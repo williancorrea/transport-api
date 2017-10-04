@@ -47,7 +47,7 @@ public class ZipCodeResource {
         String cont = zipCodeRepository.findByLastCep();
         Integer contador = 0;
         if (cont == null) {
-            contador = 01001000;
+            contador = 1001000;
         }else{
             contador = Integer.parseInt(cont.replace("-", ""));
         }
@@ -56,7 +56,7 @@ public class ZipCodeResource {
             System.out.println("Consultando cep: " + item.substring(0, 5) + "-" + item.substring(5, 8));
             ZipCode z = zipCodeService.findByZipCode(item.substring(0, 5) + "-" + item.substring(5, 8));
             if(z==null){
-                System.out.println("NAO ACHOU");
+                System.out.println("NAO ACHOU --- YEH YEH");
             }else{
                 System.out.println("\n\n\nACHOUUUUUU\n\n\n");
             }

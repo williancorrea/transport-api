@@ -14,4 +14,5 @@ CREATE TABLE zip_code (
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8;
 
-INSERT INTO zip_code (zip_code, address, complement, neighborhood, locality, uf, unit, ibge, gia) VALUES ('80330-190', 'Rua Joaquim Caetano da Silva', '', 'Santa Quitéria', 'Curitiba', 'PR', '', 4106902, '');
+
+# INSERT INTO zip_code (zip_code, address, complement, neighborhood, locality, uf, unit, ibge, gia) VALUES ('80330-190', 'Rua Joaquim Caetano da Silva', '', 'Santa Quitéria', 'Curitiba', 'PR', '', 4106902, '');'
