@@ -45,6 +45,9 @@ INSERT INTO permission (name, description) values ('ROLE_DELETE_TYPE-RELATIONSHI
 INSERT INTO permission (name, description) values ('ROLE_UPDATE_TYPE-RELATIONSHIP', ' ');
 INSERT INTO permission (name, description) values ('ROLE_SAVE_TYPE-RELATIONSHIP', ' ');
 
+INSERT INTO permission (name, description) values ('ROLE_LIST_ZIP-CODE', ' ');
+
+
 
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_LIST_BANK'));
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_DELETE_BANK'));
@@ -65,3 +68,6 @@ INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from use
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_DELETE_TYPE-RELATIONSHIP'));
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_UPDATE_TYPE-RELATIONSHIP'));
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_SAVE_TYPE-RELATIONSHIP'));
+
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_LIST_ZIP-CODE'));
+
