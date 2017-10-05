@@ -52,13 +52,20 @@ public class ZipCodeResource {
             contador = Integer.parseInt(cont.replace("-", ""));
         }
         for (int i = contador; i < 99999999; i++) {
-            String item = new Utils().StrZeroEsquerda("" + i, 8);
-            System.out.println("Consultando cep: " + item.substring(0, 5) + "-" + item.substring(5, 8));
-            ZipCode z = zipCodeService.findByZipCode(item.substring(0, 5) + "-" + item.substring(5, 8));
-            if(z==null){
-                System.out.println("NAO ACHOU --- YEH YEH");
-            }else{
-                System.out.println("\n\n\nACHOUUUUUU\n\n\n");
+
+            try {
+                Thread.sleep (10000);
+
+                String item = new Utils().StrZeroEsquerda("" + i, 8);
+                System.out.println("Consultando cep: " + item.substring(0, 5) + "-" + item.substring(5, 8));
+                ZipCode z = zipCodeService.findByZipCode(item.substring(0, 5) + "-" + item.substring(5, 8));
+                if(z==null){
+                    System.out.println("NAO ACHOU");
+                }else{
+                    System.out.println("\n\n\nACHOUUUUUU     ---      YEH YEH \n\n\n");
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
 
