@@ -40,30 +40,33 @@ public class ZipCodeResource {
     }
 
 
-    //TODO: REMOVER DEPOIS DO CLONE DO VIA CEP
+    //TODO: REMOVER DEPOIS DO CLONE DO Cep ABERTO
     @GetMapping()
     @PreAuthorize("hasAuthority('ROLE_LIST_ZIP-CODE') and #oauth2.hasScope('read')")
-    public ResponseEntity<ZipCode> findViaCEP() {
+    public ResponseEntity<ZipCode> findCepAberto() {
         String cont = zipCodeRepository.findByLastCep();
-        Integer contador = 0;
-        if (cont == null) {
-            contador = 1001000;
-        }else{
-            contador = Integer.parseInt(cont.replace("-", ""));
+        Integer contador = 1001000;
+
+
+        contador = 1001272;
+
+
+        if (cont != null) {
+            int tmp = Integer.parseInt(cont.replace("-", ""));
+            contador = tmp > contador ? tmp : contador;
         }
         for (int i = contador; i < 99999999; i++) {
-
             try {
-                Thread.sleep (10000);
-
                 String item = new Utils().StrZeroEsquerda("" + i, 8);
                 System.out.println("Consultando cep: " + item.substring(0, 5) + "-" + item.substring(5, 8));
-                ZipCode z = zipCodeService.findByZipCode(item.substring(0, 5) + "-" + item.substring(5, 8));
-                if(z==null){
+
+                ZipCode z = zipCodeService.findByZipCode(item);
+                if (z == null) {
                     System.out.println("NAO ACHOU");
-                }else{
+                } else {
                     System.out.println("\n\n\nACHOUUUUUU     ---      YEH YEH \n\n\n");
                 }
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -71,4 +74,6 @@ public class ZipCodeResource {
 
         return ResponseEntity.notFound().build();
     }
+
+
 }

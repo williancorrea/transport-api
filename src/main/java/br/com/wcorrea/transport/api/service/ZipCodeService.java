@@ -4,8 +4,15 @@ import br.com.wcorrea.transport.api.model.ZipCode;
 import br.com.wcorrea.transport.api.repository.ZipCodeRepository;
 import br.com.wcorrea.transport.api.utils.Utils;
 import com.google.gson.Gson;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Class responsible for performing the entire business rule by manipulating type of zip code information
@@ -22,7 +29,7 @@ public class ZipCodeService {
     public ZipCode findByZipCode(String zipCode) {
         ZipCode zipCodeFound = zipCodeRepository.findOne(zipCode);
         if (zipCodeFound == null) {
-            zipCodeFound = searchZipCode(zipCode);
+            zipCodeFound = searchZipCodeByCepAberto(zipCode);
             if (zipCodeFound != null) {
                 zipCodeFound = zipCodeRepository.save(zipCodeFound);
             }
@@ -30,24 +37,37 @@ public class ZipCodeService {
         return zipCodeFound;
     }
 
-    /**
-     * @param zipCode
-     * @return
-     */
-    private ZipCode searchZipCode(String zipCode) {
+    private  String URL_API = "http://www.cepaberto.com";
+    private  String TOKEN = "Token token=e06f809182c7e72992eebcc44376067c";
+    private  String AUTHORIZATION_HEADER = "Authorization";
+    private String PATH = "api/v2/ceps.json";
+    private Integer TIMEOUT_VALUE = 5000;
+
+    public ZipCode searchZipCodeByCepAberto(String zipCode) {
         try {
-            Cep json = new Gson().fromJson(new Utils().getURL("http://viacep.com.br/ws/" + zipCode + "/json"), Cep.class);
-            if (json.getCep() != null) {
+            URL url = new URL(URL_API + "/" + PATH + "?cep="+zipCode);
+            URLConnection urlConnection = url.openConnection();
+            urlConnection.setConnectTimeout(TIMEOUT_VALUE);
+            urlConnection.setRequestProperty(AUTHORIZATION_HEADER, TOKEN);
+            InputStream is = urlConnection.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+            StringBuilder jsonSb = new StringBuilder();
+            br.lines().forEach(l -> jsonSb.append(l.trim()));
+
+            JSONObject jsonObject = new JSONObject(jsonSb.toString());
+            if (jsonObject.has("cep")) {
                 ZipCode zipCodeReturn = new ZipCode();
-                zipCodeReturn.setZipCode(json.getCep());
-                zipCodeReturn.setAddress(json.getLogradouro());
-                zipCodeReturn.setComplement(json.getComplemento());
-                zipCodeReturn.setNeighborhood(json.getBairro());
-                zipCodeReturn.setLocality(json.getLocalidade());
-                zipCodeReturn.setUf(json.getUf());
-                zipCodeReturn.setUnit(json.getUnidade());
-                zipCodeReturn.setIbge(Integer.parseInt(json.getIbge()));
-                zipCodeReturn.setGia(json.getGia());
+                zipCodeReturn.setZipCode(jsonObject.getString("cep").substring(0, 5) + "-" + jsonObject.getString("cep").substring(5, 8));
+                zipCodeReturn.setAddress(jsonObject.getString("logradouro"));
+                zipCodeReturn.setNeighborhood(jsonObject.getString("bairro"));
+                zipCodeReturn.setIbge(jsonObject.getString("ibge"));
+                zipCodeReturn.setCity(jsonObject.getString("cidade"));
+                zipCodeReturn.setUf(jsonObject.getString("estado"));
+                zipCodeReturn.setDdd(jsonObject.getInt("ddd"));
+                zipCodeReturn.setLongitude(jsonObject.getString("longitude"));
+                zipCodeReturn.setLatitude(jsonObject.getString("latitude"));
+                zipCodeReturn.setAltitude(jsonObject.getInt("altitude"));
                 return zipCodeReturn;
             }
         } catch (Exception e) {
@@ -60,92 +80,5 @@ public class ZipCodeService {
             return z;
         }
         return null;
-    }
-}
-
-class Cep {
-    private String cep;
-    private String logradouro;
-    private String complemento;
-    private String bairro;
-    private String localidade;
-    private String uf;
-    private String unidade;
-    private String ibge;
-    private String gia;
-
-    public Cep() {
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public String getLogradouro() {
-        return logradouro;
-    }
-
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
-
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getLocalidade() {
-        return localidade;
-    }
-
-    public void setLocalidade(String localidade) {
-        this.localidade = localidade;
-    }
-
-    public String getUf() {
-        return uf;
-    }
-
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
-
-    public String getUnidade() {
-        return unidade;
-    }
-
-    public void setUnidade(String unidade) {
-        this.unidade = unidade;
-    }
-
-    public String getIbge() {
-        return ibge;
-    }
-
-    public void setIbge(String ibge) {
-        this.ibge = ibge;
-    }
-
-    public String getGia() {
-        return gia;
-    }
-
-    public void setGia(String gia) {
-        this.gia = gia;
     }
 }

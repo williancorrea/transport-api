@@ -20,20 +20,21 @@ public class ZipCode implements Serializable {
     private String zipCode;
     @Size(max = 250)
     private String address;
-    @Size(max = 150)
-    private String complement;
     @Size(max = 250)
     private String neighborhood;
     @Size(max = 250)
-    private String locality;
+    private String city;
     @NotNull
     @Size(min = 2, max = 2)
     private String uf;
-    @Size(max = 250)
-    private String unit;
-    private Integer ibge;
-    @Size(max = 250)
-    private String gia;
+    @Size(max = 20)
+    private String ibge;
+    private Integer ddd;
+    @Size(max = 30)
+    private String longitude;
+    @Size(max = 30)
+    private String latitude;
+    private Integer altitude;
 
     public ZipCode() {
     }
@@ -54,14 +55,6 @@ public class ZipCode implements Serializable {
         this.address = address;
     }
 
-    public String getComplement() {
-        return complement;
-    }
-
-    public void setComplement(String complement) {
-        this.complement = complement;
-    }
-
     public String getNeighborhood() {
         return neighborhood;
     }
@@ -70,12 +63,12 @@ public class ZipCode implements Serializable {
         this.neighborhood = neighborhood;
     }
 
-    public String getLocality() {
-        return locality;
+    public String getCity() {
+        return city;
     }
 
-    public void setLocality(String locality) {
-        this.locality = locality;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getUf() {
@@ -86,28 +79,45 @@ public class ZipCode implements Serializable {
         this.uf = uf;
     }
 
-    public String getUnit() {
-        return unit;
-    }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public Integer getIbge() {
+    public String getIbge() {
         return ibge;
     }
 
-    public void setIbge(Integer ibge) {
+    public void setIbge(String ibge) {
         this.ibge = ibge;
     }
 
-    public String getGia() {
-        return gia;
+    public Integer getDdd() {
+        return ddd;
     }
 
-    public void setGia(String gia) {
-        this.gia = gia;
+    public void setDdd(Integer ddd) {
+        this.ddd = ddd;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public Integer getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(Integer altitude) {
+        this.altitude = altitude;
     }
 
     @Override
