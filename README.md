@@ -24,7 +24,7 @@ Software focused on the transport area
 - Database Migration with Flyway
 - Data caching with EhCache
 - Validation of data with Hibernate Validator and Bean Validation.
-- Hikari CP.
+- Pool connections using Hikari.
 - Swagger to create documentation for the RESTful API.
 - Unit tests with JUnit and Mockito.
 - Apache AB to test API performance.
