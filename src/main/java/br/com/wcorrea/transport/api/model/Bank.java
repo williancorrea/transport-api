@@ -1,5 +1,6 @@
 package br.com.wcorrea.transport.api.model;
 
+import br.com.wcorrea.transport.api.model.common.CreationDateTime;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -25,6 +26,9 @@ public class Bank implements Serializable {
 
     @Size(min = 5, max = 250)
     private String url;
+
+    @Embedded
+    private CreationDateTime properties;
 
     public Bank() {
     }
@@ -59,6 +63,19 @@ public class Bank implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public CreationDateTime getProperties() {
+        return properties;
+    }
+
+    public void setProperties(CreationDateTime properties) {
+        this.properties = properties;
+    }
+
+    @PrePersist
+    public void prePersist(){
+        this.properties = new CreationDateTime();
     }
 
     @Override
