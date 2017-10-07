@@ -1,11 +1,10 @@
 package br.com.wcorrea.transport.api.model;
 
+import br.com.wcorrea.transport.api.model.common.CreationDateTime;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -36,7 +35,11 @@ public class ZipCode implements Serializable {
     private String latitude;
     private Integer altitude;
 
+    @Embedded
+    private CreationDateTime properties;
+
     public ZipCode() {
+        this.properties = new CreationDateTime();
     }
 
     public String getZipCode() {
@@ -118,6 +121,19 @@ public class ZipCode implements Serializable {
 
     public void setAltitude(Integer altitude) {
         this.altitude = altitude;
+    }
+
+    public CreationDateTime getProperties() {
+        return properties;
+    }
+
+    public void setProperties(CreationDateTime properties) {
+        this.properties = properties;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.properties = new CreationDateTime();
     }
 
     @Override

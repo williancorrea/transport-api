@@ -1,9 +1,8 @@
 package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.ZipCode;
+import br.com.wcorrea.transport.api.model.common.CreationDateTime;
 import br.com.wcorrea.transport.api.repository.ZipCodeRepository;
-import br.com.wcorrea.transport.api.utils.Utils;
-import com.google.gson.Gson;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +21,11 @@ public class ZipCodeService {
 
     @Autowired
     private ZipCodeRepository zipCodeRepository;
+    private String URL_API = "http://www.cepaberto.com";
+    private String TOKEN = "Token token=e06f809182c7e72992eebcc44376067c";
+    private String AUTHORIZATION_HEADER = "Authorization";
+    private String PATH = "api/v2/ceps.json";
+    private Integer TIMEOUT_VALUE = 5000;
 
     /**
      * Find zip code by zipCode
@@ -37,15 +41,9 @@ public class ZipCodeService {
         return zipCodeFound;
     }
 
-    private  String URL_API = "http://www.cepaberto.com";
-    private  String TOKEN = "Token token=e06f809182c7e72992eebcc44376067c";
-    private  String AUTHORIZATION_HEADER = "Authorization";
-    private String PATH = "api/v2/ceps.json";
-    private Integer TIMEOUT_VALUE = 5000;
-
     public ZipCode searchZipCodeByCepAberto(String zipCode) {
         try {
-            URL url = new URL(URL_API + "/" + PATH + "?cep="+zipCode);
+            URL url = new URL(URL_API + "/" + PATH + "?cep=" + zipCode.replace("-",""));
             URLConnection urlConnection = url.openConnection();
             urlConnection.setConnectTimeout(TIMEOUT_VALUE);
             urlConnection.setRequestProperty(AUTHORIZATION_HEADER, TOKEN);
@@ -59,15 +57,15 @@ public class ZipCodeService {
             if (jsonObject.has("cep")) {
                 ZipCode zipCodeReturn = new ZipCode();
                 zipCodeReturn.setZipCode(jsonObject.getString("cep").substring(0, 5) + "-" + jsonObject.getString("cep").substring(5, 8));
-                zipCodeReturn.setAddress(jsonObject.getString("logradouro"));
-                zipCodeReturn.setNeighborhood(jsonObject.getString("bairro"));
-                zipCodeReturn.setIbge(jsonObject.getString("ibge"));
-                zipCodeReturn.setCity(jsonObject.getString("cidade"));
-                zipCodeReturn.setUf(jsonObject.getString("estado"));
-                zipCodeReturn.setDdd(jsonObject.getInt("ddd"));
-                zipCodeReturn.setLongitude(jsonObject.getString("longitude"));
-                zipCodeReturn.setLatitude(jsonObject.getString("latitude"));
-                zipCodeReturn.setAltitude(jsonObject.getInt("altitude"));
+                zipCodeReturn.setAddress(jsonObject.isNull("logradouro") ? null : jsonObject.getString("logradouro"));
+                zipCodeReturn.setNeighborhood(jsonObject.isNull("bairro") ? null : jsonObject.getString("bairro"));
+                zipCodeReturn.setIbge(jsonObject.isNull("ibge") ? null : jsonObject.getString("ibge"));
+                zipCodeReturn.setCity(jsonObject.isNull("cidade") ? null : jsonObject.getString("cidade"));
+                zipCodeReturn.setUf(jsonObject.isNull("estado") ? null : jsonObject.getString("estado"));
+                zipCodeReturn.setDdd(jsonObject.isNull("ddd") ? null : jsonObject.getInt("ddd"));
+                zipCodeReturn.setLongitude(jsonObject.isNull("longitude") ? null : jsonObject.getString("longitude"));
+                zipCodeReturn.setLatitude(jsonObject.isNull("latitude") ? null : jsonObject.getString("latitude"));
+                zipCodeReturn.setAltitude(jsonObject.isNull("altitude") ? null : jsonObject.getInt("altitude"));
                 return zipCodeReturn;
             }
         } catch (Exception e) {

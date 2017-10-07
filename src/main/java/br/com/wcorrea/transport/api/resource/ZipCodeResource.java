@@ -48,7 +48,7 @@ public class ZipCodeResource {
         Integer contador = 1001000;
 
 
-        contador = 1001272;
+        contador = 1003602;
 
 
         if (cont != null) {
