@@ -7,34 +7,41 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("custom-property")
 public class ApiProperty {
 
-	private String originAllowed = "http://localhost:8000";
+    private final Security security = new Security();
+    private String originAllowed = "http://localhost:8000";
 
-	private final Security security = new Security();
+    public Security getSecurity() {
+        return security;
+    }
 
-	public Security getSecurity() {
-		return security;
-	}
+    public String getOriginAllowed() {
+        return originAllowed;
+    }
 
-	public String getOriginAllowed() {
-		return originAllowed;
-	}
+    public void setOriginAllowed(String originAllowed) {
+        this.originAllowed = originAllowed;
+    }
 
-	public void setOriginAllowed(String originAllowed) {
-		this.originAllowed = originAllowed;
-	}
+    public static class Security {
 
-	public static class Security {
+        private boolean enableHttps;
+        private String secretKeyAes;
 
-		private boolean enableHttps;
+        public boolean isEnableHttps() {
+            return enableHttps;
+        }
 
-		public boolean isEnableHttps() {
-			return enableHttps;
-		}
+        public void setEnableHttps(boolean enableHttps) {
+            this.enableHttps = enableHttps;
+        }
 
-		public void setEnableHttps(boolean enableHttps) {
-			this.enableHttps = enableHttps;
-		}
+        public String getSecretKeyAes() {
+            return secretKeyAes;
+        }
 
-	}
+        public void setSecretKeyAes(String secretKeyAes) {
+            this.secretKeyAes = secretKeyAes;
+        }
+    }
 
 }
