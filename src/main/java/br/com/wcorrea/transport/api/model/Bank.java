@@ -1,6 +1,9 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.CreationDateTime;
+import br.com.wcorrea.transport.api.utils.Cryptography;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -16,6 +19,9 @@ public class Bank implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @Transient
+    private String key;
 
     @Size(max = 10)
     private String code;
@@ -33,12 +39,21 @@ public class Bank implements Serializable {
     public Bank() {
     }
 
+    @JsonIgnore
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getKey() throws Exception {
+        return this.id != null ? new Cryptography().encryptToHex(this.id.toString()) : null;
+    }
+
+    public void setKey(String key) throws Exception {
+        this.key = StringUtils.isBlank(key) ? "" : new Cryptography().decryptFromHex(key);
     }
 
     public String getCode() {
@@ -74,7 +89,7 @@ public class Bank implements Serializable {
     }
 
     @PrePersist
-    public void prePersist(){
+    public void prePersist() {
         this.properties = new CreationDateTime();
     }
 

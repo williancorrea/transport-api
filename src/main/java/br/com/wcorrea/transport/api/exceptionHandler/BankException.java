@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.exceptionHandler;
 
-import br.com.wcorrea.transport.api.service.exception.BankUpdateNotFound;
+import br.com.wcorrea.transport.api.service.exception.BankNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -23,8 +23,8 @@ public class BankException extends DefaultExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler({BankUpdateNotFound.class})
-    public ResponseEntity<Object> handleBankUpdateNotFound(BankUpdateNotFound ex, WebRequest request, Locale loc) {
+    @ExceptionHandler({BankNotFound.class})
+    public ResponseEntity<Object> handleBankUpdateNotFound(BankNotFound ex, WebRequest request, Locale loc) {
         String userMessage = messageSource.getMessage("resource.bank-not-found", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));

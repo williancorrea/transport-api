@@ -1,10 +1,8 @@
 package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.Bank;
-import br.com.wcorrea.transport.api.model.common.CreationDateTime;
 import br.com.wcorrea.transport.api.repository.BankRepository;
-import br.com.wcorrea.transport.api.service.exception.BankUpdateNotFound;
-import org.springframework.beans.BeanUtils;
+import br.com.wcorrea.transport.api.service.exception.BankNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,21 +25,21 @@ public class BankService {
      * @return
      */
     public Bank update(Long id, Bank bank) {
-        Bank updateFound = findById(id);
+        Bank updateFound = findOne(id);
 
         bank.setId(updateFound.getId());
         bank.setProperties(updateFound.getProperties());
-        bank.getProperties().setLastUpdate(LocalDateTime.now());
+        bank.getProperties().setModificationDate(LocalDateTime.now());
         return bankRepository.save(bank);
     }
 
     /**
      * Find bank by id
      */
-    private Bank findById(Long id) {
+    public Bank findOne(Long id) {
         Bank bank = bankRepository.findOne(id);
         if (bank == null) {
-            throw new BankUpdateNotFound();
+            throw new BankNotFound();
         }
         return bank;
     }

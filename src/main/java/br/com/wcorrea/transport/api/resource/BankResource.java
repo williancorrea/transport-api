@@ -5,6 +5,8 @@ import br.com.wcorrea.transport.api.model.Bank;
 import br.com.wcorrea.transport.api.repository.BankRepository;
 import br.com.wcorrea.transport.api.repository.filter.BankFilter;
 import br.com.wcorrea.transport.api.service.BankService;
+import br.com.wcorrea.transport.api.service.exception.BankNotFound;
+import br.com.wcorrea.transport.api.utils.Cryptography;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -47,13 +49,19 @@ public class BankResource {
     /**
      * Retrieve a specific bank
      *
-     * @param id country id
+     * @param key country id
      * @return
      */
-    @GetMapping("/{id}")
+    @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LIST_BANK') and #oauth2.hasScope('read')")
-    public ResponseEntity<Bank> findOneBank(@Valid @PathVariable Long id) {
-        Bank country = bankRepository.findOne(id);
+    public ResponseEntity<Bank> findOneBank(@Valid @PathVariable String key) {
+        Long id = null;
+        try {
+            id = Long.parseLong(new Cryptography().decryptFromHex(key));
+        } catch (Exception e) {
+            throw new BankNotFound();
+        }
+        Bank country = bankService.findOne(id);
         return country != null ? ResponseEntity.ok(country) : ResponseEntity.notFound().build();
     }
 
@@ -72,15 +80,22 @@ public class BankResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(salvedBank);
     }
 
-    /**'
+    /**
+     * '
      * Update bank
      *
      * @param bank Bank
      * @return
      */
-    @PutMapping("/{id}")
+    @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_UPDATE_BANK') and #oauth2.hasScope('write')")
-    public ResponseEntity<Bank> update(@Valid @PathVariable Long id, @Valid @RequestBody Bank bank) {
+    public ResponseEntity<Bank> update(@Valid @PathVariable String key, @Valid @RequestBody Bank bank) {
+        Long id = null;
+        try {
+            id = Long.parseLong(new Cryptography().decryptFromHex(key));
+        } catch (Exception e) {
+            throw new BankNotFound();
+        }
         Bank updateBank = bankService.update(id, bank);
         return ResponseEntity.status(HttpStatus.OK).body(updateBank);
     }
@@ -90,10 +105,16 @@ public class BankResource {
      *
      * @return
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{key}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETE_BANK') and #oauth2.hasScope('write')")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable String key) throws Exception {
+        Long id = null;
+        try {
+            id = Long.parseLong(new Cryptography().decryptFromHex(key));
+        } catch (Exception e) {
+            throw new BankNotFound();
+        }
         bankRepository.delete(id);
     }
 }
