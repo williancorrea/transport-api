@@ -8,8 +8,16 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class Utils {
-
     private Integer TIMEOUT_VALUE = 5000;
+
+    public static String StrZeroEsquerda(String value, int n) {
+        String s = value.trim();
+        StringBuffer resp = new StringBuffer();
+        int fim = n - s.length();
+        for (int x = 0; x < fim; x++)
+            resp.append('0');
+        return resp + s;
+    }
 
     public String getURL(String urlParam) throws IOException {
         try {
@@ -29,14 +37,4 @@ public class Utils {
             throw e;
         }
     }
-
-    public static String StrZeroEsquerda(String value, int n) {
-        String s = value.trim();
-        StringBuffer resp = new StringBuffer();
-        int fim = n - s.length();
-        for (int x = 0; x < fim; x++)
-            resp.append('0');
-        return resp + s;
-    }
-
 }
