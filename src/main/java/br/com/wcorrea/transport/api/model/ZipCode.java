@@ -39,7 +39,6 @@ public class ZipCode implements Serializable {
     private CreationDateTime properties;
 
     public ZipCode() {
-        this.properties = new CreationDateTime();
     }
 
     public String getZipCode() {
