@@ -1,7 +1,5 @@
 package br.com.wcorrea.transport.api.model.common;
 
-import org.apache.tomcat.jni.Local;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
@@ -13,15 +11,16 @@ import java.time.format.DateTimeFormatter;
 @Access(AccessType.FIELD)
 public class CreationDateTime {
 
+
     @Column(name = "date_creation")
     private LocalDateTime dateCreation;
 
-    @Column(name = "last_update")
-    private LocalDateTime lastUpdate;
+    @Column(name = "modification_date")
+    private LocalDateTime modificationDate;
 
     public CreationDateTime() {
         LocalDateTime dateTime = LocalDateTime.now();
-        this.lastUpdate = dateTime;
+        this.modificationDate = dateTime;
         this.dateCreation = dateTime;
     }
 
@@ -29,11 +28,11 @@ public class CreationDateTime {
         return dateCreation.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
-    public String getLastUpdate() {
-        return lastUpdate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    public String getModificationDate() {
+        return modificationDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
-    public void setLastUpdate(LocalDateTime lastUpdate) {
-        this.lastUpdate = LocalDateTime.now();
+    public void setModificationDate(LocalDateTime modificationDate) {
+        this.modificationDate = LocalDateTime.now();
     }
 }
