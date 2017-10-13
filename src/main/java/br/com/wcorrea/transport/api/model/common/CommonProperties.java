@@ -1,16 +1,13 @@
 package br.com.wcorrea.transport.api.model.common;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Embeddable
-@Access(AccessType.FIELD)
-public class CreationDateTime {
-
+public class CommonProperties implements Serializable {
 
     @Column(name = "date_creation")
     private LocalDateTime dateCreation;
@@ -18,7 +15,7 @@ public class CreationDateTime {
     @Column(name = "modification_date")
     private LocalDateTime modificationDate;
 
-    public CreationDateTime() {
+    public CommonProperties() {
         LocalDateTime dateTime = LocalDateTime.now();
         this.modificationDate = dateTime;
         this.dateCreation = dateTime;

@@ -55,7 +55,7 @@ public class BankResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LIST_BANK') and #oauth2.hasScope('read')")
     public ResponseEntity<Bank> findOneBank(@Valid @PathVariable String key) {
-        Long id = null;
+        Long id;
         try {
             id = Long.parseLong(new Cryptography().decryptFromHex(key));
         } catch (Exception e) {
@@ -74,14 +74,13 @@ public class BankResource {
      */
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_SAVE_BANK') and #oauth2.hasScope('write')")
-    public ResponseEntity<Bank> save(@Valid @RequestBody Bank bank, HttpServletResponse response) {
-        Bank salvedBank = bankRepository.save(bank);
-        publisher.publishEvent(new EventResourceCreated(this, response, salvedBank.getId()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(salvedBank);
+    public ResponseEntity<Bank> save(@Valid @RequestBody Bank bank, HttpServletResponse response) throws Exception {
+        bank = bankRepository.saveAndFlush(bank);
+        publisher.publishEvent(new EventResourceCreated(this, response, bank.getKey()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(bank);
     }
 
     /**
-     * '
      * Update bank
      *
      * @param bank Bank
@@ -96,8 +95,7 @@ public class BankResource {
         } catch (Exception e) {
             throw new BankNotFound();
         }
-        Bank updateBank = bankService.update(id, bank);
-        return ResponseEntity.status(HttpStatus.OK).body(updateBank);
+        return ResponseEntity.status(HttpStatus.OK).body(bankService.update(id, bank));
     }
 
     /**
@@ -108,8 +106,8 @@ public class BankResource {
     @DeleteMapping("/{key}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETE_BANK') and #oauth2.hasScope('write')")
-    public void delete(@PathVariable String key) throws Exception {
-        Long id = null;
+    public void delete(@PathVariable String key) {
+        Long id;
         try {
             id = Long.parseLong(new Cryptography().decryptFromHex(key));
         } catch (Exception e) {

@@ -66,7 +66,7 @@ public class ProductUnitResource {
     @PreAuthorize("hasAuthority('ROLE_SAVE_PRODUCT-UNIT') and #oauth2.hasScope('write')")
     public ResponseEntity<ProductUnit> save(@Valid @RequestBody ProductUnit productUnit, HttpServletResponse response) {
         ProductUnit salvedProductUnit = productUnitRepository.save(productUnit);
-        publisher.publishEvent(new EventResourceCreated(this, response, salvedProductUnit.getId()));
+        publisher.publishEvent(new EventResourceCreated(this, response, salvedProductUnit.getId().toString()));
         return ResponseEntity.status(HttpStatus.CREATED).body(salvedProductUnit);
     }
 

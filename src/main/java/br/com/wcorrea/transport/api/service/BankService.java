@@ -26,7 +26,6 @@ public class BankService {
      */
     public Bank update(Long id, Bank bank) {
         Bank updateFound = findOne(id);
-
         bank.setId(updateFound.getId());
         bank.setProperties(updateFound.getProperties());
         bank.getProperties().setModificationDate(LocalDateTime.now());

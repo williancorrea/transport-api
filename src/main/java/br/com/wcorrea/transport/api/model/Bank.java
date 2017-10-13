@@ -1,9 +1,8 @@
 package br.com.wcorrea.transport.api.model;
 
-import br.com.wcorrea.transport.api.model.common.CreationDateTime;
+import br.com.wcorrea.transport.api.model.common.CommonProperties;
 import br.com.wcorrea.transport.api.utils.Cryptography;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -20,8 +19,8 @@ public class Bank implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Transient
-    private String key;
+    @Embedded
+    private CommonProperties properties;
 
     @Size(max = 10)
     private String code;
@@ -32,9 +31,6 @@ public class Bank implements Serializable {
 
     @Size(min = 5, max = 250)
     private String url;
-
-    @Embedded
-    private CreationDateTime properties;
 
     public Bank() {
     }
@@ -48,12 +44,17 @@ public class Bank implements Serializable {
         this.id = id;
     }
 
+    @Transient
     public String getKey() throws Exception {
         return this.id != null ? new Cryptography().encryptToHex(this.id.toString()) : null;
     }
 
-    public void setKey(String key) throws Exception {
-        this.key = StringUtils.isBlank(key) ? "" : new Cryptography().decryptFromHex(key);
+    public CommonProperties getProperties() {
+        return properties;
+    }
+
+    public void setProperties(CommonProperties properties) {
+        this.properties = properties;
     }
 
     public String getCode() {
@@ -80,17 +81,9 @@ public class Bank implements Serializable {
         this.url = url;
     }
 
-    public CreationDateTime getProperties() {
-        return properties;
-    }
-
-    public void setProperties(CreationDateTime properties) {
-        this.properties = properties;
-    }
-
     @PrePersist
     public void prePersist() {
-        this.properties = new CreationDateTime();
+        this.properties = new CommonProperties();
     }
 
     @Override

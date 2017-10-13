@@ -26,6 +26,15 @@ public class ApiProperty {
 
         private boolean enableHttps;
         private String secretKeyAes;
+        private boolean enableCryptography;
+
+        public boolean isEnableCryptography() {
+            return enableCryptography;
+        }
+
+        public void setEnableCryptography(boolean enableCryptography) {
+            this.enableCryptography = enableCryptography;
+        }
 
         public boolean isEnableHttps() {
             return enableHttps;

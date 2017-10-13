@@ -14,13 +14,11 @@ public class EventResourceListener implements ApplicationListener<EventResourceC
     @Override
     public void onApplicationEvent(EventResourceCreated eventResourceCreated) {
         HttpServletResponse response = eventResourceCreated.getResponse();
-        Long id = eventResourceCreated.getId();
-
-        adicionarHeaderLocation(response, id);
+        adicionarHeaderLocation(response, eventResourceCreated.getKey());
     }
 
-    private void adicionarHeaderLocation(HttpServletResponse response, Long id) {
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(id).toUri();
+    private void adicionarHeaderLocation(HttpServletResponse response, String key) {
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{key}").buildAndExpand(key).toUri();
         response.setHeader("Location", uri.toASCIIString());
     }
 }

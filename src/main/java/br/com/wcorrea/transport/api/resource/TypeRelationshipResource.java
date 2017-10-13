@@ -66,7 +66,7 @@ public class TypeRelationshipResource {
     @PreAuthorize("hasAuthority('ROLE_SAVE_TYPE-RELATIONSHIP') and #oauth2.hasScope('write')")
     public ResponseEntity<TypeRelationship> save(@Valid @RequestBody TypeRelationship typeRelationship, HttpServletResponse response) {
         TypeRelationship saveTypeRelationship = typeRelationshipRepository.save(typeRelationship);
-        publisher.publishEvent(new EventResourceCreated(this, response, saveTypeRelationship.getId()));
+        publisher.publishEvent(new EventResourceCreated(this, response, saveTypeRelationship.getId().toString()));
         return ResponseEntity.status(HttpStatus.CREATED).body(saveTypeRelationship);
     }
 

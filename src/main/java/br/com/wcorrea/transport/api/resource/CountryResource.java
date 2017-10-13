@@ -79,7 +79,7 @@ public class CountryResource {
     @PreAuthorize("hasAuthority('ROLE_SAVE_COUNTRY') and #oauth2.hasScope('write')")
     public ResponseEntity<Country> save(@Valid @RequestBody Country country, HttpServletResponse response) {
         Country salvedCountry = countryRepository.save(country);
-        publisher.publishEvent(new EventResourceCreated(this, response, salvedCountry.getCountry_id()));
+        publisher.publishEvent(new EventResourceCreated(this, response, salvedCountry.getCountry_id().toString()));
         return ResponseEntity.status(HttpStatus.CREATED).body(salvedCountry);
     }
 

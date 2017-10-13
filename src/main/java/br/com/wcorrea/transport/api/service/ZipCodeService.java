@@ -1,7 +1,6 @@
 package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.ZipCode;
-import br.com.wcorrea.transport.api.model.common.CreationDateTime;
 import br.com.wcorrea.transport.api.repository.ZipCodeRepository;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
