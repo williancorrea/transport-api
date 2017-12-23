@@ -62,6 +62,7 @@ public class BankResource {
             throw new BankNotFound();
         }
         Bank country = bankService.findOne(id);
+        System.out.println(country.toString());
         return country != null ? ResponseEntity.ok(country) : ResponseEntity.notFound().build();
     }
 
