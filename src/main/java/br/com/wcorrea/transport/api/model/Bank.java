@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 @ToString
 @EqualsAndHashCode
-@Entity(name = "banks")
+@Entity(name = "bank")
 public class Bank implements Serializable {
 
     private static final long serialVersionUID = -1537213210424146788L;
