@@ -7,9 +7,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -17,8 +17,8 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Entity(name = "bank")
 public class Bank implements Serializable {
-
     private static final long serialVersionUID = -1537213210424146788L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -37,7 +37,7 @@ public class Bank implements Serializable {
     @Setter
     private String code;
 
-    @NotNull
+    @NotBlank
     @Size(min = 5, max = 150)
     @Getter
     @Setter

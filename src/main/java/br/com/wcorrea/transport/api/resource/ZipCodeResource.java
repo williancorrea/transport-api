@@ -48,7 +48,7 @@ public class ZipCodeResource {
         Integer contador = 1001000;
 
 
-        contador = 1003602;
+        contador = 1017041;
 
 
         if (cont != null) {
@@ -66,7 +66,7 @@ public class ZipCodeResource {
                 } else {
                     System.out.println("\n\n\nACHOUUUUUU     ---      YEH YEH \n\n\n");
                 }
-                Thread.sleep(5000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

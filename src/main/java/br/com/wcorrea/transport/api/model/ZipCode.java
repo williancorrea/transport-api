@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Entity(name = "zip_code")
 public class ZipCode implements Serializable {
 
+    private static final long serialVersionUID = -5192858152998451721L;
+
     @Id
     @NotNull
     @Size(min = 9, max = 9)
