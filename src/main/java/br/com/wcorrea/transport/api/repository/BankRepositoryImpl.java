@@ -30,39 +30,59 @@ public class BankRepositoryImpl implements BankRepositoryQuery {
      * @return
      */
     @Override
+//    public Page<Bank> findAll(BankFilter bankFilter, Pageable pageable) {
+//        CriteriaBuilder builder = manager.getCriteriaBuilder();
+//        CriteriaQuery<Bank> criteria = builder.createQuery(Bank.class);
+//        Root<Bank> root = criteria.from(Bank.class);
+//
+//        Predicate[] predicates = createRestrictions(bankFilter, builder, root);
+//        criteria.where(predicates);
+//
+//        //CONSTRUIR COM NATIVE QUERY
+//        TypedQuery<Bank> query = manager.createQuery(criteria);
+//
+//        pagingRestrictions(query, pageable);
+//
+//        return new PageImpl<>(query.getResultList(), pageable, totalRecords(bankFilter));
+//    }
+
     public Page<Bank> findAll(BankFilter bankFilter, Pageable pageable) {
-        CriteriaBuilder builder = manager.getCriteriaBuilder();
-        CriteriaQuery<Bank> criteria = builder.createQuery(Bank.class);
-        Root<Bank> root = criteria.from(Bank.class);
+        TypedQuery<Bank> queryList = manager.createQuery(this.createQuery(bankFilter, false), Bank.class);
+        TypedQuery<Long> queryTotalRecords = manager.createQuery(this.createQuery(bankFilter, true), Long.class);
 
-        Predicate[] predicates = createRestrictions(bankFilter, builder, root);
-        criteria.where(predicates);
+        pagingRestrictions(queryList, pageable);
 
-        TypedQuery<Bank> query = manager.createQuery(criteria);
-        pagingRestrictions(query, pageable);
-
-        return new PageImpl<>(query.getResultList(), pageable, totalRecords(bankFilter));
+        return new PageImpl<>(queryList.getResultList(), pageable, queryTotalRecords.getSingleResult());
     }
 
-    /**
-     * Creates constraints for pagination
-     *
-     * @param bankFilter
-     * @param builder
-     * @param root
-     * @return
-     */
-    private Predicate[] createRestrictions(BankFilter bankFilter, CriteriaBuilder builder, Root<Bank> root) {
-        List<Predicate> predicates = new ArrayList<>();
-
-        if (!StringUtils.isEmpty(bankFilter.getCode())) {
-            predicates.add(builder.like(builder.lower(root.get("code")), "%" + bankFilter.getCode().toLowerCase() + "%"));
+    private String createQuery(BankFilter bankFilter, boolean count) {
+        String sql;
+        if (count) {
+            sql = "select count(a) from bank a where 1=1";
+        } else {
+            sql = "from bank a where 1=1 ";
         }
 
-        if (!StringUtils.isEmpty(bankFilter.getName())) {
-            predicates.add(builder.like(builder.lower(root.get("name")), "%" + bankFilter.getName().toLowerCase() + "%"));
+        if (StringUtils.isNoneBlank(bankFilter.getGlobalFilter())) {
+            sql += " and (";
+            sql += " upper(a.code) like '%" + bankFilter.getGlobalFilter().toUpperCase().trim() + "%'";
+            sql += " or upper(a.name) like '%" + bankFilter.getGlobalFilter().toUpperCase().trim() + "%'";
+            sql += " or upper(a.url) like '%" + bankFilter.getGlobalFilter().toUpperCase().trim() + "%'";
+            sql += " )";
         }
-        return predicates.toArray(new Predicate[predicates.size()]);
+
+        /**
+         * ORDERING THE LIST
+         */
+        if (count == false) {
+            if (StringUtils.isNotBlank(bankFilter.getSortField())) {
+                sql += " order by a." + bankFilter.getSortField();
+            }
+            if (StringUtils.isNotBlank(bankFilter.getSortOrder()) && StringUtils.isNotBlank(bankFilter.getSortField())) {
+                sql += " " + bankFilter.getSortOrder();
+            }
+        }
+        return sql;
     }
 
     /**
@@ -72,29 +92,7 @@ public class BankRepositoryImpl implements BankRepositoryQuery {
      * @param pageable
      */
     private void pagingRestrictions(TypedQuery<?> query, Pageable pageable) {
-        int currentPage = pageable.getPageNumber();
-        int totalRecordsPerPage = pageable.getPageSize();
-        int firstPageRegistration = currentPage * totalRecordsPerPage;
-
-        query.setFirstResult(firstPageRegistration);
-        query.setMaxResults(totalRecordsPerPage);
-    }
-
-    /**
-     * Retrieve the number of records
-     *
-     * @param bankFilter
-     * @return
-     */
-    private Long totalRecords(BankFilter bankFilter) {
-        CriteriaBuilder builder = manager.getCriteriaBuilder();
-        CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
-        Root<Bank> root = criteria.from(Bank.class);
-
-        Predicate[] predicates = createRestrictions(bankFilter, builder, root);
-        criteria.where(predicates);
-
-        criteria.select(builder.count(root));
-        return manager.createQuery(criteria).getSingleResult();
+        query.setFirstResult(pageable.getPageNumber());
+        query.setMaxResults(pageable.getPageSize());
     }
 }

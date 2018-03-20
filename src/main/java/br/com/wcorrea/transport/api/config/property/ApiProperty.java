@@ -27,6 +27,7 @@ public class ApiProperty {
         private boolean enableHttps;
         private String secretKeyAes;
         private boolean enableCryptography;
+        private boolean enableCors;
 
         public boolean isEnableCryptography() {
             return enableCryptography;
@@ -50,6 +51,14 @@ public class ApiProperty {
 
         public void setSecretKeyAes(String secretKeyAes) {
             this.secretKeyAes = secretKeyAes;
+        }
+
+        public boolean isEnableCors() {
+            return enableCors;
+        }
+
+        public void setEnableCors(boolean enableCors) {
+            this.enableCors = enableCors;
         }
     }
 

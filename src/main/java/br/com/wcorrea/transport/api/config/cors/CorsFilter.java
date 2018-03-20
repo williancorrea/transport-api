@@ -15,37 +15,39 @@ import java.io.IOException;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
-	@Autowired
-	private ApiProperty apiProperty;
-	
-	@Override
-	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
-			throws IOException, ServletException {
-		
-		HttpServletRequest request = (HttpServletRequest) req;
-		HttpServletResponse response = (HttpServletResponse) resp;
-		
-		response.setHeader("Access-Control-Allow-Origin", apiProperty.getOriginAllowed());
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-		
-		if ("OPTIONS".equals(request.getMethod()) && apiProperty.getOriginAllowed().equals(request.getHeader("Origin"))) {
-			response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
-        	response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
-        	response.setHeader("Access-Control-Max-Age", "3600");
-			
-			response.setStatus(HttpServletResponse.SC_OK);
-		} else {
-			chain.doFilter(req, resp);
-		}
-		
-	}
-	
-	@Override
-	public void destroy() {
-	}
+    @Autowired
+    private ApiProperty apiProperty;
 
-	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-	}
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
+            throws IOException, ServletException {
+
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) resp;
+
+        if (apiProperty.getSecurity().isEnableCors()) {
+            response.setHeader("Access-Control-Allow-Origin", apiProperty.getOriginAllowed());
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+        }
+
+        if ("OPTIONS".equals(request.getMethod()) && apiProperty.getOriginAllowed().equals(request.getHeader("Origin"))) {
+            response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
+            response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
+            response.setHeader("Access-Control-Max-Age", "3600");
+
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            chain.doFilter(req, resp);
+        }
+
+    }
+
+    @Override
+    public void destroy() {
+    }
+
+    @Override
+    public void init(FilterConfig arg0) throws ServletException {
+    }
 
 }
