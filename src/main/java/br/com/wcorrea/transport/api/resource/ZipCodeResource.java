@@ -44,13 +44,17 @@ public class ZipCodeResource {
     @GetMapping()
     @PreAuthorize("hasAuthority('ROLE_LIST_ZIP-CODE') and #oauth2.hasScope('read')")
     public ResponseEntity<ZipCode> findCepAberto() {
+        new Thread() {
+            public void run() {
+                getZipCode(1021387);
+            }
+        }.start();
+
+        return ResponseEntity.notFound().build();
+    }
+
+    public void getZipCode(int contador){
         String cont = zipCodeRepository.findByLastCep();
-        Integer contador = 1001000;
-
-
-        contador = 1017041;
-
-
         if (cont != null) {
             int tmp = Integer.parseInt(cont.replace("-", ""));
             contador = tmp > contador ? tmp : contador;
@@ -66,14 +70,11 @@ public class ZipCodeResource {
                 } else {
                     System.out.println("\n\n\nACHOUUUUUU     ---      YEH YEH \n\n\n");
                 }
-                Thread.sleep(10000);
+                Thread.sleep(7000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-
-        return ResponseEntity.notFound().build();
     }
-
 
 }

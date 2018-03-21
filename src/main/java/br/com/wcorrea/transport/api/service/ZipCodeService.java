@@ -33,9 +33,19 @@ public class ZipCodeService {
         ZipCode zipCodeFound = zipCodeRepository.findOne(zipCode);
         if (zipCodeFound == null) {
             zipCodeFound = searchZipCodeByCepAberto(zipCode);
+
             if (zipCodeFound != null) {
-                zipCodeFound = zipCodeRepository.save(zipCodeFound);
+                if(zipCodeFound.getZipCode() != null) {
+                    zipCodeFound = zipCodeRepository.save(zipCodeFound);
+                }else{
+                    zipCodeFound = null;
+                }
+            }else{
+                //TODO: REMOVER ESSA GAMBIARRA
+                //FEITO SOMENTE PARA PEGAR O ULTIMO ITEM CONSULTADO
+                zipCodeRepository.save(new ZipCode(zipCode));
             }
+
         }
         return zipCodeFound;
     }

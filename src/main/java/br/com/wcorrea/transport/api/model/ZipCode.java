@@ -43,6 +43,10 @@ public class ZipCode implements Serializable {
     public ZipCode() {
     }
 
+    public ZipCode(String zipCode){
+        this.zipCode = zipCode;
+    }
+
     public String getZipCode() {
         return zipCode;
     }
