@@ -25,7 +25,7 @@ public class ApiProperty {
     public static class Security {
 
         private boolean enableHttps;
-        private String secretKeyAes;
+        private String secretKeyAes = "2+:0F,6!6[965(_.";
         private boolean enableCryptography;
         private boolean enableCors;
 
