@@ -43,7 +43,7 @@ public class Bank implements Serializable {
     @Setter
     private String name;
 
-    @Size(min = 5, max = 250)
+    @Size(max = 250)
     @Getter
     @Setter
     private String url;
