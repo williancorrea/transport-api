@@ -63,12 +63,22 @@ public class BankRepositoryImpl implements BankRepositoryQuery {
             sql = "from bank a where 1=1 ";
         }
 
-        if (StringUtils.isNoneBlank(bankFilter.getGlobalFilter())) {
+        if (StringUtils.isNotBlank(bankFilter.getGlobalFilter())) {
             sql += " and (";
             sql += " upper(a.code) like '%" + bankFilter.getGlobalFilter().toUpperCase().trim() + "%'";
             sql += " or upper(a.name) like '%" + bankFilter.getGlobalFilter().toUpperCase().trim() + "%'";
             sql += " or upper(a.url) like '%" + bankFilter.getGlobalFilter().toUpperCase().trim() + "%'";
             sql += " )";
+        } else {
+            if (StringUtils.isNotBlank(bankFilter.getCode())) {
+                sql += " and upper(a.code) like '%" + bankFilter.getCode().toUpperCase().trim() + "%'";
+            }
+            if (StringUtils.isNotBlank(bankFilter.getName())) {
+                sql += " and upper(a.name) like '%" + bankFilter.getName().toUpperCase().trim() + "%'";
+            }
+            if (StringUtils.isNotBlank(bankFilter.getUrl())) {
+                sql += " and upper(a.url) like '%" + bankFilter.getUrl().toUpperCase().trim() + "%'";
+            }
         }
 
         /**
@@ -92,7 +102,11 @@ public class BankRepositoryImpl implements BankRepositoryQuery {
      * @param pageable
      */
     private void pagingRestrictions(TypedQuery<?> query, Pageable pageable) {
-        query.setFirstResult(pageable.getPageNumber());
-        query.setMaxResults(pageable.getPageSize());
+        int currentPage = pageable.getPageNumber();
+        int totalRecordsPerPage = pageable.getPageSize();
+        int firstPageRegistration = currentPage * totalRecordsPerPage;
+
+        query.setFirstResult(firstPageRegistration);
+        query.setMaxResults(totalRecordsPerPage);
     }
 }
