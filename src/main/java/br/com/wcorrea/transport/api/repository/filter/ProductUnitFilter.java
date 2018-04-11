@@ -8,9 +8,8 @@ public class ProductUnitFilter {
     private String sortField;
     private String sortOrder;
 
-    private String code;
+    private String initials;
     private String name;
-    private String url;
 
     public String getGlobalFilter() {
         return globalFilter;
@@ -52,13 +51,6 @@ public class ProductUnitFilter {
         this.sortOrder = sortOrder;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public String getName() {
         return name;
@@ -68,11 +60,11 @@ public class ProductUnitFilter {
         this.name = name;
     }
 
-    public String getUrl() {
-        return url;
+    public String getInitials() {
+        return initials;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setInitials(String initials) {
+        this.initials = initials;
     }
 }
