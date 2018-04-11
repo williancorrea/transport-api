@@ -1,84 +1,71 @@
 package br.com.wcorrea.transport.api.model;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import br.com.wcorrea.transport.api.model.common.CommonProperties;
+import br.com.wcorrea.transport.api.utils.Cryptography;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+@ToString
+@EqualsAndHashCode
 @Entity(name = "product_unit")
 public class ProductUnit implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @JsonIgnore
+    @Getter
+    @Setter
     private Long id;
+
+    @Embedded
+    @Getter
+    @Setter
+    private CommonProperties properties;
 
     @NotNull
     @Size(min = 1, max = 10)
+    @Getter
+    @Setter
     private String initials;
 
     @NotNull
     @Size(min = 5, max = 150)
+    @Getter
+    @Setter
     private String name;
 
     @Column(name = "can_fraction")
+    @Getter
+    @Setter
     private Boolean canFraction;
 
     public ProductUnit() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getInitials() {
-        return initials;
+        return initials.toUpperCase();
     }
 
     public void setInitials(String initials) {
-        this.initials = initials;
+        this.initials = initials.toUpperCase();
     }
 
-    public String getName() {
-        return name;
+    @Transient
+    public String getKey() throws Exception {
+        return this.id != null ? new Cryptography().encryptToHex(this.id.toString()) : null;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Boolean getCanFraction() {
-        return canFraction;
-    }
-
-    public void setCanFraction(Boolean canFraction) {
-        this.canFraction = canFraction;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (!(o instanceof ProductUnit)) return false;
-
-        ProductUnit that = (ProductUnit) o;
-
-        return new EqualsBuilder()
-                .append(getId(), that.getId())
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(getId())
-                .toHashCode();
+    @PrePersist
+    public void prePersist() {
+        this.properties = new CommonProperties();
     }
 }

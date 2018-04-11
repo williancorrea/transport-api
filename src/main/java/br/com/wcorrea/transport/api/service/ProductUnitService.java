@@ -2,10 +2,12 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.ProductUnit;
 import br.com.wcorrea.transport.api.repository.ProductUnitRepository;
-import br.com.wcorrea.transport.api.service.exception.ProductUnitUpdateNotFound;
+import br.com.wcorrea.transport.api.service.exception.ProductUnitNotFound;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 /**
  * Class responsible for performing the entire business rule by manipulating product unit information
@@ -24,18 +26,20 @@ public class ProductUnitService {
      * @return
      */
     public ProductUnit update(Long id, ProductUnit productUnit) {
-        ProductUnit updateFound = productUnitRepository.save(findById(id));
-        BeanUtils.copyProperties(productUnit, updateFound, "id");
-        return productUnitRepository.save(updateFound);
+        ProductUnit updateFound = findOne(id);
+        productUnit.setId(updateFound.getId());
+        productUnit.setProperties(updateFound.getProperties());
+        productUnit.getProperties().setModificationDate(LocalDateTime.now());
+        return productUnitRepository.save(productUnit);
     }
 
     /**
      * Find product unit by id
      */
-    private ProductUnit findById(Long id) {
+    private ProductUnit findOne(Long id) {
         ProductUnit productUnit = productUnitRepository.findOne(id);
         if (productUnit == null) {
-            throw new ProductUnitUpdateNotFound();
+            throw new ProductUnitNotFound();
         }
         return productUnit;
     }

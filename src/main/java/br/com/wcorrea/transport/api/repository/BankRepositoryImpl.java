@@ -30,27 +30,11 @@ public class BankRepositoryImpl implements BankRepositoryQuery {
      * @return
      */
     @Override
-//    public Page<Bank> findAll(BankFilter bankFilter, Pageable pageable) {
-//        CriteriaBuilder builder = manager.getCriteriaBuilder();
-//        CriteriaQuery<Bank> criteria = builder.createQuery(Bank.class);
-//        Root<Bank> root = criteria.from(Bank.class);
-//
-//        Predicate[] predicates = createRestrictions(bankFilter, builder, root);
-//        criteria.where(predicates);
-//
-//        //CONSTRUIR COM NATIVE QUERY
-//        TypedQuery<Bank> query = manager.createQuery(criteria);
-//
-//        pagingRestrictions(query, pageable);
-//
-//        return new PageImpl<>(query.getResultList(), pageable, totalRecords(bankFilter));
-//    }
-
     public Page<Bank> findAll(BankFilter bankFilter, Pageable pageable) {
         TypedQuery<Bank> queryList = manager.createQuery(this.createQuery(bankFilter, false), Bank.class);
         TypedQuery<Long> queryTotalRecords = manager.createQuery(this.createQuery(bankFilter, true), Long.class);
 
-        pagingRestrictions(queryList, pageable);
+        UtilsRepository.pagingRestrictions(queryList, pageable);
 
         return new PageImpl<>(queryList.getResultList(), pageable, queryTotalRecords.getSingleResult());
     }
@@ -93,20 +77,5 @@ public class BankRepositoryImpl implements BankRepositoryQuery {
             }
         }
         return sql;
-    }
-
-    /**
-     * Adds restrictions to data paging
-     *
-     * @param query
-     * @param pageable
-     */
-    private void pagingRestrictions(TypedQuery<?> query, Pageable pageable) {
-        int currentPage = pageable.getPageNumber();
-        int totalRecordsPerPage = pageable.getPageSize();
-        int firstPageRegistration = currentPage * totalRecordsPerPage;
-
-        query.setFirstResult(firstPageRegistration);
-        query.setMaxResults(totalRecordsPerPage);
     }
 }

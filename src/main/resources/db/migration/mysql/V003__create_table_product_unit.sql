@@ -2,7 +2,9 @@ CREATE TABLE product_unit (
     id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     initials VARCHAR(10),
     name VARCHAR(150) NOT NULL,
-    can_fraction INT DEFAULT 0
+    can_fraction INT DEFAULT 0,
+    date_creation TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modification_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8;

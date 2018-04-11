@@ -3,9 +3,14 @@ package br.com.wcorrea.transport.api.resource;
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.ProductUnit;
 import br.com.wcorrea.transport.api.repository.ProductUnitRepository;
+import br.com.wcorrea.transport.api.repository.filter.ProductUnitFilter;
 import br.com.wcorrea.transport.api.service.ProductUnitService;
+import br.com.wcorrea.transport.api.service.exception.ProductUnitNotFound;
+import br.com.wcorrea.transport.api.utils.Cryptography;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Class responsible for providing all the resources needed to handle product unit trash
@@ -38,34 +42,39 @@ public class ProductUnitResource {
      */
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_LIST_PRODUCT-UNIT') and #oauth2.hasScope('read')")
-    public List<ProductUnit> listAllProductUnit() {
-        return productUnitRepository.findAll();
+    public Page<ProductUnit> findAll(ProductUnitFilter productUnitFilter, Pageable pageable) {
+        return productUnitRepository.findAll(productUnitFilter, pageable);
     }
 
     /**
      * Retrieve a specific product unit
      *
-     * @param id country id
      * @return
      */
-    @GetMapping("/{id}")
+    @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LIST_PRODUCT-UNIT') and #oauth2.hasScope('read')")
-    public ResponseEntity<ProductUnit> findOneProductUnit(@Valid @PathVariable Long id) {
-        ProductUnit productUnit = productUnitRepository.findOne(id);
-        return productUnit != null ? ResponseEntity.ok(productUnit) : ResponseEntity.notFound().build();
+    public ResponseEntity<ProductUnit> findOne(@Valid @PathVariable String key) {
+        try {
+            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            ProductUnit productUnitFound = productUnitRepository.findOne(id);
+            return productUnitFound != null ? ResponseEntity.ok(productUnitFound) : ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            throw new ProductUnitNotFound();
+        }
+
     }
 
     /**
      * Save a new product unit
      *
-     * @param productUnit  Product Unit
-     * @param response HttpServletResponse
+     * @param productUnit Product Unit
+     * @param response    HttpServletResponse
      * @return
      */
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_SAVE_PRODUCT-UNIT') and #oauth2.hasScope('write')")
     public ResponseEntity<ProductUnit> save(@Valid @RequestBody ProductUnit productUnit, HttpServletResponse response) {
-        ProductUnit salvedProductUnit = productUnitRepository.save(productUnit);
+        ProductUnit salvedProductUnit = productUnitRepository.saveAndFlush(productUnit);
         publisher.publishEvent(new EventResourceCreated(this, response, salvedProductUnit.getId().toString()));
         return ResponseEntity.status(HttpStatus.CREATED).body(salvedProductUnit);
     }
@@ -73,14 +82,18 @@ public class ProductUnitResource {
     /**
      * Update product unit
      *
-     * @param productUnit  ProductUnit
+     * @param productUnit ProductUnit
      * @return
      */
-    @PutMapping("/{id}")
+    @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_UPDATE_PRODUCT-UNIT') and #oauth2.hasScope('write')")
-    public ResponseEntity<ProductUnit> update(@Valid @PathVariable Long id, @Valid @RequestBody ProductUnit productUnit) {
-        ProductUnit updateProductUnit = productUnitService.update(id, productUnit);
-        return ResponseEntity.status(HttpStatus.OK).body(updateProductUnit);
+    public ResponseEntity<ProductUnit> update(@Valid @PathVariable String key, @Valid @RequestBody ProductUnit productUnit) {
+        try {
+            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            return ResponseEntity.status(HttpStatus.OK).body(productUnitService.update(id, productUnit));
+        } catch (Exception e) {
+            throw new ProductUnitNotFound();
+        }
     }
 
     /**
@@ -88,10 +101,17 @@ public class ProductUnitResource {
      *
      * @return
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{key}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETE_PRODUCT-UNIT') and #oauth2.hasScope('write')")
-    public void delete(@PathVariable Long id) {
-        productUnitRepository.delete(id);
+    public void delete(@PathVariable String key) {
+
+        try {
+            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            productUnitRepository.delete(id);
+        } catch (Exception e) {
+            throw new ProductUnitNotFound();
+        }
+
     }
 }

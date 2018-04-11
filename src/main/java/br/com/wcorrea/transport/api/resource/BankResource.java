@@ -42,7 +42,7 @@ public class BankResource {
      */
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_LIST_BANK') and #oauth2.hasScope('read')")
-    public Page<Bank> listAllBank(BankFilter bankFilter, Pageable pageable) {
+    public Page<Bank> findAll(BankFilter bankFilter, Pageable pageable) {
         return bankRepository.findAll(bankFilter, pageable);
     }
 
@@ -54,16 +54,15 @@ public class BankResource {
      */
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LIST_BANK') and #oauth2.hasScope('read')")
-    public ResponseEntity<Bank> findOneBank(@Valid @PathVariable String key) {
-        Long id;
+    public ResponseEntity<Bank> findOne(@Valid @PathVariable String key) {
         try {
-            id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Bank bankFound = bankService.findOne(id);
+            return bankFound != null ? ResponseEntity.ok(bankFound) : ResponseEntity.notFound().build();
         } catch (Exception e) {
             throw new BankNotFound();
         }
-        Bank country = bankService.findOne(id);
-        System.out.println(country.toString());
-        return country != null ? ResponseEntity.ok(country) : ResponseEntity.notFound().build();
+
     }
 
     /**
@@ -90,13 +89,13 @@ public class BankResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_UPDATE_BANK') and #oauth2.hasScope('write')")
     public ResponseEntity<Bank> update(@Valid @PathVariable String key, @Valid @RequestBody Bank bank) {
-        Long id = null;
         try {
-            id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            return ResponseEntity.status(HttpStatus.OK).body(bankService.update(id, bank));
         } catch (Exception e) {
             throw new BankNotFound();
         }
-        return ResponseEntity.status(HttpStatus.OK).body(bankService.update(id, bank));
+
     }
 
     /**
@@ -108,12 +107,11 @@ public class BankResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETE_BANK') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        Long id;
         try {
-            id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            bankRepository.delete(id);
         } catch (Exception e) {
             throw new BankNotFound();
         }
-        bankRepository.delete(id);
     }
 }

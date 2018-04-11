@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.exceptionHandler;
 
-import br.com.wcorrea.transport.api.service.exception.ProductUnitUpdateNotFound;
+import br.com.wcorrea.transport.api.service.exception.ProductUnitNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -23,8 +23,8 @@ public class ProductUnitException extends DefaultExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler({ProductUnitUpdateNotFound.class})
-    public ResponseEntity<Object> handleProductUnitUpdateNotFound(ProductUnitUpdateNotFound ex, WebRequest request, Locale loc) {
+    @ExceptionHandler({ProductUnitNotFound.class})
+    public ResponseEntity<Object> handleProductUnitUpdateNotFound(ProductUnitNotFound ex, WebRequest request, Locale loc) {
         String userMessage = messageSource.getMessage("resource.product-unit-not-found", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
