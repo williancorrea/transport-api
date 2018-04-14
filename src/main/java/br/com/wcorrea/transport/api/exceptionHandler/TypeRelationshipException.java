@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.exceptionHandler;
 
-import br.com.wcorrea.transport.api.service.exception.TypeRelationshipUpdateNotFound;
+import br.com.wcorrea.transport.api.service.exception.TypeRelationshipNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -23,8 +23,8 @@ public class TypeRelationshipException extends DefaultExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler({TypeRelationshipUpdateNotFound.class})
-    public ResponseEntity<Object> handleTypeRelationshipUpdateNotFound(TypeRelationshipUpdateNotFound ex, WebRequest request, Locale loc) {
+    @ExceptionHandler({TypeRelationshipNotFound.class})
+    public ResponseEntity<Object> handleTypeRelationshipUpdateNotFound(TypeRelationshipNotFound ex, WebRequest request, Locale loc) {
         String userMessage = messageSource.getMessage("resource.type-relationship-not-found", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));

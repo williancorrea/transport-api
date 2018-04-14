@@ -6,7 +6,9 @@ CREATE TABLE type_of_relationship (
     id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     code CHAR(3),
     name VARCHAR(150) NOT NULL,
-    description TEXT
+    description TEXT,
+    date_creation TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modification_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8;

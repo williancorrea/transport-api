@@ -3,9 +3,14 @@ package br.com.wcorrea.transport.api.resource;
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.TypeRelationship;
 import br.com.wcorrea.transport.api.repository.TypeRelationshipRepository;
+import br.com.wcorrea.transport.api.repository.filter.TypeRelationshipFilter;
 import br.com.wcorrea.transport.api.service.TypeRelationshipService;
+import br.com.wcorrea.transport.api.service.exception.TypeRelationshipNotFound;
+import br.com.wcorrea.transport.api.utils.Cryptography;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,13 +18,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Class responsible for providing all the resources needed to handle type of relationships trash
  */
 @RestController
-@RequestMapping("/type-of-relationship")
+@RequestMapping("/types-of-relationships")
 public class TypeRelationshipResource {
 
     @Autowired
@@ -32,66 +36,81 @@ public class TypeRelationshipResource {
     private TypeRelationshipService typeRelationshipService;
 
     /**
-     * Retrieve the list of registered type of relationships
+     * Retrieve the list of registered types of relationship
      *
-     * @return List of type of relationships
+     * @return List of types of relationships
      */
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_LIST_TYPE-RELATIONSHIP') and #oauth2.hasScope('read')")
-    public List<TypeRelationship> listAllBank() {
-        return typeRelationshipRepository.findAll();
+    public Page<TypeRelationship> findAll(TypeRelationshipFilter typeRelationshipFilter, Pageable pageable) {
+        return typeRelationshipRepository.findAll(typeRelationshipFilter, pageable);
     }
 
     /**
-     * Retrieve a specific type of relationship
+     * Retrieve a specific types of relationship
      *
-     * @param id type of relationship id
      * @return
      */
-    @GetMapping("/{id}")
+    @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LIST_TYPE-RELATIONSHIP') and #oauth2.hasScope('read')")
-    public ResponseEntity<TypeRelationship> findOneBank(@Valid @PathVariable Long id) {
-        TypeRelationship typeRelationship = typeRelationshipRepository.findOne(id);
-        return typeRelationship != null ? ResponseEntity.ok(typeRelationship) : ResponseEntity.notFound().build();
+    public ResponseEntity<TypeRelationship> findOne(@Valid @PathVariable String key) {
+        try {
+            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            TypeRelationship TypeRelationshipFound = typeRelationshipRepository.findOne(id);
+            return TypeRelationshipFound != null ? ResponseEntity.ok(TypeRelationshipFound) : ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            throw new TypeRelationshipNotFound();
+        }
+
     }
 
     /**
-     * Save a new type of relationship
+     * Save a new types of relationship
      *
-     * @param typeRelationship  Bank
-     * @param response HttpServletResponse
+     * @param TypeRelationship types of relationship
+     * @param response         HttpServletResponse
      * @return
      */
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_SAVE_TYPE-RELATIONSHIP') and #oauth2.hasScope('write')")
-    public ResponseEntity<TypeRelationship> save(@Valid @RequestBody TypeRelationship typeRelationship, HttpServletResponse response) {
-        TypeRelationship saveTypeRelationship = typeRelationshipRepository.save(typeRelationship);
-        publisher.publishEvent(new EventResourceCreated(this, response, saveTypeRelationship.getId().toString()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(saveTypeRelationship);
+    public ResponseEntity<TypeRelationship> save(@Valid @RequestBody TypeRelationship TypeRelationship, HttpServletResponse response) {
+        TypeRelationship salvedTypeRelationship = typeRelationshipRepository.saveAndFlush(TypeRelationship);
+        publisher.publishEvent(new EventResourceCreated(this, response, salvedTypeRelationship.getId().toString()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(salvedTypeRelationship);
     }
 
     /**
-     * Update type of relationship
+     * Update types of relationship
      *
-     * @param typeRelationship  type of relationship
+     * @param TypeRelationship TypeRelationship
      * @return
      */
-    @PutMapping("/{id}")
+    @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_UPDATE_TYPE-RELATIONSHIP') and #oauth2.hasScope('write')")
-    public ResponseEntity<TypeRelationship> update(@Valid @PathVariable Long id, @Valid @RequestBody TypeRelationship typeRelationship) {
-        TypeRelationship updateBank = typeRelationshipService.update(id, typeRelationship);
-        return ResponseEntity.status(HttpStatus.OK).body(updateBank);
+    public ResponseEntity<TypeRelationship> update(@Valid @PathVariable String key, @Valid @RequestBody TypeRelationship TypeRelationship) {
+        try {
+            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            return ResponseEntity.status(HttpStatus.OK).body(typeRelationshipService.update(id, TypeRelationship));
+        } catch (Exception e) {
+            throw new TypeRelationshipNotFound();
+        }
     }
 
     /**
-     * Delete type of relationship
+     * Delete types of relationship
      *
      * @return
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{key}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETE_TYPE-RELATIONSHIP') and #oauth2.hasScope('write')")
-    public void delete(@PathVariable Long id) {
-        typeRelationshipRepository.delete(id);
+    public void delete(@PathVariable String key) {
+        try {
+            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            typeRelationshipRepository.delete(id);
+        } catch (Exception e) {
+            throw new TypeRelationshipNotFound();
+        }
+
     }
 }

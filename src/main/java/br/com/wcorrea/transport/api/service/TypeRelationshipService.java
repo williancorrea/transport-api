@@ -2,10 +2,12 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.TypeRelationship;
 import br.com.wcorrea.transport.api.repository.TypeRelationshipRepository;
-import br.com.wcorrea.transport.api.service.exception.TypeRelationshipUpdateNotFound;
+import br.com.wcorrea.transport.api.service.exception.TypeRelationshipNotFound;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 /**
  * Class responsible for performing the entire business rule by manipulating type of relationship information
@@ -24,18 +26,20 @@ public class TypeRelationshipService {
      * @return
      */
     public TypeRelationship update(Long id, TypeRelationship typeRelationship) {
-        TypeRelationship objFound = typeRelationshipRepository.save(findById(id));
-        BeanUtils.copyProperties(typeRelationship, objFound, "id");
-        return typeRelationshipRepository.save(objFound);
+        TypeRelationship objFound = typeRelationshipRepository.save(findOne(id));
+        typeRelationship.setId(objFound.getId());
+        typeRelationship.setProperties(objFound.getProperties());
+        typeRelationship.getProperties().setModificationDate(LocalDateTime.now());
+        return typeRelationshipRepository.save(typeRelationship);
     }
 
     /**
      * Find type of relationship by id
      */
-    private TypeRelationship findById(Long id) {
+    private TypeRelationship findOne(Long id) {
         TypeRelationship typeRelationship = typeRelationshipRepository.findOne(id);
         if (typeRelationship == null) {
-            throw new TypeRelationshipUpdateNotFound();
+            throw new TypeRelationshipNotFound();
         }
         return typeRelationship;
     }
