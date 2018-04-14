@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.repository.filter;
 
-public class ProductUnitFilter {
+public class TypeRelationshipFilter {
 
     private String globalFilter;
     private Integer page;
@@ -8,8 +8,9 @@ public class ProductUnitFilter {
     private String sortField;
     private String sortOrder;
 
-    private String initials;
     private String name;
+    private String description;
+    private String code;
 
     public String getGlobalFilter() {
         return globalFilter;
@@ -60,11 +61,19 @@ public class ProductUnitFilter {
         this.name = name;
     }
 
-    public String getInitials() {
-        return initials;
+    public String getDescription() {
+        return description;
     }
 
-    public void setInitials(String initials) {
-        this.initials = initials;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
