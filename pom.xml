@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>transport-api</name>
-    <descricao>Demo project for Spring Boot</descricao>
+    <description>Demo project for Spring Boot</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
