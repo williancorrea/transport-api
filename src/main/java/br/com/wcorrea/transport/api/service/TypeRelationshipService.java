@@ -3,14 +3,13 @@ package br.com.wcorrea.transport.api.service;
 import br.com.wcorrea.transport.api.model.TypeRelationship;
 import br.com.wcorrea.transport.api.repository.TypeRelationshipRepository;
 import br.com.wcorrea.transport.api.service.exception.TypeRelationshipNotFound;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 /**
- * Class responsible for performing the entire business rule by manipulating type of relationship information
+ * Class responsible for performing the entire business rule by manipulating tipo of relationship information
  */
 @Service
 public class TypeRelationshipService {
@@ -19,7 +18,7 @@ public class TypeRelationshipService {
     private TypeRelationshipRepository typeRelationshipRepository;
 
     /**
-     * Update type of relationship
+     * Update tipo of relationship
      *
      * @param id
      * @param typeRelationship
@@ -34,7 +33,7 @@ public class TypeRelationshipService {
     }
 
     /**
-     * Find type of relationship by id
+     * Find tipo of relationship by id
      */
     private TypeRelationship findOne(Long id) {
         TypeRelationship typeRelationship = typeRelationshipRepository.findOne(id);

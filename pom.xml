@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>transport-api</name>
-    <description>Demo project for Spring Boot</description>
+    <descricao>Demo project for Spring Boot</descricao>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -151,7 +151,7 @@
 
         <!--
             The JAXB APIs are considered to be Java EE APIs, and therefore are no longer contained on the default class path in Java SE 9.
-            Java 9 introduces the concepts of modules, and by default the java.se aggregate module is available on the class path (or rather, module path). As the name implies, the java.se aggregate module does not include the Java EE APIs that have been traditionally bundled with Java 6/7/8.
+            Java 9 introduces the concepts of modules, and by default the java.se aggregate module is available on the class path (or rather, module path). As the nome implies, the java.se aggregate module does not include the Java EE APIs that have been traditionally bundled with Java 6/7/8.
             Fortunately, these Java EE APIs that were provided in JDK 6/7/8 are still in the JDK, but they just aren't on the class path by default.
         -->
         <dependency>

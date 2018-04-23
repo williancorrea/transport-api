@@ -44,14 +44,14 @@ public class ProductUnitRepositoryImpl implements ProductUnitRepositoryQuery {
         if (StringUtils.isNotBlank(ProductUnitFilter.getGlobalFilter())) {
             sql += " and (";
             sql += " upper(a.initials) like '%" + ProductUnitFilter.getGlobalFilter().toUpperCase().trim() + "%'";
-            sql += " or upper(a.name) like '%" + ProductUnitFilter.getGlobalFilter().toUpperCase().trim() + "%'";
+            sql += " or upper(a.nome) like '%" + ProductUnitFilter.getGlobalFilter().toUpperCase().trim() + "%'";
             sql += " )";
         } else {
             if (StringUtils.isNotBlank(ProductUnitFilter.getInitials())) {
                 sql += " and upper(a.initials) like '%" + ProductUnitFilter.getInitials().toUpperCase().trim() + "%'";
             }
             if (StringUtils.isNotBlank(ProductUnitFilter.getName())) {
-                sql += " and upper(a.name) like '%" + ProductUnitFilter.getName().toUpperCase().trim() + "%'";
+                sql += " and upper(a.nome) like '%" + ProductUnitFilter.getName().toUpperCase().trim() + "%'";
             }
         }
 

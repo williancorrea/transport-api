@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 /**
- * Class responsible for providing all the resources needed to handle type of zip code
+ * Class responsible for providing all the resources needed to handle tipo of zip code
  */
 @RestController
 @RequestMapping("/zip-code")
@@ -29,7 +29,7 @@ public class ZipCodeResource {
     /**
      * Retrieve a specific zip code
      *
-     * @param cep type of relationship id
+     * @param cep tipo of relationship id
      * @return
      */
     @GetMapping("/{cep}")

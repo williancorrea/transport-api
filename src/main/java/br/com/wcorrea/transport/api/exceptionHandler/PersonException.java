@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.exceptionHandler;
 
-import br.com.wcorrea.transport.api.service.exception.TypeRelationshipNotFound;
+import br.com.wcorrea.transport.api.service.exception.PersonNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -14,18 +14,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Class responsible for dealing with all tipo of relationship errors
- */
 @ControllerAdvice
-public class TypeRelationshipException extends DefaultExceptionHandler {
+public class PersonException extends DefaultExceptionHandler {
 
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler({TypeRelationshipNotFound.class})
-    public ResponseEntity<Object> handleTypeRelationshipUpdateNotFound(TypeRelationshipNotFound ex, WebRequest request, Locale loc) {
-        String userMessage = messageSource.getMessage("resource.type-relationship-not-found", null, loc);
+    @ExceptionHandler({PersonNotFound.class})
+    public ResponseEntity<Object> handlePersonUpdateNotFound(PersonNotFound ex, WebRequest request, Locale loc) {
+        String userMessage = messageSource.getMessage("resource.person-not-found", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_FOUND, request);

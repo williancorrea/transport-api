@@ -55,6 +55,11 @@ INSERT INTO permission (name, description) values ('ROLE_DELETE_MARITAL_STATUS',
 INSERT INTO permission (name, description) values ('ROLE_UPDATE_MARITAL_STATUS', ' ');
 INSERT INTO permission (name, description) values ('ROLE_SAVE_MARITAL_STATUS', ' ');
 
+INSERT INTO permission (name, description) values ('ROLE_LIST_PERSON', '');
+INSERT INTO permission (name, description) values ('ROLE_DELETE_PERSON', ' ');
+INSERT INTO permission (name, description) values ('ROLE_UPDATE_PERSON', ' ');
+INSERT INTO permission (name, description) values ('ROLE_SAVE_PERSON', ' ');
+
 INSERT INTO permission (name, description) values ('ROLE_LIST_ZIP-CODE', ' ');
 
 
@@ -88,6 +93,11 @@ INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from use
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_DELETE_MARITAL_STATUS'));
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_UPDATE_MARITAL_STATUS'));
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_SAVE_MARITAL_STATUS'));
+
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_LIST_PERSON'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_DELETE_PERSON'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_UPDATE_PERSON'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_SAVE_PERSON'));
 
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_LIST_ZIP-CODE'));
 

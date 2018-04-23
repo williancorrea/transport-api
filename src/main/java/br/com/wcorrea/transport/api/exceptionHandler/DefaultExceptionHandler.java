@@ -97,7 +97,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Manipulates type conversion error messages
+     * Manipulates tipo conversion error messages
      *
      * @param ex      MethodArgumentTypeMismatchException
      * @param request WebRequest

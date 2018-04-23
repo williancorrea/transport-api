@@ -50,7 +50,7 @@ public class BankRepositoryImpl implements BankRepositoryQuery {
         if (StringUtils.isNotBlank(bankFilter.getGlobalFilter())) {
             sql += " and (";
             sql += " upper(a.code) like '%" + bankFilter.getGlobalFilter().toUpperCase().trim() + "%'";
-            sql += " or upper(a.name) like '%" + bankFilter.getGlobalFilter().toUpperCase().trim() + "%'";
+            sql += " or upper(a.nome) like '%" + bankFilter.getGlobalFilter().toUpperCase().trim() + "%'";
             sql += " or upper(a.url) like '%" + bankFilter.getGlobalFilter().toUpperCase().trim() + "%'";
             sql += " )";
         } else {
@@ -58,7 +58,7 @@ public class BankRepositoryImpl implements BankRepositoryQuery {
                 sql += " and upper(a.code) like '%" + bankFilter.getCode().toUpperCase().trim() + "%'";
             }
             if (StringUtils.isNotBlank(bankFilter.getName())) {
-                sql += " and upper(a.name) like '%" + bankFilter.getName().toUpperCase().trim() + "%'";
+                sql += " and upper(a.nome) like '%" + bankFilter.getName().toUpperCase().trim() + "%'";
             }
             if (StringUtils.isNotBlank(bankFilter.getUrl())) {
                 sql += " and upper(a.url) like '%" + bankFilter.getUrl().toUpperCase().trim() + "%'";

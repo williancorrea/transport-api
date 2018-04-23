@@ -13,7 +13,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 /**
- * Class responsible for performing the entire business rule by manipulating type of zip code information
+ * Class responsible for performing the entire business rule by manipulating tipo of zip code information
  */
 @Service
 public class ZipCodeService {

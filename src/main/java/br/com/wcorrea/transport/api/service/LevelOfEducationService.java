@@ -33,7 +33,7 @@ public class LevelOfEducationService {
     }
 
     /**
-     * Find type obj by id
+     * Find tipo obj by id
      */
     private LevelOfEducation findOne(Long id) {
         LevelOfEducation levelOfEducation = levelOfEducationRepository.findOne(id);

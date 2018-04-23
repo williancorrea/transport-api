@@ -44,7 +44,7 @@ public class TypeRelationshipRepositoryImpl implements TypeRelationshipRepositor
         if (StringUtils.isNotBlank(typeRelationshipFilter.getGlobalFilter())) {
             sql += " and (";
             sql += " upper(a.description) like '%" + typeRelationshipFilter.getGlobalFilter().toUpperCase().trim() + "%'";
-            sql += " or upper(a.name) like '%" + typeRelationshipFilter.getGlobalFilter().toUpperCase().trim() + "%'";
+            sql += " or upper(a.nome) like '%" + typeRelationshipFilter.getGlobalFilter().toUpperCase().trim() + "%'";
             sql += " or upper(a.code) like '%" + typeRelationshipFilter.getGlobalFilter().toUpperCase().trim() + "%'";
             sql += " )";
         } else {
@@ -52,7 +52,7 @@ public class TypeRelationshipRepositoryImpl implements TypeRelationshipRepositor
                 sql += " and upper(a.description) like '%" + typeRelationshipFilter.getDescription().toUpperCase().trim() + "%'";
             }
             if (StringUtils.isNotBlank(typeRelationshipFilter.getName())) {
-                sql += " and upper(a.name) like '%" + typeRelationshipFilter.getName().toUpperCase().trim() + "%'";
+                sql += " and upper(a.nome) like '%" + typeRelationshipFilter.getName().toUpperCase().trim() + "%'";
             }
             if (StringUtils.isNotBlank(typeRelationshipFilter.getCode())) {
                 sql += " and upper(a.code) like '%" + typeRelationshipFilter.getCode().toUpperCase().trim() + "%'";

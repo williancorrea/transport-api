@@ -1,5 +1,5 @@
 -- -----------------------------------------------
--- (number of bank or bank code), the name and website of financial institutions associated with and not associated with the Brazilian Federation of Banks (FEBRABAN).
+-- (number of bank or bank code), the nome and website of financial institutions associated with and not associated with the Brazilian Federation of Banks (FEBRABAN).
 -- -----------------------------------------------
 
 
@@ -8,8 +8,9 @@ CREATE TABLE bank (
     code VARCHAR(10),
     name VARCHAR(150) NOT NULL,
     url VARCHAR(250),
-    date_creation TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modification_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+
+    date_creation  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modification_date  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8;

@@ -44,14 +44,14 @@ public class MaritalStatusRepositoryImpl implements MaritalStatusRepositoryQuery
         if (StringUtils.isNotBlank(maritalStatusFilter.getGlobalFilter())) {
             sql += " and (";
             sql += " upper(a.description) like '%" + maritalStatusFilter.getGlobalFilter().toUpperCase().trim() + "%'";
-            sql += " or upper(a.name) like '%" + maritalStatusFilter.getGlobalFilter().toUpperCase().trim() + "%'";
+            sql += " or upper(a.nome) like '%" + maritalStatusFilter.getGlobalFilter().toUpperCase().trim() + "%'";
             sql += " )";
         } else {
             if (StringUtils.isNotBlank(maritalStatusFilter.getDescription())) {
                 sql += " and upper(a.description) like '%" + maritalStatusFilter.getDescription().toUpperCase().trim() + "%'";
             }
             if (StringUtils.isNotBlank(maritalStatusFilter.getName())) {
-                sql += " and upper(a.name) like '%" + maritalStatusFilter.getName().toUpperCase().trim() + "%'";
+                sql += " and upper(a.nome) like '%" + maritalStatusFilter.getName().toUpperCase().trim() + "%'";
             }
         }
 

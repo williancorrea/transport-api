@@ -9,8 +9,9 @@ CREATE TABLE zip_code (
     longitude VARCHAR(30),
     latitude VARCHAR(30),
     altitude INTEGER,
-    date_creation TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modification_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+
+    date_creation  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modification_date  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8;

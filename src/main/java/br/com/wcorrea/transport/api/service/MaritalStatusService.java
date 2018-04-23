@@ -33,7 +33,7 @@ public class MaritalStatusService {
     }
 
     /**
-     * Find type obj by id
+     * Find tipo obj by id
      */
     private MaritalStatus findOne(Long id) {
         MaritalStatus maritalStatus = maritalStatusRepository.findOne(id);

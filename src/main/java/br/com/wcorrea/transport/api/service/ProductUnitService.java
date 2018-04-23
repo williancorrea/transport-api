@@ -3,7 +3,6 @@ package br.com.wcorrea.transport.api.service;
 import br.com.wcorrea.transport.api.model.ProductUnit;
 import br.com.wcorrea.transport.api.repository.ProductUnitRepository;
 import br.com.wcorrea.transport.api.service.exception.ProductUnitNotFound;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

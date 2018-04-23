@@ -44,7 +44,7 @@ public class LevelOfEducationRepositoryImpl implements LevelOfEducationRepositor
         if (StringUtils.isNotBlank(levelOfEducationFilter.getGlobalFilter())) {
             sql += " and (";
             sql += " upper(a.description) like '%" + levelOfEducationFilter.getGlobalFilter().toUpperCase().trim() + "%'";
-            sql += " or upper(a.name) like '%" + levelOfEducationFilter.getGlobalFilter().toUpperCase().trim() + "%'";
+            sql += " or upper(a.nome) like '%" + levelOfEducationFilter.getGlobalFilter().toUpperCase().trim() + "%'";
             sql += " or upper(a.degreeOfInstructionCaged) = " + levelOfEducationFilter.getGlobalFilter().toUpperCase().trim();
             sql += " or upper(a.degreeOfInstructionSefip) = " + levelOfEducationFilter.getGlobalFilter().toUpperCase().trim();
             sql += " or upper(a.degreeOfInstructionRais) = " + levelOfEducationFilter.getGlobalFilter().toUpperCase().trim();
@@ -54,7 +54,7 @@ public class LevelOfEducationRepositoryImpl implements LevelOfEducationRepositor
                 sql += " and upper(a.description) like '%" + levelOfEducationFilter.getDescription().toUpperCase().trim() + "%'";
             }
             if (StringUtils.isNotBlank(levelOfEducationFilter.getName())) {
-                sql += " and upper(a.name) like '%" + levelOfEducationFilter.getName().toUpperCase().trim() + "%'";
+                sql += " and upper(a.nome) like '%" + levelOfEducationFilter.getName().toUpperCase().trim() + "%'";
             }
         }
 

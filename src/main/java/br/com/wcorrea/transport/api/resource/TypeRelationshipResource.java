@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 /**
- * Class responsible for providing all the resources needed to handle type of relationships trash
+ * Class responsible for providing all the resources needed to handle tipo of relationships trash
  */
 @RestController
 @RequestMapping("/types-of-relationships")
