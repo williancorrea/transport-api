@@ -1,10 +1,14 @@
 package br.com.wcorrea.transport.api.model;
 
+import java.io.Serializable;
+
 /**
  * Class responsible for managing all the attributes of a city
  * Created by wcorrea on 19/08/17.
  */
-public class City {
+public class City implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private long id;
     private String name;
     private Integer ibgeCode;

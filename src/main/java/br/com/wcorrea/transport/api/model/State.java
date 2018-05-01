@@ -3,13 +3,15 @@ package br.com.wcorrea.transport.api.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * Class responsible for managing all attributes of a state
  * Created by Willian Vagner Vicente Corrêa (willian.vag@gmail.com) on 19/08/17.
  */
 @Entity(name = "state")
-public class State {
+public class State implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

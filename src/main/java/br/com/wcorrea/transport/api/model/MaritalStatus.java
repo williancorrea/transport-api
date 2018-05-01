@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @Entity(name = "marital_status")
 public class MaritalStatus implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +43,7 @@ public class MaritalStatus implements Serializable {
     @Lob
     @Getter
     @Setter
+    @Column(name = "descricao")
     private String description;
 
     public MaritalStatus() {
@@ -50,6 +52,11 @@ public class MaritalStatus implements Serializable {
     @Transient
     public String getKey() throws Exception {
         return this.id != null ? new Cryptography().encryptToHex(this.id.toString()) : null;
+    }
+
+    @Transient
+    public void setKey(String key) throws Exception {
+        this.id = Long.parseLong(new Cryptography().decryptFromHex(key));
     }
 
     @PrePersist

@@ -35,7 +35,7 @@ public class MaritalStatusService {
     /**
      * Find tipo obj by id
      */
-    private MaritalStatus findOne(Long id) {
+    public MaritalStatus findOne(Long id) {
         MaritalStatus maritalStatus = maritalStatusRepository.findOne(id);
         if (maritalStatus == null) {
             throw new MaritalStatusNotFound();

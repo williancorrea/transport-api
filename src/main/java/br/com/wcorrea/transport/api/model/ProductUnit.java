@@ -17,6 +17,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Entity(name = "product_unit")
 public class ProductUnit implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

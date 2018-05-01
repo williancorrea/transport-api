@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @Entity(name = "level_of_education")
 public class LevelOfEducation implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

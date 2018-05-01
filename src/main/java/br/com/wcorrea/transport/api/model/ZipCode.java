@@ -11,8 +11,7 @@ import java.io.Serializable;
 
 @Entity(name = "zip_code")
 public class ZipCode implements Serializable {
-
-    private static final long serialVersionUID = -5192858152998451721L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @NotNull
@@ -43,7 +42,7 @@ public class ZipCode implements Serializable {
     public ZipCode() {
     }
 
-    public ZipCode(String zipCode){
+    public ZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 

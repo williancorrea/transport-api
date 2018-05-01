@@ -1,11 +1,11 @@
 package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
-import br.com.wcorrea.transport.api.model.Person;
-import br.com.wcorrea.transport.api.repository.PersonRepository;
+import br.com.wcorrea.transport.api.model.Pessoa;
+import br.com.wcorrea.transport.api.repository.PessoaRepository;
 import br.com.wcorrea.transport.api.repository.filter.PersonFilter;
-import br.com.wcorrea.transport.api.service.PersonService;
-import br.com.wcorrea.transport.api.service.exception.PersonNotFound;
+import br.com.wcorrea.transport.api.service.PessoaService;
+import br.com.wcorrea.transport.api.service.exception.PessoaNaoEncontrada;
 import br.com.wcorrea.transport.api.utils.Cryptography;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -23,81 +23,81 @@ import javax.validation.Valid;
  * Class responsible for providing all the resources needed to handle persons
  */
 @RestController
-@RequestMapping("/persons")
-public class PersonResource {
+@RequestMapping("/pessoas")
+public class PessoaResource {
 
     @Autowired
-    private PersonRepository personRepository;
+    private PessoaRepository pessoaRepository;
 
     @Autowired
     private ApplicationEventPublisher publisher;
 
     @Autowired
-    private PersonService personService;
+    private PessoaService pessoaService;
 
     /**
-     * Retrieve the list of registered person
+     * RECUPERA A LISTA DE PESSOAS, DE FORMA PAGINADA
      *
      * @return List of persons
      */
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_LIST_PERSON') and #oauth2.hasScope('read')")
-    public Page<Person> findAll(PersonFilter personFilter, Pageable paginavel) {
-        return personRepository.findAll(personFilter, paginavel);
+    public Page<Pessoa> findAll(PersonFilter personFilter, Pageable paginavel) {
+        return pessoaRepository.findAll(personFilter, paginavel);
     }
 
     /**
-     * Retrieve a specific person
+     * RECUPERA UMA PESSOA ESPECIFICA
      *
      * @return
      */
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LIST_PERSON') and #oauth2.hasScope('read')")
-    public ResponseEntity<Person> findOne(@Valid @PathVariable String key) {
+    public ResponseEntity<Pessoa> findOne(@Valid @PathVariable String key) {
         try {
             Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
-            Person personFound = personRepository.findOne(id);
-            return personFound != null ? ResponseEntity.ok(personFound) : ResponseEntity.notFound().build();
+            Pessoa pessoaEncontrada = pessoaService.findOne(id);
+            return pessoaEncontrada != null ? ResponseEntity.ok(pessoaEncontrada) : ResponseEntity.notFound().build();
         } catch (Exception e) {
-            throw new PersonNotFound();
+            throw new PessoaNaoEncontrada();
         }
 
     }
 
     /**
-     * Save a new person
+     * SALVA OS DADOS DE UMA PESSOA
      *
-     * @param Person person
+     * @param pessoa pessoa
      * @param response         HttpServletResponse
      * @return
      */
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_SAVE_PERSON') and #oauth2.hasScope('write')")
-    public ResponseEntity<Person> save(@Valid @RequestBody Person Person, HttpServletResponse response) {
-        br.com.wcorrea.transport.api.model.Person salvedPerson = personRepository.saveAndFlush(Person);
-        publisher.publishEvent(new EventResourceCreated(this, response, salvedPerson.getId().toString()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(salvedPerson);
+    public ResponseEntity<Pessoa> save(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
+        Pessoa pessoaSalva = pessoaService.save(pessoa);
+        publisher.publishEvent(new EventResourceCreated(this, response, pessoaSalva.getId().toString()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(pessoaSalva);
     }
 
     /**
-     * Update person
+     * ATUALIZA OS DADOS DE UMA PESSOA
      *
-     * @param Person Person
+     * @param Pessoa Pessoa
      * @return
      */
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_UPDATE_PERSON') and #oauth2.hasScope('write')")
-    public ResponseEntity<Person> update(@Valid @PathVariable String key, @Valid @RequestBody Person Person) {
+    public ResponseEntity<Pessoa> update(@Valid @PathVariable String key, @Valid @RequestBody Pessoa Pessoa) {
         try {
             Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
-            return ResponseEntity.status(HttpStatus.OK).body(personService.update(id, Person));
+            return ResponseEntity.status(HttpStatus.OK).body(pessoaService.update(id, Pessoa));
         } catch (Exception e) {
-            throw new PersonNotFound();
+            throw new PessoaNaoEncontrada();
         }
     }
 
     /**
-     * Delete person
+     * DELETA UMA PESSOA
      *
      * @return
      */
@@ -107,9 +107,9 @@ public class PersonResource {
     public void delete(@PathVariable String key) {
         try {
             Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
-            personRepository.delete(id);
+            pessoaRepository.delete(id);
         } catch (Exception e) {
-            throw new PersonNotFound();
+            throw new PessoaNaoEncontrada();
         }
 
     }

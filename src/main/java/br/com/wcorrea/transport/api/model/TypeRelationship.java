@@ -17,6 +17,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Entity(name = "type_of_relationship")
 public class TypeRelationship implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

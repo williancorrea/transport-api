@@ -5214,7 +5214,7 @@ INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2409902, (SELECT state_i
 INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2410256, (SELECT state_id FROM state WHERE ibge_code = 24), 'Porto do Mangue');
 INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2412807, (SELECT state_id FROM state WHERE ibge_code = 24), 'São Rafael');
 INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2400406, (SELECT state_id FROM state WHERE ibge_code = 24), 'Água Nova');
-INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2402907, (SELECT state_id FROM state WHERE ibge_code = 24), 'Coronel João Person');
+INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2402907, (SELECT state_id FROM state WHERE ibge_code = 24), 'Coronel João Pessoa');
 INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2403202, (SELECT state_id FROM state WHERE ibge_code = 24), 'Doutor Severiano');
 INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2403301, (SELECT state_id FROM state WHERE ibge_code = 24), 'Encanto');
 INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2407005, (SELECT state_id FROM state WHERE ibge_code = 24), 'Luís Gomes');
@@ -5571,7 +5571,7 @@ INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2515971, (SELECT state_i
 INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2501807, (SELECT state_id FROM state WHERE ibge_code = 25), 'Bayeux');
 INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2503209, (SELECT state_id FROM state WHERE ibge_code = 25), 'Cabedelo');
 INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2504603, (SELECT state_id FROM state WHERE ibge_code = 25), 'Conde');
-INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2507507, (SELECT state_id FROM state WHERE ibge_code = 25), 'João Person');
+INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2507507, (SELECT state_id FROM state WHERE ibge_code = 25), 'João Pessoa');
 INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2508604, (SELECT state_id FROM state WHERE ibge_code = 25), 'Lucena');
 INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2513703, (SELECT state_id FROM state WHERE ibge_code = 25), 'Santa Rita');
 INSERT INTO city ( ibge_code, state_id, name ) VALUES ( 2500601, (SELECT state_id FROM state WHERE ibge_code = 25), 'Alhandra');
