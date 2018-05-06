@@ -10,7 +10,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -74,12 +73,6 @@ public class PessoaFisica implements Serializable {
     @Getter
     @Setter
     private String nacionalidade;
-
-    @Column(name = "raca")
-    @Size(max = 250)
-    @Getter
-    @Setter
-    private String raca;
 
     @Column(name = "tipo_sangue")
     @Size(max = 5)
@@ -146,12 +139,12 @@ public class PessoaFisica implements Serializable {
     @Setter
     private String nomePai;
 
-    @NotNull
+
     @JoinColumn(name = "estado_civil_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne()
     @Getter
     @Setter
-    private MaritalStatus maritalStatus;
+    private MaritalStatus estadoCivil;
 
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

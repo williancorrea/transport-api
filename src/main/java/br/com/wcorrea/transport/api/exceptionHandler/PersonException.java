@@ -41,8 +41,16 @@ public class PersonException extends DefaultExceptionHandler {
     public ResponseEntity<Object> handlePessoaFisicaJaCadastrada(PessoaFisicaJaCadastrada ex, WebRequest request, Locale loc) {
         String userMessage = messageSource.getMessage("recurso.pessoa-fisica-ja-cadastrada", null, loc);
         String developerMessage = ex.toString();
-        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.FOUND));
-        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.FOUND, request);
+        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.CONFLICT));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
+    @ExceptionHandler({PessoaFisicaCPFInvalido.class})
+    public ResponseEntity<Object> handlePessoaFisicaCPFInvalido(PessoaFisicaCPFInvalido ex, WebRequest request, Locale loc) {
+        String userMessage = messageSource.getMessage("recurso.pessoa-fisica-cpf-invalido", null, loc);
+        String developerMessage = ex.toString();
+        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_ACCEPTABLE));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE, request);
     }
 
     @ExceptionHandler({PessoaJuridicaNaoEncontrada.class})
@@ -57,8 +65,16 @@ public class PersonException extends DefaultExceptionHandler {
     public ResponseEntity<Object> handlePessoaJuridicaJaCadastrada(PessoaJuridicaJaCadastrada ex, WebRequest request, Locale loc) {
         String userMessage = messageSource.getMessage("recurso.pessoa-juridica-ja-cadastrada", null, loc);
         String developerMessage = ex.toString();
-        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.FOUND));
-        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.FOUND, request);
+        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.CONFLICT));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
+    @ExceptionHandler({PessoaJuridicaCNPJInvalido.class})
+    public ResponseEntity<Object> handlePessoaFisicaCPFInvalido(PessoaJuridicaCNPJInvalido ex, WebRequest request, Locale loc) {
+        String userMessage = messageSource.getMessage("recurso.pessoa-juridica-cnpj-invalido", null, loc);
+        String developerMessage = ex.toString();
+        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_ACCEPTABLE));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE, request);
     }
 
 }

@@ -10,7 +10,6 @@ CREATE TABLE pessoa_fisica (
     sexo VARCHAR(1) NOT NULL,
     naturalidade VARCHAR(250),
     nacionalidade VARCHAR(250),
-    raca VARCHAR(150),
     tipo_sangue VARCHAR(5),
 
     cnh_numero VARCHAR(30),

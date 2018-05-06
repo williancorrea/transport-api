@@ -2,14 +2,11 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.MaritalStatus;
 import br.com.wcorrea.transport.api.model.Pessoa;
-import br.com.wcorrea.transport.api.model.common.CommonProperties;
 import br.com.wcorrea.transport.api.repository.MaritalStatusRepository;
 import br.com.wcorrea.transport.api.repository.PessoaRepository;
-import br.com.wcorrea.transport.api.service.exception.MaritalStatusNotFound;
-import br.com.wcorrea.transport.api.service.exception.PessoaFisicaJaCadastrada;
-import br.com.wcorrea.transport.api.service.exception.PessoaFisicaNaoEncontrada;
-import br.com.wcorrea.transport.api.service.exception.PessoaNaoEncontrada;
-import br.com.wcorrea.transport.api.utils.Cryptography;
+import br.com.wcorrea.transport.api.service.exception.*;
+import br.com.wcorrea.transport.api.utils.Utils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,57 +25,11 @@ public class PessoaService {
     private MaritalStatusRepository maritalStatusRepository;
 
     public Pessoa save(Pessoa pessoaNovo) {
+        pessoaNovo.setId(null);
+        pessoaNovo.getPessoaFisica().setId(null);
 
         pessoaNovo = this.validarPessoa(pessoaNovo);
         return pessoaRepository.saveAndFlush(pessoaNovo);
-    }
-
-    /**
-     * Efetua a validação do objeto Pessoa
-     *
-     * @param pessoa
-     * @return
-     */
-    private Pessoa validarPessoa(Pessoa pessoa) {
-
-        if (pessoa.isPessoaFisica()) {
-            /**
-             * GARANTE QUE OS DADOS DE PESSOA FISICA EXITEM
-             */
-            if (pessoa.getPessoaFisica() == null) {
-                throw new PessoaFisicaNaoEncontrada();
-            }
-
-            /**
-             * GARANTE QUE NAO TERA NENHUM CPF DUPLICADO NA BASE DE DADOS
-             */
-            //TODO: NAO ESTA FUNCIONANDO
-            if (this.findOneByCPF(pessoa.getPessoaFisica().getCpf()) != null) {
-                throw new PessoaFisicaJaCadastrada();
-            }
-
-            /**
-             * VERIFICA SE O ESTADO CIVIL EXISTE NA BASE DE DADOS
-             */
-            try {
-                Long id = Long.parseLong(new Cryptography().decryptFromHex(pessoa.getPessoaFisica().getMaritalStatus().getId().toString()));
-                MaritalStatus estadoCivilEncontrado = maritalStatusRepository.findOne(id);
-                if (estadoCivilEncontrado == null) {
-                    throw new MaritalStatusNotFound();
-                }
-                pessoa.getPessoaFisica().setMaritalStatus(estadoCivilEncontrado);
-            } catch (Exception e) {
-                throw new MaritalStatusNotFound();
-            }
-
-
-            pessoa.getPessoaFisica().setPessoa(pessoa);
-        } else {
-            //TODO: VALIDAR DADOS DE PESSOA JURIDICA
-            //TODO: VERIFICAR SE O CNPJ JÁ EXITE
-        }
-
-        return pessoa;
     }
 
     /**
@@ -89,10 +40,18 @@ public class PessoaService {
      * @return
      */
     public Pessoa update(Long id, Pessoa pessoa) {
-        Pessoa objFound = pessoaRepository.save(findOne(id));
+        Pessoa objFound = findOne(id);
+
         pessoa.setId(objFound.getId());
         pessoa.setPropriedades(objFound.getPropriedades());
-        pessoa.getPropriedades().setModificationDate(LocalDateTime.now());
+        pessoa.getPessoaFisica().setId(objFound.getPessoaFisica().getId());
+
+        pessoa = this.validarPessoa(pessoa);
+//        BeanUtils.copyProperties(pessoa, objFound, "id", "pessoaFisica", "propriedades");
+//        BeanUtils.copyProperties(pessoa.getPessoaFisica(), objFound.getPessoaFisica(),"id");
+
+//        pessoa.setPropriedades(objFound.getPropriedades());
+//        pessoa.getPropriedades().setModificationDate(LocalDateTime.now());
         return pessoaRepository.save(pessoa);
     }
 
@@ -110,5 +69,57 @@ public class PessoaService {
     public Pessoa findOneByCPF(String cpf) {
         return pessoaRepository.findOneByCPF(cpf);
     }
+
+    /**
+     * Efetua a validação do objeto Pessoa
+     *
+     * @param pessoa
+     * @return
+     */
+    private Pessoa validarPessoa(Pessoa pessoa) {
+        Pessoa pessoaEncontrada = null;
+        if (pessoa.isPessoaFisica()) {
+            /**
+             * GARANTE QUE OS DADOS DE PESSOA FISICA EXITEM
+             */
+            if (pessoa.getPessoaFisica() == null) {
+                throw new PessoaFisicaNaoEncontrada();
+            }
+
+            if(pessoa.getId() == null && pessoa.getPessoaFisica().getId() == null) {
+                if (this.findOneByCPF(pessoa.getPessoaFisica().getCpf()) != null) {
+                    throw new PessoaFisicaJaCadastrada();
+                }
+            }else{
+                //NÃO SEI SE LAVO OU SE COZINHO
+            }
+
+            if (Utils.validarCPF(pessoa.getPessoaFisica().getCpf()) == false) {
+                throw new PessoaFisicaCPFInvalido();
+            }
+
+            /**
+             * VERIFICA SE O ESTADO CIVIL EXISTE NA BASE DE DADOS
+             */
+            try {
+                MaritalStatus estadoCivilEncontrado = maritalStatusRepository.findOne(pessoa.getPessoaFisica().getEstadoCivil().getId());
+                if (estadoCivilEncontrado == null) {
+                    throw new MaritalStatusNotFound();
+                }
+                pessoa.getPessoaFisica().setEstadoCivil(estadoCivilEncontrado);
+            }catch (Exception e){
+                throw new MaritalStatusNotFound();
+            }
+
+            pessoa.getPessoaFisica().setPessoa(pessoa);
+        } else {
+            //TODO: VALIDAR DADOS DE PESSOA JURIDICA
+            //TODO: VERIFICAR SE O CNPJ JÁ EXITE
+        }
+
+        return pessoa;
+    }
+
+
 
 }

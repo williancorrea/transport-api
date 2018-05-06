@@ -38,7 +38,7 @@ public class Pessoa implements Serializable {
     private CommonProperties propriedades;
 
     @NotBlank
-    @Size(min = 5, max = 150)
+    @Size(min = 5, max = 250)
     @Getter
     @Setter
     private String nome;
@@ -110,6 +110,14 @@ public class Pessoa implements Serializable {
     public Pessoa() {
     }
 
+    public String getNome() {
+        return nome.toUpperCase();
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome.toUpperCase();
+    }
+
     @JsonIgnore
     @Transient
     public boolean isPessoaFisica() {
@@ -121,6 +129,7 @@ public class Pessoa implements Serializable {
     public boolean isPessoaJuridica() {
         return PessoaTipo.JURIDICA.equals(tipo);
     }
+
 
     @Transient
     public String getKey() throws Exception {

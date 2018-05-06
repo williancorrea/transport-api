@@ -65,6 +65,13 @@ public class ProductUnit implements Serializable {
         return this.id != null ? new Cryptography().encryptToHex(this.id.toString()) : null;
     }
 
+    @Transient
+    public void setKey(String key) throws Exception {
+        if (id != null) {
+            this.id = Long.parseLong(new Cryptography().decryptFromHex(key));
+        }
+    }
+
     @PrePersist
     public void prePersist() {
         this.properties = new CommonProperties();

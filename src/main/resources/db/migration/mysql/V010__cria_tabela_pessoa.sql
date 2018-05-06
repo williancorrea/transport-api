@@ -1,6 +1,6 @@
 CREATE TABLE pessoa (
     id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(150) NOT NULL,
+    nome VARCHAR(250) NOT NULL,
     tipo VARCHAR(150) NOT NULL,
     email VARCHAR(250),
     site VARCHAR(250),

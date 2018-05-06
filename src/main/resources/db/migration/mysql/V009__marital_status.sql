@@ -11,8 +11,8 @@ CREATE TABLE marital_status (
 
 
 
-insert into marital_status (name, descricao) values('Solteiro ','Quem nunca se casou, ou que teve o casamento anulado');
-insert into marital_status (name, descricao) values('Casado ','Quem contraiu matrimônio, independente do regime de bens adotado');
-insert into marital_status (name, descricao) values('Divorciado ','Após a homologação do divórcio pela justiça ou por uma escritura pública.');
-insert into marital_status (name, descricao) values('Viúvo ','Pessoa cujo cônjuge faleceu');
-insert into marital_status (name, descricao) values('Separado Judicialmente ','Quando a vida conjugal tenha entrado em ruptura, a lei permite que, por decisão conjunta ou individual dos cônjuges, se ponha termo à vida em comum');
+insert into marital_status (name, descricao) values('Solteiro(a)','Quem nunca se casou, ou que teve o casamento anulado');
+insert into marital_status (name, descricao) values('Casado(a)','Quem contraiu matrimônio, independente do regime de bens adotado');
+insert into marital_status (name, descricao) values('Divorciado(a)','Após a homologação do divórcio pela justiça ou por uma escritura pública.');
+insert into marital_status (name, descricao) values('Viúvo(a)','Pessoa cujo cônjuge faleceu');
+insert into marital_status (name, descricao) values('Separado Judicialmente','Quando a vida conjugal tenha entrado em ruptura, a lei permite que, por decisão conjunta ou individual dos cônjuges, se ponha termo à vida em comum');
