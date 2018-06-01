@@ -1,5 +1,6 @@
-package br.com.wcorrea.transport.api.exceptionHandler;
+package br.com.wcorrea.transport.api.exceptionHandler.defaultException;
 
+import br.com.wcorrea.transport.api.exceptionHandler.ApiError;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -25,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Class responsible for handling all application errors
+ * Classe responsavel por manipular todos os erros da aplicação
  */
 @ControllerAdvice
 public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
@@ -34,7 +35,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     private MessageSource messageSource;
 
     /**
-     * Creates the list of errors
+     * Cria a lista de erros
      *
      * @param bindingResult BindingResult
      * @return Errors list
@@ -50,7 +51,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Manipulates unreadable error messages
+     * Manipula mensagens de erro ilegíveis
      *
      * @param ex      HttpMessageNotReadableException
      * @param headers HttpHeaders
@@ -67,7 +68,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Manipulates validation error messages for object attributes
+     * Manipula mensagens de erro de validação para atributos de objetos
      *
      * @param ex      MethodArgumentNotValidException
      * @param headers HttpHeaders
@@ -82,7 +83,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Manipulates error messages when resource is not found
+     * Manipula mensagens de erro quando o recurso não é encontrado
      *
      * @param ex      EmptyResultDataAccessException
      * @param request WebRequest
@@ -97,7 +98,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Manipulates tipo conversion error messages
+     * Manipula mensagens de erro de conversão de tipo
      *
      * @param ex      MethodArgumentTypeMismatchException
      * @param request WebRequest
@@ -112,7 +113,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Manipulate permission messages to the system
+     * Manipular mensagens de permissão para o sistema
      *
      * @param ex      DataIntegrityViolationException
      * @param request WebRequest
@@ -127,7 +128,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Method not supported
+     * Método não suportado
      *
      * @param ex      HttpRequestMethodNotSupportedException
      * @param request WebRequest

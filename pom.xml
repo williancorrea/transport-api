@@ -64,7 +64,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Migration Flayway-->
+        <!-- Migração Flayway-->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>

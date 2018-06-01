@@ -6,8 +6,8 @@ CREATE TABLE level_of_education (
     degree_of_instruction_sefip BIGINT(20),
     degree_of_instruction_rais BIGINT(20),
 
-    date_creation  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modification_date  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8;

@@ -7,15 +7,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Embeddable
-public class CommonProperties implements Serializable {
+public class PropriedadesComuns implements Serializable {
+    private static final long serialVersionUID = 4575371763430219942L;
 
-    @Column(name = "date_creation")
+    @Column(name = "data_criacao")
     private LocalDateTime dateCreation;
 
-    @Column(name = "modification_date")
+    @Column(name = "data_alteracao")
     private LocalDateTime modificationDate;
 
-    public CommonProperties() {
+    public PropriedadesComuns() {
         LocalDateTime dateTime = LocalDateTime.now();
         this.modificationDate = dateTime;
         this.dateCreation = dateTime;

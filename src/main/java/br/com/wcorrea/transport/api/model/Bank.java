@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.model;
 
-import br.com.wcorrea.transport.api.model.common.CommonProperties;
+import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
 import br.com.wcorrea.transport.api.utils.Cryptography;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
@@ -30,7 +30,7 @@ public class Bank implements Serializable {
     @Embedded
     @Getter
     @Setter
-    private CommonProperties properties;
+    private PropriedadesComuns properties;
 
     @Size(max = 10)
     @Getter
@@ -65,6 +65,6 @@ public class Bank implements Serializable {
 
     @PrePersist
     public void prePersist() {
-        this.properties = new CommonProperties();
+        this.properties = new PropriedadesComuns();
     }
 }

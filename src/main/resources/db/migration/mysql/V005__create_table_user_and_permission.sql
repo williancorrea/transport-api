@@ -50,10 +50,10 @@ INSERT INTO permission (name, description) values ('ROLE_DELETE_LEVEL-OF-EDUCATI
 INSERT INTO permission (name, description) values ('ROLE_UPDATE_LEVEL-OF-EDUCATION', ' ');
 INSERT INTO permission (name, description) values ('ROLE_SAVE_LEVEL-OF-EDUCATION', ' ');
 
-INSERT INTO permission (name, description) values ('ROLE_LIST_MARITAL_STATUS', '');
-INSERT INTO permission (name, description) values ('ROLE_DELETE_MARITAL_STATUS', ' ');
-INSERT INTO permission (name, description) values ('ROLE_UPDATE_MARITAL_STATUS', ' ');
-INSERT INTO permission (name, description) values ('ROLE_SAVE_MARITAL_STATUS', ' ');
+INSERT INTO permission (name, description) values ('ROLE_LISTAR_ESTADO_CIVIL', '');
+INSERT INTO permission (name, description) values ('ROLE_DELETAR_ESTADO_CIVIL', ' ');
+INSERT INTO permission (name, description) values ('ROLE_ATUALIZAR_ESTADO_CIVIL', ' ');
+INSERT INTO permission (name, description) values ('ROLE_SALVAR_ESTADO_CIVIL', ' ');
 
 INSERT INTO permission (name, description) values ('ROLE_LIST_PERSON', '');
 INSERT INTO permission (name, description) values ('ROLE_DELETE_PERSON', ' ');

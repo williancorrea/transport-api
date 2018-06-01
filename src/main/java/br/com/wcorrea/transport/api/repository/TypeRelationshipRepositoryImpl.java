@@ -1,6 +1,7 @@
 package br.com.wcorrea.transport.api.repository;
 
 import br.com.wcorrea.transport.api.model.TypeRelationship;
+import br.com.wcorrea.transport.api.repository.utils.UtilsRepository;
 import br.com.wcorrea.transport.api.repository.filter.TypeRelationshipFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -28,7 +29,7 @@ public class TypeRelationshipRepositoryImpl implements TypeRelationshipRepositor
         TypedQuery<TypeRelationship> queryList = manager.createQuery(this.createQuery(typeRelationshipFilter, false), TypeRelationship.class);
         TypedQuery<Long> queryTotalRecords = manager.createQuery(this.createQuery(typeRelationshipFilter, true), Long.class);
 
-        UtilsRepository.pagingRestrictions(queryList, pageable);
+        UtilsRepository.adicionarRestricoesPaginacao(queryList, pageable);
 
         return new PageImpl<>(queryList.getResultList(), pageable, queryTotalRecords.getSingleResult());
     }

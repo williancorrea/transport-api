@@ -1,16 +1,13 @@
 package br.com.wcorrea.transport.api.service;
 
-import br.com.wcorrea.transport.api.model.MaritalStatus;
+import br.com.wcorrea.transport.api.model.EstadoCivil;
 import br.com.wcorrea.transport.api.model.Pessoa;
-import br.com.wcorrea.transport.api.repository.MaritalStatusRepository;
+import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
 import br.com.wcorrea.transport.api.repository.PessoaRepository;
 import br.com.wcorrea.transport.api.service.exception.*;
 import br.com.wcorrea.transport.api.utils.Utils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 /**
  * Classe responsavel por manipular as regras de negocio de pessoa
@@ -22,7 +19,7 @@ public class PessoaService {
     private PessoaRepository pessoaRepository;
 
     @Autowired
-    private MaritalStatusRepository maritalStatusRepository;
+    private EstadoCivilRepository maritalStatusRepository;
 
     public Pessoa save(Pessoa pessoaNovo) {
         pessoaNovo.setId(null);
@@ -102,13 +99,13 @@ public class PessoaService {
              * VERIFICA SE O ESTADO CIVIL EXISTE NA BASE DE DADOS
              */
             try {
-                MaritalStatus estadoCivilEncontrado = maritalStatusRepository.findOne(pessoa.getPessoaFisica().getEstadoCivil().getId());
+                EstadoCivil estadoCivilEncontrado = maritalStatusRepository.findOne(pessoa.getPessoaFisica().getEstadoCivil().getId());
                 if (estadoCivilEncontrado == null) {
-                    throw new MaritalStatusNotFound();
+                    throw new EstadoCivilNaoEncontrado();
                 }
                 pessoa.getPessoaFisica().setEstadoCivil(estadoCivilEncontrado);
             }catch (Exception e){
-                throw new MaritalStatusNotFound();
+                throw new EstadoCivilNaoEncontrado();
             }
 
             pessoa.getPessoaFisica().setPessoa(pessoa);
