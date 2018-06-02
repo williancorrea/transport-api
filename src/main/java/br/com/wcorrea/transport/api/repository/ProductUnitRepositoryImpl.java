@@ -1,6 +1,7 @@
 package br.com.wcorrea.transport.api.repository;
 
 import br.com.wcorrea.transport.api.model.ProductUnit;
+import br.com.wcorrea.transport.api.repository.utils.UtilsRepository;
 import br.com.wcorrea.transport.api.repository.filter.ProductUnitFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -28,7 +29,7 @@ public class ProductUnitRepositoryImpl implements ProductUnitRepositoryQuery {
         TypedQuery<ProductUnit> queryList = manager.createQuery(this.createQuery(productUnitFilter, false), ProductUnit.class);
         TypedQuery<Long> queryTotalRecords = manager.createQuery(this.createQuery(productUnitFilter, true), Long.class);
 
-        UtilsRepository.pagingRestrictions(queryList, pageable);
+        UtilsRepository.adicionarRestricoesPaginacao(queryList, pageable);
 
         return new PageImpl<>(queryList.getResultList(), pageable, queryTotalRecords.getSingleResult());
     }

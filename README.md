@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/williancorrea/transport-api.svg?branch=master)](https://travis-ci.org/williancorrea/transport-api)
 # Transports
 Software focused on the transport area
 

@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.model;
 
-import br.com.wcorrea.transport.api.model.common.CommonProperties;
+import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
 import br.com.wcorrea.transport.api.utils.Cryptography;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
@@ -16,13 +16,12 @@ import java.time.LocalDateTime;
 
 @ToString
 @EqualsAndHashCode
-@Entity(name = "marital_status")
-public class MaritalStatus implements Serializable {
+@Entity(name = "estado_civil")
+public class EstadoCivil implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     @JsonIgnore
     @Getter
     @Setter
@@ -31,22 +30,21 @@ public class MaritalStatus implements Serializable {
     @Embedded
     @Getter
     @Setter
-    private CommonProperties properties;
+    private PropriedadesComuns controle;
 
     @NotNull
     @Size(min = 5, max = 150)
     @Getter
     @Setter
-    private String name;
+    private String nome;
 
     @Size(max = 512)
     @Lob
     @Getter
     @Setter
-    @Column(name = "descricao")
-    private String description;
+    private String descricao;
 
-    public MaritalStatus() {
+    public EstadoCivil() {
     }
 
     @Transient
@@ -61,11 +59,11 @@ public class MaritalStatus implements Serializable {
 
     @PrePersist
     public void prePersist() {
-        this.properties = new CommonProperties();
+        this.controle = new PropriedadesComuns();
     }
 
     @PreUpdate
     public void preUpdade() {
-        this.properties.setModificationDate(LocalDateTime.now());
+        this.controle.setModificationDate(LocalDateTime.now());
     }
 }

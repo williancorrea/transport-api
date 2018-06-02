@@ -1,59 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Diagram>
   <ID>DATABASE</ID>
-  <OriginalElement>8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.bank</OriginalElement>
-  <nodes>
-    <node x="87.70069690167958" y="218.12509892651929">8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.user_permission</node>
-    <node x="0.0" y="0.0">8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.permission</node>
-    <node x="0.0" y="483.7608986589653">8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.bank_abbreviations</node>
-    <node x="0.0" y="875.7608986589653">8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.type_of_relationship</node>
-    <node x="0.0" y="701.7608986589654">8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.city</node>
-    <node x="333.19937368045464" y="320.76089865896535">8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.user</node>
-    <node x="317.6060537431842" y="483.7608986589653">8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.bank</node>
-    <node x="257.8097878337123" y="690.7608986589654">8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.state</node>
-    <node x="759.2203545313721" y="690.7608986589653">8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.product_unit</node>
-    <node x="809.1993736804545" y="0.0">8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.schema_version</node>
-    <node x="521.2203545313721" y="690.7608986589653">8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.country</node>
-    <node x="551.1993736804545" y="0.0">8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.zip_code</node>
-  </nodes>
-  <notes>
-    <note x="-110.26629615896815" y="174.38597762408864">
-      <node>8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.user_permission</node>
-      <value>TESTE</value>
-      <edge>
-        <point x="0.0" y="0.0" />
-        <point x="0.0" y="0.0" />
-      </edge>
-    </note>
-  </notes>
-  <edges>
-    <edge source="8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.user_permission" target="8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.user">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
-    </edge>
-    <edge source="8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.state" target="8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.country">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
-    </edge>
-    <edge source="8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.user_permission" target="8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.permission">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
-    </edge>
-    <edge source="8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.bank_abbreviations" target="8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.bank">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
-    </edge>
-    <edge source="8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.city" target="8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.state">
-      <point x="0.0" y="0.0" />
-      <point x="0.0" y="0.0" />
-    </edge>
-  </edges>
-  <settings layout="Hierarchic Group" zoom="1.396449704142012" x="210.05592198864147" y="236.9364406779661" />
-  <SelectedNodes>
-    <node>8c21e035-a788-4683-9d67-768d6c0edf43.TABLE:DevelopApiTransporte.user_permission</node>
-  </SelectedNodes>
+  <OriginalElement />
+  <nodes />
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="1.396449704142012" x="428.0529661016949" y="245.62288135593215" />
+  <SelectedNodes />
   <Categories>
-    <Category>Columns</Category>
     <Category>Key columns</Category>
   </Categories>
 </Diagram>

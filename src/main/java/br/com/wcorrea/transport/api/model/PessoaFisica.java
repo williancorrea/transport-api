@@ -144,7 +144,7 @@ public class PessoaFisica implements Serializable {
     @ManyToOne()
     @Getter
     @Setter
-    private MaritalStatus estadoCivil;
+    private EstadoCivil estadoCivil;
 
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

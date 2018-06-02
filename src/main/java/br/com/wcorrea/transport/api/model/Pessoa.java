@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.model;
 
-import br.com.wcorrea.transport.api.model.common.CommonProperties;
+import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
 import br.com.wcorrea.transport.api.utils.Cryptography;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -35,7 +35,7 @@ public class Pessoa implements Serializable {
     @Embedded
     @Getter
     @Setter
-    private CommonProperties propriedades;
+    private PropriedadesComuns propriedades;
 
     @NotBlank
     @Size(min = 5, max = 250)
@@ -145,7 +145,7 @@ public class Pessoa implements Serializable {
 
     @PrePersist
     public void prePersist() {
-        this.propriedades = new CommonProperties();
+        this.propriedades = new PropriedadesComuns();
     }
 
     @PreUpdate

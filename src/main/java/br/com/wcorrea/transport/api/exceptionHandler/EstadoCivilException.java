@@ -1,6 +1,7 @@
 package br.com.wcorrea.transport.api.exceptionHandler;
 
-import br.com.wcorrea.transport.api.service.exception.MaritalStatusNotFound;
+import br.com.wcorrea.transport.api.exceptionHandler.defaultException.DefaultExceptionHandler;
+import br.com.wcorrea.transport.api.service.exception.EstadoCivilNaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -15,14 +16,14 @@ import java.util.List;
 import java.util.Locale;
 
 @ControllerAdvice
-public class MaritalStatusException extends DefaultExceptionHandler {
+public class EstadoCivilException extends DefaultExceptionHandler {
 
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler({MaritalStatusNotFound.class})
-    public ResponseEntity<Object> handleMaritalStatusUpdateNotFound(MaritalStatusNotFound ex, WebRequest request, Locale loc) {
-        String userMessage = messageSource.getMessage("resource.marital-status-not-found", null, loc);
+    @ExceptionHandler({EstadoCivilNaoEncontrado.class})
+    public ResponseEntity<Object> handleMaritalStatusUpdateNotFound(EstadoCivilNaoEncontrado ex, WebRequest request, Locale loc) {
+        String userMessage = messageSource.getMessage("recurso.estado-civil-nao-encontrado", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_FOUND, request);

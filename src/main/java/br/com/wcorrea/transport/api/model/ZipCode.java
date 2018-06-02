@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.model;
 
-import br.com.wcorrea.transport.api.model.common.CommonProperties;
+import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -37,7 +37,7 @@ public class ZipCode implements Serializable {
     private Integer altitude;
 
     @Embedded
-    private CommonProperties properties;
+    private PropriedadesComuns properties;
 
     public ZipCode() {
     }
@@ -127,17 +127,17 @@ public class ZipCode implements Serializable {
         this.altitude = altitude;
     }
 
-    public CommonProperties getProperties() {
+    public PropriedadesComuns getProperties() {
         return properties;
     }
 
-    public void setProperties(CommonProperties properties) {
+    public void setProperties(PropriedadesComuns properties) {
         this.properties = properties;
     }
 
     @PrePersist
     public void prePersist() {
-        this.properties = new CommonProperties();
+        this.properties = new PropriedadesComuns();
     }
 
     @Override

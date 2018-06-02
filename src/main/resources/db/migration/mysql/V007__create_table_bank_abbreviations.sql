@@ -7,8 +7,8 @@ CREATE TABLE bank_abbreviations (
   reduced_name VARCHAR(250) NOT NULL,
   full_name VARCHAR(250) NOT NULL,
 
-  date_creation  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  modification_date  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
   bank_id BIGINT(20) not null,
   FOREIGN KEY (bank_id) REFERENCES bank(id)

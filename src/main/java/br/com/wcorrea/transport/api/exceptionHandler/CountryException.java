@@ -1,5 +1,6 @@
 package br.com.wcorrea.transport.api.exceptionHandler;
 
+import br.com.wcorrea.transport.api.exceptionHandler.defaultException.DefaultExceptionHandler;
 import br.com.wcorrea.transport.api.service.exception.CountryUpdateNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
