@@ -29,7 +29,7 @@ CREATE TABLE pessoa_fisica (
     estado_civil_id BIGINT(20),
     pessoa_id BIGINT(20),
 
-    FOREIGN KEY (estado_civil_id) REFERENCES marital_status(id),
+    FOREIGN KEY (estado_civil_id) REFERENCES estado_civil(id),
     FOREIGN KEY (pessoa_id) REFERENCES pessoa(id)
 )
     ENGINE = InnoDB

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/estado_civil")
+@RequestMapping("/estado-civil")
 public class EstadoCivilResource {
 
     @Autowired
@@ -53,8 +53,7 @@ public class EstadoCivilResource {
     public ResponseEntity<EstadoCivil> findOne(@Valid @PathVariable String key) {
         try {
             Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
-            EstadoCivil estadoCivilEncontrado = estadoCivilRepository.findOne(id);
-            return estadoCivilEncontrado != null ? ResponseEntity.ok(estadoCivilEncontrado) : ResponseEntity.notFound().build();
+            return ResponseEntity.ok(estadoCivilService.findOne(id));
         } catch (Exception e) {
             throw new EstadoCivilNaoEncontrado();
         }
@@ -72,7 +71,7 @@ public class EstadoCivilResource {
     @PreAuthorize("hasAuthority('ROLE_SALVAR_ESTADO_CIVIL') and #oauth2.hasScope('write')")
     public ResponseEntity<EstadoCivil> save(@Valid @RequestBody EstadoCivil estadoCivil, HttpServletResponse response) {
         EstadoCivil estadoCivilSalvo = estadoCivilRepository.saveAndFlush(estadoCivil);
-        publisher.publishEvent(new EventResourceCreated(this, response, estadoCivilSalvo.getId().toString()));
+        publisher.publishEvent(new EventResourceCreated(this, response, estadoCivilSalvo.getKey()));
         return ResponseEntity.status(HttpStatus.CREATED).body(estadoCivilSalvo);
     }
 
@@ -104,7 +103,8 @@ public class EstadoCivilResource {
     public void delete(@PathVariable String key) {
         try {
             Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
-            estadoCivilRepository.delete(id);
+            EstadoCivil estadoCivil = estadoCivilService.findOne(id);
+            estadoCivilRepository.delete(estadoCivil.getId());
         } catch (Exception e) {
             throw new EstadoCivilNaoEncontrado();
         }

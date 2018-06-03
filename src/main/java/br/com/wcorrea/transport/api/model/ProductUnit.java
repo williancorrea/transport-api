@@ -34,8 +34,6 @@ public class ProductUnit implements Serializable {
 
     @NotNull
     @Size(min = 1, max = 10)
-    @Getter
-    @Setter
     private String initials;
 
     @NotNull

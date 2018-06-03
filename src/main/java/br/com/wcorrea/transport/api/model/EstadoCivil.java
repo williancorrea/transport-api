@@ -48,8 +48,12 @@ public class EstadoCivil implements Serializable {
     }
 
     @Transient
-    public String getKey() throws Exception {
-        return this.id != null ? new Cryptography().encryptToHex(this.id.toString()) : null;
+    public String getKey() {
+        try {
+            return this.id != null ? new Cryptography().encryptToHex(this.id.toString()) : null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Transient
@@ -64,6 +68,6 @@ public class EstadoCivil implements Serializable {
 
     @PreUpdate
     public void preUpdade() {
-        this.controle.setModificationDate(LocalDateTime.now());
+        this.controle.setDataAlteracao(LocalDateTime.now());
     }
 }

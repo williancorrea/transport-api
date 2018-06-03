@@ -28,7 +28,7 @@ public class TypeRelationshipService {
         TypeRelationship objFound = typeRelationshipRepository.save(findOne(id));
         typeRelationship.setId(objFound.getId());
         typeRelationship.setProperties(objFound.getProperties());
-        typeRelationship.getProperties().setModificationDate(LocalDateTime.now());
+        typeRelationship.getProperties().setDataAlteracao(LocalDateTime.now());
         return typeRelationshipRepository.save(typeRelationship);
     }
 

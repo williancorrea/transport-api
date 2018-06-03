@@ -81,5 +81,5 @@ public class LevelOfEducation implements Serializable {
     }
 
     @PreUpdate
-    public void preUpdade(){this.properties.setModificationDate(LocalDateTime.now());}
+    public void preUpdade(){this.properties.setDataAlteracao(LocalDateTime.now());}
 }

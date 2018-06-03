@@ -28,7 +28,7 @@ public class LevelOfEducationService {
         LevelOfEducation objFound = levelOfEducationRepository.save(findOne(id));
         levelOfEducation.setId(objFound.getId());
         levelOfEducation.setProperties(objFound.getProperties());
-        levelOfEducation.getProperties().setModificationDate(LocalDateTime.now());
+        levelOfEducation.getProperties().setDataAlteracao(LocalDateTime.now());
         return levelOfEducationRepository.save(levelOfEducation);
     }
 

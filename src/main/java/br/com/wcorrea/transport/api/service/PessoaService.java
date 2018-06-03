@@ -48,7 +48,7 @@ public class PessoaService {
 //        BeanUtils.copyProperties(pessoa.getPessoaFisica(), objFound.getPessoaFisica(),"id");
 
 //        pessoa.setPropriedades(objFound.getPropriedades());
-//        pessoa.getPropriedades().setModificationDate(LocalDateTime.now());
+//        pessoa.getPropriedades().setDataAlteracao(LocalDateTime.now());
         return pessoaRepository.save(pessoa);
     }
 

@@ -28,7 +28,7 @@ public class ProductUnitService {
         ProductUnit updateFound = findOne(id);
         productUnit.setId(updateFound.getId());
         productUnit.setProperties(updateFound.getProperties());
-        productUnit.getProperties().setModificationDate(LocalDateTime.now());
+        productUnit.getProperties().setDataAlteracao(LocalDateTime.now());
         return productUnitRepository.save(productUnit);
     }
 

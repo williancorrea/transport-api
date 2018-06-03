@@ -40,6 +40,11 @@ public class EstadoCivilRepositoryImpl implements EstadoCivilRepositoryQuery {
      * @return
      */
     private String createQuery(EstadoCivilFiltro filtro, boolean count) {
+
+        filtro.setFiltroGlobal(removeCaracteresProblematicos(filtro.getFiltroGlobal()));
+        filtro.setNome(removeCaracteresProblematicos(filtro.getNome()));
+        filtro.setDescricao(removeCaracteresProblematicos(filtro.getDescricao()));
+
         String sql;
         if (count) {
             sql = "select count(a) from estado_civil a where 1=1 ";
@@ -66,4 +71,11 @@ public class EstadoCivilRepositoryImpl implements EstadoCivilRepositoryQuery {
     }
 
 
+    //TODO: MELHORAR ESSE METODO, FAZER ELE FICAR GENERICO O SUFICIENTE PARA PODER RECEBER UM OBJETO POR PARAMETRO
+    public String removeCaracteresProblematicos(String txt) {
+        if (txt == null) {
+            return null;
+        }
+        return txt.replaceAll("\\\\", "").replaceAll("\'", "");
+    }
 }

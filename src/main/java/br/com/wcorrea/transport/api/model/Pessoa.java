@@ -39,8 +39,6 @@ public class Pessoa implements Serializable {
 
     @NotBlank
     @Size(min = 5, max = 250)
-    @Getter
-    @Setter
     private String nome;
 
     @NotNull
@@ -150,6 +148,6 @@ public class Pessoa implements Serializable {
 
     @PreUpdate
     public void preUpdate() {
-        this.propriedades.setModificationDate(LocalDateTime.now());
+        this.propriedades.setDataAlteracao(LocalDateTime.now());
     }
 }

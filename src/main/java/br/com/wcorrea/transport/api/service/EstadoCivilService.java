@@ -28,7 +28,7 @@ public class EstadoCivilService {
         EstadoCivil objFound = maritalStatusRepository.save(findOne(id));
         estadoCivil.setId(objFound.getId());
         estadoCivil.setControle(objFound.getControle());
-        estadoCivil.getControle().setModificationDate(LocalDateTime.now());
+        estadoCivil.getControle().setDataAlteracao(LocalDateTime.now());
         return maritalStatusRepository.save(estadoCivil);
     }
 
