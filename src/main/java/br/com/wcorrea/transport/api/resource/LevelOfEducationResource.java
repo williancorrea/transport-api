@@ -6,7 +6,7 @@ import br.com.wcorrea.transport.api.repository.LevelOfEducationRepository;
 import br.com.wcorrea.transport.api.repository.filter.LevelOfEducationFilter;
 import br.com.wcorrea.transport.api.service.LevelOfEducationService;
 import br.com.wcorrea.transport.api.service.exception.LevelOfEducationNotFound;
-import br.com.wcorrea.transport.api.utils.Cryptography;
+import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -52,7 +52,7 @@ public class LevelOfEducationResource {
     @PreAuthorize("hasAuthority('ROLE_LIST_LEVEL-OF-EDUCATION') and #oauth2.hasScope('read')")
     public ResponseEntity<LevelOfEducation> findOne(@Valid @PathVariable String key) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             LevelOfEducation LevelOfEducationFound = levelOfEducationRepository.findOne(id);
             return LevelOfEducationFound != null ? ResponseEntity.ok(LevelOfEducationFound) : ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -86,7 +86,7 @@ public class LevelOfEducationResource {
     @PreAuthorize("hasAuthority('ROLE_UPDATE_LEVEL-OF-EDUCATION') and #oauth2.hasScope('write')")
     public ResponseEntity<LevelOfEducation> update(@Valid @PathVariable String key, @Valid @RequestBody LevelOfEducation LevelOfEducation) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             return ResponseEntity.status(HttpStatus.OK).body(levelOfEducationService.update(id, LevelOfEducation));
         } catch (Exception e) {
             throw new LevelOfEducationNotFound();
@@ -103,7 +103,7 @@ public class LevelOfEducationResource {
     @PreAuthorize("hasAuthority('ROLE_DELETE_LEVEL-OF-EDUCATION') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             levelOfEducationRepository.delete(id);
         } catch (Exception e) {
             throw new LevelOfEducationNotFound();

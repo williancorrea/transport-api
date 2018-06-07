@@ -10,7 +10,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.persistence.Transient;
 
-public class Cryptography {
+public class Criptografia {
 
     final static String algorithm = "AES";
 
@@ -18,7 +18,7 @@ public class Cryptography {
     @Transient
     private ApiProperty apiProperty;
 
-    public String encrypt(String encode) throws Exception {
+    private String encrypt(String encode) throws Exception {
         AutowireHelper.autowire(this, this.apiProperty);
         if (!apiProperty.getSecurity().isEnableCryptography()) {
             return StringUtils.isNotEmpty(encode) ? encode : null;
@@ -60,7 +60,7 @@ public class Cryptography {
         }
 
         byte[] ba = this.encrypt(encode).getBytes();
-        ;
+
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < ba.length; i++)
             str.append(String.format("%x", ba[i]));

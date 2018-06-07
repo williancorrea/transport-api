@@ -6,7 +6,7 @@ import br.com.wcorrea.transport.api.repository.BankRepository;
 import br.com.wcorrea.transport.api.repository.filter.BankFilter;
 import br.com.wcorrea.transport.api.service.BankService;
 import br.com.wcorrea.transport.api.service.exception.BankNotFound;
-import br.com.wcorrea.transport.api.utils.Cryptography;
+import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -56,7 +56,7 @@ public class BankResource {
     @PreAuthorize("hasAuthority('ROLE_LIST_BANK') and #oauth2.hasScope('read')")
     public ResponseEntity<Bank> findOne(@Valid @PathVariable String key) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             Bank bankFound = bankService.findOne(id);
             return bankFound != null ? ResponseEntity.ok(bankFound) : ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -90,7 +90,7 @@ public class BankResource {
     @PreAuthorize("hasAuthority('ROLE_UPDATE_BANK') and #oauth2.hasScope('write')")
     public ResponseEntity<Bank> update(@Valid @PathVariable String key, @Valid @RequestBody Bank bank) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             return ResponseEntity.status(HttpStatus.OK).body(bankService.update(id, bank));
         } catch (Exception e) {
             throw new BankNotFound();
@@ -108,7 +108,7 @@ public class BankResource {
     @PreAuthorize("hasAuthority('ROLE_DELETE_BANK') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             bankRepository.delete(id);
         } catch (Exception e) {
             throw new BankNotFound();

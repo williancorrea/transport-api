@@ -6,7 +6,7 @@ import br.com.wcorrea.transport.api.repository.ProductUnitRepository;
 import br.com.wcorrea.transport.api.repository.filter.ProductUnitFilter;
 import br.com.wcorrea.transport.api.service.ProductUnitService;
 import br.com.wcorrea.transport.api.service.exception.ProductUnitNotFound;
-import br.com.wcorrea.transport.api.utils.Cryptography;
+import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -55,7 +55,7 @@ public class ProductUnitResource {
     @PreAuthorize("hasAuthority('ROLE_LIST_PRODUCT-UNIT') and #oauth2.hasScope('read')")
     public ResponseEntity<ProductUnit> findOne(@Valid @PathVariable String key) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             ProductUnit productUnitFound = productUnitRepository.findOne(id);
             return productUnitFound != null ? ResponseEntity.ok(productUnitFound) : ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -89,7 +89,7 @@ public class ProductUnitResource {
     @PreAuthorize("hasAuthority('ROLE_UPDATE_PRODUCT-UNIT') and #oauth2.hasScope('write')")
     public ResponseEntity<ProductUnit> update(@Valid @PathVariable String key, @Valid @RequestBody ProductUnit productUnit) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             return ResponseEntity.status(HttpStatus.OK).body(productUnitService.update(id, productUnit));
         } catch (Exception e) {
             throw new ProductUnitNotFound();
@@ -107,7 +107,7 @@ public class ProductUnitResource {
     public void delete(@PathVariable String key) {
 
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             productUnitRepository.delete(id);
         } catch (Exception e) {
             throw new ProductUnitNotFound();

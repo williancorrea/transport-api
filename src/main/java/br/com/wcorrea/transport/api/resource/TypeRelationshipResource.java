@@ -6,7 +6,7 @@ import br.com.wcorrea.transport.api.repository.TypeRelationshipRepository;
 import br.com.wcorrea.transport.api.repository.filter.TypeRelationshipFilter;
 import br.com.wcorrea.transport.api.service.TypeRelationshipService;
 import br.com.wcorrea.transport.api.service.exception.TypeRelationshipNotFound;
-import br.com.wcorrea.transport.api.utils.Cryptography;
+import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -55,7 +55,7 @@ public class TypeRelationshipResource {
     @PreAuthorize("hasAuthority('ROLE_LIST_TYPE-RELATIONSHIP') and #oauth2.hasScope('read')")
     public ResponseEntity<TypeRelationship> findOne(@Valid @PathVariable String key) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             TypeRelationship TypeRelationshipFound = typeRelationshipRepository.findOne(id);
             return TypeRelationshipFound != null ? ResponseEntity.ok(TypeRelationshipFound) : ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -89,7 +89,7 @@ public class TypeRelationshipResource {
     @PreAuthorize("hasAuthority('ROLE_UPDATE_TYPE-RELATIONSHIP') and #oauth2.hasScope('write')")
     public ResponseEntity<TypeRelationship> update(@Valid @PathVariable String key, @Valid @RequestBody TypeRelationship TypeRelationship) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             return ResponseEntity.status(HttpStatus.OK).body(typeRelationshipService.update(id, TypeRelationship));
         } catch (Exception e) {
             throw new TypeRelationshipNotFound();
@@ -106,7 +106,7 @@ public class TypeRelationshipResource {
     @PreAuthorize("hasAuthority('ROLE_DELETE_TYPE-RELATIONSHIP') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             typeRelationshipRepository.delete(id);
         } catch (Exception e) {
             throw new TypeRelationshipNotFound();

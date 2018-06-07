@@ -6,7 +6,7 @@ import br.com.wcorrea.transport.api.repository.PessoaRepository;
 import br.com.wcorrea.transport.api.repository.filter.PersonFilter;
 import br.com.wcorrea.transport.api.service.PessoaService;
 import br.com.wcorrea.transport.api.service.exception.PessoaNaoEncontrada;
-import br.com.wcorrea.transport.api.utils.Cryptography;
+import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -55,7 +55,7 @@ public class PessoaResource {
     @PreAuthorize("hasAuthority('ROLE_LIST_PERSON') and #oauth2.hasScope('read')")
     public ResponseEntity<Pessoa> findOne(@Valid @PathVariable String key) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             Pessoa pessoaEncontrada = pessoaService.findOne(id);
             return pessoaEncontrada != null ? ResponseEntity.ok(pessoaEncontrada) : ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -89,7 +89,7 @@ public class PessoaResource {
     @PreAuthorize("hasAuthority('ROLE_UPDATE_PERSON') and #oauth2.hasScope('write')")
     public ResponseEntity<Pessoa> update(@Valid @PathVariable String key, @Valid @RequestBody Pessoa Pessoa) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             return ResponseEntity.status(HttpStatus.OK).body(pessoaService.update(id, Pessoa));
         } catch (Exception e) {
             throw new PessoaNaoEncontrada();
@@ -106,7 +106,7 @@ public class PessoaResource {
     @PreAuthorize("hasAuthority('ROLE_DELETE_PERSON') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             pessoaRepository.delete(id);
         } catch (Exception e) {
             throw new PessoaNaoEncontrada();

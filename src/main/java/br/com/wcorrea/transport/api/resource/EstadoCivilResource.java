@@ -6,7 +6,7 @@ import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilFiltro;
 import br.com.wcorrea.transport.api.service.EstadoCivilService;
 import br.com.wcorrea.transport.api.service.exception.EstadoCivilNaoEncontrado;
-import br.com.wcorrea.transport.api.utils.Cryptography;
+import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -52,7 +52,7 @@ public class EstadoCivilResource {
     @PreAuthorize("hasAuthority('ROLE_LISTAR_ESTADO_CIVIL') and #oauth2.hasScope('read')")
     public ResponseEntity<EstadoCivil> findOne(@Valid @PathVariable String key) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             return ResponseEntity.ok(estadoCivilService.findOne(id));
         } catch (Exception e) {
             throw new EstadoCivilNaoEncontrado();
@@ -85,7 +85,7 @@ public class EstadoCivilResource {
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_ESTADO_CIVIL') and #oauth2.hasScope('write')")
     public ResponseEntity<EstadoCivil> update(@Valid @PathVariable String key, @Valid @RequestBody EstadoCivil estadoCivil) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             return ResponseEntity.status(HttpStatus.OK).body(estadoCivilService.update(id, estadoCivil));
         } catch (Exception e) {
             throw new EstadoCivilNaoEncontrado();
@@ -102,7 +102,7 @@ public class EstadoCivilResource {
     @PreAuthorize("hasAuthority('ROLE_DELETAR_ESTADO_CIVIL') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
         try {
-            Long id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
             EstadoCivil estadoCivil = estadoCivilService.findOne(id);
             estadoCivilRepository.delete(estadoCivil.getId());
         } catch (Exception e) {

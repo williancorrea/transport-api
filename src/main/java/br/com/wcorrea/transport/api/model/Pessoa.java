@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
-import br.com.wcorrea.transport.api.utils.Cryptography;
+import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -131,13 +131,13 @@ public class Pessoa implements Serializable {
 
     @Transient
     public String getKey() throws Exception {
-        return this.id != null ? new Cryptography().encryptToHex(this.id.toString()) : null;
+        return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
     }
 
     @Transient
     public void setKey(String key) throws Exception {
         if (id != null) {
-            this.id = Long.parseLong(new Cryptography().decryptFromHex(key));
+            this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
         }
     }
 
