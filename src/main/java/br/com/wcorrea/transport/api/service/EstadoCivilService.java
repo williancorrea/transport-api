@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 /**
  * Class responsible for performing the entire business rule by manipulating information
+ * Classe responsavel por manipular toda a regra de negocio de um EstadoCivil
  */
 @Service
 public class EstadoCivilService {
@@ -18,14 +19,14 @@ public class EstadoCivilService {
     private EstadoCivilRepository maritalStatusRepository;
 
     /**
-     * ATUALIZA O OBJETO
+     * Atualizar
      *
      * @param id
      * @param estadoCivil
      * @return
      */
-    public EstadoCivil update(Long id, EstadoCivil estadoCivil) {
-        EstadoCivil objFound = maritalStatusRepository.save(findOne(id));
+    public EstadoCivil atualizar(Long id, EstadoCivil estadoCivil) {
+        EstadoCivil objFound = maritalStatusRepository.save(buscarPorId(id));
         estadoCivil.setId(objFound.getId());
         estadoCivil.setControle(objFound.getControle());
         estadoCivil.getControle().setDataAlteracao(LocalDateTime.now());
@@ -33,9 +34,9 @@ public class EstadoCivilService {
     }
 
     /**
-     * BUSCAR POR ID
+     * Buscar por ID
      */
-    public EstadoCivil findOne(Long id) {
+    public EstadoCivil buscarPorId(Long id) {
         EstadoCivil estadoCivil = maritalStatusRepository.findOne(id);
         if (estadoCivil == null) {
             throw new EstadoCivilNaoEncontrado();

@@ -53,7 +53,7 @@ public class EstadoCivilResource {
     public ResponseEntity<EstadoCivil> findOne(@Valid @PathVariable String key) {
         try {
             Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            return ResponseEntity.ok(estadoCivilService.findOne(id));
+            return ResponseEntity.ok(estadoCivilService.buscarPorId(id));
         } catch (Exception e) {
             throw new EstadoCivilNaoEncontrado();
         }
@@ -86,7 +86,7 @@ public class EstadoCivilResource {
     public ResponseEntity<EstadoCivil> update(@Valid @PathVariable String key, @Valid @RequestBody EstadoCivil estadoCivil) {
         try {
             Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            return ResponseEntity.status(HttpStatus.OK).body(estadoCivilService.update(id, estadoCivil));
+            return ResponseEntity.status(HttpStatus.OK).body(estadoCivilService.atualizar(id, estadoCivil));
         } catch (Exception e) {
             throw new EstadoCivilNaoEncontrado();
         }
@@ -103,7 +103,7 @@ public class EstadoCivilResource {
     public void delete(@PathVariable String key) {
         try {
             Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            EstadoCivil estadoCivil = estadoCivilService.findOne(id);
+            EstadoCivil estadoCivil = estadoCivilService.buscarPorId(id);
             estadoCivilRepository.delete(estadoCivil.getId());
         } catch (Exception e) {
             throw new EstadoCivilNaoEncontrado();

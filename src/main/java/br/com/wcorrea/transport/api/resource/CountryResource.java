@@ -63,7 +63,7 @@ public class CountryResource {
     @GetMapping("/{id}/states")
     @PreAuthorize("hasAuthority('ROLE_LIST_COUNTRY') and #oauth2.hasScope('read')")
     public List<State> findAllStates(@Valid @PathVariable Long id) {
-//        State state = stateRepository.findOne(id);
+//        State state = stateRepository.buscarPorId(id);
 //        return state != null ? ResponseEntity.ok(state) : ResponseEntity.notFound().build();
         return stateRepository.findAll();
     }

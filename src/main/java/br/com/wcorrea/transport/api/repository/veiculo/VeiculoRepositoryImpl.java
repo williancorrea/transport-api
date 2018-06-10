@@ -1,6 +1,6 @@
-package br.com.wcorrea.transport.api.repository.estadoCivil;
+package br.com.wcorrea.transport.api.repository.veiculo;
 
-import br.com.wcorrea.transport.api.model.EstadoCivil;
+import br.com.wcorrea.transport.api.model.Veiculo;
 import br.com.wcorrea.transport.api.repository.utils.UtilsRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -11,21 +11,21 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-public class EstadoCivilRepositoryImpl implements EstadoCivilRepositoryQuery {
+public class VeiculoRepositoryImpl implements VeiculoRepositoryQuery {
 
     @PersistenceContext
     private EntityManager manager;
 
     /**
-     * CARREGA TODOS OS ESTADOS CIVIS DE FORMA PAGINADA
+     * CARREGA TODOS OS REGISTROS DE FORMA PAGINADA
      *
      * @param filtro
      * @param paginacao
      * @return
      */
     @Override
-    public Page<EstadoCivil> findAll(EstadoCivilFiltro filtro, Pageable paginacao) {
-        TypedQuery<EstadoCivil> queryList = manager.createQuery(this.createQuery(filtro, false), EstadoCivil.class);
+    public Page<Veiculo> findAll(VeiculoFiltro filtro, Pageable paginacao) {
+        TypedQuery<Veiculo> queryList = manager.createQuery(this.createQuery(filtro, false), Veiculo.class);
         TypedQuery<Long> totalRegistros = manager.createQuery(this.createQuery(filtro, true), Long.class);
 
         UtilsRepository.adicionarRestricoesPaginacao(queryList, paginacao);
@@ -39,34 +39,35 @@ public class EstadoCivilRepositoryImpl implements EstadoCivilRepositoryQuery {
      * @param count
      * @return
      */
-    private String createQuery(EstadoCivilFiltro filtro, boolean count) {
+    private String createQuery(VeiculoFiltro filtro, boolean count) {
 
         filtro.setFiltroGlobal(UtilsRepository.removeCaracteresProblematicos(filtro.getFiltroGlobal()));
-        filtro.setNome(UtilsRepository.removeCaracteresProblematicos(filtro.getNome()));
-        filtro.setDescricao(UtilsRepository.removeCaracteresProblematicos(filtro.getDescricao()));
+        filtro.setPlaca(UtilsRepository.removeCaracteresProblematicos(filtro.getPlaca()));
+        filtro.setFrota(UtilsRepository.removeCaracteresProblematicos(filtro.getFrota()));
 
         String sql;
         if (count) {
-            sql = "select count(a) from estado_civil a where 1=1 ";
+            sql = "select count(a) from veiculo a where 1=1 ";
         } else {
-            sql = "from estado_civil a where 1=1 ";
+            sql = "from veiculo a where 1=1 ";
         }
 
         if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
             sql += " and (";
-            sql += " upper(a.descricao) like '%" + filtro.getFiltroGlobal().toUpperCase().trim() + "%'";
-            sql += " or upper(a.nome) like '%" + filtro.getFiltroGlobal().toUpperCase().trim() + "%'";
+            sql += " upper(a.placa) like '%" + filtro.getFiltroGlobal().toUpperCase().trim() + "%'";
+            sql += " or upper(a.frota) like '%" + filtro.getFiltroGlobal().toUpperCase().trim() + "%'";
             sql += " )";
         } else {
-            if (StringUtils.isNotBlank(filtro.getDescricao())) {
-                sql += " and upper(a.descricao) like '%" + filtro.getDescricao().toUpperCase().trim() + "%'";
+            if (StringUtils.isNotBlank(filtro.getPlaca())) {
+                sql += " and upper(a.placa) like '%" + filtro.getPlaca().toUpperCase().trim() + "%'";
             }
-            if (StringUtils.isNotBlank(filtro.getNome())) {
-                sql += " and upper(a.nome) like '%" + filtro.getNome().toUpperCase().trim() + "%'";
+            if (StringUtils.isNotBlank(filtro.getFrota())) {
+                sql += " and upper(a.frota) like '%" + filtro.getFrota().toUpperCase().trim() + "%'";
             }
         }
 
         sql = UtilsRepository.adicionarOrdenacaoConsulta(sql, count, filtro.getSortField(), filtro.getSortOrder());
         return sql;
     }
+
 }
