@@ -1,0 +1,14 @@
+CREATE TABLE itinerario (
+    id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(150) NOT NULL,
+    codigo VARCHAR(15) NOT NULL,
+    descricao TEXT,
+    valido_ate date NOT NULL,
+
+    inativo BOOLEAN DEFAULT FALSE,
+
+    data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    data_alteracao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8;

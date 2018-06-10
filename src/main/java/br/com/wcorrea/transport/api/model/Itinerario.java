@@ -33,16 +33,16 @@ public class Itinerario implements Serializable {
     @Setter
     private PropriedadesComuns controle;
 
+    @Size(max = 15)
+    @Getter
+    @Setter
+    private String codigo;
+
     @NotNull
     @Size(min = 5, max = 150)
     @Getter
     @Setter
     private String nome;
-
-    @Size(max = 15)
-    @Getter
-    @Setter
-    private String codigo;
 
     @Size(max = 512)
     @Lob
@@ -57,7 +57,7 @@ public class Itinerario implements Serializable {
 
     @Getter
     @Setter
-    private boolean ativo;
+    private boolean inativo;
 
     public Itinerario() {
     }

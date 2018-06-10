@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class VeiculoService {
 
     @Autowired
-    private VeiculoRepository maritalStatusRepository;
+    private VeiculoRepository veiculoRepository;
 
     /**
      * Atualizar
@@ -25,18 +25,18 @@ public class VeiculoService {
      * @return
      */
     public Veiculo atualizar(Long id, Veiculo veiculo) {
-        Veiculo objFound = maritalStatusRepository.save(buscarPorId(id));
+        Veiculo objFound = veiculoRepository.save(buscarPorId(id));
         veiculo.setId(objFound.getId());
         veiculo.setControle(objFound.getControle());
         veiculo.getControle().setDataAlteracao(LocalDateTime.now());
-        return maritalStatusRepository.save(veiculo);
+        return veiculoRepository.save(veiculo);
     }
 
     /**
      * Buscar por ID
      */
     public Veiculo buscarPorId(Long id) {
-        Veiculo veiculo = maritalStatusRepository.findOne(id);
+        Veiculo veiculo = veiculoRepository.findOne(id);
         if (veiculo == null) {
             throw new VeiculoNaoEncontrado();
         }

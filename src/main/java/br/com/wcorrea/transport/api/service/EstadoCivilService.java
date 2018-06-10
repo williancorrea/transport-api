@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class EstadoCivilService {
 
     @Autowired
-    private EstadoCivilRepository maritalStatusRepository;
+    private EstadoCivilRepository estadoCivilRepository;
 
     /**
      * Atualizar
@@ -26,18 +26,18 @@ public class EstadoCivilService {
      * @return
      */
     public EstadoCivil atualizar(Long id, EstadoCivil estadoCivil) {
-        EstadoCivil objFound = maritalStatusRepository.save(buscarPorId(id));
+        EstadoCivil objFound = estadoCivilRepository.save(buscarPorId(id));
         estadoCivil.setId(objFound.getId());
         estadoCivil.setControle(objFound.getControle());
         estadoCivil.getControle().setDataAlteracao(LocalDateTime.now());
-        return maritalStatusRepository.save(estadoCivil);
+        return estadoCivilRepository.save(estadoCivil);
     }
 
     /**
      * Buscar por ID
      */
     public EstadoCivil buscarPorId(Long id) {
-        EstadoCivil estadoCivil = maritalStatusRepository.findOne(id);
+        EstadoCivil estadoCivil = estadoCivilRepository.findOne(id);
         if (estadoCivil == null) {
             throw new EstadoCivilNaoEncontrado();
         }
