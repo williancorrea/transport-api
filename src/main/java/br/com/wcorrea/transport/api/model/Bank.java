@@ -1,6 +1,7 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
+import br.com.wcorrea.transport.api.service.exception.BankNotFound;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
@@ -53,7 +54,11 @@ public class Bank implements Serializable {
 
     @Transient
     public String getKey() throws Exception {
-        return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
+        try {
+            return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
+        }catch (Exception e){
+            throw new BankNotFound();
+        }
     }
 
     @Transient

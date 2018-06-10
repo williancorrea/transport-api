@@ -56,7 +56,7 @@ public class PessoaResource {
     public ResponseEntity<Pessoa> findOne(@Valid @PathVariable String key) {
         try {
             Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            Pessoa pessoaEncontrada = pessoaService.findOne(id);
+            Pessoa pessoaEncontrada = pessoaService.buscarPorId(id);
             return pessoaEncontrada != null ? ResponseEntity.ok(pessoaEncontrada) : ResponseEntity.notFound().build();
         } catch (Exception e) {
             throw new PessoaNaoEncontrada();

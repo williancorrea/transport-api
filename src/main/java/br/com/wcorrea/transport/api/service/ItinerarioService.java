@@ -42,4 +42,11 @@ public class ItinerarioService {
         }
         return itinerario;
     }
+
+    public Itinerario buscarPorId(Itinerario itinerario) {
+        if(itinerario == null){
+            throw  new ItinerarioNaoEncontrado();
+        }
+        return this.buscarPorId(itinerario.getId());
+    }
 }

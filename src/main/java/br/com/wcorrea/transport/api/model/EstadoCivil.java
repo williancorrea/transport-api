@@ -1,6 +1,7 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
+import br.com.wcorrea.transport.api.service.exception.EstadoCivilNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
@@ -52,7 +53,7 @@ public class EstadoCivil implements Serializable {
         try {
             return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
         } catch (Exception e) {
-            return null;
+            throw new EstadoCivilNaoEncontrado();
         }
     }
 

@@ -1,0 +1,23 @@
+CREATE TABLE controle_km (
+    id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    data_hora_saida TIMESTAMP NOT NULL,
+    data_hora_chegada TIMESTAMP NOT NULL,
+    origem VARCHAR(150) NOT NULL,
+    destino VARCHAR(150) NOT NULL,
+    km_saida VARCHAR(30) NOT NULL,
+    km_chegada VARCHAR(30) NOT NULL,
+    obs TEXT,
+
+    data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    data_alteracao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    veiculo_id BIGINT(20),
+    pessoa_id BIGINT(20),
+    itinerario_id BIGINT(20),
+
+    FOREIGN KEY (veiculo_id) REFERENCES veiculo(id),
+    FOREIGN KEY (pessoa_id) REFERENCES pessoa(id),
+    FOREIGN KEY (itinerario_id) REFERENCES pessoa(id)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8;

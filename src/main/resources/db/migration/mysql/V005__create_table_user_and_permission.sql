@@ -135,3 +135,15 @@ INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from use
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_DELETAR_ITINERARIO'));
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_ATUALIZAR_ITINERARIO'));
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_SALVAR_ITINERARIO'));
+
+-- CONTROLE DE QUILOMETRAGEM
+INSERT INTO permission (name, description) values ('ROLE_ACESSAR_URI_CONTROLE-KM', '');
+INSERT INTO permission (name, description) values ('ROLE_LISTAR_CONTROLE-KM', '');
+INSERT INTO permission (name, description) values ('ROLE_DELETAR_CONTROLE-KM', '');
+INSERT INTO permission (name, description) values ('ROLE_ATUALIZAR_CONTROLE-KM', '');
+INSERT INTO permission (name, description) values ('ROLE_SALVAR_CONTROLE-KM', '');
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_ACESSAR_URI_CONTROLE-KM'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_LISTAR_CONTROLE-KM'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_DELETAR_CONTROLE-KM'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_ATUALIZAR_CONTROLE-KM'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_SALVAR_CONTROLE-KM'));

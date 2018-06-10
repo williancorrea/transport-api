@@ -2,8 +2,8 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.EstadoCivil;
 import br.com.wcorrea.transport.api.model.Pessoa;
-import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
 import br.com.wcorrea.transport.api.repository.PessoaRepository;
+import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
 import br.com.wcorrea.transport.api.service.exception.*;
 import br.com.wcorrea.transport.api.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class PessoaService {
      * @return
      */
     public Pessoa update(Long id, Pessoa pessoa) {
-        Pessoa objFound = findOne(id);
+        Pessoa objFound = buscarPorId(id);
 
         pessoa.setId(objFound.getId());
         pessoa.setPropriedades(objFound.getPropriedades());
@@ -55,12 +55,19 @@ public class PessoaService {
     /**
      * Encontar pessoa por ID
      */
-    public Pessoa findOne(Long id) {
-        Pessoa pessoa = pessoaRepository.findOne(id);
+    public Pessoa buscarPorId(Long id) {
+        Pessoa pessoaEncontrada = pessoaRepository.findOne(id);
+        if (pessoaEncontrada == null) {
+            throw new PessoaNaoEncontrada();
+        }
+        return pessoaEncontrada;
+    }
+
+    public Pessoa buscarPorId(Pessoa pessoa) {
         if (pessoa == null) {
             throw new PessoaNaoEncontrada();
         }
-        return pessoa;
+        return this.buscarPorId(pessoa.getId());
     }
 
     public Pessoa findOneByCPF(String cpf) {
@@ -83,11 +90,11 @@ public class PessoaService {
                 throw new PessoaFisicaNaoEncontrada();
             }
 
-            if(pessoa.getId() == null && pessoa.getPessoaFisica().getId() == null) {
+            if (pessoa.getId() == null && pessoa.getPessoaFisica().getId() == null) {
                 if (this.findOneByCPF(pessoa.getPessoaFisica().getCpf()) != null) {
                     throw new PessoaFisicaJaCadastrada();
                 }
-            }else{
+            } else {
                 //NÃO SEI SE LAVO OU SE COZINHO
             }
 
@@ -104,7 +111,7 @@ public class PessoaService {
                     throw new EstadoCivilNaoEncontrado();
                 }
                 pessoa.getPessoaFisica().setEstadoCivil(estadoCivilEncontrado);
-            }catch (Exception e){
+            } catch (Exception e) {
                 throw new EstadoCivilNaoEncontrado();
             }
 
@@ -116,7 +123,6 @@ public class PessoaService {
 
         return pessoa;
     }
-
 
 
 }

@@ -1,24 +1,27 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
+import br.com.wcorrea.transport.api.service.exception.ControleKmNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @ToString
 @EqualsAndHashCode
 @Entity(name = "controle_km")
-public class ControleKM implements Serializable {
+public class ControleKm implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -37,56 +40,60 @@ public class ControleKM implements Serializable {
     @ManyToOne()
     @Getter
     @Setter
+//    @NotNull
     private Veiculo veiculo;
 
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
     @ManyToOne()
     @Getter
     @Setter
+//    @NotNull
     private Pessoa pessoa;
 
     @JoinColumn(name = "itinerario_id", referencedColumnName = "id")
     @ManyToOne()
     @Getter
     @Setter
+//    @NotNull
     private Itinerario itinerario;
 
     @Getter
     @Setter
-    @Column(name = "data")
-    private LocalDate data;
+    @NotNull
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
+    @Column(name = "data_hora_saida")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHoraSaida;
 
     @Getter
     @Setter
-    @Column(name = "hora_saida")
-    private LocalDateTime horaSaida;
-
-    @Getter
-    @Setter
-    @Column(name = "hora_chegada")
-    private LocalDateTime horaChegada;
+    @NotNull
+    @Column(name = "data_hora_chegada")
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHoraChegada;
 
     @NotNull
-    @Size(min = 5, max = 150)
+    @Size(min = 3, max = 150)
     @Getter
     @Setter
     private String origem;
 
     @NotNull
-    @Size(min = 5, max = 150)
+    @Size(min = 3, max = 150)
     @Getter
     @Setter
     private String destino;
 
     @NotNull
-    @Size(min = 5, max = 150)
+    @Size(min = 5, max = 30)
     @Getter
     @Setter
     @Column(name = "km_saida")
     private String kmSaida;
 
     @NotNull
-    @Size(min = 5, max = 150)
+    @Size(min = 5, max = 30)
     @Getter
     @Setter
     @Column(name = "km_chegada")
@@ -98,7 +105,7 @@ public class ControleKM implements Serializable {
     @Setter
     private String obs;
 
-    public ControleKM() {
+    public ControleKm() {
     }
 
     @Transient
@@ -106,7 +113,7 @@ public class ControleKM implements Serializable {
         try {
             return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
         } catch (Exception e) {
-            return null;
+            throw new ControleKmNaoEncontrado();
         }
     }
 

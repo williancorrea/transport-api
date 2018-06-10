@@ -42,4 +42,11 @@ public class VeiculoService {
         }
         return veiculo;
     }
+
+    public Veiculo buscarPorId(Veiculo veiculo) {
+        if(veiculo == null){
+            throw new VeiculoNaoEncontrado();
+        }
+        return this.buscarPorId(veiculo.getId());
+    }
 }
