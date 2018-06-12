@@ -63,6 +63,8 @@ public class ControleKmService {
         controleKm.setVeiculo(veiculoService.buscarPorId(controleKm.getVeiculo()));
         controleKm.setPessoa(pessoaService.buscarPorId(controleKm.getPessoa()));
         controleKm.setItinerario(itinerarioService.buscarPorId(controleKm.getItinerario()));
+
+        //TODO: Verificar se o km que está sendo cadastrado, está em um intervalo já registrado
         return controleKm;
     }
 }
