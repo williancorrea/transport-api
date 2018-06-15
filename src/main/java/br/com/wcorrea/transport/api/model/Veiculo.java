@@ -36,12 +36,10 @@ public class Veiculo implements Serializable {
     @NotNull
     @Size(min = 8, max = 8)
     @Getter
-    @Setter
     private String placa;
 
     @Size(max = 15)
     @Getter
-    @Setter
     private String frota;
 
     @Size(max = 512)
@@ -51,6 +49,14 @@ public class Veiculo implements Serializable {
     private String obs;
 
     public Veiculo() {
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa.toUpperCase();
+    }
+
+    public void setFrota(String frota) {
+        this.frota = frota.toUpperCase();
     }
 
     @Transient
