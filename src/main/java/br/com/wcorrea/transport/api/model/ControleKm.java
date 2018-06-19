@@ -40,27 +40,27 @@ public class ControleKm implements Serializable {
     @ManyToOne()
     @Getter
     @Setter
-//    @NotNull
+    @NotNull
     private Veiculo veiculo;
 
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
     @ManyToOne()
     @Getter
     @Setter
-//    @NotNull
+    @NotNull
     private Pessoa pessoa;
 
     @JoinColumn(name = "itinerario_id", referencedColumnName = "id")
     @ManyToOne()
     @Getter
     @Setter
-//    @NotNull
+    @NotNull
     private Itinerario itinerario;
 
     @Getter
     @Setter
     @NotNull
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @Column(name = "data_hora_saida")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataHoraSaida;
@@ -69,9 +69,8 @@ public class ControleKm implements Serializable {
     @Setter
     @NotNull
     @Column(name = "data_hora_chegada")
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataHoraChegada;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime dataHoraChegada;
 
     @NotNull
     @Size(min = 3, max = 150)

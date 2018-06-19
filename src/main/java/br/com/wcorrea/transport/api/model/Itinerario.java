@@ -57,7 +57,7 @@ public class Itinerario implements Serializable {
 
     @Getter
     @Setter
-    private boolean inativo;
+    private boolean ativo;
 
     public Itinerario() {
     }
