@@ -9,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.time.LocalDateTime;
 
 public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
 
@@ -30,6 +32,32 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
 
         UtilsRepository.adicionarRestricoesPaginacao(queryList, paginacao);
         return new PageImpl<>(queryList.getResultList(), paginacao, totalRegistros.getSingleResult());
+    }
+
+    /**
+     * Verifica se o km informado já está cadastrado em outro apontamento
+     *
+     * @param kmSaida
+     * @return
+     */
+    public boolean validarPeriodoInvalidoKmSaida(Long id, String kmSaida) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("select * from controle_km where :pkmSaida >= km_saida and :pkmSaida < km_chegada");
+        Query cKm = manager.createNativeQuery(sql.toString(), ControleKm.class)
+                .setParameter("pkmSaida", kmSaida);
+        if (id == null && cKm.getResultList().size() == 0) {
+            return false;
+        }
+        if (id != null && cKm.getResultList().size() > 1) {
+            return true;
+        }
+        if (id != null && cKm.getResultList().size() == 1) {
+            if (((ControleKm) cKm.getSingleResult()).getId() == id) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

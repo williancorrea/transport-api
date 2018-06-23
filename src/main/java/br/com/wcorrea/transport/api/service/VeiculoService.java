@@ -2,7 +2,7 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.Veiculo;
 import br.com.wcorrea.transport.api.repository.veiculo.VeiculoRepository;
-import br.com.wcorrea.transport.api.service.exception.VeiculoNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoNaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

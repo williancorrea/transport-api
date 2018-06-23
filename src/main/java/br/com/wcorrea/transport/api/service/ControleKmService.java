@@ -2,7 +2,8 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.ControleKm;
 import br.com.wcorrea.transport.api.repository.controleKm.ControleKmRepository;
-import br.com.wcorrea.transport.api.service.exception.ControleKmNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ControleKmNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ControleKmSaidaInvalido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,6 +64,13 @@ public class ControleKmService {
         controleKm.setVeiculo(veiculoService.buscarPorId(controleKm.getVeiculo()));
         controleKm.setPessoa(pessoaService.buscarPorId(controleKm.getPessoa()));
         controleKm.setItinerario(itinerarioService.buscarPorId(controleKm.getItinerario()));
+
+        if(controleKmRepository.validarPeriodoInvalidoKmSaida(controleKm.getId(), controleKm.getKmSaida())){
+            throw new ControleKmSaidaInvalido();
+        }
+
+        //Validar km, data
+        //KM Maximo pela data
 
         //TODO: Verificar se o km que está sendo cadastrado, está em um intervalo já registrado
         return controleKm;

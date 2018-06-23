@@ -5,7 +5,7 @@ import br.com.wcorrea.transport.api.model.Itinerario;
 import br.com.wcorrea.transport.api.repository.itinerario.ItinerarioFiltro;
 import br.com.wcorrea.transport.api.repository.itinerario.ItinerarioRepository;
 import br.com.wcorrea.transport.api.service.ItinerarioService;
-import br.com.wcorrea.transport.api.service.exception.ItinerarioNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

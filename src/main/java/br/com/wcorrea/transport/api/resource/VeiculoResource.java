@@ -5,7 +5,7 @@ import br.com.wcorrea.transport.api.model.Veiculo;
 import br.com.wcorrea.transport.api.repository.veiculo.VeiculoFiltro;
 import br.com.wcorrea.transport.api.repository.veiculo.VeiculoRepository;
 import br.com.wcorrea.transport.api.service.VeiculoService;
-import br.com.wcorrea.transport.api.service.exception.VeiculoNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

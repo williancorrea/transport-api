@@ -5,7 +5,7 @@ import br.com.wcorrea.transport.api.model.ControleKm;
 import br.com.wcorrea.transport.api.repository.controleKm.ControleKmFiltro;
 import br.com.wcorrea.transport.api.repository.controleKm.ControleKmRepository;
 import br.com.wcorrea.transport.api.service.ControleKmService;
-import br.com.wcorrea.transport.api.service.exception.ControleKmNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ControleKmNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

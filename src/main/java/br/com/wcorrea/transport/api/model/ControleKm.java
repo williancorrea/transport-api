@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
-import br.com.wcorrea.transport.api.service.exception.ControleKmNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ControleKmNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -9,14 +9,12 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @ToString
 @EqualsAndHashCode
@@ -60,16 +58,15 @@ public class ControleKm implements Serializable {
     @Getter
     @Setter
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "data_hora_saida")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataHoraSaida;
+    private LocalDateTime dataHoraSaida;
 
     @Getter
     @Setter
     @NotNull
     @Column(name = "data_hora_chegada")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataHoraChegada;
 
     @NotNull
@@ -85,14 +82,14 @@ public class ControleKm implements Serializable {
     private String destino;
 
     @NotNull
-    @Size(min = 5, max = 30)
+    @Size(min = 1, max = 30)
     @Getter
     @Setter
     @Column(name = "km_saida")
     private String kmSaida;
 
     @NotNull
-    @Size(min = 5, max = 30)
+    @Size(min = 1, max = 30)
     @Getter
     @Setter
     @Column(name = "km_chegada")

@@ -1,8 +1,9 @@
 package br.com.wcorrea.transport.api.exceptionHandler;
 
 import br.com.wcorrea.transport.api.exceptionHandler.defaultException.DefaultExceptionHandler;
-import br.com.wcorrea.transport.api.service.exception.ControleKmNaoEncontrado;
-import br.com.wcorrea.transport.api.service.exception.VeiculoNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ControleKmNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ControleKmSaidaInvalido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -37,4 +38,14 @@ public class VeiculoException extends DefaultExceptionHandler {
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
+
+    @ExceptionHandler({ControleKmSaidaInvalido.class})
+    public ResponseEntity<Object> handleControleKmSaidaInvalido(ControleKmSaidaInvalido ex, WebRequest request, Locale loc) {
+        String userMessage = messageSource.getMessage("recurso.controle_km_saida_invalido", null, loc);
+        String developerMessage = ex.toString();
+        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_ACCEPTABLE));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE, request);
+    }
+
+
 }

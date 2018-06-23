@@ -109,7 +109,7 @@ public class Pessoa implements Serializable {
     }
 
     public String getNome() {
-        return nome.toUpperCase();
+        return this.nome != null ? this.nome.toUpperCase() : this.nome;
     }
 
     public void setNome(String nome) {
@@ -131,14 +131,16 @@ public class Pessoa implements Serializable {
 
     @Transient
     public String getKey() throws Exception {
-        return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
+        try {
+            return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Transient
     public void setKey(String key) throws Exception {
-        if (id != null) {
-            this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
-        }
+        this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
     }
 
     @PrePersist
