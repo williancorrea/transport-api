@@ -250,15 +250,15 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
 
         if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
             sql += " and (";
-            sql += " upper(a.km_saida) like '%" + filtro.getFiltroGlobal().toUpperCase().trim() + "%'";
-            sql += " or upper(a.km_chegada) like '%" + filtro.getFiltroGlobal().toUpperCase().trim() + "%'";
+            sql += " upper(a.kmSaida) like '%" + filtro.getFiltroGlobal().toUpperCase().trim() + "%'";
+            sql += " or upper(a.kmChegada) like '%" + filtro.getFiltroGlobal().toUpperCase().trim() + "%'";
             sql += " )";
         } else {
             if (StringUtils.isNotBlank(filtro.getKmSaida())) {
-                sql += " and upper(a.km_saida) like '%" + filtro.getKmSaida().toUpperCase().trim() + "%'";
+                sql += " and upper(a.kmSaida) like '%" + filtro.getKmSaida().toUpperCase().trim() + "%'";
             }
             if (StringUtils.isNotBlank(filtro.getKmChegada())) {
-                sql += " and upper(a.km_chegada) like '%" + filtro.getKmChegada().toUpperCase().trim() + "%'";
+                sql += " and upper(a.kmChegada) like '%" + filtro.getKmChegada().toUpperCase().trim() + "%'";
             }
         }
 
