@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Class responsible for performing the entire business rule by manipulating tipo of relationship information
@@ -28,7 +29,7 @@ public class TypeRelationshipService {
         TypeRelationship objFound = typeRelationshipRepository.save(findOne(id));
         typeRelationship.setId(objFound.getId());
         typeRelationship.setProperties(objFound.getProperties());
-        typeRelationship.getProperties().setDataAlteracao(LocalDateTime.now());
+        typeRelationship.getProperties().setDataAlteracao(new Date());
         return typeRelationshipRepository.save(typeRelationship);
     }
 

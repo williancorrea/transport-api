@@ -2,12 +2,13 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.ControleKm;
 import br.com.wcorrea.transport.api.repository.controleKm.ControleKmRepository;
-import br.com.wcorrea.transport.api.service.exception.veiculo.ControleKmNaoEncontrado;
-import br.com.wcorrea.transport.api.service.exception.veiculo.ControleKmSaidaInvalido;
+import br.com.wcorrea.transport.api.service.exception.veiculo.*;
+import br.com.wcorrea.transport.api.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Classe responsavel por manipular toda a regra de negocio de um ControleKm
@@ -36,11 +37,12 @@ public class ControleKmService {
      * @return
      */
     public ControleKm atualizar(Long id, ControleKm controleKm) {
-        controleKm = this.validarControleKm(controleKm);
         ControleKm objFound = controleKmRepository.save(buscarPorId(id));
         controleKm.setId(objFound.getId());
         controleKm.setControle(objFound.getControle());
-        controleKm.getControle().setDataAlteracao(LocalDateTime.now());
+        controleKm.getControle().setDataAlteracao(new Date());
+
+        controleKm = this.validarControleKm(controleKm);
         return controleKmRepository.save(controleKm);
     }
 
@@ -65,14 +67,37 @@ public class ControleKmService {
         controleKm.setPessoa(pessoaService.buscarPorId(controleKm.getPessoa()));
         controleKm.setItinerario(itinerarioService.buscarPorId(controleKm.getItinerario()));
 
-        if(controleKmRepository.validarPeriodoInvalidoKmSaida(controleKm.getId(), controleKm.getKmSaida())){
+        if (Utils.convertToLocalDateTime(controleKm.getDataHoraSaida()).isAfter(Utils.convertToLocalDateTime(controleKm.getDataHoraChegada()))) {
+            throw new ControleKmPeriodoEntreDatasInvalidos();
+        }
+        if (Long.parseLong(controleKm.getKmSaida()) > Long.parseLong(controleKm.getKmChegada())) {
+            throw new ControleKmKmSaidaNaoPodeSerMaiorKmChegada();
+        }
+        //Verifica se o Km de Saida está sendo utilizado em outro apontamento
+        if (controleKmRepository.validarPeriodoInvalidoKmSaida(controleKm.getId(), controleKm.getVeiculo().getId(), controleKm.getKmSaida())) {
             throw new ControleKmSaidaInvalido();
         }
+        //Verifica se o Km de Chegada está sendo utilizado em outro apontamento
+        if (controleKmRepository.validarPeriodoInvalidoKmChegada(controleKm.getId(), controleKm.getVeiculo().getId(), controleKm.getKmChegada())) {
+            throw new ControleKmChegadaInvalido();
+        }
 
-        //Validar km, data
-        //KM Maximo pela data
-
-        //TODO: Verificar se o km que está sendo cadastrado, está em um intervalo já registrado
+        //Valida Data de Saida
+//        if (controleKmRepository.validarPeriodoInvalidoDeEntradaDataSaida(controleKm)) {
+//            throw new ControleKmPeriodoInvalidoDeEntradaDataSaida();
+//        }
+        //Valida Km Saida
+//        if (controleKmRepository.validarPeriodoInvalidoDeEntradaKmSaida(controleKm)) {
+//            throw new ControleKmPeriodoInvalidoDeEntradaKmSaida();
+//        }
+        //Valida Data de Chegada
+//        if (controleKmRepository.validarPeriodoInvalidoDeEntradaDataChegada(controleKm)) {
+//            throw new ControleKmPeriodoInvalidoDeEntradaDataChegada();
+//        }
+        //Valida Km Chegada
+//        if (controleKmRepository.validarPeriodoInvalidoDeEntradaKmChegada(controleKm)) {
+//            throw new ControleKmPeriodoInvalidoDeEntradaKmChegada();
+//        }
         return controleKm;
     }
 }

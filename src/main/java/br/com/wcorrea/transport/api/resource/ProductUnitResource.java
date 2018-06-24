@@ -5,7 +5,6 @@ import br.com.wcorrea.transport.api.model.ProductUnit;
 import br.com.wcorrea.transport.api.repository.ProductUnitRepository;
 import br.com.wcorrea.transport.api.repository.filter.ProductUnitFilter;
 import br.com.wcorrea.transport.api.service.ProductUnitService;
-import br.com.wcorrea.transport.api.service.exception.ProductUnitNotFound;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -54,14 +53,8 @@ public class ProductUnitResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LIST_PRODUCT-UNIT') and #oauth2.hasScope('read')")
     public ResponseEntity<ProductUnit> findOne(@Valid @PathVariable String key) {
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            ProductUnit productUnitFound = productUnitRepository.findOne(id);
-            return productUnitFound != null ? ResponseEntity.ok(productUnitFound) : ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            throw new ProductUnitNotFound();
-        }
-
+        ProductUnit productUnitFound = productUnitRepository.findOne(new Criptografia().getKey(key));
+        return productUnitFound != null ? ResponseEntity.ok(productUnitFound) : ResponseEntity.notFound().build();
     }
 
     /**
@@ -88,12 +81,7 @@ public class ProductUnitResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_UPDATE_PRODUCT-UNIT') and #oauth2.hasScope('write')")
     public ResponseEntity<ProductUnit> update(@Valid @PathVariable String key, @Valid @RequestBody ProductUnit productUnit) {
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            return ResponseEntity.status(HttpStatus.OK).body(productUnitService.update(id, productUnit));
-        } catch (Exception e) {
-            throw new ProductUnitNotFound();
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(productUnitService.update(new Criptografia().getKey(key), productUnit));
     }
 
     /**
@@ -105,13 +93,6 @@ public class ProductUnitResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETE_PRODUCT-UNIT') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            productUnitRepository.delete(id);
-        } catch (Exception e) {
-            throw new ProductUnitNotFound();
-        }
-
+        productUnitRepository.delete(new Criptografia().getKey(key));
     }
 }

@@ -8,5 +8,15 @@ import org.springframework.data.domain.Pageable;
 public interface ControleKmRepositoryQuery {
     Page<ControleKm> findAll(ControleKmFiltro filtro, Pageable paginacao);
 
-    boolean validarPeriodoInvalidoKmSaida(Long id, String kmSaida);
+    boolean validarPeriodoInvalidoKmSaida(Long controleKmId, Long veiculoId, String kmSaida);
+
+    boolean validarPeriodoInvalidoKmChegada(Long controleKmId, Long veiculoId, String kmChegada);
+
+    boolean validarPeriodoInvalidoDeEntradaKmSaida(ControleKm controleKm);
+
+    boolean validarPeriodoInvalidoDeEntradaKmChegada(ControleKm controleKm);
+
+    boolean validarPeriodoInvalidoDeEntradaDataChegada(ControleKm controleKm);
+
+    boolean validarPeriodoInvalidoDeEntradaDataSaida(ControleKm controleKm);
 }

@@ -1,38 +1,41 @@
 package br.com.wcorrea.transport.api.model.common;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Embeddable
 public class PropriedadesComuns implements Serializable {
     private static final long serialVersionUID = 4575371763430219942L;
 
     @Column(name = "data_criacao")
-    private LocalDateTime dataCriacao;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Getter @Setter
+    private Date dataCriacao;
 
     @Column(name = "data_alteracao")
-    private LocalDateTime dataAlteracao;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Getter
+    private Date dataAlteracao;
 
     public PropriedadesComuns() {
-        LocalDateTime dateTime = LocalDateTime.now();
-        this.dataAlteracao = dateTime;
-        this.dataCriacao = dateTime;
+        Date agora = new Date();
+        this.dataAlteracao = agora;
+        this.dataCriacao = agora;
     }
 
-    public String getDataCriacao() {
-        return dataCriacao.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }
-
-    public String getDataAlteracao() {
-        return dataAlteracao.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }
-
-    public void setDataAlteracao(LocalDateTime dataAlteracao) {
+    public void setDataAlteracao(Date dataAlteracao) {
         this.dataAlteracao = dataAlteracao;
     }
 }

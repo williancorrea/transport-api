@@ -15,13 +15,13 @@ public class ApiApplication {
         SpringApplication.run(ApiApplication.class, args);
     }
 
-    /**
-     * Corrige o timezone da datas
-     */
-    @PostConstruct
-    void started() {
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-    }
+//    /**
+//     * Corrige o timezone da datas
+//     */
+//    @PostConstruct
+//    void started() {
+//        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+//    }
 
     @Bean
     public AutowireHelper autowireHelper() {

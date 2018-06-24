@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Classe responsavel por manipular toda a regra de negocio de um Itinerario
@@ -28,7 +29,7 @@ public class ItinerarioService {
         Itinerario objFound = itinerarioRepository.save(buscarPorId(id));
         itinerario.setId(objFound.getId());
         itinerario.setControle(objFound.getControle());
-        itinerario.getControle().setDataAlteracao(LocalDateTime.now());
+        itinerario.getControle().setDataAlteracao(new Date());
         return itinerarioRepository.save(itinerario);
     }
 

@@ -5,7 +5,6 @@ import br.com.wcorrea.transport.api.model.Pessoa;
 import br.com.wcorrea.transport.api.repository.PessoaRepository;
 import br.com.wcorrea.transport.api.repository.filter.PersonFilter;
 import br.com.wcorrea.transport.api.service.PessoaService;
-import br.com.wcorrea.transport.api.service.exception.PessoaNaoEncontrada;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -54,21 +53,15 @@ public class PessoaResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LIST_PERSON') and #oauth2.hasScope('read')")
     public ResponseEntity<Pessoa> findOne(@Valid @PathVariable String key) {
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            Pessoa pessoaEncontrada = pessoaService.buscarPorId(id);
-            return pessoaEncontrada != null ? ResponseEntity.ok(pessoaEncontrada) : ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            throw new PessoaNaoEncontrada();
-        }
-
+        Pessoa pessoaEncontrada = pessoaService.buscarPorId(new Criptografia().getKey(key));
+        return pessoaEncontrada != null ? ResponseEntity.ok(pessoaEncontrada) : ResponseEntity.notFound().build();
     }
 
     /**
      * SALVA OS DADOS DE UMA PESSOA
      *
-     * @param pessoa pessoa
-     * @param response         HttpServletResponse
+     * @param pessoa   pessoa
+     * @param response HttpServletResponse
      * @return
      */
     @PostMapping
@@ -88,12 +81,7 @@ public class PessoaResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_UPDATE_PERSON') and #oauth2.hasScope('write')")
     public ResponseEntity<Pessoa> update(@Valid @PathVariable String key, @Valid @RequestBody Pessoa Pessoa) {
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            return ResponseEntity.status(HttpStatus.OK).body(pessoaService.update(id, Pessoa));
-        } catch (Exception e) {
-            throw new PessoaNaoEncontrada();
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.update(new Criptografia().getKey(key), Pessoa));
     }
 
     /**
@@ -105,12 +93,6 @@ public class PessoaResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETE_PERSON') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            pessoaRepository.delete(id);
-        } catch (Exception e) {
-            throw new PessoaNaoEncontrada();
-        }
-
+        pessoaRepository.delete(new Criptografia().getKey(key));
     }
 }

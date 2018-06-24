@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Classe responsavel por manipular toda a regra de negocio de um Veiculo
@@ -28,7 +29,7 @@ public class VeiculoService {
         Veiculo objFound = veiculoRepository.save(buscarPorId(id));
         veiculo.setId(objFound.getId());
         veiculo.setControle(objFound.getControle());
-        veiculo.getControle().setDataAlteracao(LocalDateTime.now());
+        veiculo.getControle().setDataAlteracao(new Date());
         return veiculoRepository.save(veiculo);
     }
 

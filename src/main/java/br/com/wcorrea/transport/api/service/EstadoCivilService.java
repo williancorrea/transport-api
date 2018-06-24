@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Class responsible for performing the entire business rule by manipulating information
@@ -29,7 +30,7 @@ public class EstadoCivilService {
         EstadoCivil objFound = estadoCivilRepository.save(buscarPorId(id));
         estadoCivil.setId(objFound.getId());
         estadoCivil.setControle(objFound.getControle());
-        estadoCivil.getControle().setDataAlteracao(LocalDateTime.now());
+        estadoCivil.getControle().setDataAlteracao(new Date());
         return estadoCivilRepository.save(estadoCivil);
     }
 

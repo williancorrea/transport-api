@@ -6,6 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.InputMismatchException;
 
 public class Utils {
@@ -19,6 +24,28 @@ public class Utils {
             resp.append('0');
         return resp + s;
     }
+
+    public static LocalDateTime convertToLocalDateTime(Date dateToConvert) {
+        return Instant.ofEpochMilli(dateToConvert.getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
+
+    public static LocalDate convertToLocalDate(Date dateToConvert) {
+        return Instant.ofEpochMilli(dateToConvert.getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
+
+    public static Date convertDate(LocalDate dateToConvert) {
+        return java.util.Date.from(dateToConvert.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+    }
+    public static Date convertDate(LocalDateTime dateToConvert) {
+        return java.sql.Timestamp.valueOf(dateToConvert);
+    }
+
 
     public String getURL(String urlParam) throws IOException {
         try {

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Class responsible for performing the entire business rule by manipulating information
@@ -28,7 +29,7 @@ public class LevelOfEducationService {
         LevelOfEducation objFound = levelOfEducationRepository.save(findOne(id));
         levelOfEducation.setId(objFound.getId());
         levelOfEducation.setProperties(objFound.getProperties());
-        levelOfEducation.getProperties().setDataAlteracao(LocalDateTime.now());
+        levelOfEducation.getProperties().setDataAlteracao(new Date());
         return levelOfEducationRepository.save(levelOfEducation);
     }
 

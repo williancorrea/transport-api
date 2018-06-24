@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Class responsible for performing the entire business rule by manipulating product unit information
@@ -28,7 +29,7 @@ public class ProductUnitService {
         ProductUnit updateFound = findOne(id);
         productUnit.setId(updateFound.getId());
         productUnit.setProperties(updateFound.getProperties());
-        productUnit.getProperties().setDataAlteracao(LocalDateTime.now());
+        productUnit.getProperties().setDataAlteracao(new Date());
         return productUnitRepository.save(productUnit);
     }
 

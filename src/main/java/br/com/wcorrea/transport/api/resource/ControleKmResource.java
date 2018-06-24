@@ -5,7 +5,6 @@ import br.com.wcorrea.transport.api.model.ControleKm;
 import br.com.wcorrea.transport.api.repository.controleKm.ControleKmFiltro;
 import br.com.wcorrea.transport.api.repository.controleKm.ControleKmRepository;
 import br.com.wcorrea.transport.api.service.ControleKmService;
-import br.com.wcorrea.transport.api.service.exception.veiculo.ControleKmNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -51,13 +50,7 @@ public class ControleKmResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_CONTROLE-KM') and #oauth2.hasScope('read')")
     public ResponseEntity<ControleKm> findOne(@Valid @PathVariable String key) {
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            return ResponseEntity.ok(controleKmService.buscarPorId(id));
-        } catch (Exception e) {
-            throw new ControleKmNaoEncontrado();
-        }
-
+        return ResponseEntity.ok(controleKmService.buscarPorId(new Criptografia().getKey(key)));
     }
 
     /**
@@ -84,12 +77,7 @@ public class ControleKmResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_CONTROLE-KM') and #oauth2.hasScope('write')")
     public ResponseEntity<ControleKm> update(@Valid @PathVariable String key, @Valid @RequestBody ControleKm controleKm) {
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            return ResponseEntity.status(HttpStatus.OK).body(controleKmService.atualizar(id, controleKm));
-        } catch (Exception e) {
-            throw new ControleKmNaoEncontrado();
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(controleKmService.atualizar(new Criptografia().getKey(key), controleKm));
     }
 
     /**
@@ -101,14 +89,7 @@ public class ControleKmResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETAR_CONTROLE-KM') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        //TODO: COLOCAR O EXCLUIR COMO UM RECURSO DO SERVICE, TIRAR A REGRA DE NEGOCIO DAQUI
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            ControleKm controleKm = controleKmService.buscarPorId(id);
-            controleKmRepository.delete(controleKm.getId());
-        } catch (Exception e) {
-            throw new ControleKmNaoEncontrado();
-        }
-
+        ControleKm controleKm = controleKmService.buscarPorId(new Criptografia().getKey(key));
+        controleKmRepository.delete(controleKm.getId());
     }
 }

@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @ToString(exclude = {"pessoaFisica"})
 @EqualsAndHashCode(exclude = {"pessoaFisica"})
@@ -150,6 +151,6 @@ public class Pessoa implements Serializable {
 
     @PreUpdate
     public void preUpdate() {
-        this.propriedades.setDataAlteracao(LocalDateTime.now());
+        this.propriedades.setDataAlteracao(new Date());
     }
 }

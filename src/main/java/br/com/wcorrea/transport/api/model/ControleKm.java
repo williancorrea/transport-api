@@ -15,6 +15,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.Date;
 
 @ToString
 @EqualsAndHashCode
@@ -60,14 +62,16 @@ public class ControleKm implements Serializable {
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "data_hora_saida")
-    private LocalDateTime dataHoraSaida;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHoraSaida;
 
     @Getter
     @Setter
     @NotNull
     @Column(name = "data_hora_chegada")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime dataHoraChegada;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHoraChegada;
 
     @NotNull
     @Size(min = 3, max = 150)
@@ -101,6 +105,11 @@ public class ControleKm implements Serializable {
     @Setter
     private String obs;
 
+    @Transient
+    @Getter
+    @Setter
+    private Integer kmNaoInformado;
+
     public ControleKm() {
     }
 
@@ -125,6 +134,6 @@ public class ControleKm implements Serializable {
 
     @PreUpdate
     public void preUpdade() {
-        this.controle.setDataAlteracao(LocalDateTime.now());
+        this.controle.setDataAlteracao(new Date());
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Class responsible for performing the entire business rule by manipulating bank information
@@ -28,7 +29,7 @@ public class BankService {
         Bank updateFound = findOne(id);
         bank.setId(updateFound.getId());
         bank.setProperties(updateFound.getProperties());
-        bank.getProperties().setDataAlteracao(LocalDateTime.now());
+        bank.getProperties().setDataAlteracao(new Date());
         return bankRepository.save(bank);
     }
 

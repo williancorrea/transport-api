@@ -5,7 +5,6 @@ import br.com.wcorrea.transport.api.model.Itinerario;
 import br.com.wcorrea.transport.api.repository.itinerario.ItinerarioFiltro;
 import br.com.wcorrea.transport.api.repository.itinerario.ItinerarioRepository;
 import br.com.wcorrea.transport.api.service.ItinerarioService;
-import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -51,13 +50,7 @@ public class ItinerarioResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_ITINERARIO') and #oauth2.hasScope('read')")
     public ResponseEntity<Itinerario> findOne(@Valid @PathVariable String key) {
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            return ResponseEntity.ok(itinerarioService.buscarPorId(id));
-        } catch (Exception e) {
-            throw new ItinerarioNaoEncontrado();
-        }
-
+        return ResponseEntity.ok(itinerarioService.buscarPorId(new Criptografia().getKey(key)));
     }
 
     /**
@@ -84,12 +77,7 @@ public class ItinerarioResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_ITINERARIO') and #oauth2.hasScope('write')")
     public ResponseEntity<Itinerario> update(@Valid @PathVariable String key, @Valid @RequestBody Itinerario itinerario) {
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            return ResponseEntity.status(HttpStatus.OK).body(itinerarioService.atualizar(id, itinerario));
-        } catch (Exception e) {
-            throw new ItinerarioNaoEncontrado();
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(itinerarioService.atualizar(new Criptografia().getKey(key), itinerario));
     }
 
     /**
@@ -101,14 +89,7 @@ public class ItinerarioResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETAR_ITINERARIO') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        //TODO: COLOCAR O EXCLUIR COMO UM RECURSO DO SERVICE, TIRAR A REGRA DE NEGOCIO DAQUI
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            Itinerario itinerario = itinerarioService.buscarPorId(id);
-            itinerarioRepository.delete(itinerario.getId());
-        } catch (Exception e) {
-            throw new ItinerarioNaoEncontrado();
-        }
-
+        Itinerario itinerario = itinerarioService.buscarPorId(new Criptografia().getKey(key));
+        itinerarioRepository.delete(itinerario.getId());
     }
 }

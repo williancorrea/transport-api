@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @ToString
 @EqualsAndHashCode
@@ -80,6 +81,6 @@ public class ItinerarioParada implements Serializable {
 
     @PreUpdate
     public void preUpdade() {
-        this.controle.setDataAlteracao(LocalDateTime.now());
+        this.controle.setDataAlteracao(new Date());
     }
 }

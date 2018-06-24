@@ -2,10 +2,9 @@ package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.EstadoCivil;
-import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilFiltro;
+import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
 import br.com.wcorrea.transport.api.service.EstadoCivilService;
-import br.com.wcorrea.transport.api.service.exception.EstadoCivilNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -51,13 +50,7 @@ public class EstadoCivilResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_ESTADO_CIVIL') and #oauth2.hasScope('read')")
     public ResponseEntity<EstadoCivil> findOne(@Valid @PathVariable String key) {
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            return ResponseEntity.ok(estadoCivilService.buscarPorId(id));
-        } catch (Exception e) {
-            throw new EstadoCivilNaoEncontrado();
-        }
-
+        return ResponseEntity.ok(estadoCivilService.buscarPorId(new Criptografia().getKey(key)));
     }
 
     /**
@@ -84,12 +77,7 @@ public class EstadoCivilResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_ESTADO_CIVIL') and #oauth2.hasScope('write')")
     public ResponseEntity<EstadoCivil> update(@Valid @PathVariable String key, @Valid @RequestBody EstadoCivil estadoCivil) {
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            return ResponseEntity.status(HttpStatus.OK).body(estadoCivilService.atualizar(id, estadoCivil));
-        } catch (Exception e) {
-            throw new EstadoCivilNaoEncontrado();
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(estadoCivilService.atualizar(new Criptografia().getKey(key), estadoCivil));
     }
 
     /**
@@ -101,13 +89,7 @@ public class EstadoCivilResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETAR_ESTADO_CIVIL') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            EstadoCivil estadoCivil = estadoCivilService.buscarPorId(id);
-            estadoCivilRepository.delete(estadoCivil.getId());
-        } catch (Exception e) {
-            throw new EstadoCivilNaoEncontrado();
-        }
-
+        EstadoCivil estadoCivil = estadoCivilService.buscarPorId(new Criptografia().getKey(key));
+        estadoCivilRepository.delete(estadoCivil.getId());
     }
 }

@@ -2,6 +2,7 @@ package br.com.wcorrea.transport.api.utils;
 
 import br.com.wcorrea.transport.api.config.AutowireHelper;
 import br.com.wcorrea.transport.api.config.property.ApiProperty;
+import br.com.wcorrea.transport.api.service.exception.ExceptionDescriptografarKey;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.codec.Base64;
@@ -85,4 +86,13 @@ public class Criptografia {
         }
         return this.decrypt(str.toString());
     }
+
+    public Long getKey(String key){
+        try {
+            return Long.parseLong(new Criptografia().decryptFromHex(key));
+        }catch(Exception e){
+            throw new ExceptionDescriptografarKey();
+        }
+    }
+
 }

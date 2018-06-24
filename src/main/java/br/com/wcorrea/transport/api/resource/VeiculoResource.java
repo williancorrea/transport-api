@@ -5,7 +5,6 @@ import br.com.wcorrea.transport.api.model.Veiculo;
 import br.com.wcorrea.transport.api.repository.veiculo.VeiculoFiltro;
 import br.com.wcorrea.transport.api.repository.veiculo.VeiculoRepository;
 import br.com.wcorrea.transport.api.service.VeiculoService;
-import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -51,13 +50,7 @@ public class VeiculoResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_VEICULO') and #oauth2.hasScope('read')")
     public ResponseEntity<Veiculo> findOne(@Valid @PathVariable String key) {
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            return ResponseEntity.ok(veiculoService.buscarPorId(id));
-        } catch (Exception e) {
-            throw new VeiculoNaoEncontrado();
-        }
-
+        return ResponseEntity.ok(veiculoService.buscarPorId(new Criptografia().getKey(key)));
     }
 
     /**
@@ -84,12 +77,7 @@ public class VeiculoResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_VEICULO') and #oauth2.hasScope('write')")
     public ResponseEntity<Veiculo> update(@Valid @PathVariable String key, @Valid @RequestBody Veiculo veiculo) {
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            return ResponseEntity.status(HttpStatus.OK).body(veiculoService.atualizar(id, veiculo));
-        } catch (Exception e) {
-            throw new VeiculoNaoEncontrado();
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(veiculoService.atualizar(new Criptografia().getKey(key), veiculo));
     }
 
     /**
@@ -101,14 +89,7 @@ public class VeiculoResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETAR_VEICULO') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        //TODO: COLOCAR O EXCLUIR COMO UM RECURSO DO SERVICE, TIRAR A REGRA DE NEGOCIO DAQUI
-        try {
-            Long id = Long.parseLong(new Criptografia().decryptFromHex(key));
-            Veiculo veiculo = veiculoService.buscarPorId(id);
-            veiculoRepository.delete(veiculo.getId());
-        } catch (Exception e) {
-            throw new VeiculoNaoEncontrado();
-        }
-
+        Veiculo veiculo = veiculoService.buscarPorId(new Criptografia().getKey(key));
+        veiculoRepository.delete(veiculo.getId());
     }
 }
