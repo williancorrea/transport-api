@@ -33,6 +33,10 @@ public class CorsFilter implements Filter {
             if (!apiProperty.getOriginAllowed().trim().equals(request.getHeader("Origin").trim())) {
                 chain.doFilter(req, resp);
             }
+        }else{
+            //Permite acesso de qualquer lugar
+            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin").trim());
+            response.setHeader("Access-Control-Allow-Credentials", "true");
         }
 
         if ("OPTIONS".equals(request.getMethod())) {
