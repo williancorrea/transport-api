@@ -17,7 +17,7 @@ CREATE TABLE controle_km (
 
     FOREIGN KEY (veiculo_id) REFERENCES veiculo(id),
     FOREIGN KEY (pessoa_id) REFERENCES pessoa(id),
-    FOREIGN KEY (itinerario_id) REFERENCES pessoa(id)
+    FOREIGN KEY (itinerario_id) REFERENCES itinerario(id)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8;
