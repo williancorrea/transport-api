@@ -78,9 +78,13 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
                 return false;
             }
         }
-        if (controleKmId != null && cKm.getResultList().size() == 1) {
-            if (((ControleKm) cKm.getSingleResult()).getId() == controleKmId) {
+        if (controleKmId != null) {
+            if (cKm.getResultList().size() == 1 && ((ControleKm) cKm.getSingleResult()).getId() == controleKmId) {
                 return false;
+            } else if (cKm.getResultList().size() == 0) {
+                return false;
+            } else if (cKm.getResultList().size() > 1) {
+                return true;
             }
         }
         return true;
