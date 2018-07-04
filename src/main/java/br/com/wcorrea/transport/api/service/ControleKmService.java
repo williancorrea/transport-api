@@ -82,6 +82,9 @@ public class ControleKmService {
             throw new ControleKmChegadaInvalido();
         }
 
+        //TODO: testar o localDateTime novamente, depois das alteraçoes de timezono no arquivo properties
+
+        //TODO: Adicionar restrição de km inicial do sistema - adicionar quantidade permitida de km por dia (km * dia) p/ nao cadastrar km de carro errado
         //Valida Data de Saida
 //        if (controleKmRepository.validarPeriodoInvalidoDeEntradaDataSaida(controleKm)) {
 //            throw new ControleKmPeriodoInvalidoDeEntradaDataSaida();
