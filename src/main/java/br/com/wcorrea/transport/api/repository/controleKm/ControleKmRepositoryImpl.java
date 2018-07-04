@@ -65,9 +65,9 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
      */
     public boolean validarPeriodoInvalidoKmSaida(Long controleKmId, Long veiculoId, String kmSaida) {
         StringBuilder sql = new StringBuilder();
-        sql.append("from controle_km where :pkmSaida >= km_saida and :pkmSaida <= km_chegada and veiculo.id = :pveiculoId");
+        sql.append("from controle_km where :pkmSaida >= km_saida and :pkmSaida < km_chegada and veiculo.id = :pveiculoId");
         Query cKm = manager.createQuery(sql.toString(), ControleKm.class)
-                .setParameter("pkmSaida", kmSaida)
+                .setParameter("pkmSaida", Integer.parseInt(kmSaida))
                 .setParameter("pveiculoId", veiculoId);
         if (controleKmId == null) {
             if (cKm.getResultList().size() == 0) {
@@ -78,9 +78,13 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
                 return false;
             }
         }
-        if (controleKmId != null && cKm.getResultList().size() == 1) {
-            if (((ControleKm) cKm.getSingleResult()).getId() == controleKmId) {
+        if (controleKmId != null) {
+            if (cKm.getResultList().size() == 1 && ((ControleKm) cKm.getSingleResult()).getId() == controleKmId) {
                 return false;
+            } else if (cKm.getResultList().size() == 0) {
+                return false;
+            } else if (cKm.getResultList().size() > 1) {
+                return true;
             }
         }
         return true;
@@ -94,7 +98,7 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
      */
     public boolean validarPeriodoInvalidoKmChegada(Long controleKmId, Long veiculoId, String kmChegada) {
         StringBuilder sql = new StringBuilder();
-        sql.append("from controle_km where :pkmChegada >= km_saida and :pkmChegada <= km_chegada and veiculo.id = :pveiculoId");
+        sql.append("from controle_km where :pkmChegada > km_saida and :pkmChegada <= km_chegada and veiculo.id = :pveiculoId");
         Query cKm = manager.createQuery(sql.toString(), ControleKm.class)
                 .setParameter("pkmChegada", kmChegada)
                 .setParameter("pveiculoId", veiculoId);
@@ -250,8 +254,7 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
 
         if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
             sql += " and (";
-            sql += " upper(a.kmSaida) like '%" + filtro.getFiltroGlobal().toUpperCase().trim() + "%'";
-            sql += " or upper(a.kmChegada) like '%" + filtro.getFiltroGlobal().toUpperCase().trim() + "%'";
+            sql += " upper(a.itinerario.nome) like '%" + filtro.getFiltroGlobal().toUpperCase().trim() + "%'";
             sql += " )";
         } else {
             if (StringUtils.isNotBlank(filtro.getKmSaida())) {

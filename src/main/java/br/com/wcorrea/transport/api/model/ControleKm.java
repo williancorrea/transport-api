@@ -123,6 +123,11 @@ public class ControleKm implements Serializable {
     }
 
     @Transient
+    public Long getKmTotal() {
+        return Long.parseLong(this.kmChegada) - Long.parseLong(this.kmSaida);
+    }
+
+    @Transient
     public void setKey(String key) throws Exception {
         this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
     }
