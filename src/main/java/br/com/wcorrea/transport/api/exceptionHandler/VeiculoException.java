@@ -101,4 +101,27 @@ public class VeiculoException extends DefaultExceptionHandler {
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE, request);
     }
 
+    @ExceptionHandler({ControleKmKmSaidaKmChegadaIdenticos.class})
+    public ResponseEntity<Object> handleControleKmKmSaidaKmChegadaIdenticos(ControleKmKmSaidaKmChegadaIdenticos ex, WebRequest request, Locale loc) {
+        String userMessage = messageSource.getMessage("recurso.controle_km_km_saida_km_chegada_identidos", null, loc);
+        String developerMessage = ex.toString();
+        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_ACCEPTABLE));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE, request);
+    }
+
+    @ExceptionHandler({ControleKmDataSaidaDataChegadaIdenticas.class})
+    public ResponseEntity<Object> handleControleKmDataSaidaDataChegadaIdenticas(ControleKmDataSaidaDataChegadaIdenticas ex, WebRequest request, Locale loc) {
+        String userMessage = messageSource.getMessage("recurso.controle_km_data_saida_data_chegada_identidas", null, loc);
+        String developerMessage = ex.toString();
+        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_ACCEPTABLE));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE, request);
+    }
+
+    @ExceptionHandler({ControleKmKmSaidaMenorOdometroInicialVeiculo.class})
+    public ResponseEntity<Object> handleControleKmKmSaidaMenorOdometroInicialVeiculo(ControleKmKmSaidaMenorOdometroInicialVeiculo ex, WebRequest request, Locale loc) {
+        String userMessage = messageSource.getMessage("recurso.controle_km_km_saida_manor_que_odometro_inicial_veiculo", null, loc);
+        String developerMessage = ex.toString();
+        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_ACCEPTABLE));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE, request);
+    }
 }

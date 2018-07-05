@@ -49,6 +49,11 @@ public class Veiculo implements Serializable {
     @Setter
     private String obs;
 
+    @Getter
+    @Setter
+    @Column(name = "odometro_inicial")
+    private Long odometroInicial;
+
     public Veiculo() {
     }
 

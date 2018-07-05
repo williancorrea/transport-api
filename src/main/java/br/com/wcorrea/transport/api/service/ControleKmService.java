@@ -7,7 +7,6 @@ import br.com.wcorrea.transport.api.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -67,40 +66,68 @@ public class ControleKmService {
         controleKm.setPessoa(pessoaService.buscarPorId(controleKm.getPessoa()));
         controleKm.setItinerario(itinerarioService.buscarPorId(controleKm.getItinerario()));
 
+        // Data de saída de data de chegada identicas
+        if (Utils.convertToLocalDateTime(controleKm.getDataHoraSaida()).isEqual(Utils.convertToLocalDateTime(controleKm.getDataHoraChegada()))) {
+            throw new ControleKmDataSaidaDataChegadaIdenticas();
+        }
+
+        //Data de saída maior que a data de chegada
         if (Utils.convertToLocalDateTime(controleKm.getDataHoraSaida()).isAfter(Utils.convertToLocalDateTime(controleKm.getDataHoraChegada()))) {
             throw new ControleKmPeriodoEntreDatasInvalidos();
         }
+
+        // Km de saída informado é menor que o odometro inical do veículo
+        if(Long.parseLong(controleKm.getKmSaida()) < controleKm.getVeiculo().getOdometroInicial()){
+            throw new ControleKmKmSaidaMenorOdometroInicialVeiculo();
+        }
+
+        // Km de Saída e Km de Chegada identicos
+        if (Long.parseLong(controleKm.getKmSaida()) == Long.parseLong(controleKm.getKmChegada())) {
+            throw new ControleKmKmSaidaKmChegadaIdenticos();
+        }
+
+        //Km de saída maior que o km de chegada
         if (Long.parseLong(controleKm.getKmSaida()) > Long.parseLong(controleKm.getKmChegada())) {
             throw new ControleKmKmSaidaNaoPodeSerMaiorKmChegada();
         }
+
         //Verifica se o Km de Saida está sendo utilizado em outro apontamento
         if (controleKmRepository.validarPeriodoInvalidoKmSaida(controleKm.getId(), controleKm.getVeiculo().getId(), controleKm.getKmSaida())) {
             throw new ControleKmSaidaInvalido();
         }
+
         //Verifica se o Km de Chegada está sendo utilizado em outro apontamento
         if (controleKmRepository.validarPeriodoInvalidoKmChegada(controleKm.getId(), controleKm.getVeiculo().getId(), controleKm.getKmChegada())) {
             throw new ControleKmChegadaInvalido();
         }
 
-        //TODO: testar o localDateTime novamente, depois das alteraçoes de timezono no arquivo properties
-
         //TODO: Adicionar restrição de km inicial do sistema - adicionar quantidade permitida de km por dia (km * dia) p/ nao cadastrar km de carro errado
+
         //Valida Data de Saida
 //        if (controleKmRepository.validarPeriodoInvalidoDeEntradaDataSaida(controleKm)) {
 //            throw new ControleKmPeriodoInvalidoDeEntradaDataSaida();
 //        }
+
         //Valida Km Saida
 //        if (controleKmRepository.validarPeriodoInvalidoDeEntradaKmSaida(controleKm)) {
 //            throw new ControleKmPeriodoInvalidoDeEntradaKmSaida();
 //        }
+
         //Valida Data de Chegada
 //        if (controleKmRepository.validarPeriodoInvalidoDeEntradaDataChegada(controleKm)) {
 //            throw new ControleKmPeriodoInvalidoDeEntradaDataChegada();
 //        }
+
         //Valida Km Chegada
 //        if (controleKmRepository.validarPeriodoInvalidoDeEntradaKmChegada(controleKm)) {
 //            throw new ControleKmPeriodoInvalidoDeEntradaKmChegada();
 //        }
+
+
+        if (true) {
+            throw new ControleKmNaoEncontrado();
+        }
+
         return controleKm;
     }
 }
