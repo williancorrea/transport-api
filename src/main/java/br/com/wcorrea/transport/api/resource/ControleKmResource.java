@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/controle-km")
@@ -51,6 +53,21 @@ public class ControleKmResource {
     @PreAuthorize("hasAuthority('ROLE_LISTAR_CONTROLE-KM') and #oauth2.hasScope('read')")
     public ResponseEntity<ControleKm> findOne(@Valid @PathVariable String key) {
         return ResponseEntity.ok(controleKmService.buscarPorId(new Criptografia().getKey(key)));
+    }
+
+    /**
+     * Busca o km minimo a ser informado no periodo
+     *
+     * @param veiculoId
+     * @param dataSaida
+     * @return
+     */
+    @GetMapping("/kmMinimoPeriodo")
+    @PreAuthorize("hasAuthority('ROLE_LISTAR_CONTROLE-KM') and #oauth2.hasScope('read')")
+    public ResponseEntity<Long> buscarKmSaidaMinimoPorPeriodo(
+            @RequestParam Long veiculoId,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date dataSaida) {
+        return ResponseEntity.ok(controleKmService.buscarKmMinimoPeloPeriodo(dataSaida, veiculoId));
     }
 
     /**

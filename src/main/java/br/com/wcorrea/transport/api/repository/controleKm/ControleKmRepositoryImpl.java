@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
@@ -122,6 +123,28 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
         }
         return true;
     }
+
+    /**
+     * Recupera o km minimo a ser inserido para o veiculo informado, impossibilitando a digitação de intervalos de km inválidos
+     *
+     * @param dataSaida
+     * @param veiculoId
+     * @return
+     */
+    public Long recuperarKmSaidaMinimo(Date dataSaida, Long veiculoId) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("select max(kmChegada)from controle_km where veiculo.id = :pveiculoId and dataHoraChegada <= :pDataSaida");
+        //TODO: Mudara para long depois que alterar o tipo do banco
+        Query cKm = manager.createQuery(sql.toString(), String.class)
+                .setParameter("pDataSaida", dataSaida)
+                .setParameter("pveiculoId", veiculoId);
+
+        if (cKm.getResultList().size() == 0) {
+            return 0L;
+        }
+        return Long.parseLong(cKm.getSingleResult().toString());
+    }
+
 
     /**
      * Verifica se o intevalo da data pode ser inserido o Km informado (verifica se já nao existe um km superior neste mesmo perio)

@@ -61,6 +61,17 @@ public class ControleKmService {
         return controleKm;
     }
 
+    /**
+     * Busca o Km de saida minimo a ser informado através do periodo
+     *
+     * @param dataSaida
+     * @param veiculoId
+     * @return
+     */
+    public Long buscarKmMinimoPeloPeriodo(Date dataSaida, Long veiculoId) {
+        return controleKmRepository.recuperarKmSaidaMinimo(dataSaida, veiculoId);
+    }
+
     private ControleKm validarControleKm(ControleKm controleKm) {
         controleKm.setVeiculo(veiculoService.buscarPorId(controleKm.getVeiculo()));
         controleKm.setPessoa(pessoaService.buscarPorId(controleKm.getPessoa()));
@@ -77,7 +88,7 @@ public class ControleKmService {
         }
 
         // Km de saída informado é menor que o odometro inical do veículo
-        if(Long.parseLong(controleKm.getKmSaida()) < controleKm.getVeiculo().getOdometroInicial()){
+        if (Long.parseLong(controleKm.getKmSaida()) < controleKm.getVeiculo().getOdometroInicial()) {
             throw new ControleKmKmSaidaMenorOdometroInicialVeiculo();
         }
 
@@ -124,9 +135,9 @@ public class ControleKmService {
 //        }
 
 
-        if (true) {
-            throw new ControleKmNaoEncontrado();
-        }
+//        if (true) {
+//            throw new ControleKmNaoEncontrado();
+//        }
 
         return controleKm;
     }

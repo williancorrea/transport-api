@@ -4,6 +4,8 @@ import br.com.wcorrea.transport.api.model.ControleKm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Date;
+
 
 public interface ControleKmRepositoryQuery {
     Page<ControleKm> findAll(ControleKmFiltro filtro, Pageable paginacao);
@@ -19,4 +21,6 @@ public interface ControleKmRepositoryQuery {
     boolean validarPeriodoInvalidoDeEntradaDataChegada(ControleKm controleKm);
 
     boolean validarPeriodoInvalidoDeEntradaDataSaida(ControleKm controleKm);
+
+    Long recuperarKmSaidaMinimo(Date dataSaida, Long veiculoId);
 }
