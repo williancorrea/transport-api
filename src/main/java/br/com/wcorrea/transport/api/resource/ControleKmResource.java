@@ -70,6 +70,12 @@ public class ControleKmResource {
         return ResponseEntity.ok(controleKmService.buscarKmMinimoPeloPeriodo(dataSaida, new Criptografia().getKey(veiculoId)));
     }
 
+    /**
+     * Busca o Km máximo a ser informado no periodo
+     * @param veiculoId
+     * @param dataChegada
+     * @return
+     */
     @GetMapping("/kmMaximoPeriodo")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_CONTROLE-KM') and #oauth2.hasScope('read')")
     public ResponseEntity<Long> buscarKmChegadaMaximoPorPeriodo(

@@ -124,14 +124,16 @@ public class ControleKmService {
             throw new ControleKmPeriodoInvalidoDeEntradaDataSaida();
         }
 
+        //TODO: NAO PERMITIR O CADASTRAMENTO DE UM APONTAMENTO FUTURO (DATA MAIOR QUE AGORA)
+
         // Valida Data de Chegada
 //        if (controleKmRepository.validarPeriodoInvalidoDeEntradaDataChegada(controleKm)) {
 //            throw new ControleKmPeriodoInvalidoDeEntradaDataChegada();
 //        }
 
-        if (true) {
-            throw new ControleKmNaoEncontrado();
-        }
+//        if (true) {
+//            throw new ControleKmNaoEncontrado();
+//        }
 
         return controleKm;
     }
