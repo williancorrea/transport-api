@@ -65,9 +65,17 @@ public class ControleKmResource {
     @GetMapping("/kmMinimoPeriodo")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_CONTROLE-KM') and #oauth2.hasScope('read')")
     public ResponseEntity<Long> buscarKmSaidaMinimoPorPeriodo(
-            @RequestParam Long veiculoId,
+            @RequestParam String veiculoId,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date dataSaida) {
-        return ResponseEntity.ok(controleKmService.buscarKmMinimoPeloPeriodo(dataSaida, veiculoId));
+        return ResponseEntity.ok(controleKmService.buscarKmMinimoPeloPeriodo(dataSaida, new Criptografia().getKey(veiculoId)));
+    }
+
+    @GetMapping("/kmMaximoPeriodo")
+    @PreAuthorize("hasAuthority('ROLE_LISTAR_CONTROLE-KM') and #oauth2.hasScope('read')")
+    public ResponseEntity<Long> buscarKmChegadaMaximoPorPeriodo(
+            @RequestParam String veiculoId,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date dataChegada) {
+        return ResponseEntity.ok(controleKmService.buscarKmMaximoPeloPeriodo(dataChegada, new Criptografia().getKey(veiculoId)));
     }
 
     /**

@@ -72,6 +72,11 @@ public class ControleKmService {
         return controleKmRepository.recuperarKmSaidaMinimo(dataSaida, veiculoId);
     }
 
+    public Long buscarKmMaximoPeloPeriodo(Date dataSaidaChegada, Long veiculoId) {
+        return controleKmRepository.recuperarKmChegadaMaximo(dataSaidaChegada, veiculoId);
+    }
+
+
     private ControleKm validarControleKm(ControleKm controleKm) {
         controleKm.setVeiculo(veiculoService.buscarPorId(controleKm.getVeiculo()));
         controleKm.setPessoa(pessoaService.buscarPorId(controleKm.getPessoa()));
@@ -114,30 +119,19 @@ public class ControleKmService {
 
         //TODO: Adicionar restrição de km inicial do sistema - adicionar quantidade permitida de km por dia (km * dia) p/ nao cadastrar km de carro errado
 
-        //Valida Data de Saida
-//        if (controleKmRepository.validarPeriodoInvalidoDeEntradaDataSaida(controleKm)) {
-//            throw new ControleKmPeriodoInvalidoDeEntradaDataSaida();
-//        }
+        // Valida Data de Saida
+        if (controleKmRepository.validarPeriodoInvalidoDeEntradaDataSaida(controleKm)) {
+            throw new ControleKmPeriodoInvalidoDeEntradaDataSaida();
+        }
 
-        //Valida Km Saida
-//        if (controleKmRepository.validarPeriodoInvalidoDeEntradaKmSaida(controleKm)) {
-//            throw new ControleKmPeriodoInvalidoDeEntradaKmSaida();
-//        }
-
-        //Valida Data de Chegada
+        // Valida Data de Chegada
 //        if (controleKmRepository.validarPeriodoInvalidoDeEntradaDataChegada(controleKm)) {
 //            throw new ControleKmPeriodoInvalidoDeEntradaDataChegada();
 //        }
 
-        //Valida Km Chegada
-//        if (controleKmRepository.validarPeriodoInvalidoDeEntradaKmChegada(controleKm)) {
-//            throw new ControleKmPeriodoInvalidoDeEntradaKmChegada();
-//        }
-
-
-//        if (true) {
-//            throw new ControleKmNaoEncontrado();
-//        }
+        if (true) {
+            throw new ControleKmNaoEncontrado();
+        }
 
         return controleKm;
     }

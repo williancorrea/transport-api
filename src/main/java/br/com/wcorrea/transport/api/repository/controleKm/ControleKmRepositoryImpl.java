@@ -2,7 +2,6 @@ package br.com.wcorrea.transport.api.repository.controleKm;
 
 import br.com.wcorrea.transport.api.model.ControleKm;
 import br.com.wcorrea.transport.api.repository.utils.UtilsRepository;
-import br.com.wcorrea.transport.api.service.exception.veiculo.ControleKmPeriodoInvalidoDeEntradaKmSaida;
 import br.com.wcorrea.transport.api.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -133,126 +132,87 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
      */
     public Long recuperarKmSaidaMinimo(Date dataSaida, Long veiculoId) {
         StringBuilder sql = new StringBuilder();
-        sql.append("select max(kmChegada)from controle_km where veiculo.id = :pveiculoId and dataHoraChegada <= :pDataSaida");
+        sql.append("select max(kmChegada) from controle_km where veiculo.id = :pveiculoId and dataHoraChegada <= :pDataSaida");
         //TODO: Mudara para long depois que alterar o tipo do banco
         Query cKm = manager.createQuery(sql.toString(), String.class)
                 .setParameter("pDataSaida", dataSaida)
                 .setParameter("pveiculoId", veiculoId);
 
-        if (cKm.getResultList().size() == 0) {
+        if (cKm.getResultList().size() == 0 || cKm.getResultList().get(0) == null) {
             return 0L;
         }
         return Long.parseLong(cKm.getSingleResult().toString());
     }
 
-
-    /**
-     * Verifica se o intevalo da data pode ser inserido o Km informado (verifica se já nao existe um km superior neste mesmo perio)
-     *
-     * @return
-     */
-    public boolean validarPeriodoInvalidoDeEntradaKmSaida(ControleKm controleKm) {
+    public Long recuperarKmChegadaMaximo(Date dataChegada, Long veiculoId) {
         StringBuilder sql = new StringBuilder();
-        sql.append("from controle_km where data_hora_chegada >= :pDataSaida and data_hora_saida <= :pDataChegada and veiculo.id = :pveiculoId order by km_saida");
-        Query max = manager.createQuery(sql.toString(), ControleKm.class)
-                .setParameter("pDataSaida", controleKm.getDataHoraSaida())
-                .setParameter("pDataChegada", controleKm.getDataHoraChegada())
-                .setParameter("pveiculoId", controleKm.getVeiculo().getId());
+        sql.append("select min(kmSaida)from controle_km where veiculo.id = :pveiculoId and dataHoraSaida >= :pDataChegada");
+        //TODO: Mudara para long depois que alterar o tipo do banco
+        Query cKm = manager.createQuery(sql.toString(), String.class)
+                .setParameter("pDataChegada", dataChegada)
+                .setParameter("pveiculoId", veiculoId);
 
-        if (controleKm.getId() == null) {
-            if (max.getResultList().size() == 0 || max.getResultList().get(0) == null) {
-                return false;
-            }
-            // KM Saida
-            if (Long.parseLong(controleKm.getKmSaida()) < Long.parseLong(((ControleKm) max.getResultList().get(0)).getKmChegada())) {
-                throw new ControleKmPeriodoInvalidoDeEntradaKmSaida();
-            }
-        } else {
-            if (max.getResultList().size() > 1) {
-                return true;
-            }
+        if (cKm.getResultList().size() == 0 || cKm.getResultList().get(0) == null) {
+            return 0L;
         }
-        return false;
+        return Long.parseLong(cKm.getSingleResult().toString());
     }
 
     public boolean validarPeriodoInvalidoDeEntradaDataSaida(ControleKm controleKm) {
         StringBuilder sql = new StringBuilder();
-        sql.append("from controle_km where data_hora_chegada >= :pDataSaida and data_hora_saida <= :pDataChegada and veiculo.id = :pveiculoId order by km_saida");
+        sql.append("from controle_km where dataHoraChegada <= :pDataSaida or (:pDataSaida between dataHoraSaida and dataHoraChegada)  and veiculo.id = :pveiculoId order by km_saida ASC");
         Query max = manager.createQuery(sql.toString(), ControleKm.class)
                 .setParameter("pDataSaida", controleKm.getDataHoraSaida())
-                .setParameter("pDataChegada", controleKm.getDataHoraChegada())
-                .setParameter("pveiculoId", controleKm.getVeiculo().getId());
+                .setParameter("pveiculoId", controleKm.getVeiculo().getId())
+                .setMaxResults(1);
+
 
         if (controleKm.getId() == null) {
             if (max.getResultList().size() == 0 || max.getResultList().get(0) == null) {
                 return false;
-            }
-            // Verifica a data de Saida
-            if (Utils.convertToLocalDateTime(controleKm.getDataHoraSaida()).isBefore(
-                    Utils.convertToLocalDateTime(
-                            ((ControleKm) max.getResultList().get(0)).getDataHoraChegada()
-                    )
-            )) {
-                return true;
-            }
-        } else {
-            //TODO: VERIFICA A ATUALIZAÇAÔ
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Verifica se o intevalo da data pode ser inserido o Km informado (verifica se já nao existe um km superior neste mesmo perio)
-     *
-     * @return
-     */
-    public boolean validarPeriodoInvalidoDeEntradaKmChegada(ControleKm controleKm) {
-        StringBuilder sql = new StringBuilder();
-        sql.append("from controle_km where data_hora_chegada >= :pDataSaida and data_hora_saida <= :pDataChegada and veiculo.id = :pveiculoId order by km_saida");
-        Query max = manager.createQuery(sql.toString(), ControleKm.class)
-                .setParameter("pDataSaida", controleKm.getDataHoraSaida())
-                .setParameter("pDataChegada", controleKm.getDataHoraChegada())
-                .setParameter("pveiculoId", controleKm.getVeiculo().getId());
-        if (controleKm.getId() == null) {
-            if (max.getResultList().size() == 0 || max.getResultList().get(0) == null) {
+            } else if (Utils.convertToLocalDateTime(controleKm.getDataHoraSaida()).isAfter(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraChegada()))) {
+                return false;
+            } else if (Utils.convertToLocalDateTime(controleKm.getDataHoraSaida()).isEqual(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraChegada()))) {
                 return false;
             }
-            // KM Chegada
-            if (Long.parseLong(controleKm.getKmChegada()) > Long.parseLong(((ControleKm) max.getResultList().get(max.getResultList().size() - 1)).getKmSaida())) {
-                return true;
-            }
         } else {
-            //TODO: Verificar a atualização
-            return true;
+            if (max.getResultList().size() == 0 || max.getResultList().get(0) == null) {
+                return false;
+            } else if (max.getResultList().size() > 0 && ((ControleKm) max.getSingleResult()).getId() == controleKm.getId() && Utils.convertToLocalDateTime(controleKm.getDataHoraSaida()).isAfter(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraChegada()))) {
+                return false;
+            } else if (max.getResultList().size() > 0 && ((ControleKm) max.getSingleResult()).getId() == controleKm.getId() && Utils.convertToLocalDateTime(controleKm.getDataHoraSaida()).isEqual(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraChegada()))) {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
     public boolean validarPeriodoInvalidoDeEntradaDataChegada(ControleKm controleKm) {
-        StringBuilder sql = new StringBuilder();
-        sql.append("from controle_km where data_hora_chegada >= :pDataSaida and data_hora_saida <= :pDataChegada and veiculo.id = :pveiculoId order by km_saida");
-        Query max = manager.createQuery(sql.toString(), ControleKm.class)
-                .setParameter("pDataSaida", controleKm.getDataHoraSaida())
-                .setParameter("pDataChegada", controleKm.getDataHoraChegada())
-                .setParameter("pveiculoId", controleKm.getVeiculo().getId());
-
-        if (controleKm.getId() == null) {
-            if (max.getResultList().size() == 0 || max.getResultList().get(0) == null) {
-                return false;
-            }
-            // Verifica a data de chegada
-            if (Utils.convertToLocalDateTime(controleKm.getDataHoraChegada()).isAfter(
-                    Utils.convertToLocalDateTime(
-                            ((ControleKm) max.getResultList().get(max.getResultList().size() - 1)).getDataHoraSaida()
-                    )
-            )) {
-                return true;
-            }
-        } else {
-            return true;
-        }
-        return false;
+//        StringBuilder sql = new StringBuilder();
+//        sql.append("from controle_km where data_hora_saida >= :pDataChegada  or (:pDataChegada between dataHoraSaida and dataHoraChegada) and veiculo.id = :pveiculoId order by km_saida ASC");
+//        Query max = manager.createQuery(sql.toString(), ControleKm.class)
+//                .setParameter("pDataChegada", controleKm.getDataHoraChegada())
+//                .setParameter("pveiculoId", controleKm.getVeiculo().getId())
+//                .setMaxResults(1);
+//
+//        if (controleKm.getId() == null) {
+//            if (max.getResultList().size() == 0 || max.getResultList().get(0) == null) {
+//                return false;
+//            } else if (Utils.convertToLocalDateTime(controleKm.getDataHoraChegada()).isBefore(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraSaida()))) {
+//                return false;
+//            } else if (Utils.convertToLocalDateTime(controleKm.getDataHoraChegada()).equals(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraSaida()))) {
+//                return false;
+//            }
+//        } else {
+//            if (max.getResultList().size() == 0 || max.getResultList().get(0) == null) {
+//                return false;
+//            } else if (((ControleKm) max.getSingleResult()).getId() == controleKm.getId() && Utils.convertToLocalDateTime(controleKm.getDataHoraChegada()).isBefore(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraSaida()))) {
+//                return false;
+//            } else if (((ControleKm) max.getSingleResult()).getId() == controleKm.getId() && Utils.convertToLocalDateTime(controleKm.getDataHoraChegada()).equals(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraSaida()))) {
+//                return false;
+//            }
+//        }
+        return true;
     }
 
     /**

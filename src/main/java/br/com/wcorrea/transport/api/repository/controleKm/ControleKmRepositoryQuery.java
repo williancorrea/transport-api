@@ -14,13 +14,11 @@ public interface ControleKmRepositoryQuery {
 
     boolean validarPeriodoInvalidoKmChegada(Long controleKmId, Long veiculoId, String kmChegada);
 
-    boolean validarPeriodoInvalidoDeEntradaKmSaida(ControleKm controleKm);
-
-    boolean validarPeriodoInvalidoDeEntradaKmChegada(ControleKm controleKm);
-
     boolean validarPeriodoInvalidoDeEntradaDataChegada(ControleKm controleKm);
 
     boolean validarPeriodoInvalidoDeEntradaDataSaida(ControleKm controleKm);
 
     Long recuperarKmSaidaMinimo(Date dataSaida, Long veiculoId);
+
+    Long recuperarKmChegadaMaximo(Date dataChegada, Long veiculoId);
 }
