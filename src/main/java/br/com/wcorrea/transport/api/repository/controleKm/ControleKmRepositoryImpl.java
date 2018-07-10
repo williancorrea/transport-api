@@ -2,7 +2,6 @@ package br.com.wcorrea.transport.api.repository.controleKm;
 
 import br.com.wcorrea.transport.api.model.ControleKm;
 import br.com.wcorrea.transport.api.repository.utils.UtilsRepository;
-import br.com.wcorrea.transport.api.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -44,17 +43,17 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
         return new PageImpl<>(controleKmList, paginacao, totalRegistros.getSingleResult());
     }
 
-    public Integer encontrarKmNaoInformado(ControleKm controleKm) {
+    public Long encontrarKmNaoInformado(ControleKm controleKm) {
         StringBuilder sql = new StringBuilder();
         sql.append("select max(kmChegada) from controle_km where dataHoraSaida < :pDataHoraSaida and veiculo.id = :pVeiculoId");
-        Query cKm = manager.createQuery(sql.toString(), String.class)
+        Query cKm = manager.createQuery(sql.toString(), Long.class)
                 .setParameter("pDataHoraSaida", controleKm.getDataHoraSaida())
                 .setParameter("pVeiculoId", controleKm.getVeiculo().getId());
 
         if (cKm.getResultList().size() == 0 || cKm.getResultList().get(0) == null) {
-            return 0;
+            return 0L;
         }
-        return Integer.parseInt(controleKm.getKmSaida()) - Integer.parseInt(cKm.getSingleResult().toString());
+        return controleKm.getKmSaida() - ((Long) cKm.getSingleResult());
     }
 
     /**
@@ -63,18 +62,18 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
      * @param kmSaida
      * @return
      */
-    public boolean validarPeriodoInvalidoKmSaida(Long controleKmId, Long veiculoId, String kmSaida) {
+    public boolean validarPeriodoInvalidoKmSaida(Long controleKmId, Long veiculoId, Long kmSaida) {
         StringBuilder sql = new StringBuilder();
         sql.append("from controle_km where :pkmSaida >= km_saida and :pkmSaida < km_chegada and veiculo.id = :pveiculoId");
         Query cKm = manager.createQuery(sql.toString(), ControleKm.class)
-                .setParameter("pkmSaida", Integer.parseInt(kmSaida))
+                .setParameter("pkmSaida", kmSaida)
                 .setParameter("pveiculoId", veiculoId);
         if (controleKmId == null) {
             if (cKm.getResultList().size() == 0) {
                 return false;
             } else if (cKm.getResultList().size() > 1) {
                 return true;
-            } else if (cKm.getResultList().size() == 1 && ((ControleKm) cKm.getSingleResult()).getKmChegada().equalsIgnoreCase(kmSaida)) {
+            } else if (cKm.getResultList().size() == 1 && ((ControleKm) cKm.getSingleResult()).getKmChegada() == kmSaida) {
                 return false;
             }
         }
@@ -96,7 +95,7 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
      * @param kmChegada
      * @return
      */
-    public boolean validarPeriodoInvalidoKmChegada(Long controleKmId, Long veiculoId, String kmChegada) {
+    public boolean validarPeriodoInvalidoKmChegada(Long controleKmId, Long veiculoId, Long kmChegada) {
         StringBuilder sql = new StringBuilder();
         sql.append("from controle_km where :pkmChegada > km_saida and :pkmChegada <= km_chegada and veiculo.id = :pveiculoId");
         Query cKm = manager.createQuery(sql.toString(), ControleKm.class)
@@ -107,7 +106,7 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
                 return false;
             } else if (cKm.getResultList().size() > 1) {
                 return true;
-            } else if (cKm.getResultList().size() == 1 && ((ControleKm) cKm.getSingleResult()).getKmSaida().equalsIgnoreCase(kmChegada)) {
+            } else if (cKm.getResultList().size() == 1 && ((ControleKm) cKm.getSingleResult()).getKmSaida() == kmChegada) {
                 return false;
             }
         }
@@ -134,53 +133,52 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
         StringBuilder sql = new StringBuilder();
         sql.append("select max(kmChegada) from controle_km where veiculo.id = :pveiculoId and dataHoraChegada <= :pDataSaida");
         //TODO: Mudara para long depois que alterar o tipo do banco
-        Query cKm = manager.createQuery(sql.toString(), String.class)
+        Query cKm = manager.createQuery(sql.toString(), Long.class)
                 .setParameter("pDataSaida", dataSaida)
                 .setParameter("pveiculoId", veiculoId);
 
         if (cKm.getResultList().size() == 0 || cKm.getResultList().get(0) == null) {
             return 0L;
         }
-        return Long.parseLong(cKm.getSingleResult().toString());
+        return (Long) cKm.getSingleResult();
     }
 
     public Long recuperarKmChegadaMaximo(Date dataChegada, Long veiculoId) {
         StringBuilder sql = new StringBuilder();
         sql.append("select min(kmSaida)from controle_km where veiculo.id = :pveiculoId and dataHoraSaida >= :pDataChegada");
-        //TODO: Mudara para long depois que alterar o tipo do banco
-        Query cKm = manager.createQuery(sql.toString(), String.class)
+        Query cKm = manager.createQuery(sql.toString(), Long.class)
                 .setParameter("pDataChegada", dataChegada)
                 .setParameter("pveiculoId", veiculoId);
 
         if (cKm.getResultList().size() == 0 || cKm.getResultList().get(0) == null) {
             return 0L;
         }
-        return Long.parseLong(cKm.getSingleResult().toString());
+        return (Long) cKm.getSingleResult();
     }
 
     public boolean validarPeriodoInvalidoDeEntradaDataSaida(ControleKm controleKm) {
         StringBuilder sql = new StringBuilder();
-        sql.append("from controle_km where dataHoraChegada <= :pDataSaida or (:pDataSaida between dataHoraSaida and dataHoraChegada)  and veiculo.id = :pveiculoId order by km_saida ASC");
-        Query max = manager.createQuery(sql.toString(), ControleKm.class)
+//        or (:pDataSaida  between dataHoraSaida and dataHoraChegada )
+        sql.append("from controle_km where :pDataSaida >= dataHoraSaida and :pDataChegada <= dataHoraChegada and veiculo.id = :pveiculoId");
+        Query cKm = manager.createQuery(sql.toString(), ControleKm.class)
                 .setParameter("pDataSaida", controleKm.getDataHoraSaida())
-                .setParameter("pveiculoId", controleKm.getVeiculo().getId())
-                .setMaxResults(1);
+                .setParameter("pDataChegada", controleKm.getDataHoraChegada())
+                .setParameter("pveiculoId", controleKm.getVeiculo().getId());
 
+        if (cKm.getResultList().size() == 0 || cKm.getResultList().get(0) == null) {
+            return false;
+        } else if (cKm.getResultList().size() > 1) {
+            return true;
+        }
 
         if (controleKm.getId() == null) {
-            if (max.getResultList().size() == 0 || max.getResultList().get(0) == null) {
-                return false;
-            } else if (Utils.convertToLocalDateTime(controleKm.getDataHoraSaida()).isAfter(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraChegada()))) {
-                return false;
-            } else if (Utils.convertToLocalDateTime(controleKm.getDataHoraSaida()).isEqual(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraChegada()))) {
+            ControleKm c = (ControleKm) cKm.getSingleResult();
+            if (controleKm.getKmSaida() >= c.getKmSaida()) {
                 return false;
             }
         } else {
-            if (max.getResultList().size() == 0 || max.getResultList().get(0) == null) {
-                return false;
-            } else if (max.getResultList().size() > 0 && ((ControleKm) max.getSingleResult()).getId() == controleKm.getId() && Utils.convertToLocalDateTime(controleKm.getDataHoraSaida()).isAfter(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraChegada()))) {
-                return false;
-            } else if (max.getResultList().size() > 0 && ((ControleKm) max.getSingleResult()).getId() == controleKm.getId() && Utils.convertToLocalDateTime(controleKm.getDataHoraSaida()).isEqual(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraChegada()))) {
+            ControleKm c = (ControleKm) cKm.getSingleResult();
+            if (c.getVeiculo().getId() == c.getVeiculo().getId() && controleKm.getKmSaida() >= c.getKmSaida()) {
                 return false;
             }
         }
@@ -188,30 +186,30 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
     }
 
     public boolean validarPeriodoInvalidoDeEntradaDataChegada(ControleKm controleKm) {
-//        StringBuilder sql = new StringBuilder();
-//        sql.append("from controle_km where data_hora_saida >= :pDataChegada  or (:pDataChegada between dataHoraSaida and dataHoraChegada) and veiculo.id = :pveiculoId order by km_saida ASC");
-//        Query max = manager.createQuery(sql.toString(), ControleKm.class)
-//                .setParameter("pDataChegada", controleKm.getDataHoraChegada())
-//                .setParameter("pveiculoId", controleKm.getVeiculo().getId())
-//                .setMaxResults(1);
-//
-//        if (controleKm.getId() == null) {
-//            if (max.getResultList().size() == 0 || max.getResultList().get(0) == null) {
-//                return false;
-//            } else if (Utils.convertToLocalDateTime(controleKm.getDataHoraChegada()).isBefore(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraSaida()))) {
-//                return false;
-//            } else if (Utils.convertToLocalDateTime(controleKm.getDataHoraChegada()).equals(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraSaida()))) {
-//                return false;
-//            }
-//        } else {
-//            if (max.getResultList().size() == 0 || max.getResultList().get(0) == null) {
-//                return false;
-//            } else if (((ControleKm) max.getSingleResult()).getId() == controleKm.getId() && Utils.convertToLocalDateTime(controleKm.getDataHoraChegada()).isBefore(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraSaida()))) {
-//                return false;
-//            } else if (((ControleKm) max.getSingleResult()).getId() == controleKm.getId() && Utils.convertToLocalDateTime(controleKm.getDataHoraChegada()).equals(Utils.convertToLocalDateTime(((ControleKm) max.getResultList().get(0)).getDataHoraSaida()))) {
-//                return false;
-//            }
-//        }
+        StringBuilder sql = new StringBuilder();
+        sql.append("from controle_km where :pDataSaida >= dataHoraSaida and :pDataChegada <= dataHoraChegada and veiculo.id = :pveiculoId");
+        Query cKm = manager.createQuery(sql.toString(), ControleKm.class)
+                .setParameter("pDataSaida", controleKm.getDataHoraSaida())
+                .setParameter("pDataChegada", controleKm.getDataHoraChegada())
+                .setParameter("pveiculoId", controleKm.getVeiculo().getId());
+
+        if (cKm.getResultList().size() == 0 || cKm.getResultList().get(0) == null) {
+            return false;
+        } else if (cKm.getResultList().size() > 1) {
+            return true;
+        }
+
+        if (controleKm.getId() == null) {
+            ControleKm c = (ControleKm) cKm.getSingleResult();
+            if (controleKm.getKmChegada() <= c.getKmChegada()) {
+                return false;
+            }
+        } else {
+            ControleKm c = (ControleKm) cKm.getSingleResult();
+            if (c.getVeiculo().getId() == c.getVeiculo().getId() && controleKm.getKmChegada() <= c.getKmChegada()) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -223,10 +221,7 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
      * @return
      */
     private String createQuery(ControleKmFiltro filtro, boolean count) {
-
         filtro.setFiltroGlobal(UtilsRepository.removeCaracteresProblematicos(filtro.getFiltroGlobal()));
-        filtro.setKmSaida(UtilsRepository.removeCaracteresProblematicos(filtro.getKmSaida()));
-        filtro.setKmChegada(UtilsRepository.removeCaracteresProblematicos(filtro.getKmChegada()));
 
         String sql;
         if (count) {
@@ -240,11 +235,27 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
             sql += " upper(a.itinerario.nome) like '%" + filtro.getFiltroGlobal().toUpperCase().trim() + "%'";
             sql += " )";
         } else {
-            if (StringUtils.isNotBlank(filtro.getKmSaida())) {
-                sql += " and upper(a.kmSaida) like '%" + filtro.getKmSaida().toUpperCase().trim() + "%'";
+            if (filtro.getDataSaida() != null) {
+                sql += " and a.dataHoraSaida >= '" + filtro.getDataSaida() + "'";
             }
-            if (StringUtils.isNotBlank(filtro.getKmChegada())) {
-                sql += " and upper(a.kmChegada) like '%" + filtro.getKmChegada().toUpperCase().trim() + "%'";
+            if (filtro.getDataChegada() != null) {
+                sql += " and a.dataHoraChegada <= '" + filtro.getDataChegada() + "'";
+            }
+            if (filtro.getKmSaida() != null) {
+                sql += " and a.kmSaida >= " + filtro.getKmSaida();
+            }
+            if (filtro.getKmChegada() != null) {
+                sql += " and a.kmChegada <= " + filtro.getKmChegada();
+            }
+
+            if (filtro.getVeiculoId() != null) {
+                sql += " and a.veiculo.id = " + filtro.getVeiculoId();
+            }
+            if (filtro.getPessoaId() != null) {
+                sql += " and a.pessoa.id = " + filtro.getPessoaId();
+            }
+            if (filtro.getItinerarioId() != null) {
+                sql += " and a.itinerario.id = " + filtro.getItinerarioId();
             }
         }
 

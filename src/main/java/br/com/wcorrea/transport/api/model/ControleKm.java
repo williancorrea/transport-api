@@ -14,8 +14,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.Date;
 
 @ToString
@@ -86,18 +84,16 @@ public class ControleKm implements Serializable {
     private String destino;
 
     @NotNull
-    @Size(min = 1, max = 30)
     @Getter
     @Setter
     @Column(name = "km_saida")
-    private String kmSaida;
+    private Long kmSaida;
 
     @NotNull
-    @Size(min = 1, max = 30)
     @Getter
     @Setter
     @Column(name = "km_chegada")
-    private String kmChegada;
+    private Long kmChegada;
 
     @Size(max = 512)
     @Lob
@@ -108,7 +104,7 @@ public class ControleKm implements Serializable {
     @Transient
     @Getter
     @Setter
-    private Integer kmNaoInformado;
+    private Long kmNaoInformado;
 
     public ControleKm() {
     }
@@ -124,7 +120,7 @@ public class ControleKm implements Serializable {
 
     @Transient
     public Long getKmTotal() {
-        return Long.parseLong(this.kmChegada) - Long.parseLong(this.kmSaida);
+        return this.kmChegada - this.kmSaida;
     }
 
     @Transient

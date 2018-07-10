@@ -3,7 +3,6 @@ package br.com.wcorrea.transport.api.service;
 import br.com.wcorrea.transport.api.model.ControleKm;
 import br.com.wcorrea.transport.api.repository.controleKm.ControleKmRepository;
 import br.com.wcorrea.transport.api.service.exception.veiculo.*;
-import br.com.wcorrea.transport.api.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,28 +81,33 @@ public class ControleKmService {
         controleKm.setPessoa(pessoaService.buscarPorId(controleKm.getPessoa()));
         controleKm.setItinerario(itinerarioService.buscarPorId(controleKm.getItinerario()));
 
+        // Não é permitido o cadastramento de um periodo futuro
+        if (controleKm.getDataHoraChegada().after(new Date()) && controleKm.getDataHoraSaida().after(new Date())) {
+            throw new ControleKmPeriodoFuturoNaoPermitido();
+        }
+
         // Data de saída de data de chegada identicas
-        if (Utils.convertToLocalDateTime(controleKm.getDataHoraSaida()).isEqual(Utils.convertToLocalDateTime(controleKm.getDataHoraChegada()))) {
+        if (controleKm.getDataHoraSaida().equals(controleKm.getDataHoraChegada())) {
             throw new ControleKmDataSaidaDataChegadaIdenticas();
         }
 
         //Data de saída maior que a data de chegada
-        if (Utils.convertToLocalDateTime(controleKm.getDataHoraSaida()).isAfter(Utils.convertToLocalDateTime(controleKm.getDataHoraChegada()))) {
+        if (controleKm.getDataHoraSaida().after(controleKm.getDataHoraChegada())) {
             throw new ControleKmPeriodoEntreDatasInvalidos();
         }
 
         // Km de saída informado é menor que o odometro inical do veículo
-        if (Long.parseLong(controleKm.getKmSaida()) < controleKm.getVeiculo().getOdometroInicial()) {
+        if (controleKm.getKmSaida() < controleKm.getVeiculo().getOdometroInicial()) {
             throw new ControleKmKmSaidaMenorOdometroInicialVeiculo();
         }
 
         // Km de Saída e Km de Chegada identicos
-        if (Long.parseLong(controleKm.getKmSaida()) == Long.parseLong(controleKm.getKmChegada())) {
+        if (controleKm.getKmSaida() == controleKm.getKmChegada()) {
             throw new ControleKmKmSaidaKmChegadaIdenticos();
         }
 
         //Km de saída maior que o km de chegada
-        if (Long.parseLong(controleKm.getKmSaida()) > Long.parseLong(controleKm.getKmChegada())) {
+        if (controleKm.getKmSaida() > controleKm.getKmChegada()) {
             throw new ControleKmKmSaidaNaoPodeSerMaiorKmChegada();
         }
 
@@ -117,23 +121,19 @@ public class ControleKmService {
             throw new ControleKmChegadaInvalido();
         }
 
-        //TODO: Adicionar restrição de km inicial do sistema - adicionar quantidade permitida de km por dia (km * dia) p/ nao cadastrar km de carro errado
-
         // Valida Data de Saida
         if (controleKmRepository.validarPeriodoInvalidoDeEntradaDataSaida(controleKm)) {
             throw new ControleKmPeriodoInvalidoDeEntradaDataSaida();
         }
 
-        //TODO: NAO PERMITIR O CADASTRAMENTO DE UM APONTAMENTO FUTURO (DATA MAIOR QUE AGORA)
+//         Valida Data de Chegada
+        if (controleKmRepository.validarPeriodoInvalidoDeEntradaDataChegada(controleKm)) {
+            throw new ControleKmPeriodoInvalidoDeEntradaDataChegada();
+        }
 
-        // Valida Data de Chegada
-//        if (controleKmRepository.validarPeriodoInvalidoDeEntradaDataChegada(controleKm)) {
-//            throw new ControleKmPeriodoInvalidoDeEntradaDataChegada();
-//        }
-
-//        if (true) {
-//            throw new ControleKmNaoEncontrado();
-//        }
+        if (true) {
+            throw new ControleKmNaoEncontrado();
+        }
 
         return controleKm;
     }

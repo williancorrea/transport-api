@@ -10,9 +10,9 @@ import java.util.Date;
 public interface ControleKmRepositoryQuery {
     Page<ControleKm> findAll(ControleKmFiltro filtro, Pageable paginacao);
 
-    boolean validarPeriodoInvalidoKmSaida(Long controleKmId, Long veiculoId, String kmSaida);
+    boolean validarPeriodoInvalidoKmSaida(Long controleKmId, Long veiculoId, Long kmSaida);
 
-    boolean validarPeriodoInvalidoKmChegada(Long controleKmId, Long veiculoId, String kmChegada);
+    boolean validarPeriodoInvalidoKmChegada(Long controleKmId, Long veiculoId, Long kmChegada);
 
     boolean validarPeriodoInvalidoDeEntradaDataChegada(ControleKm controleKm);
 
