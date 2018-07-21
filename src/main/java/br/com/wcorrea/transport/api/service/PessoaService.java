@@ -2,7 +2,8 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.EstadoCivil;
 import br.com.wcorrea.transport.api.model.Pessoa;
-import br.com.wcorrea.transport.api.repository.PessoaRepository;
+import br.com.wcorrea.transport.api.model.PessoaTipo;
+import br.com.wcorrea.transport.api.repository.pessoa.PessoaRepository;
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
 import br.com.wcorrea.transport.api.service.exception.*;
 import br.com.wcorrea.transport.api.utils.Utils;
@@ -23,7 +24,11 @@ public class PessoaService {
 
     public Pessoa save(Pessoa pessoaNovo) {
         pessoaNovo.setId(null);
-        pessoaNovo.getPessoaFisica().setId(null);
+        if (pessoaNovo.getTipo().equals(PessoaTipo.FISICA)) {
+            pessoaNovo.getPessoaFisica().setId(null);
+        } else {
+            pessoaNovo.getPessoaJuridica().setId(null);
+        }
 
         pessoaNovo = this.validarPessoa(pessoaNovo);
         return pessoaRepository.saveAndFlush(pessoaNovo);
@@ -41,7 +46,13 @@ public class PessoaService {
 
         pessoa.setId(objFound.getId());
         pessoa.setPropriedades(objFound.getPropriedades());
-        pessoa.getPessoaFisica().setId(objFound.getPessoaFisica().getId());
+        if (objFound.getTipo().equals(PessoaTipo.FISICA)) {
+            pessoa.getPessoaFisica().setId(objFound.getPessoaFisica().getId());
+            pessoa.setPessoaJuridica(null);
+        } else {
+            pessoa.getPessoaJuridica().setId(objFound.getPessoaJuridica().getId());
+            pessoa.setPessoaFisica(null);
+        }
 
         pessoa = this.validarPessoa(pessoa);
 //        BeanUtils.copyProperties(pessoa, objFound, "id", "pessoaFisica", "propriedades");
@@ -74,6 +85,10 @@ public class PessoaService {
         return pessoaRepository.findOneByCPF(cpf);
     }
 
+    public Pessoa findOneByCNPJ(String cnpj) {
+        return pessoaRepository.findOneByCNPJ(cnpj);
+    }
+
     /**
      * Efetua a validação do objeto Pessoa
      *
@@ -90,12 +105,10 @@ public class PessoaService {
                 throw new PessoaFisicaNaoEncontrada();
             }
 
-            if (pessoa.getId() == null && pessoa.getPessoaFisica().getId() == null) {
+            if (pessoa.getPessoaFisica().getId() == null) {
                 if (this.findOneByCPF(pessoa.getPessoaFisica().getCpf()) != null) {
                     throw new PessoaFisicaJaCadastrada();
                 }
-            } else {
-                //NÃO SEI SE LAVO OU SE COZINHO
             }
 
             if (Utils.validarCPF(pessoa.getPessoaFisica().getCpf()) == false) {
@@ -117,8 +130,20 @@ public class PessoaService {
 
             pessoa.getPessoaFisica().setPessoa(pessoa);
         } else {
-            //TODO: VALIDAR DADOS DE PESSOA JURIDICA
-            //TODO: VERIFICAR SE O CNPJ JÁ EXITE
+            if (pessoa.getPessoaJuridica() == null) {
+                throw new PessoaJuridicaNaoEncontrada();
+            }
+
+            if (pessoa.getPessoaJuridica().getId() == null) {
+                if (this.findOneByCNPJ(pessoa.getPessoaJuridica().getCnpj()) != null) {
+                    throw new PessoaJuridicaJaCadastrada();
+                }
+            }
+
+            if (Utils.validarCNPJ(pessoa.getPessoaJuridica().getCnpj()) == false) {
+                throw new PessoaJuridicaCNPJInvalido();
+            }
+            pessoa.getPessoaJuridica().setPessoa(pessoa);
         }
 
         return pessoa;

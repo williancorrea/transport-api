@@ -2,6 +2,7 @@ package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
 import br.com.wcorrea.transport.api.utils.Criptografia;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -53,8 +54,11 @@ public class Itinerario implements Serializable {
 
     @Getter
     @Setter
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     @Column(name = "valido_ate")
-    private LocalDate validoAte;
+    private Date validoAte;
 
     @Getter
     @Setter

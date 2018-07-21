@@ -131,10 +131,6 @@ public class ControleKmService {
             throw new ControleKmPeriodoInvalidoDeEntradaDataChegada();
         }
 
-        if (true) {
-            throw new ControleKmNaoEncontrado();
-        }
-
         return controleKm;
     }
 }

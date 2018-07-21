@@ -2,8 +2,8 @@ package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.Pessoa;
-import br.com.wcorrea.transport.api.repository.PessoaRepository;
-import br.com.wcorrea.transport.api.repository.filter.PersonFilter;
+import br.com.wcorrea.transport.api.repository.pessoa.PessoaRepository;
+import br.com.wcorrea.transport.api.repository.pessoa.PessoaFiltro;
 import br.com.wcorrea.transport.api.service.PessoaService;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +41,8 @@ public class PessoaResource {
      */
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_LIST_PERSON') and #oauth2.hasScope('read')")
-    public Page<Pessoa> findAll(PersonFilter personFilter, Pageable paginavel) {
-        return pessoaRepository.findAll(personFilter, paginavel);
+    public Page<Pessoa> findAll(PessoaFiltro pessoaFiltro, Pageable paginavel) {
+        return pessoaRepository.findAll(pessoaFiltro, paginavel);
     }
 
     /**

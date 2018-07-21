@@ -89,9 +89,13 @@ public class Pessoa implements Serializable {
     @JsonProperty("pessoaFisica")
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     private PessoaFisica pessoaFisica;
-//
-//    @OneToOne(fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL)
-//    private PessoaJuridica pessoaJuridica;
+
+    @Getter
+    @Setter
+    @JsonIgnoreProperties("pessoa")
+    @JsonProperty("pessoaJuridica")
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private PessoaJuridica pessoaJuridica;
 //
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private Set<PessoaEndereco> listaPessoaEndereco;

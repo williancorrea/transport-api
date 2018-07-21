@@ -1,6 +1,7 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.utils.Criptografia;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,9 +11,11 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 
 @ToString
 @EqualsAndHashCode
@@ -46,15 +49,19 @@ public class PessoaFisica implements Serializable {
     @Setter
     private String orgaoRg;
 
+    @Getter
+    @Setter
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     @Column(name = "data_emissao_rg")
-    @Getter
-    @Setter
-    private LocalDate dataEmissaoRg;
+    private Date dataEmissaoRg;
 
-    @Column(name = "data_nascimento")
     @Getter
     @Setter
-    private LocalDate dataNascimento;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_nascimento")
+    private Date dataNascimento;
 
     @Column(name = "sexo")
     @Size(min = 1, max = 1)
@@ -92,10 +99,12 @@ public class PessoaFisica implements Serializable {
     @Setter
     private String cnhCategoria;
 
-    @Column(name = "cnh_vencimento")
     @Getter
     @Setter
-    private LocalDate cnhVencimento;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "cnh_vencimento")
+    private Date cnhVencimento;
 
     @Column(name = "titulo_eleitoral_numero")
     @Size(max = 30)

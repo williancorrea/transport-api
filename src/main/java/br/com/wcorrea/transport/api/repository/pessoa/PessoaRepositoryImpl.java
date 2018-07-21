@@ -1,8 +1,7 @@
-package br.com.wcorrea.transport.api.repository;
+package br.com.wcorrea.transport.api.repository.pessoa;
 
 import br.com.wcorrea.transport.api.model.Pessoa;
 import br.com.wcorrea.transport.api.repository.utils.UtilsRepository;
-import br.com.wcorrea.transport.api.repository.filter.PersonFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -20,21 +19,21 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
     /**
      * Encontra todas as Pessoas e retornar o valor de forma paginada
      *
-     * @param personFilter
+     * @param pessoaFiltro
      * @param pageable
      * @return
      */
     @Override
-    public Page<Pessoa> findAll(PersonFilter personFilter, Pageable pageable) {
-        TypedQuery<Pessoa> queryList = manager.createQuery(this.createQuery(personFilter, false), Pessoa.class);
-        TypedQuery<Long> queryTotalRecords = manager.createQuery(this.createQuery(personFilter, true), Long.class);
+    public Page<Pessoa> findAll(PessoaFiltro pessoaFiltro, Pageable pageable) {
+        TypedQuery<Pessoa> queryList = manager.createQuery(this.createQuery(pessoaFiltro, false), Pessoa.class);
+        TypedQuery<Long> queryTotalRecords = manager.createQuery(this.createQuery(pessoaFiltro, true), Long.class);
 
         UtilsRepository.adicionarRestricoesPaginacao(queryList, pageable);
 
         return new PageImpl<>(queryList.getResultList(), pageable, queryTotalRecords.getSingleResult());
     }
 
-    private String createQuery(PersonFilter personFilter, boolean count) {
+    private String createQuery(PessoaFiltro pessoaFiltro, boolean count) {
         String sql;
         if (count) {
             sql = "select count(a) from pessoa a where 1=1 ";
@@ -42,17 +41,17 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
             sql = "from pessoa a where 1=1 ";
         }
 
-        if (StringUtils.isNotBlank(personFilter.getGlobalFilter())) {
+        if (StringUtils.isNotBlank(pessoaFiltro.getGlobalFilter())) {
             sql += " and (";
-            sql += " upper(a.nome) like '%" + personFilter.getGlobalFilter().toUpperCase().trim() + "%'";
-//            sql += " or upper(a.name) like '%" + personFilter.getGlobalFilter().toUpperCase().trim() + "%'";
+            sql += " upper(a.nome) like '%" + pessoaFiltro.getGlobalFilter().toUpperCase().trim() + "%'";
+//            sql += " or upper(a.name) like '%" + pessoaFiltro.getGlobalFilter().toUpperCase().trim() + "%'";
             sql += " )";
         } else {
-//            if (StringUtils.isNotBlank(personFilter.getDescricao())) {
-//                sql += " and upper(a.description) like '%" + personFilter.getDescricao().toUpperCase().trim() + "%'";
+//            if (StringUtils.isNotBlank(pessoaFiltro.getDescricao())) {
+//                sql += " and upper(a.description) like '%" + pessoaFiltro.getDescricao().toUpperCase().trim() + "%'";
 //            }
-            if (StringUtils.isNotBlank(personFilter.getName())) {
-                sql += " and upper(a.nome) like '%" + personFilter.getName().toUpperCase().trim() + "%'";
+            if (StringUtils.isNotBlank(pessoaFiltro.getName())) {
+                sql += " and upper(a.nome) like '%" + pessoaFiltro.getName().toUpperCase().trim() + "%'";
             }
         }
 
@@ -60,11 +59,11 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
          * ORDERING THE LIST
          */
         if (count == false) {
-            if (StringUtils.isNotBlank(personFilter.getSortField())) {
-                sql += " order by a." + personFilter.getSortField();
+            if (StringUtils.isNotBlank(pessoaFiltro.getSortField())) {
+                sql += " order by a." + pessoaFiltro.getSortField();
             }
-            if (StringUtils.isNotBlank(personFilter.getSortOrder()) && StringUtils.isNotBlank(personFilter.getSortField())) {
-                sql += " " + personFilter.getSortOrder();
+            if (StringUtils.isNotBlank(pessoaFiltro.getSortOrder()) && StringUtils.isNotBlank(pessoaFiltro.getSortField())) {
+                sql += " " + pessoaFiltro.getSortOrder();
             }
         }
         return sql;
