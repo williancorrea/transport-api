@@ -35,9 +35,15 @@ public class CorsFilter implements Filter {
             }
         }else{
             //Permite acesso de qualquer lugar
-            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin").trim());
+            if(request.getHeader("Origin") != null) {
+                response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin").trim());
+            }else{
+                response.setHeader("Access-Control-Allow-Origin", "*");
+            }
             response.setHeader("Access-Control-Allow-Credentials", "true");
         }
+
+
 
         if ("OPTIONS".equals(request.getMethod())) {
             response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
