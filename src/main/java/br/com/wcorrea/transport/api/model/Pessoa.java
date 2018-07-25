@@ -48,13 +48,13 @@ public class Pessoa implements Serializable {
     @Setter
     private PessoaTipo tipo;
 
-    @Size(min = 5, max = 250)
+    @Size(max = 250)
     @Getter
     @Setter
     @Email
     private String email;
 
-    @Size(min = 5, max = 250)
+    @Size(max = 250)
     @Getter
     @Setter
     private String site;
