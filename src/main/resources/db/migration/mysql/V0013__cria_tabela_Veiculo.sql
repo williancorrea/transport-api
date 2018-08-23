@@ -4,7 +4,7 @@ CREATE TABLE veiculo (
     frota VARCHAR(15) NOT NULL,
 
     obs TEXT,
-    odometro_inicial BIGINT(20) DEFAULT 0 NULL,
+    odometro_inicial BIGINT(20) DEFAULT 0,
 
     data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     data_alteracao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP

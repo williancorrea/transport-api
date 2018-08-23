@@ -13,7 +13,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @ToString
@@ -50,7 +49,6 @@ public class Veiculo implements Serializable {
     private String obs;
 
     @Getter
-    @Setter
     @Column(name = "odometro_inicial")
     private Long odometroInicial;
 
@@ -64,6 +62,8 @@ public class Veiculo implements Serializable {
     public void setFrota(String frota) {
         this.frota = frota.toUpperCase();
     }
+
+    public void setOdometroInicial(Long odometroInicial) {this.odometroInicial = odometroInicial == null ? 0 : odometroInicial;}
 
     @Transient
     public String getKey() {
