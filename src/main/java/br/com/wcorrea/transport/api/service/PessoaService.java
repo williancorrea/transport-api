@@ -6,12 +6,14 @@ import br.com.wcorrea.transport.api.model.PessoaTipo;
 import br.com.wcorrea.transport.api.repository.pessoa.PessoaRepository;
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
 import br.com.wcorrea.transport.api.service.exception.*;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
+import br.com.wcorrea.transport.api.utils.Criptografia;
 import br.com.wcorrea.transport.api.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Classe responsavel por manipular as regras de negocio de pessoa
+ * ClasseDespeza responsavel por manipular as regras de negocio de pessoa
  */
 @Service
 public class PessoaService {
@@ -79,6 +81,14 @@ public class PessoaService {
             throw new PessoaNaoEncontrada();
         }
         return this.buscarPorId(pessoa.getId());
+    }
+
+    public Long buscarPorKey(String key) {
+        try {
+            return new Criptografia().getKey(key);
+        } catch (Exception e) {
+            throw new PessoaNaoEncontrada();
+        }
     }
 
     public Pessoa findOneByCPF(String cpf) {

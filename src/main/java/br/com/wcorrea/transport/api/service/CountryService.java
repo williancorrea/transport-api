@@ -3,6 +3,8 @@ package br.com.wcorrea.transport.api.service;
 import br.com.wcorrea.transport.api.model.Country;
 import br.com.wcorrea.transport.api.repository.CountryRepository;
 import br.com.wcorrea.transport.api.service.exception.CountryUpdateNotFound;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
+import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +40,13 @@ public class CountryService {
             throw new CountryUpdateNotFound();
         }
         return country;
+    }
+
+    public Long buscarPorKey(String key) {
+        try {
+            return new Criptografia().getKey(key);
+        } catch (Exception e) {
+            throw new CountryUpdateNotFound();
+        }
     }
 }

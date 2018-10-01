@@ -53,7 +53,7 @@ public class TypeRelationshipResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LIST_TYPE-RELATIONSHIP') and #oauth2.hasScope('read')")
     public ResponseEntity<TypeRelationship> findOne(@Valid @PathVariable String key) {
-        TypeRelationship TypeRelationshipFound = typeRelationshipRepository.findOne(new Criptografia().getKey(key));
+        TypeRelationship TypeRelationshipFound = typeRelationshipRepository.findOne(typeRelationshipService.buscarPorKey(key));
         return TypeRelationshipFound != null ? ResponseEntity.ok(TypeRelationshipFound) : ResponseEntity.notFound().build();
     }
 
@@ -81,7 +81,7 @@ public class TypeRelationshipResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_UPDATE_TYPE-RELATIONSHIP') and #oauth2.hasScope('write')")
     public ResponseEntity<TypeRelationship> update(@Valid @PathVariable String key, @Valid @RequestBody TypeRelationship TypeRelationship) {
-        return ResponseEntity.status(HttpStatus.OK).body(typeRelationshipService.update(new Criptografia().getKey(key), TypeRelationship));
+        return ResponseEntity.status(HttpStatus.OK).body(typeRelationshipService.update(typeRelationshipService.buscarPorKey(key), TypeRelationship));
     }
 
     /**
@@ -93,6 +93,6 @@ public class TypeRelationshipResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETE_TYPE-RELATIONSHIP') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        typeRelationshipRepository.delete(new Criptografia().getKey(key));
+        typeRelationshipRepository.delete(typeRelationshipService.buscarPorKey(key));
     }
 }

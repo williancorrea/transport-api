@@ -50,7 +50,7 @@ public class VeiculoResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_VEICULO') and #oauth2.hasScope('read')")
     public ResponseEntity<Veiculo> findOne(@Valid @PathVariable String key) {
-        return ResponseEntity.ok(veiculoService.buscarPorId(new Criptografia().getKey(key)));
+        return ResponseEntity.ok(veiculoService.buscarPorId(veiculoService.buscarPorKey(key)));
     }
 
     /**
@@ -77,7 +77,7 @@ public class VeiculoResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_VEICULO') and #oauth2.hasScope('write')")
     public ResponseEntity<Veiculo> update(@Valid @PathVariable String key, @Valid @RequestBody Veiculo veiculo) {
-        return ResponseEntity.status(HttpStatus.OK).body(veiculoService.atualizar(new Criptografia().getKey(key), veiculo));
+        return ResponseEntity.status(HttpStatus.OK).body(veiculoService.atualizar(veiculoService.buscarPorKey(key), veiculo));
     }
 
     /**
@@ -89,7 +89,7 @@ public class VeiculoResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETAR_VEICULO') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        Veiculo veiculo = veiculoService.buscarPorId(new Criptografia().getKey(key));
+        Veiculo veiculo = veiculoService.buscarPorId(veiculoService.buscarPorKey(key));
         veiculoRepository.delete(veiculo.getId());
     }
 }

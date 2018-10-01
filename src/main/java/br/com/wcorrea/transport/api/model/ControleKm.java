@@ -124,8 +124,12 @@ public class ControleKm implements Serializable {
     }
 
     @Transient
-    public void setKey(String key) throws Exception {
-        this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
+    public void setKey(String key) {
+        try {
+            this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
+        } catch (Exception e) {
+            throw new ControleKmNaoEncontrado();
+        }
     }
 
     @PrePersist

@@ -3,13 +3,14 @@ package br.com.wcorrea.transport.api.service;
 import br.com.wcorrea.transport.api.model.ControleKm;
 import br.com.wcorrea.transport.api.repository.controleKm.ControleKmRepository;
 import br.com.wcorrea.transport.api.service.exception.veiculo.*;
+import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
 /**
- * Classe responsavel por manipular toda a regra de negocio de um ControleKm
+ * ClasseDespeza responsavel por manipular toda a regra de negocio de um ControleKm
  */
 @Service
 public class ControleKmService {
@@ -58,6 +59,14 @@ public class ControleKmService {
             throw new ControleKmNaoEncontrado();
         }
         return controleKm;
+    }
+
+    public Long buscarPorKey(String key) {
+        try {
+            return new Criptografia().getKey(key);
+        } catch (Exception e) {
+            throw new ControleKmNaoEncontrado();
+        }
     }
 
     /**

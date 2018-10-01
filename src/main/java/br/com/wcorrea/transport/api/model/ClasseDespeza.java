@@ -1,8 +1,7 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
-import br.com.wcorrea.transport.api.service.exception.BankNotFound;
-import br.com.wcorrea.transport.api.service.exception.ClasseNaoEncontrada;
+import br.com.wcorrea.transport.api.service.exception.ClasseDespezaNaoEncontrada;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
@@ -14,12 +13,11 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
 
 @ToString
 @EqualsAndHashCode
-@Entity(name = "classe")
-public class Classe implements Serializable {
+@Entity(name = "classe_despeza")
+public class ClasseDespeza implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -45,7 +43,7 @@ public class Classe implements Serializable {
     @Setter
     private boolean inativo;
 
-    public Classe() {
+    public ClasseDespeza() {
     }
 
     @Transient
@@ -53,14 +51,16 @@ public class Classe implements Serializable {
         try {
             return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
         } catch (Exception e) {
-            throw new ClasseNaoEncontrada();
+            throw new ClasseDespezaNaoEncontrada();
         }
     }
 
     @Transient
-    public void setKey(String key) throws Exception {
-        if (id != null) {
+    public void setKey(String key){
+        try {
             this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
+        } catch (Exception e) {
+            throw new ClasseDespezaNaoEncontrada();
         }
     }
 

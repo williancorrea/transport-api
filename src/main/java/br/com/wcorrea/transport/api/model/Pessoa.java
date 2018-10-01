@@ -1,6 +1,7 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
+import br.com.wcorrea.transport.api.service.exception.PessoaNaoEncontrada;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -135,17 +136,21 @@ public class Pessoa implements Serializable {
 
 
     @Transient
-    public String getKey() throws Exception {
+    public String getKey(){
         try {
             return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
         } catch (Exception e) {
-            return null;
+            throw new PessoaNaoEncontrada();
         }
     }
 
     @Transient
-    public void setKey(String key) throws Exception {
-        this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
+    public void setKey(String key) {
+        try {
+            this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
+        } catch (Exception e) {
+            throw new PessoaNaoEncontrada();
+        }
     }
 
     @PrePersist

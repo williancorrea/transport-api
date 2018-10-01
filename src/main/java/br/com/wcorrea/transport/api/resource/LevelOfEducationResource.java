@@ -50,7 +50,7 @@ public class LevelOfEducationResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LIST_LEVEL-OF-EDUCATION') and #oauth2.hasScope('read')")
     public ResponseEntity<LevelOfEducation> findOne(@Valid @PathVariable String key) {
-        LevelOfEducation LevelOfEducationFound = levelOfEducationRepository.findOne(new Criptografia().getKey(key));
+        LevelOfEducation LevelOfEducationFound = levelOfEducationRepository.findOne(levelOfEducationService.buscarPorKey(key));
         return LevelOfEducationFound != null ? ResponseEntity.ok(LevelOfEducationFound) : ResponseEntity.notFound().build();
     }
 
@@ -78,7 +78,7 @@ public class LevelOfEducationResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_UPDATE_LEVEL-OF-EDUCATION') and #oauth2.hasScope('write')")
     public ResponseEntity<LevelOfEducation> update(@Valid @PathVariable String key, @Valid @RequestBody LevelOfEducation LevelOfEducation) {
-        return ResponseEntity.status(HttpStatus.OK).body(levelOfEducationService.update(new Criptografia().getKey(key), LevelOfEducation));
+        return ResponseEntity.status(HttpStatus.OK).body(levelOfEducationService.update(levelOfEducationService.buscarPorKey(key), LevelOfEducation));
     }
 
     /**
@@ -90,6 +90,6 @@ public class LevelOfEducationResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETE_LEVEL-OF-EDUCATION') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        levelOfEducationRepository.delete(new Criptografia().getKey(key));
+        levelOfEducationRepository.delete(levelOfEducationService.buscarPorKey(key));
     }
 }

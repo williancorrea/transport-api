@@ -65,12 +65,15 @@ public class ItinerarioParada implements Serializable {
         try {
             return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
         } catch (Exception e) {
+//            throw new ItinerarioPararadaNaoEncontrado;
+            //todo: corrigir
             return null;
         }
     }
 
     @Transient
     public void setKey(String key) throws Exception {
+        //todo corrigir
         this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
     }
 

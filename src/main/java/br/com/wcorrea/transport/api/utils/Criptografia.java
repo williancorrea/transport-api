@@ -87,12 +87,12 @@ public class Criptografia {
         return this.decrypt(str.toString());
     }
 
-    public Long getKey(String key){
-        try {
-            return Long.parseLong(new Criptografia().decryptFromHex(key));
-        }catch(Exception e){
-            throw new ExceptionDescriptografarKey();
-        }
+    public Long getKey(String key) throws Exception {
+//        try {
+        return Long.parseLong(new Criptografia().decryptFromHex(key));
+//        } catch (Exception e) {
+//            throw new ExceptionDescriptografarKey();
+//        }
     }
 
 }

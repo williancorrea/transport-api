@@ -1,6 +1,7 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -72,13 +73,17 @@ public class Itinerario implements Serializable {
         try {
             return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
         } catch (Exception e) {
-            return null;
+            throw new ItinerarioNaoEncontrado();
         }
     }
 
     @Transient
-    public void setKey(String key) throws Exception {
-        this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
+    public void setKey(String key){
+        try {
+            this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
+        } catch (Exception e) {
+            throw new ItinerarioNaoEncontrado();
+        }
     }
 
     @PrePersist

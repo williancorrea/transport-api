@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Classe responsavel por manipular todos os erros da aplicação
+ * ClasseDespeza responsavel por manipular todos os erros da aplicação
  */
 @ControllerAdvice
 public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {

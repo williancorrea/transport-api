@@ -3,6 +3,8 @@ package br.com.wcorrea.transport.api.service;
 import br.com.wcorrea.transport.api.model.Bank;
 import br.com.wcorrea.transport.api.repository.BankRepository;
 import br.com.wcorrea.transport.api.service.exception.BankNotFound;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
+import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,4 +46,11 @@ public class BankService {
         return bank;
     }
 
+    public Long buscarPorKey(String key) {
+        try {
+            return new Criptografia().getKey(key);
+        } catch (Exception e) {
+            throw new BankNotFound();
+        }
+    }
 }

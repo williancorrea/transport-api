@@ -3,6 +3,8 @@ package br.com.wcorrea.transport.api.service;
 import br.com.wcorrea.transport.api.model.ProductUnit;
 import br.com.wcorrea.transport.api.repository.ProductUnitRepository;
 import br.com.wcorrea.transport.api.service.exception.ProductUnitNotFound;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
+import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +44,13 @@ public class ProductUnitService {
             throw new ProductUnitNotFound();
         }
         return productUnit;
+    }
+
+    public Long buscarPorKey(String key) {
+        try {
+            return new Criptografia().getKey(key);
+        } catch (Exception e) {
+            throw new ProductUnitNotFound();
+        }
     }
 }

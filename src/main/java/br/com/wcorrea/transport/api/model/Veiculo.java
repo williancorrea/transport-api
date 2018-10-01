@@ -63,7 +63,9 @@ public class Veiculo implements Serializable {
         this.frota = frota.toUpperCase();
     }
 
-    public void setOdometroInicial(Long odometroInicial) {this.odometroInicial = odometroInicial == null ? 0 : odometroInicial;}
+    public void setOdometroInicial(Long odometroInicial) {
+        this.odometroInicial = odometroInicial == null ? 0 : odometroInicial;
+    }
 
     @Transient
     public String getKey() {
@@ -75,8 +77,12 @@ public class Veiculo implements Serializable {
     }
 
     @Transient
-    public void setKey(String key) throws Exception {
-        this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
+    public void setKey(String key){
+        try {
+            this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
+        } catch (Exception e) {
+            throw new VeiculoNaoEncontrado();
+        }
     }
 
     @PrePersist

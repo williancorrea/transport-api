@@ -1,13 +1,14 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
-import br.com.wcorrea.transport.api.service.exception.ProductUnitNotFound;
+import br.com.wcorrea.transport.api.service.exception.CentroDeCustoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,8 +17,8 @@ import java.io.Serializable;
 
 @ToString
 @EqualsAndHashCode
-@Entity(name = "product_unit")
-public class ProductUnit implements Serializable {
+@Entity(name = "CentroDeCusto")
+public class CentroDeCusto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -31,32 +32,26 @@ public class ProductUnit implements Serializable {
     @Embedded
     @Getter
     @Setter
-    private PropriedadesComuns properties;
+    private PropriedadesComuns controle;
 
-    @NotNull
-    @Size(min = 1, max = 10)
-    private String initials;
-
-    @NotNull
+    @NotBlank
     @Size(min = 5, max = 150)
     @Getter
     @Setter
-    private String name;
+    private String descricao;
 
-    @Column(name = "can_fraction")
     @Getter
     @Setter
-    private Boolean canFraction;
+    private boolean inativo;
 
-    public ProductUnit() {
-    }
+    @NotNull
+    @JoinColumn(name = "classe_despeza_id", referencedColumnName = "id")
+    @ManyToOne()
+    @Getter
+    @Setter
+    private ClasseDespeza classeDespeza;
 
-    public String getInitials() {
-        return initials.toUpperCase();
-    }
-
-    public void setInitials(String initials) {
-        this.initials = initials.toUpperCase();
+    public CentroDeCusto() {
     }
 
     @Transient
@@ -64,7 +59,7 @@ public class ProductUnit implements Serializable {
         try {
             return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
         } catch (Exception e) {
-            throw new ProductUnitNotFound();
+            throw new CentroDeCustoNaoEncontrado();
         }
     }
 
@@ -73,12 +68,13 @@ public class ProductUnit implements Serializable {
         try {
             this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
         } catch (Exception e) {
-            throw new ProductUnitNotFound();
+            throw new CentroDeCustoNaoEncontrado();
         }
     }
 
     @PrePersist
     public void prePersist() {
-        this.properties = new PropriedadesComuns();
+        this.controle = new PropriedadesComuns();
     }
+
 }

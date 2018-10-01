@@ -1,6 +1,9 @@
 package br.com.wcorrea.transport.api.repository.controleKm;
 
 import br.com.wcorrea.transport.api.repository.filter.padrao.QueryFiltroPadrao;
+import br.com.wcorrea.transport.api.service.exception.PessoaNaoEncontrada;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,14 +37,26 @@ public class ControleKmFiltro extends QueryFiltroPadrao {
     private Long veiculoId;
 
     public void setItinerarioId(String itinerarioId) {
-        this.itinerarioId = new Criptografia().getKey(itinerarioId);
+        try {
+            this.itinerarioId = new Criptografia().getKey(itinerarioId);
+        } catch (Exception e) {
+            throw new ItinerarioNaoEncontrado();
+        }
     }
 
     public void setPessoaId(String pessoaId) {
-        this.pessoaId = new Criptografia().getKey(pessoaId);
+        try {
+            this.pessoaId = new Criptografia().getKey(pessoaId);
+        } catch (Exception e) {
+            throw new PessoaNaoEncontrada();
+        }
     }
 
     public void setVeiculoId(String veiculoId) {
-        this.veiculoId = new Criptografia().getKey(veiculoId);
+        try {
+            this.veiculoId = new Criptografia().getKey(veiculoId);
+        } catch (Exception e) {
+            throw new VeiculoNaoEncontrado();
+        }
     }
 }

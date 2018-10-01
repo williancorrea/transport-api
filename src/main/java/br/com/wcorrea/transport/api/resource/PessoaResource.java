@@ -53,7 +53,7 @@ public class PessoaResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LIST_PERSON') and #oauth2.hasScope('read')")
     public ResponseEntity<Pessoa> findOne(@Valid @PathVariable String key) {
-        Pessoa pessoaEncontrada = pessoaService.buscarPorId(new Criptografia().getKey(key));
+        Pessoa pessoaEncontrada = pessoaService.buscarPorId(pessoaService.buscarPorKey(key));
         return pessoaEncontrada != null ? ResponseEntity.ok(pessoaEncontrada) : ResponseEntity.notFound().build();
     }
 
@@ -81,7 +81,7 @@ public class PessoaResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_UPDATE_PERSON') and #oauth2.hasScope('write')")
     public ResponseEntity<Pessoa> update(@Valid @PathVariable String key, @Valid @RequestBody Pessoa Pessoa) {
-        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.update(new Criptografia().getKey(key), Pessoa));
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.update(pessoaService.buscarPorKey(key), Pessoa));
     }
 
     /**
@@ -93,6 +93,6 @@ public class PessoaResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETE_PERSON') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        pessoaRepository.delete(new Criptografia().getKey(key));
+        pessoaRepository.delete(pessoaService.buscarPorKey(key));
     }
 }

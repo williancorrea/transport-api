@@ -3,6 +3,8 @@ package br.com.wcorrea.transport.api.service;
 import br.com.wcorrea.transport.api.model.LevelOfEducation;
 import br.com.wcorrea.transport.api.repository.LevelOfEducationRepository;
 import br.com.wcorrea.transport.api.service.exception.LevelOfEducationNotFound;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
+import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +44,13 @@ public class LevelOfEducationService {
             throw new LevelOfEducationNotFound();
         }
         return levelOfEducation;
+    }
+
+    public Long buscarPorKey(String key) {
+        try {
+            return new Criptografia().getKey(key);
+        } catch (Exception e) {
+            throw new LevelOfEducationNotFound();
+        }
     }
 }

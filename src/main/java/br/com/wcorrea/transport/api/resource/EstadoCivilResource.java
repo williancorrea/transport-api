@@ -50,7 +50,7 @@ public class EstadoCivilResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_ESTADO_CIVIL') and #oauth2.hasScope('read')")
     public ResponseEntity<EstadoCivil> findOne(@Valid @PathVariable String key) {
-        return ResponseEntity.ok(estadoCivilService.buscarPorId(new Criptografia().getKey(key)));
+        return ResponseEntity.ok(estadoCivilService.buscarPorId(estadoCivilService.buscarPorKey(key)));
     }
 
     /**
@@ -77,7 +77,7 @@ public class EstadoCivilResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_ESTADO_CIVIL') and #oauth2.hasScope('write')")
     public ResponseEntity<EstadoCivil> update(@Valid @PathVariable String key, @Valid @RequestBody EstadoCivil estadoCivil) {
-        return ResponseEntity.status(HttpStatus.OK).body(estadoCivilService.atualizar(new Criptografia().getKey(key), estadoCivil));
+        return ResponseEntity.status(HttpStatus.OK).body(estadoCivilService.atualizar(estadoCivilService.buscarPorKey(key), estadoCivil));
     }
 
     /**
@@ -89,7 +89,7 @@ public class EstadoCivilResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETAR_ESTADO_CIVIL') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        EstadoCivil estadoCivil = estadoCivilService.buscarPorId(new Criptografia().getKey(key));
+        EstadoCivil estadoCivil = estadoCivilService.buscarPorId(estadoCivilService.buscarPorKey(key));
         estadoCivilRepository.delete(estadoCivil.getId());
     }
 }

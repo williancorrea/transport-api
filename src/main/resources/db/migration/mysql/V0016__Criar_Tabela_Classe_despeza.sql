@@ -1,4 +1,4 @@
-CREATE TABLE classe(
+CREATE TABLE classe_despeza(
     id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     descricao varchar(150) NOT NULL,
     inativo BOOLEAN DEFAULT FALSE,

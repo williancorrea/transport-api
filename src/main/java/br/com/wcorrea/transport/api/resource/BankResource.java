@@ -54,7 +54,7 @@ public class BankResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LIST_BANK') and #oauth2.hasScope('read')")
     public ResponseEntity<Bank> findOne(@Valid @PathVariable String key) {
-        Bank bankFound = bankService.findOne(new Criptografia().getKey(key));
+        Bank bankFound = bankService.findOne(bankService.buscarPorKey(key));
         return bankFound != null ? ResponseEntity.ok(bankFound) : ResponseEntity.notFound().build();
     }
 
@@ -82,7 +82,7 @@ public class BankResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_UPDATE_BANK') and #oauth2.hasScope('write')")
     public ResponseEntity<Bank> update(@Valid @PathVariable String key, @Valid @RequestBody Bank bank) {
-        return ResponseEntity.status(HttpStatus.OK).body(bankService.update(new Criptografia().getKey(key), bank));
+        return ResponseEntity.status(HttpStatus.OK).body(bankService.update(bankService.buscarPorKey(key), bank));
     }
 
     /**
@@ -94,6 +94,6 @@ public class BankResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETE_BANK') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        bankRepository.delete(new Criptografia().getKey(key));
+        bankRepository.delete(bankService.buscarPorKey(key));
     }
 }

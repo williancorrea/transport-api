@@ -53,7 +53,7 @@ public class ProductUnitResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LIST_PRODUCT-UNIT') and #oauth2.hasScope('read')")
     public ResponseEntity<ProductUnit> findOne(@Valid @PathVariable String key) {
-        ProductUnit productUnitFound = productUnitRepository.findOne(new Criptografia().getKey(key));
+        ProductUnit productUnitFound = productUnitRepository.findOne(productUnitService.buscarPorKey(key));
         return productUnitFound != null ? ResponseEntity.ok(productUnitFound) : ResponseEntity.notFound().build();
     }
 
@@ -81,7 +81,7 @@ public class ProductUnitResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_UPDATE_PRODUCT-UNIT') and #oauth2.hasScope('write')")
     public ResponseEntity<ProductUnit> update(@Valid @PathVariable String key, @Valid @RequestBody ProductUnit productUnit) {
-        return ResponseEntity.status(HttpStatus.OK).body(productUnitService.update(new Criptografia().getKey(key), productUnit));
+        return ResponseEntity.status(HttpStatus.OK).body(productUnitService.update(productUnitService.buscarPorKey(key), productUnit));
     }
 
     /**
@@ -93,6 +93,6 @@ public class ProductUnitResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETE_PRODUCT-UNIT') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        productUnitRepository.delete(new Criptografia().getKey(key));
+        productUnitRepository.delete(productUnitService.buscarPorKey(key));
     }
 }
