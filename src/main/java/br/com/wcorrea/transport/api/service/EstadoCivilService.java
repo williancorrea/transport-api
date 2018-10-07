@@ -13,7 +13,7 @@ import java.util.Date;
 
 /**
  * Class responsible for performing the entire business rule by manipulating information
- * ClasseDespeza responsavel por manipular toda a regra de negocio de um EstadoCivil
+ * ClasseDespesa responsavel por manipular toda a regra de negocio de um EstadoCivil
  */
 @Service
 public class EstadoCivilService {

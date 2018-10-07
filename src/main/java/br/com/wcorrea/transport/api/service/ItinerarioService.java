@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
- * ClasseDespeza responsavel por manipular toda a regra de negocio de um Itinerario
+ * ClasseDespesa responsavel por manipular toda a regra de negocio de um Itinerario
  */
 @Service
 public class ItinerarioService {

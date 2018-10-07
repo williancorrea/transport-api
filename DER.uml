@@ -2,13 +2,96 @@
 <Diagram>
   <ID>DATABASE</ID>
   <OriginalElement />
-  <nodes />
+  <nodes>
+    <node x="1153.25" y="380.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.city</node>
+    <node x="1200.25" y="1093.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.user_permission</node>
+    <node x="286.5" y="925.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.classe_despeza</node>
+    <node x="1136.75" y="0.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.country</node>
+    <node x="0.0" y="1344.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.level_of_education</node>
+    <node x="1151.75" y="190.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.state</node>
+    <node x="1087.0" y="936.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.permission</node>
+    <node x="350.0" y="1344.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.product_unit</node>
+    <node x="0.0" y="1137.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.bank_abbreviations</node>
+    <node x="873.75" y="55.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.itinerario</node>
+    <node x="559.0" y="925.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.zip_code</node>
+    <node x="1317.0" y="925.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.user</node>
+    <node x="277.0" y="1115.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.centro_de_custo</node>
+    <node x="627.75" y="66.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.veiculo</node>
+    <node x="613.0" y="1344.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.type_of_relationship</node>
+    <node x="617.25" y="465.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.controle_km</node>
+    <node x="39.24999999999994" y="366.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.pessoa_fisica</node>
+    <node x="7.0" y="925.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.bank</node>
+    <node x="0.0" y="88.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.estado_civil</node>
+    <node x="338.24999999999994" y="498.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.pessoa_juridica</node>
+    <node x="358.74999999999994" y="0.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.pessoa</node>
+    <node x="830.0" y="925.0">dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.schema_version</node>
+  </nodes>
   <notes />
-  <edges />
-  <settings layout="Hierarchic Group" zoom="1.396449704142012" x="428.0529661016949" y="245.62288135593215" />
+  <edges>
+    <edge source="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.user_permission" target="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.permission">
+      <point x="-51.75" y="-36.5" />
+      <point x="1252.0" y="1068.0" />
+      <point x="1192.0" y="1068.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.controle_km" target="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.veiculo">
+      <point x="0.0" y="-158.0" />
+      <point x="0.0" y="92.0" />
+    </edge>
+    <edge source="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.pessoa_fisica" target="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.pessoa">
+      <point x="69.75" y="-257.0" />
+      <point x="248.49999999999994" y="341.0" />
+      <point x="395.0833333333333" y="341.0" />
+      <point x="-72.66666666666663" y="158.0" />
+    </edge>
+    <edge source="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.user_permission" target="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.user">
+      <point x="51.75" y="-36.5" />
+      <point x="1355.5" y="1068.0" />
+      <point x="1415.5" y="1068.0" />
+      <point x="0.0" y="59.0" />
+    </edge>
+    <edge source="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.bank_abbreviations" target="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.bank">
+      <point x="0.0" y="-81.0" />
+      <point x="0.0" y="81.0" />
+    </edge>
+    <edge source="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.controle_km" target="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.itinerario">
+      <point x="82.33333333333331" y="-158.0" />
+      <point x="823.0833333333333" y="341.0" />
+      <point x="982.75" y="341.0" />
+      <point x="0.0" y="103.0" />
+    </edge>
+    <edge source="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.centro_de_custo" target="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.classe_despeza">
+      <point x="0.0" y="-81.0" />
+      <point x="0.0" y="70.0" />
+    </edge>
+    <edge source="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.state" target="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.country">
+      <point x="0.0" y="-70.0" />
+      <point x="0.0" y="70.0" />
+    </edge>
+    <edge source="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.city" target="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.state">
+      <point x="0.0" y="-59.0" />
+      <point x="0.0" y="70.0" />
+    </edge>
+    <edge source="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.pessoa_fisica" target="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.estado_civil">
+      <point x="-69.75" y="-257.0" />
+      <point x="0.0" y="70.0" />
+    </edge>
+    <edge source="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.controle_km" target="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.pessoa">
+      <point x="-82.33333333333331" y="-158.0" />
+      <point x="658.4166666666666" y="341.0" />
+      <point x="540.4166666666665" y="341.0" />
+      <point x="72.66666666666663" y="158.0" />
+    </edge>
+    <edge source="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.pessoa_juridica" target="dce677b0-5374-4952-88ba-bdf833ae4418.TABLE:transport_api.pessoa">
+      <point x="0.0" y="-125.0" />
+      <point x="0.0" y="158.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5961783439490446" x="3.354700854700809" y="194.57264957264954" />
   <SelectedNodes />
   <Categories>
     <Category>Key columns</Category>
+    <Category>Columns</Category>
   </Categories>
 </Diagram>
 

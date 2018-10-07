@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * ClasseDespeza responsavel por manipular todas as excessoes que ocorrerem nas regras de negocio da contabilidade
+ * ClasseDespesa responsavel por manipular todas as excessoes que ocorrerem nas regras de negocio da contabilidade
  */
 @ControllerAdvice
 public class ContabilidadeException extends DefaultExceptionHandler {

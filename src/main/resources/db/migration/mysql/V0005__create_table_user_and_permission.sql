@@ -147,3 +147,28 @@ INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from use
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_DELETAR_CONTROLE-KM'));
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_ATUALIZAR_CONTROLE-KM'));
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_SALVAR_CONTROLE-KM'));
+
+-- CLASSE DE DESPESAS
+INSERT INTO permission (name, description) values ('ROLE_ACESSAR_URI_CLASSE-DESPESA', '');
+INSERT INTO permission (name, description) values ('ROLE_LISTAR_CLASSE-DESPESA', '');
+INSERT INTO permission (name, description) values ('ROLE_DELETAR_CLASSE-DESPESA', '');
+INSERT INTO permission (name, description) values ('ROLE_ATUALIZAR_CLASSE-DESPESA', '');
+INSERT INTO permission (name, description) values ('ROLE_SALVAR_CLASSE-DESPESA', '');
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_ACESSAR_URI_CLASSE-DESPESA'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_LISTAR_CLASSE-DESPESA'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_DELETAR_CLASSE-DESPESA'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_ATUALIZAR_CLASSE-DESPESA'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_SALVAR_CLASSE-DESPESA'));
+
+
+-- CLASSE DE DESPESAS
+INSERT INTO permission (name, description) values ('ROLE_ACESSAR_URI_CENTRO-DE-CUSTO', '');
+INSERT INTO permission (name, description) values ('ROLE_LISTAR_CENTRO-DE-CUSTO', '');
+INSERT INTO permission (name, description) values ('ROLE_DELETAR_CENTRO-DE-CUSTO', '');
+INSERT INTO permission (name, description) values ('ROLE_ATUALIZAR_CENTRO-DE-CUSTO', '');
+INSERT INTO permission (name, description) values ('ROLE_SALVAR_CENTRO-DE-CUSTO', '');
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_ACESSAR_URI_CENTRO-DE-CUSTO'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_LISTAR_CENTRO-DE-CUSTO'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_DELETAR_CENTRO-DE-CUSTO'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_ATUALIZAR_CENTRO-DE-CUSTO'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_SALVAR_CENTRO-DE-CUSTO'));

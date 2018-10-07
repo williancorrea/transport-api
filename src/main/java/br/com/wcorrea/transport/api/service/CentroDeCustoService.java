@@ -1,9 +1,9 @@
 package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.CentroDeCusto;
-import br.com.wcorrea.transport.api.repository.CentroDeCusto.CentroDeCustoRepository;
+import br.com.wcorrea.transport.api.repository.centroDeCusto.CentroDeCustoRepository;
 import br.com.wcorrea.transport.api.service.exception.CentroDeCustoNaoEncontrado;
-import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.ClasseDespezaNaoEncontrada;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 /**
- * CentroDeCusto responsavel por manipular todas as informcoes do objeto Centro de Custo
+ * centroDeCusto responsavel por manipular todas as informcoes do objeto Centro de Custo
  */
 @Service
 public class CentroDeCustoService {
@@ -20,7 +20,7 @@ public class CentroDeCustoService {
     private CentroDeCustoRepository centroDeCustoRepository;
 
     @Autowired
-    private ClasseDespezaService classeDespezaService;
+    private ClasseDespesaService classeDespesaService;
 
     /**
      * Atualizar
@@ -40,7 +40,10 @@ public class CentroDeCustoService {
     }
 
     public CentroDeCusto salvar(CentroDeCusto centroDeCusto) {
-        centroDeCusto.setClasseDespeza(classeDespezaService.buscarPorId(centroDeCusto.getClasseDespeza().getId()));
+        centroDeCusto.setClasseDespesa(classeDespesaService.buscarPorId(centroDeCusto.getClasseDespesa().getId()));
+        if(centroDeCusto.getClasseDespesa() == null){
+            throw new ClasseDespezaNaoEncontrada();
+        }
         return centroDeCustoRepository.saveAndFlush(centroDeCusto);
     }
 

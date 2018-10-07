@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.repository.CentroDeCusto;
+package br.com.wcorrea.transport.api.repository.centroDeCusto;
 
 import br.com.wcorrea.transport.api.model.CentroDeCusto;
 import br.com.wcorrea.transport.api.repository.utils.UtilsRepository;
@@ -36,16 +36,16 @@ public class CentroDeCustoRepositoryImpl implements CentroDeCustoRepositoryQuery
     private String createQuery(CentroDeCustoFiltro centroDeCustoFiltro, boolean count) {
         String sql;
         if (count) {
-            sql = "select count(a) from CentroDeCusto a where 1=1";
+            sql = "select count(a) from centro_de_custo a where 1=1";
         } else {
-            sql = "from CentroDeCusto a where 1=1 ";
+            sql = "from centro_de_custo a where 1=1 ";
         }
 
         if (StringUtils.isNotBlank(centroDeCustoFiltro.getFiltroGlobal())) {
             sql += " and (";
             sql += " upper(a.descricao) like '%" + centroDeCustoFiltro.getFiltroGlobal().toUpperCase().trim() + "%'";
             if (centroDeCustoFiltro.getClasseId() != null) {
-                sql += " or 1=1 and a.classeDespeza.id = " + centroDeCustoFiltro.getClasseId();
+                sql += " or 1=1 and a.classeDespesa.id = " + centroDeCustoFiltro.getClasseId();
             }
             sql += " )";
         } else {
@@ -53,7 +53,7 @@ public class CentroDeCustoRepositoryImpl implements CentroDeCustoRepositoryQuery
                 sql += " and upper(a.descricao) like '%" + centroDeCustoFiltro.getDescricao().toUpperCase().trim() + "%'";
             }
             if (centroDeCustoFiltro.getClasseId() != null) {
-                sql += " and a.classeDespeza.id = " + centroDeCustoFiltro.getClasseId();
+                sql += " and a.classeDespesa.id = " + centroDeCustoFiltro.getClasseId();
             }
         }
 

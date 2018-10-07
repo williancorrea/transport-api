@@ -2,10 +2,9 @@ package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.CentroDeCusto;
-import br.com.wcorrea.transport.api.repository.CentroDeCusto.CentroDeCustoFiltro;
-import br.com.wcorrea.transport.api.repository.CentroDeCusto.CentroDeCustoRepository;
+import br.com.wcorrea.transport.api.repository.centroDeCusto.CentroDeCustoFiltro;
+import br.com.wcorrea.transport.api.repository.centroDeCusto.CentroDeCustoRepository;
 import br.com.wcorrea.transport.api.service.CentroDeCustoService;
-import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -32,36 +31,36 @@ public class CentroDeCustoResource {
     private CentroDeCustoService centroDeCustoService;
 
     /**
-     * RECUPERA A LISTA DE REGISTRO DE CENTRO_DE_CUSTO
+     * RECUPERA A LISTA DE REGISTRO DE CENTRO-DE-CUSTO
      *
      * @return
      */
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_LISTAR_CENTRO_DE_CUSTO') and #oauth2.hasScope('read')")
+    @PreAuthorize("hasAuthority('ROLE_LISTAR_CENTRO-DE-CUSTO') and #oauth2.hasScope('read')")
     public Page<CentroDeCusto> findAll(CentroDeCustoFiltro filtro, Pageable paginacao) {
         return centroDeCustoRepository.findAll(filtro, paginacao);
     }
 
     /**
-     * RECUPERA UM CENTRO_DE_CUSTO ESPECIFICO
+     * RECUPERA UM CENTRO-DE-CUSTO ESPECIFICO
      *
      * @return
      */
     @GetMapping("/{key}")
-    @PreAuthorize("hasAuthority('ROLE_LISTAR_CENTRO_DE_CUSTO') and #oauth2.hasScope('read')")
+    @PreAuthorize("hasAuthority('ROLE_LISTAR_CENTRO-DE-CUSTO') and #oauth2.hasScope('read')")
     public ResponseEntity<CentroDeCusto> findOne(@Valid @PathVariable String key) {
         return ResponseEntity.ok(centroDeCustoService.buscarPorId(centroDeCustoService.buscarPorKey(key)));
     }
 
     /**
-     * SALVA UM CENTRO_DE_CUSTO
+     * SALVA UM CENTRO-DE-CUSTO
      *
      * @param centroDeCusto
      * @param response
      * @return
      */
     @PostMapping
-    @PreAuthorize("hasAuthority('ROLE_SALVAR_CENTRO_DE_CUSTO') and #oauth2.hasScope('write')")
+    @PreAuthorize("hasAuthority('ROLE_SALVAR_CENTRO-DE-CUSTO') and #oauth2.hasScope('write')")
     public ResponseEntity<CentroDeCusto> save(@Valid @RequestBody CentroDeCusto centroDeCusto, HttpServletResponse response) {
         CentroDeCusto centroDeCustoSalvo = centroDeCustoService.salvar(centroDeCusto);
         publisher.publishEvent(new EventResourceCreated(this, response, centroDeCustoSalvo.getKey()));
@@ -75,7 +74,7 @@ public class CentroDeCustoResource {
      * @return
      */
     @PutMapping("/{key}")
-    @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_CENTRO_DE_CUSTO') and #oauth2.hasScope('write')")
+    @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_CENTRO-DE-CUSTO') and #oauth2.hasScope('write')")
     public ResponseEntity<CentroDeCusto> update(@Valid @PathVariable String key, @Valid @RequestBody CentroDeCusto centroDeCusto) {
         return ResponseEntity.status(HttpStatus.OK).body(centroDeCustoService.atualizar(centroDeCustoService.buscarPorKey(key), centroDeCusto));
     }
@@ -87,7 +86,7 @@ public class CentroDeCustoResource {
      */
     @DeleteMapping("/{key}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAuthority('ROLE_DELETAR_CENTRO_DE_CUSTO') and #oauth2.hasScope('write')")
+    @PreAuthorize("hasAuthority('ROLE_DELETAR_CENTRO-DE-CUSTO') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
         CentroDeCusto centroDeCusto = centroDeCustoService.buscarPorId(centroDeCustoService.buscarPorKey(key));
         centroDeCustoRepository.delete(centroDeCusto.getId());

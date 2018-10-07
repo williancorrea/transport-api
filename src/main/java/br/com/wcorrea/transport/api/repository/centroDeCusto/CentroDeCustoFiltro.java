@@ -1,13 +1,17 @@
-package br.com.wcorrea.transport.api.repository.classeDespeza;
+package br.com.wcorrea.transport.api.repository.centroDeCusto;
 
 import br.com.wcorrea.transport.api.repository.filter.padrao.QueryFiltroPadrao;
 import lombok.Getter;
 import lombok.Setter;
 
 
-public class ClasseDespezaFiltro extends QueryFiltroPadrao{
+public class CentroDeCustoFiltro extends QueryFiltroPadrao {
 
     @Getter
     @Setter
     private String descricao;
+
+    @Getter
+    @Setter
+    private Long classeId;
 }

@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * ClasseDespeza responsavel por manipular as regras de negocio de pessoa
+ * ClasseDespesa responsavel por manipular as regras de negocio de pessoa
  */
 @Service
 public class PessoaService {

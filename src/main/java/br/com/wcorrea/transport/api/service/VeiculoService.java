@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
- * ClasseDespeza responsavel por manipular toda a regra de negocio de um Veiculo
+ * ClasseDespesa responsavel por manipular toda a regra de negocio de um Veiculo
  */
 @Service
 public class VeiculoService {

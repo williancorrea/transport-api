@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.repository.CentroDeCusto;
+package br.com.wcorrea.transport.api.repository.centroDeCusto;
 
 import br.com.wcorrea.transport.api.model.CentroDeCusto;
 import org.springframework.data.jpa.repository.JpaRepository;

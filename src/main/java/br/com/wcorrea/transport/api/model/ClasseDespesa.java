@@ -13,11 +13,12 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Date;
 
 @ToString
 @EqualsAndHashCode
-@Entity(name = "classe_despeza")
-public class ClasseDespeza implements Serializable {
+@Entity(name = "classe_despesa")
+public class ClasseDespesa implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -43,7 +44,7 @@ public class ClasseDespeza implements Serializable {
     @Setter
     private boolean inativo;
 
-    public ClasseDespeza() {
+    public ClasseDespesa() {
     }
 
     @Transient
@@ -56,7 +57,7 @@ public class ClasseDespeza implements Serializable {
     }
 
     @Transient
-    public void setKey(String key){
+    public void setKey(String key) {
         try {
             this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
         } catch (Exception e) {
@@ -65,8 +66,14 @@ public class ClasseDespeza implements Serializable {
     }
 
     @PrePersist
-    public void prePersist() {
-        this.controle = new PropriedadesComuns();
+    @PreUpdate
+    public void updateControle() {
+        //TODO: VERIFICAR SE ESTS TUDO OK AQUI
+        if (this.controle == null) {
+            this.controle = new PropriedadesComuns();
+        } else {
+            this.controle.setDataAlteracao(new Date());
+        }
     }
 
 }

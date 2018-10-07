@@ -6,8 +6,8 @@ CREATE TABLE centro_de_custo(
     data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     data_alteracao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    classe_despeza_id BIGINT(20) NOT NULL,
+    classe_despesa_id BIGINT(20) NOT NULL,
 
-    FOREIGN KEY (classe_despeza_id) REFERENCES classe_despeza(id)
+    FOREIGN KEY (classe_despesa_id) REFERENCES classe_despesa(id)
 )
     ENGINE = InnoDB DEFAULT CHARSET = utf8;

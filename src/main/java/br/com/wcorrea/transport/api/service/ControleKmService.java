@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 /**
- * ClasseDespeza responsavel por manipular toda a regra de negocio de um ControleKm
+ * ClasseDespesa responsavel por manipular toda a regra de negocio de um ControleKm
  */
 @Service
 public class ControleKmService {

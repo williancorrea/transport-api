@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 /**
- * ClasseDespeza responsavel por apresentar os erros ao usuario
+ * ClasseDespesa responsavel por apresentar os erros ao usuario
  */
 public class ApiError {
     @Getter

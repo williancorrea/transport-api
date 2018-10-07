@@ -17,7 +17,7 @@ import java.io.Serializable;
 
 @ToString
 @EqualsAndHashCode
-@Entity(name = "CentroDeCusto")
+@Entity(name = "centro_de_custo")
 public class CentroDeCusto implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -45,11 +45,11 @@ public class CentroDeCusto implements Serializable {
     private boolean inativo;
 
     @NotNull
-    @JoinColumn(name = "classe_despeza_id", referencedColumnName = "id")
+    @JoinColumn(name = "classe_despesa_id", referencedColumnName = "id")
     @ManyToOne()
     @Getter
     @Setter
-    private ClasseDespeza classeDespeza;
+    private ClasseDespesa classeDespesa;
 
     public CentroDeCusto() {
     }
