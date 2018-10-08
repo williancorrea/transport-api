@@ -3,7 +3,7 @@ package br.com.wcorrea.transport.api.service;
 import br.com.wcorrea.transport.api.model.CentroDeCusto;
 import br.com.wcorrea.transport.api.repository.centroDeCusto.CentroDeCustoRepository;
 import br.com.wcorrea.transport.api.service.exception.CentroDeCustoNaoEncontrado;
-import br.com.wcorrea.transport.api.service.exception.ClasseDespezaNaoEncontrada;
+import br.com.wcorrea.transport.api.service.exception.ClasseDespesaNaoEncontrada;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +42,7 @@ public class CentroDeCustoService {
     public CentroDeCusto salvar(CentroDeCusto centroDeCusto) {
         centroDeCusto.setClasseDespesa(classeDespesaService.buscarPorId(centroDeCusto.getClasseDespesa().getId()));
         if(centroDeCusto.getClasseDespesa() == null){
-            throw new ClasseDespezaNaoEncontrada();
+            throw new ClasseDespesaNaoEncontrada();
         }
         return centroDeCustoRepository.saveAndFlush(centroDeCusto);
     }

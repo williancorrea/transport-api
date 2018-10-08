@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
-import br.com.wcorrea.transport.api.service.exception.ClasseDespesaNaoEncontrada;
+import br.com.wcorrea.transport.api.service.exception.TipoPagamentoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
@@ -17,8 +17,8 @@ import java.util.Date;
 
 @ToString
 @EqualsAndHashCode
-@Entity(name = "classe_despesa")
-public class ClasseDespesa implements Serializable {
+@Entity(name = "tipo_pagamento")
+public class TipoPagamento implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -44,7 +44,7 @@ public class ClasseDespesa implements Serializable {
     @Setter
     private boolean inativo;
 
-    public ClasseDespesa() {
+    public TipoPagamento() {
     }
 
     @Transient
@@ -52,7 +52,7 @@ public class ClasseDespesa implements Serializable {
         try {
             return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
         } catch (Exception e) {
-            throw new ClasseDespesaNaoEncontrada();
+            throw new TipoPagamentoNaoEncontrado();
         }
     }
 
@@ -61,7 +61,7 @@ public class ClasseDespesa implements Serializable {
         try {
             this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
         } catch (Exception e) {
-            throw new ClasseDespesaNaoEncontrada();
+            throw new TipoPagamentoNaoEncontrado();
         }
     }
 

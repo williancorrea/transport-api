@@ -2,7 +2,7 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.ClasseDespesa;
 import br.com.wcorrea.transport.api.repository.classeDespesa.ClasseDespesaRepository;
-import br.com.wcorrea.transport.api.service.exception.ClasseDespezaNaoEncontrada;
+import br.com.wcorrea.transport.api.service.exception.ClasseDespesaNaoEncontrada;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +45,7 @@ public class ClasseDespesaService {
     public ClasseDespesa buscarPorId(Long id) {
         ClasseDespesa classeDespesa = classeDespesaRepository.findOne(id);
         if (classeDespesa == null) {
-            throw new ClasseDespezaNaoEncontrada();
+            throw new ClasseDespesaNaoEncontrada();
         }
         return classeDespesa;
     }
@@ -54,7 +54,7 @@ public class ClasseDespesaService {
         try {
             return new Criptografia().getKey(key);
         } catch (Exception e) {
-            throw new ClasseDespezaNaoEncontrada();
+            throw new ClasseDespesaNaoEncontrada();
         }
     }
 

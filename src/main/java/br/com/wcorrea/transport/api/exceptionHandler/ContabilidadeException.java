@@ -2,7 +2,8 @@ package br.com.wcorrea.transport.api.exceptionHandler;
 
 import br.com.wcorrea.transport.api.exceptionHandler.defaultException.DefaultExceptionHandler;
 import br.com.wcorrea.transport.api.service.exception.CentroDeCustoNaoEncontrado;
-import br.com.wcorrea.transport.api.service.exception.ClasseDespezaNaoEncontrada;
+import br.com.wcorrea.transport.api.service.exception.ClasseDespesaNaoEncontrada;
+import br.com.wcorrea.transport.api.service.exception.TipoPagamentoNaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -25,8 +26,8 @@ public class ContabilidadeException extends DefaultExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler({ClasseDespezaNaoEncontrada.class})
-    public ResponseEntity<Object> handleClasseNotFound(ClasseDespezaNaoEncontrada ex, WebRequest request, Locale loc) {
+    @ExceptionHandler({ClasseDespesaNaoEncontrada.class})
+    public ResponseEntity<Object> handleClasseDespezaNaoEncontrada(ClasseDespesaNaoEncontrada ex, WebRequest request, Locale loc) {
         String userMessage = messageSource.getMessage("recurso.classe_despeza_nao_encontrada", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
@@ -34,8 +35,16 @@ public class ContabilidadeException extends DefaultExceptionHandler {
     }
 
     @ExceptionHandler({CentroDeCustoNaoEncontrado.class})
-    public ResponseEntity<Object> handleCentroDeCustoNotFound(CentroDeCustoNaoEncontrado ex, WebRequest request, Locale loc) {
+    public ResponseEntity<Object> handleCentroDeCustoNaoEncontrado(CentroDeCustoNaoEncontrado ex, WebRequest request, Locale loc) {
         String userMessage = messageSource.getMessage("recurso.centro_de_custo_nao_encontrado", null, loc);
+        String developerMessage = ex.toString();
+        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler({TipoPagamentoNaoEncontrado.class})
+    public ResponseEntity<Object> handleTipoPagamentoNaoEncontrado(TipoPagamentoNaoEncontrado ex, WebRequest request, Locale loc) {
+        String userMessage = messageSource.getMessage("recurso.tipo_pagamento_nao_encontrado", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
