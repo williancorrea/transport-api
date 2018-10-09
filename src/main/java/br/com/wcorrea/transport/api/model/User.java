@@ -18,6 +18,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    //TODO: VERIFICAR A POSIBILIDADE DE COLOCAR O IDENTIFICAR CRIPTOGRAFADO AQUI
     private Long id;
 
     @NotNull

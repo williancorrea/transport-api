@@ -36,17 +36,10 @@ INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from use
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_UPDATE_BANK'));
 INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_SAVE_BANK'));
 
--- PAIS
-INSERT INTO permission (name, description) values ('ROLE_ACESSAR_URI_PAIS', '');
-INSERT INTO permission (name, description) values ('ROLE_LIST_COUNTRY', '');
-INSERT INTO permission (name, description) values ('ROLE_DELETE_COUNTRY', '');
-INSERT INTO permission (name, description) values ('ROLE_UPDATE_COUNTRY', '');
-INSERT INTO permission (name, description) values ('ROLE_SAVE_COUNTRY', '');
-INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_ACESSAR_URI_PAIS'));
-INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_LIST_COUNTRY'));
-INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_DELETE_COUNTRY'));
-INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_UPDATE_COUNTRY'));
-INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_SAVE_COUNTRY'));
+INSERT INTO permission (name, description) values ('ROLE_LISTAR_ESTADO', '');
+INSERT INTO permission (name, description) values ('ROLE_LISTAR_CIDADE', '');
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_LISTAR_ESTADO'));
+INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_LISTAR_CIDADE'));
 
 -- UNIDADE DE MEDIDA
 INSERT INTO permission (name, description) values ('ROLE_ACESSAR_URI_UNIDADE_MEDIDA', '');

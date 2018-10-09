@@ -68,7 +68,6 @@ public class ClasseDespesa implements Serializable {
     @PrePersist
     @PreUpdate
     public void updateControle() {
-        //TODO: VERIFICAR SE ESTS TUDO OK AQUI
         if (this.controle == null) {
             this.controle = new PropriedadesComuns();
         } else {

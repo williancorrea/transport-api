@@ -1,50 +1,53 @@
 package br.com.wcorrea.transport.api.model;
 
-import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
-import br.com.wcorrea.transport.api.service.exception.TipoPagamentoNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.EstadoCivilNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
 
+/**
+ * Classe responsavel por manipular todos os atributos de um objeto do tipo Estado
+ * Created by Willian Vagner Vicente Corrêa (willian.vag@gmail.com) on 19/08/17.
+ */
 @ToString
 @EqualsAndHashCode
-@Entity(name = "tipo_pagamento")
-public class TipoPagamento implements Serializable {
+@Entity(name = "estado")
+public class Estado implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     @JsonIgnore
     @Getter
     @Setter
     private Long id;
 
-    @Embedded
-    @Getter
-    @Setter
-    private PropriedadesComuns controle;
-
-    @NotBlank
-    @Size(min = 5, max = 150)
+    @NotNull
+    @Size(min = 3, max = 150)
     @Getter
     @Setter
     private String descricao;
 
+    @NotNull
+    @Size(min = 2, max = 2)
     @Getter
     @Setter
-    private boolean inativo;
+    private String iniciais;
 
-    public TipoPagamento() {
+    @Column(name = "codigo_ibge")
+    @Getter
+    @Setter
+    private Integer codigoIbge;
+
+    public Estado() {
     }
 
     @Transient
@@ -52,7 +55,7 @@ public class TipoPagamento implements Serializable {
         try {
             return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
         } catch (Exception e) {
-            throw new TipoPagamentoNaoEncontrado();
+            throw new EstadoCivilNaoEncontrado();
         }
     }
 
@@ -61,18 +64,7 @@ public class TipoPagamento implements Serializable {
         try {
             this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
         } catch (Exception e) {
-            throw new TipoPagamentoNaoEncontrado();
+            throw new EstadoCivilNaoEncontrado();
         }
     }
-
-    @PrePersist
-    @PreUpdate
-    public void updateControle() {
-        if (this.controle == null) {
-            this.controle = new PropriedadesComuns();
-        } else {
-            this.controle.setDataAlteracao(new Date());
-        }
-    }
-
 }
