@@ -28,35 +28,30 @@ public class PessoaService {
         pessoaNovo.setId(null);
         if (pessoaNovo.getTipo().equals(PessoaTipo.FISICA)) {
             pessoaNovo.getPessoaFisica().setId(null);
+            pessoaNovo = this.validarPessoaFisica(pessoaNovo);
         } else {
             pessoaNovo.getPessoaJuridica().setId(null);
+            pessoaNovo = this.validarPessoaJuridica(pessoaNovo);
         }
-
-        pessoaNovo = this.validarPessoa(pessoaNovo);
         return pessoaRepository.saveAndFlush(pessoaNovo);
     }
 
-    /**
-     * Atualiza o objeto do tipo pessoa (Fisica / Jurídica)
-     *
-     * @param id
-     * @param pessoa
-     * @return
-     */
     public Pessoa update(Long id, Pessoa pessoa) {
         Pessoa objFound = buscarPorId(id);
 
         pessoa.setId(objFound.getId());
-        pessoa.setPropriedades(objFound.getPropriedades());
+
+        pessoa.setControle(objFound.getControle());
         if (objFound.getTipo().equals(PessoaTipo.FISICA)) {
             pessoa.getPessoaFisica().setId(objFound.getPessoaFisica().getId());
             pessoa.setPessoaJuridica(null);
+            pessoa = this.validarPessoaFisica(pessoa);
         } else {
             pessoa.getPessoaJuridica().setId(objFound.getPessoaJuridica().getId());
             pessoa.setPessoaFisica(null);
+            pessoa = this.validarPessoaJuridica(pessoa);
         }
 
-        pessoa = this.validarPessoa(pessoa);
 //        BeanUtils.copyProperties(pessoa, objFound, "id", "pessoaFisica", "propriedades");
 //        BeanUtils.copyProperties(pessoa.getPessoaFisica(), objFound.getPessoaFisica(),"id");
 
@@ -65,9 +60,6 @@ public class PessoaService {
         return pessoaRepository.save(pessoa);
     }
 
-    /**
-     * Encontar pessoa por ID
-     */
     public Pessoa buscarPorId(Long id) {
         Pessoa pessoaEncontrada = pessoaRepository.findOne(id);
         if (pessoaEncontrada == null) {
@@ -99,65 +91,58 @@ public class PessoaService {
         return pessoaRepository.findOneByCNPJ(cnpj);
     }
 
-    /**
-     * Efetua a validação do objeto Pessoa
-     *
-     * @param pessoa
-     * @return
-     */
-    private Pessoa validarPessoa(Pessoa pessoa) {
-        Pessoa pessoaEncontrada = null;
-        if (pessoa.isPessoaFisica()) {
-            /**
-             * GARANTE QUE OS DADOS DE PESSOA FISICA EXITEM
-             */
-            if (pessoa.getPessoaFisica() == null) {
-                throw new PessoaFisicaNaoEncontrada();
-            }
-
-            if (pessoa.getPessoaFisica().getId() == null) {
-                if (this.findOneByCPF(pessoa.getPessoaFisica().getCpf()) != null) {
-                    throw new PessoaFisicaJaCadastrada();
-                }
-            }
-
-            if (Utils.validarCPF(pessoa.getPessoaFisica().getCpf()) == false) {
-                throw new PessoaFisicaCPFInvalido();
-            }
-
-            /**
-             * VERIFICA SE O ESTADO CIVIL EXISTE NA BASE DE DADOS
-             */
-            try {
-                EstadoCivil estadoCivilEncontrado = maritalStatusRepository.findOne(pessoa.getPessoaFisica().getEstadoCivil().getId());
-                if (estadoCivilEncontrado == null) {
-                    throw new EstadoCivilNaoEncontrado();
-                }
-                pessoa.getPessoaFisica().setEstadoCivil(estadoCivilEncontrado);
-            } catch (Exception e) {
-                throw new EstadoCivilNaoEncontrado();
-            }
-
-            pessoa.getPessoaFisica().setPessoa(pessoa);
-        } else {
-            if (pessoa.getPessoaJuridica() == null) {
-                throw new PessoaJuridicaNaoEncontrada();
-            }
-
-            if (pessoa.getPessoaJuridica().getId() == null) {
-                if (this.findOneByCNPJ(pessoa.getPessoaJuridica().getCnpj()) != null) {
-                    throw new PessoaJuridicaJaCadastrada();
-                }
-            }
-
-            if (Utils.validarCNPJ(pessoa.getPessoaJuridica().getCnpj()) == false) {
-                throw new PessoaJuridicaCNPJInvalido();
-            }
-            pessoa.getPessoaJuridica().setPessoa(pessoa);
+    private Pessoa validarPessoaFisica(Pessoa pessoa) {
+        /**
+         * GARANTE QUE OS DADOS DE PESSOA FISICA EXITEM
+         */
+        if (pessoa.getPessoaFisica() == null) {
+            throw new PessoaFisicaNaoEncontrada();
         }
 
+        if (Utils.validarCPF(pessoa.getPessoaFisica().getCpf()) == false) {
+            throw new PessoaFisicaCPFInvalido();
+        }
+
+        Long pessoaFisicaId = this.findOneByCPF(pessoa.getPessoaFisica().getCpf()).getId();
+        if (pessoaFisicaId != null || pessoaFisicaId == pessoa.getPessoaFisica().getId()) {
+            throw new PessoaFisicaJaCadastrada();
+        }
+
+        /**
+         * VERIFICA SE O ESTADO CIVIL EXISTE NA BASE DE DADOS
+         */
+        try {
+            EstadoCivil estadoCivilEncontrado = maritalStatusRepository.findOne(pessoa.getPessoaFisica().getEstadoCivil().getId());
+            if (estadoCivilEncontrado == null) {
+                throw new EstadoCivilNaoEncontrado();
+            }
+            pessoa.getPessoaFisica().setEstadoCivil(estadoCivilEncontrado);
+        } catch (Exception e) {
+            throw new EstadoCivilNaoEncontrado();
+        }
+
+        pessoa.getPessoaFisica().setPessoa(pessoa);
         return pessoa;
     }
 
+    public Pessoa validarPessoaJuridica(Pessoa pessoa) {
+        if (pessoa.getPessoaJuridica() == null) {
+            throw new PessoaJuridicaNaoEncontrada();
+        }
+
+        if (pessoa.getPessoaJuridica().getId() == null) {
+            if (this.findOneByCNPJ(pessoa.getPessoaJuridica().getCnpj()) != null) {
+                throw new PessoaJuridicaJaCadastrada();
+            }
+        }
+
+        if (Utils.validarCNPJ(pessoa.getPessoaJuridica().getCnpj()) == false) {
+            throw new PessoaJuridicaCNPJInvalido();
+        }
+        pessoa.getPessoaJuridica().setPessoa(pessoa);
+
+        return pessoa;
+
+    }
 
 }

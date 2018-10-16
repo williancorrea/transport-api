@@ -1,23 +1,12 @@
 package br.com.wcorrea.transport.api.repository.pessoa;
 
+import br.com.wcorrea.transport.api.repository.filter.padrao.QueryFiltroPadrao;
 import lombok.Getter;
 import lombok.Setter;
 
-public class PessoaFiltro {
+public class PessoaFiltro extends QueryFiltroPadrao {
 
     @Getter
     @Setter
-    private String globalFilter;
-
-    @Getter
-    @Setter
-    private String sortField;
-
-    @Getter
-    @Setter
-    private String sortOrder;
-
-    @Getter
-    @Setter
-    private String name;
+    private String nome;
 }

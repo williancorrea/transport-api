@@ -1,7 +1,6 @@
 package br.com.wcorrea.transport.api.model;
 
-import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
-import br.com.wcorrea.transport.api.service.exception.CentroDeCustoNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.PessoaTelefoneNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
@@ -13,45 +12,44 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 
 @ToString
 @EqualsAndHashCode
-@Entity(name = "centro_de_custo")
-public class CentroDeCusto implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Entity(name = "pessoa_telefone")
+public class PessoaTelefone {
 
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     @JsonIgnore
-    @Getter
-    @Setter
     private Long id;
 
-    @Embedded
     @Getter
     @Setter
-    private PropriedadesComuns controle;
-
     @NotBlank
-    @Size(min = 2, max = 150)
-    @Getter
-    @Setter
-    private String descricao;
+    @Column(name = "telefone_tipo")
+    @Enumerated
+    private TelefoneTipo telefoneTipo;
 
     @Getter
     @Setter
-    private boolean inativo;
+    @Size(max = 14)
+    private String numero;
 
+    @Getter
+    @Setter
+    @Size(max = 250)
+    private String observacao;
+
+    @Getter
+    @Setter
     @NotNull
-    @JoinColumn(name = "classe_despesa_id", referencedColumnName = "id")
-    @ManyToOne()
-    @Getter
-    @Setter
-    private ClasseDespesa classeDespesa;
+    @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Pessoa pessoa;
 
-    public CentroDeCusto() {
+    public PessoaTelefone() {
     }
 
     @Transient
@@ -59,7 +57,7 @@ public class CentroDeCusto implements Serializable {
         try {
             return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
         } catch (Exception e) {
-            throw new CentroDeCustoNaoEncontrado();
+            throw new PessoaTelefoneNaoEncontrado();
         }
     }
 
@@ -68,13 +66,7 @@ public class CentroDeCusto implements Serializable {
         try {
             this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
         } catch (Exception e) {
-            throw new CentroDeCustoNaoEncontrado();
+            throw new PessoaTelefoneNaoEncontrado();
         }
     }
-
-    @PrePersist
-    public void prePersist() {
-        this.controle = new PropriedadesComuns();
-    }
-
 }

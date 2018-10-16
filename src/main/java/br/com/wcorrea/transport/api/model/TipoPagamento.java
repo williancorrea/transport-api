@@ -42,6 +42,10 @@ public class TipoPagamento implements Serializable {
 
     @Getter
     @Setter
+    private Boolean naoPodeSerAlterado;
+
+    @Getter
+    @Setter
     private boolean inativo;
 
     public TipoPagamento() {

@@ -35,7 +35,7 @@ public class ClasseDespesa implements Serializable {
     private PropriedadesComuns controle;
 
     @NotBlank
-    @Size(min = 5, max = 150)
+    @Size(min = 2, max = 150)
     @Getter
     @Setter
     private String descricao;

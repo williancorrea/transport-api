@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/tipo_pagamentos")
@@ -39,6 +40,12 @@ public class TipoPagamentoResource {
     @PreAuthorize("hasAuthority('ROLE_LISTAR_TIPO-PAGAMENTO') and #oauth2.hasScope('read')")
     public Page<TipoPagamento> findAll(TipoPagamentoFiltro filtro, Pageable paginacao) {
         return tipoPagamentoRepository.findAll(filtro, paginacao);
+    }
+
+    @GetMapping("/ativos")
+    @PreAuthorize("hasAuthority('ROLE_LISTAR_TIPO-PAGAMENTO') and #oauth2.hasScope('read')")
+    public List<TipoPagamento> listarTudoAtivo() {
+        return tipoPagamentoRepository.listarTudoAtivo();
     }
 
     /**

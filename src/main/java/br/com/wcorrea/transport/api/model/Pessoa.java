@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @ToString(exclude = {"pessoaFisica"})
 @EqualsAndHashCode(exclude = {"pessoaFisica"})
@@ -28,7 +29,6 @@ public class Pessoa implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     @JsonIgnore
     @Getter
     @Setter
@@ -37,7 +37,7 @@ public class Pessoa implements Serializable {
     @Embedded
     @Getter
     @Setter
-    private PropriedadesComuns propriedades;
+    private PropriedadesComuns controle;
 
     @NotBlank
     @Size(min = 5, max = 250)
@@ -97,16 +97,26 @@ public class Pessoa implements Serializable {
     @JsonProperty("pessoaJuridica")
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     private PessoaJuridica pessoaJuridica;
-//
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<PessoaEndereco> listaPessoaEndereco;
-//
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<PessoaContato> listaPessoaContato;
-//
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<PessoaTelefone> listaPessoaTelefone;
-//
+
+    @Getter
+    @Setter
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PessoaEndereco> listaPessoaEndereco;
+
+    @Getter
+    @Setter
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PessoaTelefone> listaPessoaTelefone;
+
+
+    @Getter
+    @Setter
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PessoaContato> listaPessoaContato;
+
 //    @ManyToMany(fetch = FetchType.EAGER)
 //    @JoinTable(nome = "EMPRESA_PESSOA", joinColumns = { @JoinColumn(nome = "ID_PESSOA") }, inverseJoinColumns = { @JoinColumn(nome = "ID_EMPRESA") })
 //    private Set<Empresa> listaEmpresa;
@@ -136,7 +146,7 @@ public class Pessoa implements Serializable {
 
 
     @Transient
-    public String getKey(){
+    public String getKey() {
         try {
             return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
         } catch (Exception e) {
@@ -154,12 +164,12 @@ public class Pessoa implements Serializable {
     }
 
     @PrePersist
-    public void prePersist() {
-        this.propriedades = new PropriedadesComuns();
-    }
-
     @PreUpdate
-    public void preUpdate() {
-        this.propriedades.setDataAlteracao(new Date());
+    public void updateControle() {
+        if (this.controle == null) {
+            this.controle = new PropriedadesComuns();
+        } else {
+            this.controle.setDataAlteracao(new Date());
+        }
     }
 }
