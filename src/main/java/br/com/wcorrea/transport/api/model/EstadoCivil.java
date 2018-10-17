@@ -63,7 +63,6 @@ public class EstadoCivil implements Serializable {
         try {
             this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
         } catch (Exception e) {
-            throw new EstadoCivilNaoEncontrado();
         }
     }
 

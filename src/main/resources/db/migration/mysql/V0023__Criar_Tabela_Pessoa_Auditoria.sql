@@ -1,7 +1,6 @@
 CREATE TABLE pessoa_auditoria (
   id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
-  objeto_antigo TEXT NOT NULL,
-  objetoNovo TEXT NOT NULL,
+  objeto_alterado TEXT NOT NULL,
   data_alteracao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
   pessoa_id BIGINT(20),

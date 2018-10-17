@@ -39,6 +39,7 @@ public class ControleKm implements Serializable {
     @Getter
     @Setter
     @NotNull
+    //TODO:Adicionar os atributos  a serem ignorados, para diminuir a carga de dados a ser enviada pelo json
     private Veiculo veiculo;
 
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")

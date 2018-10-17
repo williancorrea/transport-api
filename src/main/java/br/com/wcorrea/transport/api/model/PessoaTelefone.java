@@ -46,7 +46,7 @@ public class PessoaTelefone {
     @Setter
     @NotNull
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Pessoa pessoa;
 
     public PessoaTelefone() {

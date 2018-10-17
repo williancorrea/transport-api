@@ -132,7 +132,6 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
     public Long recuperarKmSaidaMinimo(Date dataSaida, Long veiculoId) {
         StringBuilder sql = new StringBuilder();
         sql.append("select max(kmChegada) from controle_km where veiculo.id = :pveiculoId and dataHoraChegada <= :pDataSaida");
-        //TODO: Mudara para long depois que alterar o tipo do banco
         Query cKm = manager.createQuery(sql.toString(), Long.class)
                 .setParameter("pDataSaida", dataSaida)
                 .setParameter("pveiculoId", veiculoId);

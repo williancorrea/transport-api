@@ -31,13 +31,7 @@ public class PessoaAuditoria {
     @Setter
     @Lob
     @NotBlank
-    private String objetoAntigo;
-
-    @Getter
-    @Setter
-    @Lob
-    @NotBlank
-    private String objetoNovo;
+    private String objetoAlterado;
 
     @Getter
     @Setter
@@ -51,7 +45,7 @@ public class PessoaAuditoria {
     @Setter
     @NotNull
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Pessoa pessoa;
 
     public PessoaAuditoria() {

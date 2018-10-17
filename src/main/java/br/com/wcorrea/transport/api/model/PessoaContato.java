@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode()
 @Entity(name = "pessoa_contato")
 public class PessoaContato {
 
@@ -37,21 +37,28 @@ public class PessoaContato {
     @Getter
     @Setter
     @Size(max = 14)
+    @Column(name = "fone_comercial")
     private String foneComercial;
     @Getter
     @Setter
     @Size(max = 14)
+    @Column(name = "fone_residencial")
     private String foneResidencial;
     @Getter
     @Setter
     @Size(max = 14)
+    @Column(name = "fone_celular")
     private String foneCelular;
+
+    @Getter
+    @Setter
+    private boolean inativo;
 
     @Getter
     @Setter
     @NotNull
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Pessoa pessoa;
 
     public PessoaContato() {

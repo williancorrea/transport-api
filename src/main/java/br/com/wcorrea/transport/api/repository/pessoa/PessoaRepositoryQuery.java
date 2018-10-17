@@ -7,6 +7,12 @@ import org.springframework.data.domain.Pageable;
 
 public interface PessoaRepositoryQuery {
     Page<Pessoa> findAll(PessoaFiltro pessoaFiltro, Pageable pageable);
+
     Pessoa findOneByCPF(String cpf);
+
     Pessoa findOneByCNPJ(String cnpj);
+
+    Boolean verificarCPFJaCadastrado(String cpf, Long id);
+
+    Boolean verificarCNPJJaCadastrado(String cnpj, Long id);
 }

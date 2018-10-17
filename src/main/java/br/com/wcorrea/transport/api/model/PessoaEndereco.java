@@ -77,7 +77,7 @@ public class PessoaEndereco implements Serializable {
     @Setter
     @NotNull
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Pessoa pessoa;
 
     public PessoaEndereco() {
