@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.UUID;
 
 public class Utils {
     private Integer TIMEOUT_VALUE = 5000;
@@ -42,10 +43,10 @@ public class Utils {
                 .atZone(ZoneId.systemDefault())
                 .toInstant());
     }
+
     public static Date convertDate(LocalDateTime dateToConvert) {
         return java.sql.Timestamp.valueOf(dateToConvert);
     }
-
 
     public String getURL(String urlParam) throws IOException {
         try {
@@ -66,6 +67,10 @@ public class Utils {
         }
     }
 
+    public String gerarNomeUnico() {
+        return UUID.randomUUID().toString();
+    }
+
     /**
      * Verifica se o cnpj informado e valido
      *
@@ -74,7 +79,7 @@ public class Utils {
      */
     public static boolean validarCNPJ(String CNPJ) {
 
-        CNPJ = CNPJ.replace(".","").replace("/","").replace("-","");
+        CNPJ = CNPJ.replace(".", "").replace("/", "").replace("-", "");
         // considera-se erro CNPJ's formados por uma sequencia de numeros iguais
         if (CNPJ.equals("00000000000000") || CNPJ.equals("11111111111111") ||
                 CNPJ.equals("22222222222222") || CNPJ.equals("33333333333333") ||
@@ -140,7 +145,7 @@ public class Utils {
      * @return boolean
      */
     public static boolean validarCPF(String CPF) {
-        CPF = CPF.replace(".","").replace("-","");
+        CPF = CPF.replace(".", "").replace("-", "");
         // considera-se erro CPF's formados por uma sequencia de numeros iguais
         if (CPF.equals("00000000000") || CPF.equals("11111111111") ||
                 CPF.equals("22222222222") || CPF.equals("33333333333") ||

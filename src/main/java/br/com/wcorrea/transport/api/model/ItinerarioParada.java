@@ -18,7 +18,7 @@ import java.util.Date;
 
 @ToString
 @EqualsAndHashCode
-@Entity(name = "itinerario")
+@Entity(name = "Itinerario_parada")
 public class ItinerarioParada implements Serializable {
     private static final long serialVersionUID = 1L;
 

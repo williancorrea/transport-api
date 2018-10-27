@@ -177,7 +177,7 @@ public class PessoaService {
         /**
          * VERIFICA SE O ESTADO CIVIL EXISTE NA BASE DE DADOS
          */
-        if (pessoa.getPessoaFisica().getEstadoCivil() != null) {
+        if (pessoa.getPessoaFisica().getEstadoCivil() != null && pessoa.getPessoaFisica().getId() != null) {
             try {
                 EstadoCivil estadoCivilEncontrado = estadoCivilRepository.findOne(pessoa.getPessoaFisica().getEstadoCivil().getId());
                 if (estadoCivilEncontrado == null) {
@@ -187,6 +187,8 @@ public class PessoaService {
             } catch (Exception e) {
                 throw new EstadoCivilNaoEncontrado();
             }
+        } else {
+            pessoa.getPessoaFisica().setEstadoCivil(null);
         }
 
         pessoa.getPessoaFisica().setPessoa(pessoa);
