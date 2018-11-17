@@ -39,8 +39,8 @@ public class PessoaService {
         Pessoa objFound = buscarPorId(id);
 
         pessoa.setId(objFound.getId());
-
         pessoa.setControle(objFound.getControle());
+
         if (objFound.getTipo().equals(PessoaTipo.FISICA)) {
             pessoa.getPessoaFisica().setId(objFound.getPessoaFisica().getId());
             pessoa.setPessoaJuridica(null);

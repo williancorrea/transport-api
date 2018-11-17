@@ -28,7 +28,7 @@ public class ContabilidadeException extends DefaultExceptionHandler {
 
     @ExceptionHandler({ClasseDespesaNaoEncontrada.class})
     public ResponseEntity<Object> handleClasseDespezaNaoEncontrada(ClasseDespesaNaoEncontrada ex, WebRequest request, Locale loc) {
-        String userMessage = messageSource.getMessage("recurso.classe_despeza_nao_encontrada", null, loc);
+        String userMessage = messageSource.getMessage("recurso.classe_despesa_nao_encontrada", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
