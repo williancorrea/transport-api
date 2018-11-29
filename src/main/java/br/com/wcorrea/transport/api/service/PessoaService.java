@@ -111,8 +111,10 @@ public class PessoaService {
         /**
          * IMPEDE A ALTERACAO DO CPF
          */
-        if (pessoa.getPessoaFisica() != null && !pessoa.getPessoaFisica().getCpf().equals(pessoaEncontrada.getPessoaFisica().getCpf())) {
-            throw new PessoaFisicaNaoPodeAlterarValorCPF();
+        if(pessoaEncontrada != null) {
+            if (pessoa.getPessoaFisica() != null && !pessoa.getPessoaFisica().getCpf().equals(pessoaEncontrada.getPessoaFisica().getCpf())) {
+                throw new PessoaFisicaNaoPodeAlterarValorCPF();
+            }
         }
         /**
          * IMPEDE A ALTERACAO DO CNPJ
