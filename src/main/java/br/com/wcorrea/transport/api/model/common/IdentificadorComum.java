@@ -64,6 +64,6 @@ public abstract class IdentificadorComum implements Serializable {
 
     @PreUpdate
     public void preUpdate() {
-        this.getControle().setDataCriacao(new Date());
+        this.getControle().setDataAlteracao(new Date());
     }
 }

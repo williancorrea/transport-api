@@ -1,10 +1,9 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
-import br.com.wcorrea.transport.api.service.exception.LevelOfEducationNotFound;
+import br.com.wcorrea.transport.api.service.exception.NivelEducacaoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javassist.bytecode.stackmap.BasicBlock;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +13,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @ToString
@@ -71,7 +69,7 @@ public class LevelOfEducation implements Serializable {
         try {
             return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
         } catch (Exception e) {
-            throw new LevelOfEducationNotFound();
+            throw new NivelEducacaoNaoEncontrado();
         }
     }
 
@@ -80,7 +78,7 @@ public class LevelOfEducation implements Serializable {
         try {
             this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
         } catch (Exception e) {
-            throw new LevelOfEducationNotFound();
+            throw new NivelEducacaoNaoEncontrado();
         }
     }
 

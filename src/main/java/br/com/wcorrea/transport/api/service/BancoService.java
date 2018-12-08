@@ -2,7 +2,7 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.Banco;
 import br.com.wcorrea.transport.api.repository.banco.BancoRepository;
-import br.com.wcorrea.transport.api.service.exception.BankNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.BancoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +39,7 @@ public class BancoService {
     public Banco findOne(Long id) {
         Banco banco = bancoRepository.findOne(id);
         if (banco == null) {
-            throw new BankNaoEncontrado();
+            throw new BancoNaoEncontrado();
         }
         return banco;
     }
@@ -48,7 +48,7 @@ public class BancoService {
         try {
             return new Criptografia().getKey(key);
         } catch (Exception e) {
-            throw new BankNaoEncontrado();
+            throw new BancoNaoEncontrado();
         }
     }
 }

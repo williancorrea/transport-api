@@ -10,19 +10,19 @@ CREATE TABLE tipo_pagamento (
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-
-
+-- ------------------
 -- PERMISSOES
-INSERT INTO permission (name, description) values ('ROLE_ACESSAR_URI_TIPO-PAGAMENTO', '');
-INSERT INTO permission (name, description) values ('ROLE_LISTAR_TIPO-PAGAMENTO', '');
-INSERT INTO permission (name, description) values ('ROLE_DELETAR_TIPO-PAGAMENTO', '');
-INSERT INTO permission (name, description) values ('ROLE_ATUALIZAR_TIPO-PAGAMENTO', '');
-INSERT INTO permission (name, description) values ('ROLE_SALVAR_TIPO-PAGAMENTO', '');
-INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_ACESSAR_URI_TIPO-PAGAMENTO'));
-INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_LISTAR_TIPO-PAGAMENTO'));
-INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_DELETAR_TIPO-PAGAMENTO'));
-INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_ATUALIZAR_TIPO-PAGAMENTO'));
-INSERT INTO user_permission (id_user, id_permission) VALUES ((select id from user where email='willian.vag@gmail.com'), (select id from permission where name='ROLE_SALVAR_TIPO-PAGAMENTO'));
+-- ------------------
+INSERT INTO permissao (nome, descricao) values ('ROLE_ACESSAR_URI_TIPO-PAGAMENTO', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_LISTAR_TIPO-PAGAMENTO', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_DELETAR_TIPO-PAGAMENTO', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_ATUALIZAR_TIPO-PAGAMENTO', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_SALVAR_TIPO-PAGAMENTO', '');
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_ACESSAR_URI_TIPO-PAGAMENTO'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_LISTAR_TIPO-PAGAMENTO'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_DELETAR_TIPO-PAGAMENTO'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_ATUALIZAR_TIPO-PAGAMENTO'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_SALVAR_TIPO-PAGAMENTO'));
 
 -- DADOS
 INSERT INTO tipo_pagamento (descricao, nao_pode_ser_alterado) VALUES ('DINHEIRO', true );

@@ -2,13 +2,11 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.ProductUnit;
 import br.com.wcorrea.transport.api.repository.ProductUnitRepository;
-import br.com.wcorrea.transport.api.service.exception.ProductUnitNotFound;
-import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.UnidadeMedidaNaoEncontrada;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -41,7 +39,7 @@ public class ProductUnitService {
     private ProductUnit findOne(Long id) {
         ProductUnit productUnit = productUnitRepository.findOne(id);
         if (productUnit == null) {
-            throw new ProductUnitNotFound();
+            throw new UnidadeMedidaNaoEncontrada();
         }
         return productUnit;
     }
@@ -50,7 +48,7 @@ public class ProductUnitService {
         try {
             return new Criptografia().getKey(key);
         } catch (Exception e) {
-            throw new ProductUnitNotFound();
+            throw new UnidadeMedidaNaoEncontrada();
         }
     }
 }

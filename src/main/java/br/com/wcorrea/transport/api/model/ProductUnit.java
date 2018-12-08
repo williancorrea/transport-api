@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
-import br.com.wcorrea.transport.api.service.exception.ProductUnitNotFound;
+import br.com.wcorrea.transport.api.service.exception.UnidadeMedidaNaoEncontrada;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
@@ -64,7 +64,7 @@ public class ProductUnit implements Serializable {
         try {
             return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
         } catch (Exception e) {
-            throw new ProductUnitNotFound();
+            throw new UnidadeMedidaNaoEncontrada();
         }
     }
 
@@ -73,7 +73,7 @@ public class ProductUnit implements Serializable {
         try {
             this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
         } catch (Exception e) {
-            throw new ProductUnitNotFound();
+            throw new UnidadeMedidaNaoEncontrada();
         }
     }
 

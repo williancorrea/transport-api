@@ -2,13 +2,11 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.TypeRelationship;
 import br.com.wcorrea.transport.api.repository.TypeRelationshipRepository;
-import br.com.wcorrea.transport.api.service.exception.TypeRelationshipNotFound;
-import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.TipoRelacionamentoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -41,7 +39,7 @@ public class TypeRelationshipService {
     private TypeRelationship findOne(Long id) {
         TypeRelationship typeRelationship = typeRelationshipRepository.findOne(id);
         if (typeRelationship == null) {
-            throw new TypeRelationshipNotFound();
+            throw new TipoRelacionamentoNaoEncontrado();
         }
         return typeRelationship;
     }
@@ -50,7 +48,7 @@ public class TypeRelationshipService {
         try {
             return new Criptografia().getKey(key);
         } catch (Exception e) {
-            throw new TypeRelationshipNotFound();
+            throw new TipoRelacionamentoNaoEncontrado();
         }
     }
 }

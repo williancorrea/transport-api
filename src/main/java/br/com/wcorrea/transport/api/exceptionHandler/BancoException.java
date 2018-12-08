@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.exceptionHandler;
 
 import br.com.wcorrea.transport.api.exceptionHandler.defaultException.DefaultExceptionHandler;
-import br.com.wcorrea.transport.api.service.exception.BankNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.BancoNaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -24,8 +24,8 @@ public class BancoException extends DefaultExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler({BankNaoEncontrado.class})
-    public ResponseEntity<Object> handleBankUpdateNotFound(BankNaoEncontrado ex, WebRequest request, Locale loc) {
+    @ExceptionHandler({BancoNaoEncontrado.class})
+    public ResponseEntity<Object> handleBankUpdateNotFound(BancoNaoEncontrado ex, WebRequest request, Locale loc) {
         String userMessage = messageSource.getMessage("recurso.banco-nao-encontrado", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));

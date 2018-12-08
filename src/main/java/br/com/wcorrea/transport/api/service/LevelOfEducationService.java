@@ -2,13 +2,11 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.LevelOfEducation;
 import br.com.wcorrea.transport.api.repository.LevelOfEducationRepository;
-import br.com.wcorrea.transport.api.service.exception.LevelOfEducationNotFound;
-import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.NivelEducacaoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -41,7 +39,7 @@ public class LevelOfEducationService {
     private LevelOfEducation findOne(Long id) {
         LevelOfEducation levelOfEducation = levelOfEducationRepository.findOne(id);
         if (levelOfEducation == null) {
-            throw new LevelOfEducationNotFound();
+            throw new NivelEducacaoNaoEncontrado();
         }
         return levelOfEducation;
     }
@@ -50,7 +48,7 @@ public class LevelOfEducationService {
         try {
             return new Criptografia().getKey(key);
         } catch (Exception e) {
-            throw new LevelOfEducationNotFound();
+            throw new NivelEducacaoNaoEncontrado();
         }
     }
 }

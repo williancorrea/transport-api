@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.exceptionHandler;
 
 import br.com.wcorrea.transport.api.exceptionHandler.defaultException.DefaultExceptionHandler;
-import br.com.wcorrea.transport.api.service.exception.LevelOfEducationNotFound;
+import br.com.wcorrea.transport.api.service.exception.NivelEducacaoNaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -21,8 +21,8 @@ public class LevelOfEducationException extends DefaultExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler({LevelOfEducationNotFound.class})
-    public ResponseEntity<Object> handleLevelOfEducationUpdateNotFound(LevelOfEducationNotFound ex, WebRequest request, Locale loc) {
+    @ExceptionHandler({NivelEducacaoNaoEncontrado.class})
+    public ResponseEntity<Object> handleLevelOfEducationUpdateNotFound(NivelEducacaoNaoEncontrado ex, WebRequest request, Locale loc) {
         String userMessage = messageSource.getMessage("recurso.nivel-de-educacao-nao-encontrao", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));

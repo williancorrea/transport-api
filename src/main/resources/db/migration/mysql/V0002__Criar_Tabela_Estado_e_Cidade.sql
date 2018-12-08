@@ -13,7 +13,9 @@ CREATE TABLE cidade (
   FOREIGN KEY (estado_id) REFERENCES estado(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+-- -------------------
+-- DADOS
+-- -------------------
 INSERT INTO estado ( iniciais, descricao, codigo_ibge ) VALUES ('SE', 'Sergipe', 28 );
 INSERT INTO estado ( iniciais, descricao, codigo_ibge ) VALUES ('BA', 'Bahia', 29 );
 INSERT INTO estado ( iniciais, descricao, codigo_ibge ) VALUES ('MG', 'Minas Gerais', 31 );

@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
-import br.com.wcorrea.transport.api.service.exception.TypeRelationshipNotFound;
+import br.com.wcorrea.transport.api.service.exception.TipoRelacionamentoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
@@ -59,7 +59,7 @@ public class TypeRelationship implements Serializable {
         try {
             return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
         } catch (Exception e) {
-            throw new TypeRelationshipNotFound();
+            throw new TipoRelacionamentoNaoEncontrado();
         }
     }
 
@@ -68,7 +68,7 @@ public class TypeRelationship implements Serializable {
         try {
             this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
         } catch (Exception e) {
-            throw new TypeRelationshipNotFound();
+            throw new TipoRelacionamentoNaoEncontrado();
         }
     }
 

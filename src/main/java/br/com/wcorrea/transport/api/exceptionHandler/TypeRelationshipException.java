@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.exceptionHandler;
 
 import br.com.wcorrea.transport.api.exceptionHandler.defaultException.DefaultExceptionHandler;
-import br.com.wcorrea.transport.api.service.exception.TypeRelationshipNotFound;
+import br.com.wcorrea.transport.api.service.exception.TipoRelacionamentoNaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -24,8 +24,8 @@ public class TypeRelationshipException extends DefaultExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler({TypeRelationshipNotFound.class})
-    public ResponseEntity<Object> handleTypeRelationshipUpdateNotFound(TypeRelationshipNotFound ex, WebRequest request, Locale loc) {
+    @ExceptionHandler({TipoRelacionamentoNaoEncontrado.class})
+    public ResponseEntity<Object> handleTypeRelationshipUpdateNotFound(TipoRelacionamentoNaoEncontrado ex, WebRequest request, Locale loc) {
         String userMessage = messageSource.getMessage("recurso.tipo-de-relacionamento-nao-encontrado", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
