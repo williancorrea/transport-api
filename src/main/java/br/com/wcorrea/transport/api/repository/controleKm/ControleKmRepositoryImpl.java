@@ -253,7 +253,7 @@ public class ControleKmRepositoryImpl implements ControleKmRepositoryQuery {
             }
         }
 
-        sql = UtilsRepository.adicionarOrdenacaoConsulta(sql, count, filtro.getSortField(), filtro.getSortOrder());
+        sql = UtilsRepository.adicionarOrdenacaoConsulta(sql, count, filtro.getPropriedadeOrdenacao(), filtro.getOrdemClassificacao());
         return sql;
     }
 

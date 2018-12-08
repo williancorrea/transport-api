@@ -55,11 +55,11 @@ public class TipoPagamentoRepositoryImpl implements TipoPagamentoRepositoryQuery
          * ORDERING THE LIST
          */
         if (count == false) {
-            if (StringUtils.isNotBlank(tipoPagamentoFiltro.getSortField())) {
-                sql += " order by a." + tipoPagamentoFiltro.getSortField();
+            if (StringUtils.isNotBlank(tipoPagamentoFiltro.getPropriedadeOrdenacao())) {
+                sql += " order by a." + tipoPagamentoFiltro.getPropriedadeOrdenacao();
             }
-            if (StringUtils.isNotBlank(tipoPagamentoFiltro.getSortOrder()) && StringUtils.isNotBlank(tipoPagamentoFiltro.getSortField())) {
-                sql += " " + tipoPagamentoFiltro.getSortOrder();
+            if (StringUtils.isNotBlank(tipoPagamentoFiltro.getOrdemClassificacao()) && StringUtils.isNotBlank(tipoPagamentoFiltro.getPropriedadeOrdenacao())) {
+                sql += " " + tipoPagamentoFiltro.getOrdemClassificacao();
             }
         }
         return sql;

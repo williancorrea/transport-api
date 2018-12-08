@@ -61,11 +61,11 @@ public class CentroDeCustoRepositoryImpl implements CentroDeCustoRepositoryQuery
          * ORDERING THE LIST
          */
         if (count == false) {
-            if (StringUtils.isNotBlank(centroDeCustoFiltro.getSortField())) {
-                sql += " order by a." + centroDeCustoFiltro.getSortField();
+            if (StringUtils.isNotBlank(centroDeCustoFiltro.getPropriedadeOrdenacao())) {
+                sql += " order by a." + centroDeCustoFiltro.getPropriedadeOrdenacao();
             }
-            if (StringUtils.isNotBlank(centroDeCustoFiltro.getSortOrder()) && StringUtils.isNotBlank(centroDeCustoFiltro.getSortField())) {
-                sql += " " + centroDeCustoFiltro.getSortOrder();
+            if (StringUtils.isNotBlank(centroDeCustoFiltro.getOrdemClassificacao()) && StringUtils.isNotBlank(centroDeCustoFiltro.getPropriedadeOrdenacao())) {
+                sql += " " + centroDeCustoFiltro.getOrdemClassificacao();
             }
         }
         return sql;
