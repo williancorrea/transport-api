@@ -23,7 +23,7 @@ public class LevelOfEducationException extends DefaultExceptionHandler {
 
     @ExceptionHandler({LevelOfEducationNotFound.class})
     public ResponseEntity<Object> handleLevelOfEducationUpdateNotFound(LevelOfEducationNotFound ex, WebRequest request, Locale loc) {
-        String userMessage = messageSource.getMessage("resource.level-of-education-not-found", null, loc);
+        String userMessage = messageSource.getMessage("recurso.nivel-de-educacao-nao-encontrao", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_FOUND, request);

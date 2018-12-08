@@ -26,7 +26,7 @@ public class ProductUnitException extends DefaultExceptionHandler {
 
     @ExceptionHandler({ProductUnitNotFound.class})
     public ResponseEntity<Object> handleProductUnitUpdateNotFound(ProductUnitNotFound ex, WebRequest request, Locale loc) {
-        String userMessage = messageSource.getMessage("resource.product-unit-not-found", null, loc);
+        String userMessage = messageSource.getMessage("recurso.produto-nao-encontrado", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
