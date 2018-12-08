@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.repository;
 
-import br.com.wcorrea.transport.api.model.User;
+import br.com.wcorrea.transport.api.model.seguranca.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

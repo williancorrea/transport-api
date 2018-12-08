@@ -10,14 +10,14 @@ public class SystemUser extends User {
 
 	private static final long serialVersionUID = 1L;
 
-	private br.com.wcorrea.transport.api.model.User userModel;
+	private br.com.wcorrea.transport.api.model.seguranca.User userModel;
 
-	public SystemUser(br.com.wcorrea.transport.api.model.User userParam, Collection<? extends GrantedAuthority> authorities) {
+	public SystemUser(br.com.wcorrea.transport.api.model.seguranca.User userParam, Collection<? extends GrantedAuthority> authorities) {
 		super(userParam.getEmail(), userParam.getPassword(), authorities);
 		this.userModel = userParam;
 	}
 
-	public br.com.wcorrea.transport.api.model.User getUser() {
+	public br.com.wcorrea.transport.api.model.seguranca.User getUser() {
 		return userModel;
 	}
 

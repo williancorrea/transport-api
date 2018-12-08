@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.model;
+package br.com.wcorrea.transport.api.model.seguranca;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

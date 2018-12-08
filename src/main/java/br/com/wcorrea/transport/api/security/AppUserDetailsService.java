@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.security;
 
-import br.com.wcorrea.transport.api.model.User;
+import br.com.wcorrea.transport.api.model.seguranca.User;
 import br.com.wcorrea.transport.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
