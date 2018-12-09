@@ -1,5 +1,6 @@
 package br.com.wcorrea.transport.api.model;
 
+import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
 import br.com.wcorrea.transport.api.service.exception.PessoaNaoEncontrada;
 import br.com.wcorrea.transport.api.utils.Criptografia;
@@ -25,21 +26,11 @@ import java.util.List;
 @ToString(exclude = {"pessoaFisica"})
 @EqualsAndHashCode(exclude = {"pessoaFisica"})
 @Entity(name = "pessoa")
-public class Pessoa implements Serializable {
+public class Pessoa extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     @Getter
     @Setter
-    private Long id;
-
-    @Embedded
-    @Getter
-    @Setter
-    private PropriedadesComuns controle;
-
     @NotBlank
     @Size(min = 5, max = 250)
     private String nome;
@@ -138,14 +129,6 @@ public class Pessoa implements Serializable {
     public Pessoa() {
     }
 
-    public String getNome() {
-        return this.nome != null ? this.nome.toUpperCase() : this.nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome.toUpperCase();
-    }
-
     @JsonIgnore
     @Transient
     public boolean isPessoaFisica() {
@@ -156,34 +139,5 @@ public class Pessoa implements Serializable {
     @Transient
     public boolean isPessoaJuridica() {
         return PessoaTipo.JURIDICA.equals(tipo);
-    }
-
-
-    @Transient
-    public String getKey() {
-        try {
-            return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
-        } catch (Exception e) {
-            throw new PessoaNaoEncontrada();
-        }
-    }
-
-    @Transient
-    public void setKey(String key) {
-        try {
-            this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
-        } catch (Exception e) {
-            throw new PessoaNaoEncontrada();
-        }
-    }
-
-    @PrePersist
-    @PreUpdate
-    public void updateControle() {
-        if (this.controle == null) {
-            this.controle = new PropriedadesComuns();
-        } else {
-            this.controle.setDataAlteracao(new Date());
-        }
     }
 }

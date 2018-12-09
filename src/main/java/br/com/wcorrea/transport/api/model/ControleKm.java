@@ -1,5 +1,6 @@
 package br.com.wcorrea.transport.api.model;
 
+import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
 import br.com.wcorrea.transport.api.service.exception.veiculo.ControleKmNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
@@ -19,20 +20,8 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 @Entity(name = "controle_km")
-public class ControleKm implements Serializable {
+public class ControleKm extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
-    @Getter
-    @Setter
-    private Long id;
-
-    @Embedded
-    @Getter
-    @Setter
-    private PropriedadesComuns controle;
 
     @JoinColumn(name = "veiculo_id", referencedColumnName = "id")
     @ManyToOne()
@@ -47,6 +36,7 @@ public class ControleKm implements Serializable {
     @Getter
     @Setter
     @NotNull
+    //TODO:Adicionar os atributos  a serem ignorados, para diminuir a carga de dados a ser enviada pelo json
     private Pessoa pessoa;
 
     @JoinColumn(name = "itinerario_id", referencedColumnName = "id")
@@ -54,6 +44,7 @@ public class ControleKm implements Serializable {
     @Getter
     @Setter
     @NotNull
+    //TODO:Adicionar os atributos  a serem ignorados, para diminuir a carga de dados a ser enviada pelo json
     private Itinerario itinerario;
 
     @Getter
@@ -111,35 +102,7 @@ public class ControleKm implements Serializable {
     }
 
     @Transient
-    public String getKey() {
-        try {
-            return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
-        } catch (Exception e) {
-            throw new ControleKmNaoEncontrado();
-        }
-    }
-
-    @Transient
     public Long getKmTotal() {
         return this.kmChegada - this.kmSaida;
-    }
-
-    @Transient
-    public void setKey(String key) {
-        try {
-            this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
-        } catch (Exception e) {
-            throw new ControleKmNaoEncontrado();
-        }
-    }
-
-    @PrePersist
-    public void prePersist() {
-        this.controle = new PropriedadesComuns();
-    }
-
-    @PreUpdate
-    public void preUpdade() {
-        this.controle.setDataAlteracao(new Date());
     }
 }

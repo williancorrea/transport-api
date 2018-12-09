@@ -28,8 +28,6 @@ public class TypeRelationshipService {
     public TypeRelationship update(Long id, TypeRelationship typeRelationship) {
         TypeRelationship objFound = typeRelationshipRepository.save(findOne(id));
         typeRelationship.setId(objFound.getId());
-        typeRelationship.setProperties(objFound.getProperties());
-        typeRelationship.getProperties().setDataAlteracao(new Date());
         return typeRelationshipRepository.save(typeRelationship);
     }
 

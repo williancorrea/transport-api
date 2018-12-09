@@ -1,5 +1,6 @@
 package br.com.wcorrea.transport.api.model;
 
+import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
 import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
@@ -21,20 +22,8 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 @Entity(name = "itinerario")
-public class Itinerario implements Serializable {
+public class Itinerario extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
-    @Getter
-    @Setter
-    private Long id;
-
-    @Embedded
-    @Getter
-    @Setter
-    private PropriedadesComuns controle;
 
     @Size(max = 15)
     @Getter
@@ -66,33 +55,5 @@ public class Itinerario implements Serializable {
     private boolean ativo;
 
     public Itinerario() {
-    }
-
-    @Transient
-    public String getKey() {
-        try {
-            return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
-        } catch (Exception e) {
-            throw new ItinerarioNaoEncontrado();
-        }
-    }
-
-    @Transient
-    public void setKey(String key){
-        try {
-            this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
-        } catch (Exception e) {
-            throw new ItinerarioNaoEncontrado();
-        }
-    }
-
-    @PrePersist
-    public void prePersist() {
-        this.controle = new PropriedadesComuns();
-    }
-
-    @PreUpdate
-    public void preUpdade() {
-        this.controle.setDataAlteracao(new Date());
     }
 }

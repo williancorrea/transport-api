@@ -28,8 +28,6 @@ public class ProductUnitService {
     public ProductUnit update(Long id, ProductUnit productUnit) {
         ProductUnit updateFound = findOne(id);
         productUnit.setId(updateFound.getId());
-        productUnit.setProperties(updateFound.getProperties());
-        productUnit.getProperties().setDataAlteracao(new Date());
         return productUnitRepository.save(productUnit);
     }
 

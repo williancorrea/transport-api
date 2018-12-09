@@ -28,8 +28,6 @@ public class LevelOfEducationService {
     public LevelOfEducation update(Long id, LevelOfEducation levelOfEducation) {
         LevelOfEducation objFound = levelOfEducationRepository.save(findOne(id));
         levelOfEducation.setId(objFound.getId());
-        levelOfEducation.setProperties(objFound.getProperties());
-        levelOfEducation.getProperties().setDataAlteracao(new Date());
         return levelOfEducationRepository.save(levelOfEducation);
     }
 

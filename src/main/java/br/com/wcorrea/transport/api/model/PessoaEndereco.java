@@ -1,5 +1,6 @@
 package br.com.wcorrea.transport.api.model;
 
+import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.service.exception.PessoaEnderecoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,15 +17,8 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode
 @Entity(name = "pessoa_endereco")
-public class PessoaEndereco implements Serializable {
+public class PessoaEndereco extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 8059136906512768883L;
-
-    @Getter
-    @Setter
-    @JsonIgnore
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Getter
     @Setter
@@ -81,23 +75,5 @@ public class PessoaEndereco implements Serializable {
     private Pessoa pessoa;
 
     public PessoaEndereco() {
-    }
-
-    @Transient
-    public String getKey() {
-        try {
-            return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
-        } catch (Exception e) {
-            throw new PessoaEnderecoNaoEncontrado();
-        }
-    }
-
-    @Transient
-    public void setKey(String key) {
-        try {
-            this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
-        } catch (Exception e) {
-            throw new PessoaEnderecoNaoEncontrado();
-        }
     }
 }

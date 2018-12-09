@@ -224,7 +224,6 @@ public class PessoaService {
 
     private PessoaAuditoria construirObjAuditoria(Pessoa novo, Pessoa antigo) {
         PessoaAuditoria aud = new PessoaAuditoria();
-        aud.setDataAlteracao(new Date());
         aud.setPessoa(novo);
 
         StringBuilder txt = new StringBuilder();

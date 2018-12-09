@@ -1,5 +1,6 @@
 package br.com.wcorrea.transport.api.model;
 
+import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.service.exception.PessoaFisicaNaoEncontrada;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -21,16 +22,8 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 @Entity(name = "pessoa_fisica")
-public class PessoaFisica implements Serializable {
+public class PessoaFisica extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    @JsonIgnore
-    @Getter
-    @Setter
-    private Long id;
 
     @NotBlank
     @Size(min = 14, max = 14)
@@ -163,23 +156,5 @@ public class PessoaFisica implements Serializable {
     private Pessoa pessoa;
 
     public PessoaFisica() {
-    }
-
-    @Transient
-    public String getKey(){
-        try {
-            return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
-        } catch (Exception e) {
-            throw new PessoaFisicaNaoEncontrada();
-        }
-    }
-
-    @Transient
-    public void setKey(String key){
-        try {
-            this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
-        } catch (Exception e) {
-            throw new PessoaFisicaNaoEncontrada();
-        }
     }
 }
