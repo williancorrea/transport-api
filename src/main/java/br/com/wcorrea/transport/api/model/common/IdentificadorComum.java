@@ -47,7 +47,10 @@ public abstract class IdentificadorComum implements Serializable {
         try {
             this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
         } catch (Exception e) {
-            throw new ExceptionCriptografarKey();
+            /**
+             * SOLUCAO ENCONTRADA PARA APRESENTAR O A EXCECAO PARA O USUARIO
+             */
+            this.id = new Long(-1);
         }
     }
 
