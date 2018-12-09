@@ -1,8 +1,3 @@
--- -----------------------------------------------
--- (number of banco or banco codigo), the nome and website of financial institutions associated with and not associated with the Brazilian Federation of Banks (FEBRABAN).
--- -----------------------------------------------
-
-
 CREATE TABLE banco (
     id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     codigo VARCHAR(10),

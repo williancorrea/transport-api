@@ -16,6 +16,17 @@ CREATE TABLE zip_code (
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8;
 
+
+-- -------------------------
+-- PERMISSOES
+-- -------------------------
+INSERT INTO permissao (nome, descricao) values ('ROLE_LIST_ZIP-CODE', '');
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_LIST_ZIP-CODE'));
+
+
+-- -------------------------
+-- DADOS
+-- -------------------------
 INSERT INTO zip_code (zip_code, address, neighborhood, cidade, uf, ibge, ddd, longitude, latitude, altitude, data_criacao, data_alteracao) VALUES ('01001-000', 'Praça da Sé, lado ímpar', 'Sé', 'São Paulo', 'SP', '3550308', 11, '-46.636', '-23.5479099981', 760, '2018-02-26 21:11:45', '2018-02-26 21:11:45');
 -- INSERT INTO zip_code (zip_code, address, neighborhood, cidade, uf, ibge, ddd, longitude, latitude, altitude, data_criacao, data_alteracao) VALUES ('01001-001', 'Praça da Sé, lado par', 'Sé', 'São Paulo', 'SP', '3550308', 11, '-46.6359018159', '-23.5479099922', 760, '2018-02-26 21:11:45', '2018-02-26 21:11:45');
 -- INSERT INTO zip_code (zip_code, address, neighborhood, cidade, uf, ibge, ddd, longitude, latitude, altitude, data_criacao, data_alteracao) VALUES ('01001-010', 'Rua Filipe de Oliveira', 'Sé', 'São Paulo', 'SP', '3550308', 11, '-46.6359018226', '-23.548', 760, '2018-02-26 21:11:46', '2018-02-26 21:11:46');

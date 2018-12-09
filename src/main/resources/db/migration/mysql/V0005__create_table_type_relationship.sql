@@ -14,7 +14,23 @@ CREATE TABLE type_of_relationship (
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8;
 
+-- -------------------------
+-- PERMISSOES
+-- -------------------------
+INSERT INTO permissao (nome, descricao) values ('ROLE_ACESSAR_URI_TIPO_RELACIONAMENTO', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_LIST_TYPE-RELATIONSHIP', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_DELETE_TYPE-RELATIONSHIP', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_UPDATE_TYPE-RELATIONSHIP', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_SAVE_TYPE-RELATIONSHIP', '');
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_ACESSAR_URI_TIPO_RELACIONAMENTO'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_LIST_TYPE-RELATIONSHIP'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_DELETE_TYPE-RELATIONSHIP'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_UPDATE_TYPE-RELATIONSHIP'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_SAVE_TYPE-RELATIONSHIP'));
 
+-- -----------------------
+-- DADOS
+-- -----------------------
 INSERT INTO type_of_relationship (code, name, descricao) VALUES ('101', 'Conjugue ou Companheiro', 'Companheiro(a) com quem o contribuinte tenha filho ou viva há mais de 5 anos, ou cônjuge');
 INSERT INTO type_of_relationship (code, name, descricao) VALUES ('102', 'Filho ou enteado ate 21 anos', ' Filho(a) ou enteado(a), até 21 anos de idade, ou, em qualquer idade, quando incapacitado física ou mentalmente para o trabalho');
 INSERT INTO type_of_relationship (code, name, descricao) VALUES ('103', 'Filho ou enteado ate 24 anos estudante', ' Filho(a) ou enteado(a), se ainda estiverem cursando estabelecimento de ensino superior ou escola técnica de segundo grau, até 24 anos de idade');

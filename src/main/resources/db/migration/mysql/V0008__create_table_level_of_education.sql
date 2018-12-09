@@ -12,8 +12,23 @@ CREATE TABLE level_of_education (
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8;
 
+-- -------------------------
+-- PERMISSOES
+-- -------------------------
+INSERT INTO permissao (nome, descricao) values ('ROLE_ACESSAR_URI_NIVEL_FORMACAO', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_LIST_LEVEL-OF-EDUCATION', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_DELETE_LEVEL-OF-EDUCATION', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_UPDATE_LEVEL-OF-EDUCATION', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_SAVE_LEVEL-OF-EDUCATION', '');
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_ACESSAR_URI_NIVEL_FORMACAO'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_LIST_LEVEL-OF-EDUCATION'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_DELETE_LEVEL-OF-EDUCATION'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_UPDATE_LEVEL-OF-EDUCATION'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_SAVE_LEVEL-OF-EDUCATION'));
 
-
+-- -------------------------
+-- DADOS
+-- -------------------------
 insert into level_of_education (id, name, descricao, degree_of_instruction_caged, degree_of_instruction_sefip, degree_of_instruction_rais) values('1','Analfabeto','Analfabeto','1','1','1');
 insert into level_of_education (id, name, descricao, degree_of_instruction_caged, degree_of_instruction_sefip, degree_of_instruction_rais) values('2','Até 4ª série incomplleto','Até 4ª série incompleta do 1º grau (ensino fundamental)','2','2','2');
 insert into level_of_education (id, name, descricao, degree_of_instruction_caged, degree_of_instruction_sefip, degree_of_instruction_rais) values('3','4ª série completa','4ª série completa do 1º grau (ensino fundamental)','3','3','3');

@@ -10,6 +10,23 @@ CREATE TABLE product_unit (
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8;
 
+-- -------------------------
+-- PERMISSOES
+-- -------------------------
+INSERT INTO permissao (nome, descricao) values ('ROLE_ACESSAR_URI_UNIDADE_MEDIDA', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_LIST_PRODUCT-UNIT', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_DELETE_PRODUCT-UNIT', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_UPDATE_PRODUCT-UNIT', '');
+INSERT INTO permissao (nome, descricao) values ('ROLE_SAVE_PRODUCT-UNIT', '');
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_ACESSAR_URI_UNIDADE_MEDIDA'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_LIST_PRODUCT-UNIT'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_DELETE_PRODUCT-UNIT'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_UPDATE_PRODUCT-UNIT'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_SAVE_PRODUCT-UNIT'));
+
+-- ------------------------
+-- DADOS
+-- ------------------------
 INSERT INTO product_unit (initials, name, can_fraction) VALUES ('AR', 'ARROBA', 0);
 INSERT INTO product_unit (initials, name, can_fraction) VALUES ('BA', 'BARRICA', 0);
 INSERT INTO product_unit (initials, name, can_fraction) VALUES ('BB', 'BOMBONA', 0);
