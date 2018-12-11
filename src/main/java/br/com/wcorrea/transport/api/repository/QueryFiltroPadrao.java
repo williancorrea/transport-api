@@ -13,7 +13,10 @@ public class QueryFiltroPadrao {
     @Setter
     private String propriedadeOrdenacao;
 
-    @Getter
     @Setter
     private String ordemClassificacao;
+
+    public String getOrdemClassificacao() {
+        return ordemClassificacao.isEmpty() ? "ASC" : ordemClassificacao.toUpperCase();
+    }
 }
