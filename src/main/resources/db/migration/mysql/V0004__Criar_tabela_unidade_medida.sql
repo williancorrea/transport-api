@@ -19,7 +19,7 @@ INSERT INTO permissao (nome, descricao) values ('ROLE_LISTAR_UNIDADE-MEDIDA', ''
 INSERT INTO permissao (nome, descricao) values ('ROLE_DELETE_UNIDADE-MEDIDA', '');
 INSERT INTO permissao (nome, descricao) values ('ROLE_ATUALIZAR_UNIDADE-MEDIDA', '');
 INSERT INTO permissao (nome, descricao) values ('ROLE_SALVAR_UNIDADE-MEDIDA', '');
-INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_ACESSAR_URI_UNIDADE_MEDIDA'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_ACESSAR_URI_UNIDADE-MEDIDA'));
 INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_LISTAR_UNIDADE-MEDIDA'));
 INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_DELETE_UNIDADE-MEDIDA'));
 INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_ATUALIZAR_UNIDADE-MEDIDA'));

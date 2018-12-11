@@ -19,7 +19,7 @@ import java.util.Locale;
  * Class responsible for dealing with all tipo of relationship errors
  */
 @ControllerAdvice
-public class TypeRelationshipException extends DefaultExceptionHandler {
+public class TipoRelacionamentoException extends DefaultExceptionHandler {
 
     @Autowired
     private MessageSource messageSource;

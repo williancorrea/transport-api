@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.repository.filter.padrao;
+package br.com.wcorrea.transport.api.repository;
 
 import lombok.Getter;
 import lombok.Setter;

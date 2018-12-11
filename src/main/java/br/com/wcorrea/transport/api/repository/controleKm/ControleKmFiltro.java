@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.repository.controleKm;
 
-import br.com.wcorrea.transport.api.repository.filter.padrao.QueryFiltroPadrao;
+import br.com.wcorrea.transport.api.repository.QueryFiltroPadrao;
 import br.com.wcorrea.transport.api.service.exception.PessoaNaoEncontrada;
 import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
 import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoNaoEncontrado;

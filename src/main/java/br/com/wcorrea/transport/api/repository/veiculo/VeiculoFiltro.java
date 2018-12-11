@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.repository.veiculo;
 
-import br.com.wcorrea.transport.api.repository.filter.padrao.QueryFiltroPadrao;
+import br.com.wcorrea.transport.api.repository.QueryFiltroPadrao;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,14 +1,10 @@
-package br.com.wcorrea.transport.api.repository.banco;
+package br.com.wcorrea.transport.api.repository.TipoRelacionamento;
 
 import br.com.wcorrea.transport.api.repository.QueryFiltroPadrao;
 import lombok.Getter;
 import lombok.Setter;
 
-public class BancoFiltro extends QueryFiltroPadrao {
-
-    @Getter
-    @Setter
-    private String codigo;
+public class TipoRelacionamentoFilter extends QueryFiltroPadrao {
 
     @Getter
     @Setter
@@ -16,9 +12,9 @@ public class BancoFiltro extends QueryFiltroPadrao {
 
     @Getter
     @Setter
-    private String url;
+    private String descricao;
 
     @Getter
     @Setter
-    private String inativo;
+    private String codigo;
 }

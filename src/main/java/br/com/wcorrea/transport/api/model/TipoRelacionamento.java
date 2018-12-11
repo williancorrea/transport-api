@@ -17,28 +17,28 @@ import java.io.Serializable;
 
 @ToString
 @EqualsAndHashCode
-@Entity(name = "type_of_relationship")
-public class TypeRelationship extends IdentificadorComum implements Serializable {
+@Entity(name = "tipo_relacionamento")
+public class TipoRelacionamento extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
     @Size(min = 1, max = 3)
     @Getter
     @Setter
-    private String code;
+    private String codigo;
 
     @NotNull
     @Size(min = 5, max = 150)
     @Getter
     @Setter
-    private String name;
+    private String nome;
 
     @Size(max = 512)
     @Lob
     @Getter
     @Setter
-    private String description;
+    private String descricao;
 
-    public TypeRelationship() {
+    public TipoRelacionamento() {
     }
 }
