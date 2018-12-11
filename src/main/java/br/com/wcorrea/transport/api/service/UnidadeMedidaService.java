@@ -1,45 +1,43 @@
 package br.com.wcorrea.transport.api.service;
 
-import br.com.wcorrea.transport.api.model.ProductUnit;
-import br.com.wcorrea.transport.api.repository.ProductUnitRepository;
+import br.com.wcorrea.transport.api.model.UnidadeMedida;
+import br.com.wcorrea.transport.api.repository.UnidadeMedida.UnidadeMedidaRepository;
 import br.com.wcorrea.transport.api.service.exception.UnidadeMedidaNaoEncontrada;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 /**
  * Class responsible for performing the entire business rule by manipulating product unit information
  */
 @Service
-public class ProductUnitService {
+public class UnidadeMedidaService {
 
     @Autowired
-    private ProductUnitRepository productUnitRepository;
+    private UnidadeMedidaRepository unidadeMedidaRepository;
 
     /**
      * Update product unit
      *
      * @param id
-     * @param productUnit
+     * @param unidadeMedida
      * @return
      */
-    public ProductUnit update(Long id, ProductUnit productUnit) {
-        ProductUnit updateFound = findOne(id);
-        productUnit.setId(updateFound.getId());
-        return productUnitRepository.save(productUnit);
+    public UnidadeMedida update(Long id, UnidadeMedida unidadeMedida) {
+        UnidadeMedida updateFound = findOne(id);
+        unidadeMedida.setId(updateFound.getId());
+        return unidadeMedidaRepository.save(unidadeMedida);
     }
 
     /**
      * Find product unit by id
      */
-    private ProductUnit findOne(Long id) {
-        ProductUnit productUnit = productUnitRepository.findOne(id);
-        if (productUnit == null) {
+    private UnidadeMedida findOne(Long id) {
+        UnidadeMedida unidadeMedida = unidadeMedidaRepository.findOne(id);
+        if (unidadeMedida == null) {
             throw new UnidadeMedidaNaoEncontrada();
         }
-        return productUnit;
+        return unidadeMedida;
     }
 
     public Long buscarPorKey(String key) {

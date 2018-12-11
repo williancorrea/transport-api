@@ -1,0 +1,10 @@
+package br.com.wcorrea.transport.api.repository.NivelFormacao;
+
+import br.com.wcorrea.transport.api.model.NivelFormacao;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+
+public interface NivelFormacaoRepositoryQuery {
+    Page<NivelFormacao> findAll(NivelFormacaoFilter levelOdEducationFilter, Pageable pageable);
+}

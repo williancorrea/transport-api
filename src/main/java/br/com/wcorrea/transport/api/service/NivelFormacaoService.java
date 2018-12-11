@@ -1,22 +1,20 @@
 package br.com.wcorrea.transport.api.service;
 
-import br.com.wcorrea.transport.api.model.LevelOfEducation;
-import br.com.wcorrea.transport.api.repository.LevelOfEducationRepository;
+import br.com.wcorrea.transport.api.model.NivelFormacao;
+import br.com.wcorrea.transport.api.repository.NivelFormacao.NivelFormacaoRepository;
 import br.com.wcorrea.transport.api.service.exception.NivelEducacaoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 /**
  * Class responsible for performing the entire business rule by manipulating information
  */
 @Service
-public class LevelOfEducationService {
+public class NivelFormacaoService {
 
     @Autowired
-    private LevelOfEducationRepository levelOfEducationRepository;
+    private NivelFormacaoRepository nivelFormacaoRepository;
 
     /**
      * Update
@@ -25,17 +23,17 @@ public class LevelOfEducationService {
      * @param levelOfEducation
      * @return
      */
-    public LevelOfEducation update(Long id, LevelOfEducation levelOfEducation) {
-        LevelOfEducation objFound = levelOfEducationRepository.save(findOne(id));
+    public NivelFormacao update(Long id, NivelFormacao levelOfEducation) {
+        NivelFormacao objFound = nivelFormacaoRepository.save(findOne(id));
         levelOfEducation.setId(objFound.getId());
-        return levelOfEducationRepository.save(levelOfEducation);
+        return nivelFormacaoRepository.save(levelOfEducation);
     }
 
     /**
      * Find tipo obj by id
      */
-    private LevelOfEducation findOne(Long id) {
-        LevelOfEducation levelOfEducation = levelOfEducationRepository.findOne(id);
+    private NivelFormacao findOne(Long id) {
+        NivelFormacao levelOfEducation = nivelFormacaoRepository.findOne(id);
         if (levelOfEducation == null) {
             throw new NivelEducacaoNaoEncontrado();
         }

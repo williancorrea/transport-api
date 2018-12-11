@@ -18,37 +18,37 @@ import java.util.Date;
 
 @ToString
 @EqualsAndHashCode
-@Entity(name = "level_of_education")
-public class LevelOfEducation extends IdentificadorComum implements Serializable {
+@Entity(name = "nivel_formacao")
+public class NivelFormacao extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
     @Size(min = 5, max = 150)
     @Getter
     @Setter
-    private String name;
+    private String nome;
 
     @Size(max = 512)
     @Lob
     @Getter
     @Setter
-    private String description;
+    private String descricao;
 
-    @Column(name = "degree_of_instruction_caged")
+    @Column(name = "grau_de_instrucao_caged")
     @Getter
     @Setter
-    private Long degreeOfInstructionCaged;
+    private Long grauInstrucaoCaged;
 
-    @Column(name = "degree_of_instruction_sefip")
+    @Column(name = "grau_de_instrucao_sefip")
     @Getter
     @Setter
-    private Long degreeOfInstructionSefip;
+    private Long grauInstrucaoSefip;
 
-    @Column(name = "degree_of_instruction_rais")
+    @Column(name = "grau_de_instrucao_rais")
     @Getter
     @Setter
-    private Long degreeOfInstructionRais;
+    private Long grauInstrucaoRais;
 
-    public LevelOfEducation() {
+    public NivelFormacao() {
     }
 }

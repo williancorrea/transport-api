@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.exceptionHandler;
 
 import br.com.wcorrea.transport.api.exceptionHandler.defaultException.DefaultExceptionHandler;
-import br.com.wcorrea.transport.api.service.exception.NivelEducacaoNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.UnidadeMedidaNaoEncontrada;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.Locale;
 
 @ControllerAdvice
-public class LevelOfEducationException extends DefaultExceptionHandler {
+public class UnidadeMedidaException extends DefaultExceptionHandler {
 
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler({NivelEducacaoNaoEncontrado.class})
-    public ResponseEntity<Object> handleLevelOfEducationUpdateNotFound(NivelEducacaoNaoEncontrado ex, WebRequest request, Locale loc) {
-        String userMessage = messageSource.getMessage("recurso.nivel-de-educacao-nao-encontrao", null, loc);
+    @ExceptionHandler({UnidadeMedidaNaoEncontrada.class})
+    public ResponseEntity<Object> handleUnidadeMedidaUpdateNotFound(UnidadeMedidaNaoEncontrada ex, WebRequest request, Locale loc) {
+        String userMessage = messageSource.getMessage("recurso.unidade-medida-nao-encontrada", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_FOUND, request);

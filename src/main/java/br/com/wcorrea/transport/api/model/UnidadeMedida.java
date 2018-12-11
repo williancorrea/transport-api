@@ -17,27 +17,27 @@ import java.io.Serializable;
 
 @ToString
 @EqualsAndHashCode
-@Entity(name = "product_unit")
-public class ProductUnit extends IdentificadorComum implements Serializable {
+@Entity(name = "unidade_medida")
+public class UnidadeMedida extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    @Getter
-    @Setter
-    @NotNull
-    @Size(min = 1, max = 10)
-    private String initials;
 
     @NotNull
     @Size(min = 5, max = 150)
     @Getter
     @Setter
-    private String name;
+    private String nome;
 
-    @Column(name = "can_fraction")
     @Getter
     @Setter
-    private Boolean canFraction;
+    @NotNull
+    @Size(min = 1, max = 10)
+    private String sigla;
 
-    public ProductUnit() {
+    @Column(name = "pode_fracionar")
+    @Getter
+    @Setter
+    private Boolean podeFracionar;
+
+    public UnidadeMedida() {
     }
 }
