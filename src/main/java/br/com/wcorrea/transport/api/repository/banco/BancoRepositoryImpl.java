@@ -1,7 +1,6 @@
 package br.com.wcorrea.transport.api.repository.banco;
 
 import br.com.wcorrea.transport.api.model.Banco;
-import br.com.wcorrea.transport.api.repository.utils.UtilsRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 public class BancoRepositoryImpl implements BancoRepositoryQuery {
 
@@ -70,7 +68,7 @@ public class BancoRepositoryImpl implements BancoRepositoryQuery {
         Criteria criteria = session.createCriteria(Banco.class);
 
         if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
-            Disjunction disjunction = Restrictions.disjunction();
+            Disjunction disjunction = Restrictions.disjunction(); // Restricao com OR
             disjunction.add(Restrictions.ilike("codigo", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
             disjunction.add(Restrictions.ilike("nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
             disjunction.add(Restrictions.ilike("url", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
