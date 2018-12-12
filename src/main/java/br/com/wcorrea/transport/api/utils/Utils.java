@@ -1,9 +1,8 @@
 package br.com.wcorrea.transport.api.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import org.apache.commons.codec.binary.Base64;
+
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.time.Instant;
@@ -92,15 +91,15 @@ public class Utils {
         char dig13, dig14;
         int sm, i, r, num, peso;
 
-// "try" - protege o código para eventuais erros de conversao de tipo (int)
+        // "try" - protege o código para eventuais erros de conversao de tipo (int)
         try {
-// Calculo do 1o. Digito Verificador
+            // Calculo do 1o. Digito Verificador
             sm = 0;
             peso = 2;
             for (i = 11; i >= 0; i--) {
-// converte o i-ésimo caractere do CNPJ em um número:
-// por exemplo, transforma o caractere '0' no inteiro 0
-// (48 eh a posição de '0' na tabela ASCII)
+                // converte o i-ésimo caractere do CNPJ em um número:
+                // por exemplo, transforma o caractere '0' no inteiro 0
+                // (48 eh a posição de '0' na tabela ASCII)
                 num = (int) (CNPJ.charAt(i) - 48);
                 sm = sm + (num * peso);
                 peso = peso + 1;
@@ -113,7 +112,7 @@ public class Utils {
                 dig13 = '0';
             else dig13 = (char) ((11 - r) + 48);
 
-// Calculo do 2o. Digito Verificador
+            // Calculo do 2o. Digito Verificador
             sm = 0;
             peso = 2;
             for (i = 12; i >= 0; i--) {
@@ -129,7 +128,7 @@ public class Utils {
                 dig14 = '0';
             else dig14 = (char) ((11 - r) + 48);
 
-// Verifica se os dígitos calculados conferem com os dígitos informados.
+            // Verifica se os dígitos calculados conferem com os dígitos informados.
             if ((dig13 == CNPJ.charAt(12)) && (dig14 == CNPJ.charAt(13)))
                 return (true);
             else return (false);
@@ -158,15 +157,15 @@ public class Utils {
         char dig10, dig11;
         int sm, i, r, num, peso;
 
-// "try" - protege o codigo para eventuais erros de conversao de tipo (int)
+        // "try" - protege o codigo para eventuais erros de conversao de tipo (int)
         try {
-// Calculo do 1o. Digito Verificador
+            // Calculo do 1o. Digito Verificador
             sm = 0;
             peso = 10;
             for (i = 0; i < 9; i++) {
-// converte o i-esimo caractere do CPF em um numero:
-// por exemplo, transforma o caractere '0' no inteiro 0
-// (48 eh a posicao de '0' na tabela ASCII)
+                // converte o i-esimo caractere do CPF em um numero:
+                // por exemplo, transforma o caractere '0' no inteiro 0
+                // (48 eh a posicao de '0' na tabela ASCII)
                 num = (int) (CPF.charAt(i) - 48);
                 sm = sm + (num * peso);
                 peso = peso - 1;
@@ -177,7 +176,7 @@ public class Utils {
                 dig10 = '0';
             else dig10 = (char) (r + 48); // converte no respectivo caractere numerico
 
-// Calculo do 2o. Digito Verificador
+            // Calculo do 2o. Digito Verificador
             sm = 0;
             peso = 11;
             for (i = 0; i < 10; i++) {
@@ -191,12 +190,35 @@ public class Utils {
                 dig11 = '0';
             else dig11 = (char) (r + 48);
 
-// Verifica se os digitos calculados conferem com os digitos informados.
+            // Verifica se os digitos calculados conferem com os digitos informados.
             if ((dig10 == CPF.charAt(9)) && (dig11 == CPF.charAt(10)))
                 return (true);
             else return (false);
         } catch (InputMismatchException erro) {
             return (false);
         }
+    }
+
+    /**
+     * Converte uma imagem em base64
+     * @param file
+     * @return
+     */
+    private static String encodeFileToBase64Binary(File file){
+        String encodedfile = null;
+        try {
+            FileInputStream fileInputStreamReader = new FileInputStream(file);
+            byte[] bytes = new byte[(int)file.length()];
+            fileInputStreamReader.read(bytes);
+            encodedfile = new String(Base64.encodeBase64(bytes), "UTF-8");
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return encodedfile;
     }
 }
