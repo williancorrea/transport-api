@@ -66,7 +66,7 @@ public class VeiculoRepositoryImpl implements VeiculoRepositoryQuery {
             }
         }
 
-        sql = UtilsRepository.adicionarOrdenacaoConsulta(sql, count, filtro.getPropriedadeOrdenacao(), filtro.getOrdemClassificacao());
+        sql = UtilsRepository.adicionarOrdenacaoConsulta(sql, count, filtro.getCampoOrdenacao(), filtro.getOrdemClassificacao());
         return sql;
     }
 

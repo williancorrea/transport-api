@@ -71,7 +71,7 @@ public class ItinerarioRepositoryImpl implements ItinerarioRepositoryQuery {
             }
         }
 
-        sql = UtilsRepository.adicionarOrdenacaoConsulta(sql, count, filtro.getPropriedadeOrdenacao(), filtro.getOrdemClassificacao());
+        sql = UtilsRepository.adicionarOrdenacaoConsulta(sql, count, filtro.getCampoOrdenacao(), filtro.getOrdemClassificacao());
         return sql;
     }
 

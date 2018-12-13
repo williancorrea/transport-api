@@ -59,10 +59,10 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
          * ORDERING THE LIST
          */
         if (count == false) {
-            if (StringUtils.isNotBlank(pessoaFiltro.getPropriedadeOrdenacao())) {
-                sql += " order by a." + pessoaFiltro.getPropriedadeOrdenacao();
+            if (StringUtils.isNotBlank(pessoaFiltro.getCampoOrdenacao())) {
+                sql += " order by a." + pessoaFiltro.getCampoOrdenacao();
             }
-            if (StringUtils.isNotBlank(pessoaFiltro.getOrdemClassificacao()) && StringUtils.isNotBlank(pessoaFiltro.getPropriedadeOrdenacao())) {
+            if (StringUtils.isNotBlank(pessoaFiltro.getOrdemClassificacao()) && StringUtils.isNotBlank(pessoaFiltro.getCampoOrdenacao())) {
                 sql += " " + pessoaFiltro.getOrdemClassificacao();
             }
         }

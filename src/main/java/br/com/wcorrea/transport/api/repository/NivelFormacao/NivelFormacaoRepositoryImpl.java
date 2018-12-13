@@ -52,10 +52,10 @@ public class NivelFormacaoRepositoryImpl implements NivelFormacaoRepositoryQuery
          * ORDERING THE LIST
          */
         if (count == false) {
-            if (StringUtils.isNotBlank(NivelFormacaoFilter.getPropriedadeOrdenacao())) {
-                sql += " order by a." + NivelFormacaoFilter.getPropriedadeOrdenacao();
+            if (StringUtils.isNotBlank(NivelFormacaoFilter.getCampoOrdenacao())) {
+                sql += " order by a." + NivelFormacaoFilter.getCampoOrdenacao();
             }
-            if (StringUtils.isNotBlank(NivelFormacaoFilter.getPropriedadeOrdenacao()) && StringUtils.isNotBlank(NivelFormacaoFilter.getOrdemClassificacao())) {
+            if (StringUtils.isNotBlank(NivelFormacaoFilter.getCampoOrdenacao()) && StringUtils.isNotBlank(NivelFormacaoFilter.getOrdemClassificacao())) {
                 sql += " " + NivelFormacaoFilter.getOrdemClassificacao();
             }
         }
