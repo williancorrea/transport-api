@@ -35,10 +35,10 @@ public class BancoRepositoryImpl implements BancoRepositoryQuery {
         criteria.setMaxResults(pageable.getPageSize());
 
         //Ordenacao
-        if (filtro.getOrdemClassificacao() == "ASC" && filtro.getPropriedadeOrdenacao() != null) {
-            criteria.addOrder(Order.asc(filtro.getPropriedadeOrdenacao()));
-        } else if (filtro.getPropriedadeOrdenacao() != null) {
-            criteria.addOrder(Order.desc(filtro.getPropriedadeOrdenacao()));
+        if (filtro.getOrdemClassificacao() == "ASC" && filtro.getCampoOrdenacao() != null) {
+            criteria.addOrder(Order.asc(filtro.getCampoOrdenacao()));
+        } else if (filtro.getCampoOrdenacao() != null) {
+            criteria.addOrder(Order.desc(filtro.getCampoOrdenacao()));
         }
 
         //Consulta paginada
@@ -130,10 +130,10 @@ public class BancoRepositoryImpl implements BancoRepositoryQuery {
 //         * Ordenacao da lista
 //         */
 //        if (count == false) {
-//            if (StringUtils.isNotBlank(bancoFiltro.getPropriedadeOrdenacao())) {
-//                sql += " order by a." + bancoFiltro.getPropriedadeOrdenacao();
+//            if (StringUtils.isNotBlank(bancoFiltro.getCampoOrdenacao())) {
+//                sql += " order by a." + bancoFiltro.getCampoOrdenacao();
 //            }
-//            if (StringUtils.isNotBlank(bancoFiltro.getOrdemClassificacao()) && StringUtils.isNotBlank(bancoFiltro.getPropriedadeOrdenacao())) {
+//            if (StringUtils.isNotBlank(bancoFiltro.getOrdemClassificacao()) && StringUtils.isNotBlank(bancoFiltro.getCampoOrdenacao())) {
 //                sql += " " + bancoFiltro.getOrdemClassificacao();
 //            }
 //        }

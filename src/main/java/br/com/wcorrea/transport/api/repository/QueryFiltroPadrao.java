@@ -11,7 +11,7 @@ public class QueryFiltroPadrao {
 
     @Getter
     @Setter
-    private String propriedadeOrdenacao;
+    private String campoOrdenacao;
 
     @Setter
     private String ordemClassificacao;

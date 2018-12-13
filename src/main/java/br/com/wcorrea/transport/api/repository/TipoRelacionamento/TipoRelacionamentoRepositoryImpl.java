@@ -63,10 +63,10 @@ public class TipoRelacionamentoRepositoryImpl implements TipoRelacionamentoRepos
          * ORDERING THE LIST
          */
         if (count == false) {
-            if (StringUtils.isNotBlank(tipoRelacionamentoFilter.getPropriedadeOrdenacao())) {
-                sql += " order by a." + tipoRelacionamentoFilter.getPropriedadeOrdenacao();
+            if (StringUtils.isNotBlank(tipoRelacionamentoFilter.getCampoOrdenacao())) {
+                sql += " order by a." + tipoRelacionamentoFilter.getCampoOrdenacao();
             }
-            if (StringUtils.isNotBlank(tipoRelacionamentoFilter.getPropriedadeOrdenacao()) && StringUtils.isNotBlank(tipoRelacionamentoFilter.getOrdemClassificacao())) {
+            if (StringUtils.isNotBlank(tipoRelacionamentoFilter.getCampoOrdenacao()) && StringUtils.isNotBlank(tipoRelacionamentoFilter.getOrdemClassificacao())) {
                 sql += " " + tipoRelacionamentoFilter.getOrdemClassificacao();
             }
         }

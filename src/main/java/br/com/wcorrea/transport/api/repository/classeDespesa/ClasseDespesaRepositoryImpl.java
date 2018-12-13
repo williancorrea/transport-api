@@ -55,10 +55,10 @@ public class ClasseDespesaRepositoryImpl implements ClasseDespesaRepositoryQuery
          * ORDERING THE LIST
          */
         if (count == false) {
-            if (StringUtils.isNotBlank(classeDespesaFiltro.getPropriedadeOrdenacao())) {
-                sql += " order by a." + classeDespesaFiltro.getPropriedadeOrdenacao();
+            if (StringUtils.isNotBlank(classeDespesaFiltro.getCampoOrdenacao())) {
+                sql += " order by a." + classeDespesaFiltro.getCampoOrdenacao();
             }
-            if (StringUtils.isNotBlank(classeDespesaFiltro.getOrdemClassificacao()) && StringUtils.isNotBlank(classeDespesaFiltro.getPropriedadeOrdenacao())) {
+            if (StringUtils.isNotBlank(classeDespesaFiltro.getOrdemClassificacao()) && StringUtils.isNotBlank(classeDespesaFiltro.getCampoOrdenacao())) {
                 sql += " " + classeDespesaFiltro.getOrdemClassificacao();
             }
         }

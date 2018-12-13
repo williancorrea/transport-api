@@ -59,10 +59,10 @@ public class UnidadeMedidaRepositoryImpl implements UnidadeMedidaRepositoryQuery
          * ORDERING THE LIST
          */
         if (count == false) {
-            if (StringUtils.isNotBlank(UnidadeMedidaFilter.getPropriedadeOrdenacao())) {
-                sql += " order by a." + UnidadeMedidaFilter.getPropriedadeOrdenacao();
+            if (StringUtils.isNotBlank(UnidadeMedidaFilter.getCampoOrdenacao())) {
+                sql += " order by a." + UnidadeMedidaFilter.getCampoOrdenacao();
             }
-            if (StringUtils.isNotBlank(UnidadeMedidaFilter.getPropriedadeOrdenacao()) && StringUtils.isNotBlank(UnidadeMedidaFilter.getOrdemClassificacao())) {
+            if (StringUtils.isNotBlank(UnidadeMedidaFilter.getCampoOrdenacao()) && StringUtils.isNotBlank(UnidadeMedidaFilter.getOrdemClassificacao())) {
                 sql += " " + UnidadeMedidaFilter.getOrdemClassificacao();
             }
         }
