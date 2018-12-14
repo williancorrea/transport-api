@@ -204,7 +204,7 @@ public class Utils {
      * @param file
      * @return
      */
-    private static String encodeFileToBase64Binary(File file){
+    private static String encodeFileToBase64Binary(File file) throws IOException {
         String encodedfile = null;
         try {
             FileInputStream fileInputStreamReader = new FileInputStream(file);
@@ -212,11 +212,11 @@ public class Utils {
             fileInputStreamReader.read(bytes);
             encodedfile = new String(Base64.encodeBase64(bytes), "UTF-8");
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            throw e;
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            throw e;
         }
 
         return encodedfile;
