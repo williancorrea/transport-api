@@ -35,10 +35,12 @@ public class BancoRepositoryImpl implements BancoRepositoryQuery {
         criteria.setMaxResults(pageable.getPageSize());
 
         //Ordenacao
-        if (filtro.getOrdemClassificacao() == "ASC" && filtro.getCampoOrdenacao() != null) {
-            criteria.addOrder(Order.asc(filtro.getCampoOrdenacao()));
-        } else if (filtro.getCampoOrdenacao() != null) {
-            criteria.addOrder(Order.desc(filtro.getCampoOrdenacao()));
+        if (filtro.getCampoOrdenacao() != null && filtro.getOrdemClassificacao() != null) {
+            if (filtro.getOrdemClassificacao().equalsIgnoreCase("ASC")) {
+                criteria.addOrder(Order.asc(filtro.getCampoOrdenacao()));
+            } else {
+                criteria.addOrder(Order.desc(filtro.getCampoOrdenacao()));
+            }
         }
 
         //Consulta paginada
