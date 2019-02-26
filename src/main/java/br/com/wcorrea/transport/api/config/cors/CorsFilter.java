@@ -25,9 +25,10 @@ public class CorsFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+
         if (apiProperty.getSecurity().isEnableCors()) {
             response.setHeader("Access-Control-Allow-Origin", apiProperty.getOriginAllowed().trim());
-            response.setHeader("Access-Control-Allow-Credentials", "true");
 
             //Caso nao tenha a origem permitida
             if (!apiProperty.getOriginAllowed().trim().equals(request.getHeader("Origin").trim())) {
@@ -35,14 +36,14 @@ public class CorsFilter implements Filter {
             }
         } else {
             //Permite acesso de qualquer lugar
-            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin") != null ? request.getHeader("Origin").trim() : "*");
-            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin").trim());
         }
 
         if ("OPTIONS".equals(request.getMethod())) {
             response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
             response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
-            response.setHeader("Access-Control-Max-Age", "3600");
+//            response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept, Orgin, DNT, X-Mx-ReqToken, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control");
+            response.setHeader("Access-Control-Max-Age", "3600");//TODO: Verificar se nao esta sendo pouco
 
             response.setStatus(HttpServletResponse.SC_OK);
         } else {

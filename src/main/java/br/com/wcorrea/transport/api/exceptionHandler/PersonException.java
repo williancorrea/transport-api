@@ -78,4 +78,19 @@ public class PersonException extends DefaultExceptionHandler {
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE, request);
     }
 
+    @ExceptionHandler({PessoaFisicaNaoPodeAlterarValorCPF.class})
+    public ResponseEntity<Object> handlePessoaFisicaNaoPodeAlterarValorCPF(PessoaFisicaNaoPodeAlterarValorCPF ex, WebRequest request, Locale loc) {
+        String userMessage = messageSource.getMessage("recurso.pessoa-fisica-cpf-nao-pode-ser-alterado", null, loc);
+        String developerMessage = ex.toString();
+        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_ACCEPTABLE));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE, request);
+    }
+
+    @ExceptionHandler({PessoaJuridicaNaoPodeAlterarValorCNPJ.class})
+    public ResponseEntity<Object> handlePessoaJuridicaNaoEncontrada(PessoaJuridicaNaoPodeAlterarValorCNPJ ex, WebRequest request, Locale loc) {
+        String userMessage = messageSource.getMessage("recurso.pessoa-juridica-cnpj-nao-pode-ser-alterado", null, loc);
+        String developerMessage = ex.toString();
+        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_ACCEPTABLE));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE, request);
+    }
 }

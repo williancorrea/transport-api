@@ -2,13 +2,129 @@
 <Diagram>
   <ID>DATABASE</ID>
   <OriginalElement />
-  <nodes />
+  <nodes>
+    <node x="0.0" y="223.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.itinerario</node>
+    <node x="1067.0" y="1271.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.usuario_permissao</node>
+    <node x="751.0" y="1544.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.configuracao_sistema</node>
+    <node x="1639.1813186813188" y="267.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.cidade</node>
+    <node x="275.0" y="1544.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.unidade_medida</node>
+    <node x="1369.0" y="1103.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.nivel_formacao</node>
+    <node x="643.6813186813187" y="720.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa_telefone</node>
+    <node x="0.0" y="1544.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.tipo_pagamento</node>
+    <node x="870.3260073260074" y="168.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa</node>
+    <node x="1639.1813186813188" y="0.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.estado</node>
+    <node x="1100.6813186813188" y="742.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa_auditoria</node>
+    <node x="1400.9313186813188" y="256.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.estado_civil</node>
+    <node x="1171.0" y="1103.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.usuario</node>
+    <node x="0.0" y="1337.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.banco_abreviacao</node>
+    <node x="1578.6813186813188" y="643.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa_endereco</node>
+    <node x="513.0" y="1544.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.tipo_relacionamento</node>
+    <node x="213.0" y="234.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.veiculo</node>
+    <node x="418.68131868131866" y="698.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa_contato</node>
+    <node x="256.0" y="1293.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.centro_de_custo</node>
+    <node x="1313.6813186813188" y="544.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa_fisica</node>
+    <node x="978.0" y="1114.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.permissao</node>
+    <node x="504.0" y="1103.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.zip_code</node>
+    <node x="859.6813186813187" y="676.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa_juridica</node>
+    <node x="9.0" y="1103.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.banco</node>
+    <node x="261.0" y="1103.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.classe_despesa</node>
+    <node x="748.0" y="1103.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.schema_version</node>
+    <node x="180.68131868131866" y="643.0">169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.controle_km</node>
+  </nodes>
   <notes />
-  <edges />
-  <settings layout="Hierarchic Group" zoom="1.396449704142012" x="428.0529661016949" y="245.62288135593215" />
+  <edges>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa_contato" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa">
+      <point x="0.0" y="-103.0" />
+      <point x="521.1813186813187" y="514.0" />
+      <point x="911.6831501831502" y="514.0" />
+      <point x="-55.14285714285711" y="158.0" />
+    </edge>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.centro_de_custo" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.classe_despesa">
+      <point x="0.0" y="-81.0" />
+      <point x="0.0" y="70.0" />
+    </edge>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa_auditoria" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa">
+      <point x="0.0" y="-59.0" />
+      <point x="1197.1813186813188" y="524.0" />
+      <point x="994.3974358974359" y="524.0" />
+      <point x="27.571428571428555" y="158.0" />
+    </edge>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.banco_abreviacao" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.banco">
+      <point x="0.0" y="-81.0" />
+      <point x="0.0" y="92.0" />
+    </edge>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa_endereco" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.cidade">
+      <point x="49.0" y="-158.0" />
+      <point x="0.0" y="59.0" />
+    </edge>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.controle_km" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa">
+      <point x="72.66666666666663" y="-158.0" />
+      <point x="362.3479853479853" y="504.0" />
+      <point x="884.1117216117216" y="504.0" />
+      <point x="-82.71428571428578" y="158.0" />
+    </edge>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa_telefone" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa">
+      <point x="0.0" y="-81.0" />
+      <point x="741.6813186813187" y="524.0" />
+      <point x="939.2545787545788" y="524.0" />
+      <point x="-27.571428571428555" y="158.0" />
+    </edge>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.controle_km" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.itinerario">
+      <point x="-72.66666666666674" y="-158.0" />
+      <point x="217.01465201465192" y="524.0" />
+      <point x="96.5" y="524.0" />
+      <point x="0.0" y="103.0" />
+    </edge>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.controle_km" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.veiculo">
+      <point x="0.0" y="-158.0" />
+      <point x="289.68131868131866" y="524.0" />
+      <point x="312.5" y="524.0" />
+      <point x="0.0" y="92.0" />
+    </edge>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa_endereco" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa">
+      <point x="-49.0" y="-158.0" />
+      <point x="1627.6813186813188" y="504.0" />
+      <point x="1049.5402930402931" y="504.0" />
+      <point x="82.71428571428578" y="158.0" />
+    </edge>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa_juridica" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa">
+      <point x="0.0" y="-125.0" />
+      <point x="970.1813186813187" y="524.0" />
+      <point x="966.8260073260074" y="524.0" />
+      <point x="0.0" y="158.0" />
+    </edge>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa_fisica" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa">
+      <point x="-61.25" y="-257.0" />
+      <point x="1374.9313186813188" y="514.0" />
+      <point x="1021.9688644688645" y="514.0" />
+      <point x="55.14285714285711" y="158.0" />
+    </edge>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.cidade" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.estado">
+      <point x="0.0" y="-59.0" />
+      <point x="0.0" y="59.0" />
+    </edge>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.usuario_permissao" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.permissao">
+      <point x="-44.5" y="-36.5" />
+      <point x="1111.5" y="1246.0" />
+      <point x="1064.5" y="1246.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.usuario_permissao" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.usuario">
+      <point x="44.5" y="-36.5" />
+      <point x="1200.5" y="1246.0" />
+      <point x="1247.5" y="1246.0" />
+      <point x="0.0" y="59.0" />
+    </edge>
+    <edge source="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.pessoa_fisica" target="169f3a9f-fd0a-45c7-8311-ba5a3a914740.TABLE:transport_api.estado_civil">
+      <point x="61.25" y="-257.0" />
+      <point x="0.0" y="70.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9" x="352.6249999999999" y="830.1236263736264" />
   <SelectedNodes />
   <Categories>
     <Category>Key columns</Category>
+    <Category>Columns</Category>
   </Categories>
 </Diagram>
 

@@ -41,17 +41,17 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
             sql = "from pessoa a where 1=1 ";
         }
 
-        if (StringUtils.isNotBlank(pessoaFiltro.getGlobalFilter())) {
+        if (StringUtils.isNotBlank(pessoaFiltro.getFiltroGlobal())) {
             sql += " and (";
-            sql += " upper(a.nome) like '%" + pessoaFiltro.getGlobalFilter().toUpperCase().trim() + "%'";
+            sql += " upper(a.nome) like '%" + pessoaFiltro.getFiltroGlobal().toUpperCase().trim() + "%'";
 //            sql += " or upper(a.name) like '%" + pessoaFiltro.getGlobalFilter().toUpperCase().trim() + "%'";
             sql += " )";
         } else {
 //            if (StringUtils.isNotBlank(pessoaFiltro.getDescricao())) {
 //                sql += " and upper(a.description) like '%" + pessoaFiltro.getDescricao().toUpperCase().trim() + "%'";
 //            }
-            if (StringUtils.isNotBlank(pessoaFiltro.getName())) {
-                sql += " and upper(a.nome) like '%" + pessoaFiltro.getName().toUpperCase().trim() + "%'";
+            if (StringUtils.isNotBlank(pessoaFiltro.getNome())) {
+                sql += " and upper(a.nome) like '%" + pessoaFiltro.getNome().toUpperCase().trim() + "%'";
             }
         }
 
@@ -59,16 +59,17 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
          * ORDERING THE LIST
          */
         if (count == false) {
-            if (StringUtils.isNotBlank(pessoaFiltro.getSortField())) {
-                sql += " order by a." + pessoaFiltro.getSortField();
+            if (StringUtils.isNotBlank(pessoaFiltro.getCampoOrdenacao())) {
+                sql += " order by a." + pessoaFiltro.getCampoOrdenacao();
             }
-            if (StringUtils.isNotBlank(pessoaFiltro.getSortOrder()) && StringUtils.isNotBlank(pessoaFiltro.getSortField())) {
-                sql += " " + pessoaFiltro.getSortOrder();
+            if (StringUtils.isNotBlank(pessoaFiltro.getOrdemClassificacao()) && StringUtils.isNotBlank(pessoaFiltro.getCampoOrdenacao())) {
+                sql += " " + pessoaFiltro.getOrdemClassificacao();
             }
         }
         return sql;
     }
 
+    //TODO: Colocar no repositorio abstrato
     @Override
     public Pessoa findOneByCPF(String cpf) {
         StringBuilder sb = new StringBuilder();
@@ -82,6 +83,39 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
         return query.getResultList().size() == 0 ? null : query.getResultList().get(0);
     }
 
+    //TODO: Colocar no repositorio abstrato
+    @Override
+    public Boolean verificarCPFJaCadastrado(String cpf, Long id) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("select count(p.id) from pessoa p where 1=1 and p.pessoaFisica.cpf = :cpf and (p.id =null or p.id not in(:id))");
+
+        TypedQuery<Long> query = manager.createQuery(sb.toString(), Long.class);
+        query.setParameter("cpf", cpf);
+        query.setParameter("id", id);
+
+        if (query.getSingleResult() == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    //TODO: Colocar no repositorio abstrato
+    @Override
+    public Boolean verificarCNPJJaCadastrado(String cnpj, Long id) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("select count(p.id) from pessoa p where 1=1 and p.pessoaJuridica.cnpj = :cnpj and (p.id =null or p.id not in(:id))");
+
+        TypedQuery<Long> query = manager.createQuery(sb.toString(), Long.class);
+        query.setParameter("cnpj", cnpj);
+        query.setParameter("id", id);
+
+        if (query.getSingleResult() == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    //TODO: Colocar no repositorio abstrato
     @Override
     public Pessoa findOneByCNPJ(String cnpj) {
         StringBuilder sb = new StringBuilder();

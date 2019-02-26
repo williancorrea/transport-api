@@ -3,6 +3,8 @@ package br.com.wcorrea.transport.api.service;
 import br.com.wcorrea.transport.api.model.EstadoCivil;
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
 import br.com.wcorrea.transport.api.service.exception.EstadoCivilNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
+import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,7 @@ import java.util.Date;
 
 /**
  * Class responsible for performing the entire business rule by manipulating information
- * Classe responsavel por manipular toda a regra de negocio de um EstadoCivil
+ * ClasseDespesa responsavel por manipular toda a regra de negocio de um EstadoCivil
  */
 @Service
 public class EstadoCivilService {
@@ -43,5 +45,13 @@ public class EstadoCivilService {
             throw new EstadoCivilNaoEncontrado();
         }
         return estadoCivil;
+    }
+
+    public Long buscarPorKey(String key) {
+        try {
+            return new Criptografia().getKey(key);
+        } catch (Exception e) {
+            throw new EstadoCivilNaoEncontrado();
+        }
     }
 }

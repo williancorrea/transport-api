@@ -66,7 +66,7 @@ public class EstadoCivilRepositoryImpl implements EstadoCivilRepositoryQuery {
             }
         }
 
-        sql = UtilsRepository.adicionarOrdenacaoConsulta(sql, count, filtro.getSortField(), filtro.getSortOrder());
+        sql = UtilsRepository.adicionarOrdenacaoConsulta(sql, count, filtro.getCampoOrdenacao(), filtro.getOrdemClassificacao());
         return sql;
     }
 }

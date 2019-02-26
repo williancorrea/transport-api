@@ -2,7 +2,9 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.Veiculo;
 import br.com.wcorrea.transport.api.repository.veiculo.VeiculoRepository;
+import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
 import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoNaoEncontrado;
+import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
- * Classe responsavel por manipular toda a regra de negocio de um Veiculo
+ * ClasseDespesa responsavel por manipular toda a regra de negocio de um Veiculo
  */
 @Service
 public class VeiculoService {
@@ -49,5 +51,13 @@ public class VeiculoService {
             throw new VeiculoNaoEncontrado();
         }
         return this.buscarPorId(veiculo.getId());
+    }
+
+    public Long buscarPorKey(String key) {
+        try {
+            return new Criptografia().getKey(key);
+        } catch (Exception e) {
+            throw new VeiculoNaoEncontrado();
+        }
     }
 }

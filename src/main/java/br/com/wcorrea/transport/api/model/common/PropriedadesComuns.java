@@ -20,7 +20,7 @@ public class PropriedadesComuns implements Serializable {
     @Column(name = "data_criacao")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
-    @Getter @Setter
+    @Getter
     private Date dataCriacao;
 
     @Column(name = "data_alteracao")

@@ -1,5 +1,7 @@
 package br.com.wcorrea.transport.api.model;
 
+import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
+import br.com.wcorrea.transport.api.service.exception.PessoaJuridicaNaoEncontrada;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,16 +21,8 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 @Entity(name = "pessoa_juridica")
-public class PessoaJuridica implements Serializable {
+public class PessoaJuridica extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    @JsonIgnore
-    @Getter
-    @Setter
-    private Long id;
 
     @NotBlank
     @Size(min = 18, max = 18)
@@ -39,7 +33,7 @@ public class PessoaJuridica implements Serializable {
 
     @Column(name = "fantasia")
     @Size(max = 250)
-    @Getter
+    @Getter @Setter
     private String fantasia;
 
     @Column(name = "inscricao_municipal")
@@ -88,23 +82,5 @@ public class PessoaJuridica implements Serializable {
     private Pessoa pessoa;
 
     public PessoaJuridica() {
-    }
-
-    @Transient
-    public String getKey() throws Exception {
-        return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
-    }
-
-    @Transient
-    public void setKey(String key) throws Exception {
-        if (id != null) {
-            this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
-        }
-    }
-
-    public void setFantasia(String fantasia) {
-        if (fantasia != null) {
-            this.fantasia = fantasia.toUpperCase();
-        }
     }
 }

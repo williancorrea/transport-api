@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Classe responsavel por manipular todos os erros da aplicação
+ * ClasseDespesa responsavel por manipular todos os erros da aplicação
  */
 @ControllerAdvice
 public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
@@ -91,7 +91,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler({EmptyResultDataAccessException.class})
     public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex, WebRequest request) {
-        String userMessage = messageSource.getMessage("resource.not-found", null, LocaleContextHolder.getLocale());
+        String userMessage = messageSource.getMessage("recurso.nao-encontrado", null, LocaleContextHolder.getLocale());
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
@@ -121,7 +121,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler({DataIntegrityViolationException.class})
     public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
-        String userMessage = messageSource.getMessage("resource.operation-not-allowed", null, LocaleContextHolder.getLocale());
+        String userMessage = messageSource.getMessage("recurso.operacao-nao-aceita", null, LocaleContextHolder.getLocale());
         String developerMessage = ExceptionUtils.getRootCauseMessage(ex);
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.BAD_REQUEST));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
@@ -136,7 +136,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @Override
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        String userMessage = messageSource.getMessage("resource.method-not-support", null, LocaleContextHolder.getLocale());
+        String userMessage = messageSource.getMessage("recurso.metodo-nao-suportado", null, LocaleContextHolder.getLocale());
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.METHOD_NOT_ALLOWED));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED, request);

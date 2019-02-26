@@ -1,6 +1,8 @@
 package br.com.wcorrea.transport.api.model;
 
+import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
+import br.com.wcorrea.transport.api.service.exception.PessoaNaoEncontrada;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -9,35 +11,26 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @ToString(exclude = {"pessoaFisica"})
 @EqualsAndHashCode(exclude = {"pessoaFisica"})
 @Entity(name = "pessoa")
-public class Pessoa implements Serializable {
+public class Pessoa extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    @JsonIgnore
     @Getter
     @Setter
-    private Long id;
-
-    @Embedded
-    @Getter
-    @Setter
-    private PropriedadesComuns propriedades;
-
     @NotBlank
     @Size(min = 5, max = 250)
     private String nome;
@@ -85,40 +78,55 @@ public class Pessoa implements Serializable {
 
     @Getter
     @Setter
-    @JsonIgnoreProperties("pessoa")
     @JsonProperty("pessoaFisica")
+    @JsonIgnoreProperties("pessoa")
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     private PessoaFisica pessoaFisica;
 
     @Getter
     @Setter
-    @JsonIgnoreProperties("pessoa")
     @JsonProperty("pessoaJuridica")
+    @JsonIgnoreProperties("pessoa")
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     private PessoaJuridica pessoaJuridica;
-//
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<PessoaEndereco> listaPessoaEndereco;
-//
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<PessoaContato> listaPessoaContato;
-//
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<PessoaTelefone> listaPessoaTelefone;
-//
+
+    @Getter
+    @Setter
+    @JsonProperty("listaPessoaEndereco")
+    @JsonIgnoreProperties("pessoa")
+    @Valid
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PessoaEndereco> listaPessoaEndereco;
+
+    @Getter
+    @Setter
+    @JsonProperty("listaPessoaTelefone")
+    @JsonIgnoreProperties("pessoa")
+    @Valid
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PessoaTelefone> listaPessoaTelefone;
+
+
+    @Getter
+    @Setter
+    @JsonProperty("listaPessoaContato")
+    @JsonIgnoreProperties("pessoa")
+    @Valid
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PessoaContato> listaPessoaContato;
+
+    @Getter
+    @Setter
+    @JsonProperty("listaPessoaAuditoria")
+    @JsonIgnoreProperties("pessoa")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.MERGE)
+    private List<PessoaAuditoria> listaPessoaAuditoria;
+
 //    @ManyToMany(fetch = FetchType.EAGER)
 //    @JoinTable(nome = "EMPRESA_PESSOA", joinColumns = { @JoinColumn(nome = "ID_PESSOA") }, inverseJoinColumns = { @JoinColumn(nome = "ID_EMPRESA") })
 //    private Set<Empresa> listaEmpresa;
 
     public Pessoa() {
-    }
-
-    public String getNome() {
-        return this.nome != null ? this.nome.toUpperCase() : this.nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome.toUpperCase();
     }
 
     @JsonIgnore
@@ -131,30 +139,5 @@ public class Pessoa implements Serializable {
     @Transient
     public boolean isPessoaJuridica() {
         return PessoaTipo.JURIDICA.equals(tipo);
-    }
-
-
-    @Transient
-    public String getKey() throws Exception {
-        try {
-            return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    @Transient
-    public void setKey(String key) throws Exception {
-        this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
-    }
-
-    @PrePersist
-    public void prePersist() {
-        this.propriedades = new PropriedadesComuns();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        this.propriedades.setDataAlteracao(new Date());
     }
 }

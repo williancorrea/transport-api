@@ -50,7 +50,7 @@ public class ItinerarioResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_ITINERARIO') and #oauth2.hasScope('read')")
     public ResponseEntity<Itinerario> findOne(@Valid @PathVariable String key) {
-        return ResponseEntity.ok(itinerarioService.buscarPorId(new Criptografia().getKey(key)));
+        return ResponseEntity.ok(itinerarioService.buscarPorId(itinerarioService.buscarPorKey(key)));
     }
 
     /**
@@ -77,7 +77,7 @@ public class ItinerarioResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_ITINERARIO') and #oauth2.hasScope('write')")
     public ResponseEntity<Itinerario> update(@Valid @PathVariable String key, @Valid @RequestBody Itinerario itinerario) {
-        return ResponseEntity.status(HttpStatus.OK).body(itinerarioService.atualizar(new Criptografia().getKey(key), itinerario));
+        return ResponseEntity.status(HttpStatus.OK).body(itinerarioService.atualizar(itinerarioService.buscarPorKey(key), itinerario));
     }
 
     /**
@@ -89,7 +89,8 @@ public class ItinerarioResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETAR_ITINERARIO') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        Itinerario itinerario = itinerarioService.buscarPorId(new Criptografia().getKey(key));
+        Itinerario itinerario = itinerarioService.buscarPorId(itinerarioService.buscarPorKey(key));
         itinerarioRepository.delete(itinerario.getId());
     }
+
 }

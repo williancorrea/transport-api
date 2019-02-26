@@ -1,5 +1,6 @@
 package br.com.wcorrea.transport.api.model;
 
+import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
 import br.com.wcorrea.transport.api.service.exception.EstadoCivilNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
@@ -19,20 +20,8 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 @Entity(name = "estado_civil")
-public class EstadoCivil implements Serializable {
+public class EstadoCivil extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
-    @Getter
-    @Setter
-    private Long id;
-
-    @Embedded
-    @Getter
-    @Setter
-    private PropriedadesComuns controle;
 
     @NotNull
     @Size(min = 5, max = 150)
@@ -47,29 +36,5 @@ public class EstadoCivil implements Serializable {
     private String descricao;
 
     public EstadoCivil() {
-    }
-
-    @Transient
-    public String getKey() {
-        try {
-            return this.id != null ? new Criptografia().encryptToHex(this.id.toString()) : null;
-        } catch (Exception e) {
-            throw new EstadoCivilNaoEncontrado();
-        }
-    }
-
-    @Transient
-    public void setKey(String key) throws Exception {
-        this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
-    }
-
-    @PrePersist
-    public void prePersist() {
-        this.controle = new PropriedadesComuns();
-    }
-
-    @PreUpdate
-    public void preUpdade() {
-        this.controle.setDataAlteracao(new Date());
     }
 }
