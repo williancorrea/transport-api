@@ -1,12 +1,10 @@
 package br.com.wcorrea.transport.api.model.common;
 
-import br.com.wcorrea.transport.api.service.exception.ExceptionCriptografarKey;
 import br.com.wcorrea.transport.api.service.exception.ExceptionDescriptografarKey;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -16,20 +14,18 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 @MappedSuperclass
+@Data
 public abstract class IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 7988485287160781269L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     @Column(name = "id")
     @JsonIgnore
-    @Getter
-    @Setter
     private Long id;
 
     @Embedded
-    @Getter
-    @Setter
     private PropriedadesComuns controle;
 
 
