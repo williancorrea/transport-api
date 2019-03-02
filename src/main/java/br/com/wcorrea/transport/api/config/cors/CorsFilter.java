@@ -26,16 +26,16 @@ public class CorsFilter implements Filter {
 
         response.setHeader("Access-Control-Allow-Credentials", "true");
 
+        //Permite acesso de qualquer lugar
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin").trim());
+
         if (apiProperty.getSecurity().isEnableCors()) {
             response.setHeader("Access-Control-Allow-Origin", apiProperty.getOriginAllowed().trim());
 
-            //Caso nao tenha a origem permitida
+            //Bloqueia caso nao tenha a origem permitida
             if (!apiProperty.getOriginAllowed().trim().equals(request.getHeader("Origin").trim())) {
                 chain.doFilter(req, resp);
             }
-        } else {
-            //Permite acesso de qualquer lugar
-            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin").trim());
         }
 
         if ("OPTIONS".equals(request.getMethod())) {
