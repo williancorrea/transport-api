@@ -43,19 +43,19 @@ public abstract class IdentificadorComum implements Serializable {
         try {
             this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
         } catch (Exception e) {
-            /**
-             * SOLUCAO ENCONTRADA PARA APRESENTAR O A EXCECAO PARA O USUARIO
+            /*
+             * TODO: SOLUCAO ENCONTRADA PARA APRESENTAR O A EXCECAO PARA O USUARIO (REFATORAR)
              *
              * Estava apresentando erro de parse para o usuario assim que recebia o objeto
              */
-            this.id = new Long(-1);
+            this.id = (long) -1;
         }
     }
 
     @JsonIgnore
     @Transient
     public boolean isEditando() {
-        return id != null ? true : false;
+        return id != null;
     }
 
     @PrePersist
