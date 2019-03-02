@@ -28,6 +28,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+		//TODO: COLOCAR CONFIGURACOES NO ARQUIVO DE PROPRIEDADES
 		clients.inMemory()
 				.withClient("angular")
 				.secret("@ngul@r0")
