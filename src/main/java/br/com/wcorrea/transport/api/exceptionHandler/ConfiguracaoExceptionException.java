@@ -1,8 +1,8 @@
 package br.com.wcorrea.transport.api.exceptionHandler;
 
+import br.com.wcorrea.transport.api.exceptionHandler.defaultException.ApiError;
 import br.com.wcorrea.transport.api.exceptionHandler.defaultException.DefaultExceptionHandler;
 import br.com.wcorrea.transport.api.service.exception.ConfiguracaoSistemaNaoEncontrado;
-import br.com.wcorrea.transport.api.service.exception.veiculo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;

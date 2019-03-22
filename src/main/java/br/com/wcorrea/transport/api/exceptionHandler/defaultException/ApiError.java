@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.exceptionHandler;
+package br.com.wcorrea.transport.api.exceptionHandler.defaultException;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

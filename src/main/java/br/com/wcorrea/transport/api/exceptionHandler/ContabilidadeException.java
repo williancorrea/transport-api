@@ -1,5 +1,6 @@
 package br.com.wcorrea.transport.api.exceptionHandler;
 
+import br.com.wcorrea.transport.api.exceptionHandler.defaultException.ApiError;
 import br.com.wcorrea.transport.api.exceptionHandler.defaultException.DefaultExceptionHandler;
 import br.com.wcorrea.transport.api.service.exception.CentroDeCustoNaoEncontrado;
 import br.com.wcorrea.transport.api.service.exception.ClasseDespesaNaoEncontrada;

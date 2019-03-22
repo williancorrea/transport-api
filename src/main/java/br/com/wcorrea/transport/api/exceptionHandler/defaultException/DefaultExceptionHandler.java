@@ -1,6 +1,5 @@
 package br.com.wcorrea.transport.api.exceptionHandler.defaultException;
 
-import br.com.wcorrea.transport.api.exceptionHandler.ApiError;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -106,7 +105,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler({MethodArgumentTypeMismatchException.class})
     public ResponseEntity<Object> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, WebRequest request) {
-        String userMessage = messageSource.getMessage("resource.incorrect-attribute-type", null, LocaleContextHolder.getLocale());
+        String userMessage = messageSource.getMessage("recurso.tipo-atributo-incorreto", null, LocaleContextHolder.getLocale());
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.BAD_REQUEST));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
