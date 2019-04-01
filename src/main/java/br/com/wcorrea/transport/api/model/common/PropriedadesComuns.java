@@ -2,15 +2,12 @@ package br.com.wcorrea.transport.api.model.common;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Embeddable

@@ -16,26 +16,20 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @Entity(name = "unidade_medida")
 public class UnidadeMedida extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
     @Size(min = 5, max = 150)
-    @Getter
-    @Setter
     private String nome;
 
-    @Getter
-    @Setter
     @NotNull
     @Size(min = 1, max = 10)
     private String sigla;
 
     @Column(name = "pode_fracionar")
-    @Getter
-    @Setter
     private Boolean podeFracionar;
 
     public UnidadeMedida() {
