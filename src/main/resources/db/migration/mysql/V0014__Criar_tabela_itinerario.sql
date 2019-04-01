@@ -5,7 +5,7 @@ CREATE TABLE itinerario (
     descricao TEXT,
     valido_ate date NOT NULL,
 
-    ativo BOOLEAN DEFAULT FALSE,
+    inativo BOOLEAN DEFAULT FALSE,
 
     data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     data_alteracao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP

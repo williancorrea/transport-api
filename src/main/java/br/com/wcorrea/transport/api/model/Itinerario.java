@@ -40,7 +40,7 @@ public class Itinerario extends IdentificadorComum implements Serializable {
     @Column(name = "valido_ate")
     private Date validoAte;
 
-    private boolean ativo;
+    private boolean inativo;
 
     public Itinerario() {
     }
