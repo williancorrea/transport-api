@@ -2,13 +2,12 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.Veiculo;
 import br.com.wcorrea.transport.api.repository.veiculo.VeiculoRepository;
-import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoJaCadastrado;
 import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -36,6 +35,19 @@ public class VeiculoService {
     }
 
     /**
+     * SALVAR
+     *
+     * @param veiculo
+     * @return
+     */
+    public Veiculo salvar(Veiculo veiculo) {
+        if (veiculoExiste(veiculo.getPlaca())) {
+            throw new VeiculoJaCadastrado();
+        }
+        return veiculoRepository.saveAndFlush(veiculo);
+    }
+
+    /**
      * Buscar por ID
      */
     public Veiculo buscarPorId(Long id) {
@@ -47,7 +59,7 @@ public class VeiculoService {
     }
 
     public Veiculo buscarPorId(Veiculo veiculo) {
-        if(veiculo == null){
+        if (veiculo == null) {
             throw new VeiculoNaoEncontrado();
         }
         return this.buscarPorId(veiculo.getId());
@@ -59,5 +71,27 @@ public class VeiculoService {
         } catch (Exception e) {
             throw new VeiculoNaoEncontrado();
         }
+    }
+
+    public Veiculo buscarPorPlaca(String placa) {
+        Veiculo veiculo = veiculoRepository.findByPlaca(placa);
+        if (veiculo == null) {
+            throw new VeiculoNaoEncontrado();
+        }
+        return veiculo;
+    }
+
+    /**
+     * Verifica se o veiculo ja existe na base de dados
+     *
+     * @param placa
+     * @return
+     */
+    public boolean veiculoExiste(String placa) {
+        Veiculo veiculo = veiculoRepository.findByPlaca(placa);
+        if (veiculo == null) {
+            return false;
+        }
+        return true;
     }
 }

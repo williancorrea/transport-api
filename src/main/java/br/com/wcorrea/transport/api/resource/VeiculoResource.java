@@ -5,7 +5,6 @@ import br.com.wcorrea.transport.api.model.Veiculo;
 import br.com.wcorrea.transport.api.repository.veiculo.VeiculoFiltro;
 import br.com.wcorrea.transport.api.repository.veiculo.VeiculoRepository;
 import br.com.wcorrea.transport.api.service.VeiculoService;
-import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -63,7 +62,7 @@ public class VeiculoResource {
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_SALVAR_VEICULO') and #oauth2.hasScope('write')")
     public ResponseEntity<Veiculo> save(@Valid @RequestBody Veiculo veiculo, HttpServletResponse response) {
-        Veiculo veiculoSalvo = veiculoRepository.saveAndFlush(veiculo);
+        Veiculo veiculoSalvo = veiculoService.salvar(veiculo);
         publisher.publishEvent(new EventResourceCreated(this, response, veiculoSalvo.getKey()));
         return ResponseEntity.status(HttpStatus.CREATED).body(veiculoSalvo);
     }

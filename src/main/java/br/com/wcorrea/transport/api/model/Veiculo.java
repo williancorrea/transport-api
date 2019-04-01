@@ -4,6 +4,7 @@ import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,6 +43,6 @@ public class Veiculo extends IdentificadorComum implements Serializable {
     }
 
     public void setFrota(String frota) {
-        this.frota = frota.toUpperCase();
+        this.frota = StringUtils.isNotBlank(frota) ? frota.toUpperCase().trim() : "";
     }
 }

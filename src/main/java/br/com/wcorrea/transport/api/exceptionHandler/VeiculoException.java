@@ -30,6 +30,14 @@ public class VeiculoException extends DefaultExceptionHandler {
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
+    @ExceptionHandler({VeiculoJaCadastrado.class})
+    public ResponseEntity<Object> handleVeiculoJaCadastrado(VeiculoJaCadastrado ex, WebRequest request, Locale loc) {
+        String userMessage = messageSource.getMessage("recurso.veiculo-ja-cadastrado", null, loc);
+        String developerMessage = ex.toString();
+        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
     @ExceptionHandler({ControleKmNaoEncontrado.class})
     public ResponseEntity<Object> handleConroleKmNaoEncontrado(ControleKmNaoEncontrado ex, WebRequest request, Locale loc) {
         String userMessage = messageSource.getMessage("recurso.controle_km-nao-encontrado", null, loc);
