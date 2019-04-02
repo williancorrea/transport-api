@@ -1,18 +1,20 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
-import br.com.wcorrea.transport.api.service.exception.PessoaContatoNaoEncontrado;
-import br.com.wcorrea.transport.api.utils.Criptografia;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @ToString
-@EqualsAndHashCode()
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @Entity(name = "pessoa_contato")
 @Data
 public class PessoaContato extends IdentificadorComum implements Serializable {
