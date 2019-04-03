@@ -18,7 +18,7 @@ public class Combustivel extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotBlank
-    @Size(min = 5, max = 150)
+    @Size(min = 3, max = 150)
     private String nome;
 
     private boolean inativo;
