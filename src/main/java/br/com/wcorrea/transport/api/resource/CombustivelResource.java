@@ -39,7 +39,7 @@ public class CombustivelResource {
      * @return List of country
      */
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_LISTAR_BANCO') and #oauth2.hasScope('read')")
+    @PreAuthorize("hasAuthority('ROLE_LISTAR_COMBUSTIVEL') and #oauth2.hasScope('read')")
     public Page<Combustivel> findAll(CombustivelFiltro combustivelFiltro, Pageable pageable) {
         return combustivelRepository.findAll(combustivelFiltro, pageable);
     }
@@ -51,7 +51,7 @@ public class CombustivelResource {
      * @return
      */
     @GetMapping("/{key}")
-    @PreAuthorize("hasAuthority('ROLE_LISTAR_BANCO') and #oauth2.hasScope('read')")
+    @PreAuthorize("hasAuthority('ROLE_LISTAR_COMBUSTIVEL') and #oauth2.hasScope('read')")
     public ResponseEntity<Combustivel> findOne(@Valid @PathVariable String key) {
         Combustivel combustivelEncontrado = combustivelService.findOne(combustivelService.buscarPorKey(key));
         return combustivelEncontrado != null ? ResponseEntity.ok(combustivelEncontrado) : ResponseEntity.notFound().build();
@@ -65,7 +65,7 @@ public class CombustivelResource {
      * @return
      */
     @PostMapping
-    @PreAuthorize("hasAuthority('ROLE_SALVAR_BANCO') and #oauth2.hasScope('write')")
+    @PreAuthorize("hasAuthority('ROLE_SALVAR_COMBUSTIVEL') and #oauth2.hasScope('write')")
     public ResponseEntity<Combustivel> save(@Valid @RequestBody Combustivel combustivel, HttpServletResponse response) throws Exception {
         combustivel = combustivelRepository.saveAndFlush(combustivel);
         publisher.publishEvent(new EventResourceCreated(this, response, combustivel.getKey()));
@@ -79,7 +79,7 @@ public class CombustivelResource {
      * @return
      */
     @PutMapping("/{key}")
-    @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_BANCO') and #oauth2.hasScope('write')")
+    @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_COMBUSTIVEL') and #oauth2.hasScope('write')")
     public ResponseEntity<Combustivel> update(@Valid @PathVariable String key, @Valid @RequestBody Combustivel combustivel) {
         return ResponseEntity.status(HttpStatus.OK).body(combustivelService.update(combustivelService.buscarPorKey(key), combustivel));
     }
@@ -91,7 +91,7 @@ public class CombustivelResource {
      */
     @DeleteMapping("/{key}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAuthority('ROLE_DELETAR_BANCO') and #oauth2.hasScope('write')")
+    @PreAuthorize("hasAuthority('ROLE_DELETAR_COMBUSTIVEL') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
         combustivelRepository.delete(combustivelService.buscarPorKey(key));
     }
