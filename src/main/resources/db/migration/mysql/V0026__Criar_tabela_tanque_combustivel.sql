@@ -3,7 +3,7 @@ CREATE TABLE tanque_combustivel (
     nome VARCHAR(150) NOT NULL,
     inativo BOOLEAN DEFAULT FALSE,
 
-    quantidade_lts  decimal(10,2),
+    quantidade_lts  INTEGER,
 
     data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

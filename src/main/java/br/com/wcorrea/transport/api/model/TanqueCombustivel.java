@@ -26,10 +26,9 @@ public class TanqueCombustivel extends IdentificadorComum implements Serializabl
     @Size(min = 3, max = 150)
     private String nome;
 
-    @Column(name = "quantidade_lts", precision = 10, scale = 2, nullable= false)
-    @Digits(integer = 10, fraction = 2)
+    @Column(name = "quantidade_lts")
     @Min(value = 0)
-    private BigDecimal quantidadeLts;
+    private int quantidadeLts;
 
     @NotNull
     @ManyToOne()
