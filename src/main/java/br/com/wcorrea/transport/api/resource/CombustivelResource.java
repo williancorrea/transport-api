@@ -2,12 +2,14 @@ package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.Combustivel;
+import br.com.wcorrea.transport.api.model.CombustivelResumo;
 import br.com.wcorrea.transport.api.repository.combustivel.CombustivelFiltro;
 import br.com.wcorrea.transport.api.repository.combustivel.CombustivelRepository;
 import br.com.wcorrea.transport.api.service.CombustivelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe responsavel por fornecer todos os recursos para manipular os dados de Combustivels
@@ -42,6 +46,23 @@ public class CombustivelResource {
     @PreAuthorize("hasAuthority('ROLE_LISTAR_COMBUSTIVEL') and #oauth2.hasScope('read')")
     public Page<Combustivel> findAll(CombustivelFiltro combustivelFiltro, Pageable pageable) {
         return combustivelRepository.findAll(combustivelFiltro, pageable);
+    }
+
+    @GetMapping("/cmb")
+    @PreAuthorize("hasAuthority('ROLE_CMB_PADRAO') and #oauth2.hasScope('read')")
+    public Page<CombustivelResumo> listAllComboBox(Pageable pageable) {
+        CombustivelFiltro combustivelFiltro = new CombustivelFiltro();
+        combustivelFiltro.setSomenteAtivo(true);
+        combustivelFiltro.setCampoOrdenacao("nome");
+        combustivelFiltro.setOrdemClassificacao("ASC");
+
+        Page<Combustivel> page = combustivelRepository.findAll(combustivelFiltro, pageable);
+
+        List<CombustivelResumo> lista = new ArrayList<>();
+        for (Combustivel c : page.getContent()) {
+            lista.add(new CombustivelResumo(c));
+        }
+        return new PageImpl<>(lista, pageable, page.getTotalElements());
     }
 
     /**

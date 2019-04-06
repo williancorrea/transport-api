@@ -81,6 +81,9 @@ public class CombustivelRepositoryImpl implements CombustivelRepositoryQuery {
             criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
         }
 
+        if (filtro.isSomenteAtivo()) {
+            criteria.add(Restrictions.eq("inativo", false));
+        }
         return criteria;
     }
 }

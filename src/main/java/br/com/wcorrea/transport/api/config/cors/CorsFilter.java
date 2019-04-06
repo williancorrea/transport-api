@@ -35,7 +35,11 @@ public class CorsFilter implements Filter {
                 chain.doFilter(req, resp);
             }
         } else {
-            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin").trim());
+            if(request.getHeader("Origin") != null) {
+                response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin").trim());
+            }else{
+                response.setHeader("Access-Control-Allow-Origin", "*");
+            }
         }
 
         if ("OPTIONS".equals(request.getMethod())) {

@@ -16,6 +16,10 @@ public class QueryFiltroPadrao {
     @Setter
     private String ordemClassificacao;
 
+    @Getter
+    @Setter
+    private boolean somenteAtivo;
+
     public String getOrdemClassificacao() {
         return ordemClassificacao.isEmpty() ? "ASC" : ordemClassificacao.toUpperCase();
     }
