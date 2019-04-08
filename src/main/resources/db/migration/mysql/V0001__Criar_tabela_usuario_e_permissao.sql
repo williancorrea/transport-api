@@ -24,8 +24,8 @@ CREATE TABLE usuario_permissao (
 INSERT INTO usuario (nome, email, senha) VALUES ('Willian Vagner Vicente Corrêa', 'willian.vag@gmail.com', '$2a$10$LfoVSB5m5A5Fey2Y90.owOYvYaSFaWwMmGB9N7qSSdeHwcyhAA2R6');
 
 -- ADICIONA O FILTRO PADRAO QUE SERA UTILIZADO NOS COMBOBOX
-INSERT INTO permissao (nome, descricao) values ('ROLE_CMB_PADRAO', '');
-INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_CMB_PADRAO'));
+INSERT INTO permissao (nome, descricao) values ('ROLE_CMB-PADRAO', 'Permissão utilizada em todos os combobox');
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_CMB-PADRAO'));
 
 
 

@@ -49,7 +49,7 @@ public class CombustivelResource {
     }
 
     @GetMapping("/cmb")
-    @PreAuthorize("hasAuthority('ROLE_CMB_PADRAO') and #oauth2.hasScope('read')")
+    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
     public Page<CombustivelResumo> listAllComboBox(CombustivelFiltro combustivelFiltro, Pageable pageable) {
         combustivelFiltro.setSomenteAtivo(true);
 //        combustivelFiltro.setCampoOrdenacao("nome");
