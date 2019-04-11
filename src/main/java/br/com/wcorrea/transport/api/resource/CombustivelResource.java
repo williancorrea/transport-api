@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,18 +51,14 @@ public class CombustivelResource {
 
     @GetMapping("/cmb")
     @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
-    public Page<CombustivelResumo> listAllComboBox(CombustivelFiltro combustivelFiltro, Pageable pageable) {
+    public List<CombustivelResumo> listAllComboBox(CombustivelFiltro combustivelFiltro, Pageable pageable) {
         combustivelFiltro.setSomenteAtivo(true);
-//        combustivelFiltro.setCampoOrdenacao("nome");
-//        combustivelFiltro.setOrdemClassificacao("ASC");
-
-        Page<Combustivel> page = combustivelRepository.findAll(combustivelFiltro, pageable);
-
+        Page<Combustivel> page = combustivelRepository.findAll(combustivelFiltro,  pageable);
         List<CombustivelResumo> lista = new ArrayList<>();
         for (Combustivel c : page.getContent()) {
             lista.add(new CombustivelResumo(c));
         }
-        return new PageImpl<>(lista, pageable, page.getTotalElements());
+        return lista;
     }
 
     /**
