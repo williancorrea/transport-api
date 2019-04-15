@@ -3,7 +3,8 @@ CREATE TABLE unidade_medida (
     nome VARCHAR(150) NOT NULL,
     sigla VARCHAR(10),
     
-    pode_fracionar INT DEFAULT 0,
+    pode_fracionar BOOLEAN DEFAULT FALSE,
+    inativo BOOLEAN DEFAULT FALSE,
 
     data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
