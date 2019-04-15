@@ -26,6 +26,8 @@ public class UnidadeMedidaService {
     public UnidadeMedida update(Long id, UnidadeMedida unidadeMedida) {
         UnidadeMedida updateFound = findOne(id);
         unidadeMedida.setId(updateFound.getId());
+        unidadeMedida.setControle(updateFound.getControle());
+
         return unidadeMedidaRepository.save(unidadeMedida);
     }
 
