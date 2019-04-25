@@ -4,7 +4,9 @@ import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import lombok.*;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -24,6 +26,10 @@ public class Banco extends IdentificadorComum implements Serializable {
 
     @Size(max = 250)
     private String url;
+
+    @Lob
+    @Column(name = "logo_base_64")
+    private String logo;
 
     private boolean inativo;
 
