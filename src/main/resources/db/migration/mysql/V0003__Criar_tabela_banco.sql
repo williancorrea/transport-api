@@ -5,8 +5,7 @@ CREATE TABLE banco (
     url VARCHAR(250),
     inativo BOOLEAN DEFAULT FALSE,
 
---     logo MEDIUMBLOB NOT NULL COMMENT 'Logo do banco',
-    logo_base_64 TEXT,
+    logo_base_64 LONGBLOB,
 
     data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
