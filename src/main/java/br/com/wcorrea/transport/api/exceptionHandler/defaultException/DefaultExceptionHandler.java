@@ -120,7 +120,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler({DataIntegrityViolationException.class})
     public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
-        String userMessage = messageSource.getMessage("recurso.operacao-nao-aceita", null, LocaleContextHolder.getLocale());
+        String userMessage = messageSource.getMessage("recurso.violacao-de-integridade", null, LocaleContextHolder.getLocale());
         String developerMessage = ExceptionUtils.getRootCauseMessage(ex);
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.BAD_REQUEST));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
