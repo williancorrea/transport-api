@@ -5,6 +5,9 @@ CREATE TABLE pessoa_telefone (
   observacao varchar(250),
   inativo BOOLEAN DEFAULT FALSE,
 
+  data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
   pessoa_id BIGINT(20),
   FOREIGN KEY (pessoa_id) REFERENCES pessoa(id)
 )

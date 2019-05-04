@@ -26,6 +26,9 @@ CREATE TABLE pessoa_fisica (
     nome_mae VARCHAR(250),
     nome_pai VARCHAR(250),
 
+    data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
     estado_civil_id BIGINT(20),
     pessoa_id BIGINT(20),
 

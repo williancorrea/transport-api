@@ -4,6 +4,7 @@ import br.com.wcorrea.transport.api.exceptionHandler.defaultException.ApiError;
 import br.com.wcorrea.transport.api.exceptionHandler.defaultException.DefaultExceptionHandler;
 import br.com.wcorrea.transport.api.service.exception.CidadeNaoEncontrada;
 import br.com.wcorrea.transport.api.service.exception.EstadoCivilNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.EstadoNaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -26,8 +27,8 @@ public class EstadoCidadeException extends DefaultExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler({EstadoCivilNaoEncontrado.class})
-    public ResponseEntity<Object> handleEstadoCivilNaoEncontrado(EstadoCivilNaoEncontrado ex, WebRequest request, Locale loc) {
+    @ExceptionHandler({EstadoNaoEncontrado.class})
+    public ResponseEntity<Object> handleEstadoNaoEncontrado(EstadoNaoEncontrado ex, WebRequest request, Locale loc) {
         String userMessage = messageSource.getMessage("recurso.estado_nao_encontrado", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));

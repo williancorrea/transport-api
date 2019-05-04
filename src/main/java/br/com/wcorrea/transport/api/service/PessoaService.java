@@ -4,18 +4,15 @@ import br.com.wcorrea.transport.api.model.EstadoCivil;
 import br.com.wcorrea.transport.api.model.Pessoa;
 import br.com.wcorrea.transport.api.model.PessoaAuditoria;
 import br.com.wcorrea.transport.api.model.PessoaTipo;
-import br.com.wcorrea.transport.api.repository.pessoa.PessoaRepository;
+import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
+import br.com.wcorrea.transport.api.repository.pessoa.PessoaRepository;
 import br.com.wcorrea.transport.api.service.exception.*;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import br.com.wcorrea.transport.api.utils.Utils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * ClasseDespesa responsavel por manipular as regras de negocio de pessoa
@@ -111,7 +108,7 @@ public class PessoaService {
         /**
          * IMPEDE A ALTERACAO DO CPF
          */
-        if(pessoaEncontrada != null) {
+        if (pessoaEncontrada != null) {
             if (pessoa.getPessoaFisica() != null && !pessoa.getPessoaFisica().getCpf().equals(pessoaEncontrada.getPessoaFisica().getCpf())) {
                 throw new PessoaFisicaNaoPodeAlterarValorCPF();
             }
@@ -128,27 +125,34 @@ public class PessoaService {
             pessoa.getListaPessoaTelefone().forEach(c -> c.setPessoa(finalPessoa));
             pessoa.getListaPessoaContato().forEach(c -> c.setPessoa(finalPessoa));
             pessoa.getListaPessoaEndereco().forEach(c -> c.setPessoa(finalPessoa));
+            pessoa.getListaPessoaAuditoria().forEach(c -> c.setPessoa(finalPessoa));
         } else {
-            /**
-             * ADICIONANDO A LISTA DE TELEFONES
+            /*
+                ADICIONANDO A LISTA DE TELEFONES
              */
             pessoaEncontrada.getListaPessoaTelefone().clear();
             pessoaEncontrada.getListaPessoaTelefone().addAll(pessoa.getListaPessoaTelefone());
             pessoaEncontrada.getListaPessoaTelefone().forEach(c -> c.setPessoa(pessoaEncontrada));
-            /**
-             * ADICIONANDO A LISTA DE CONTATOS
+            /*
+                ADICIONANDO A LISTA DE CONTATOS
              */
             pessoaEncontrada.getListaPessoaContato().clear();
             pessoaEncontrada.getListaPessoaContato().addAll(pessoa.getListaPessoaContato());
             pessoaEncontrada.getListaPessoaContato().forEach(c -> c.setPessoa(pessoaEncontrada));
-            /**
-             * ADICIONANDO A LISTA DE ENDEREÇOS
+            /*
+                ADICIONANDO A LISTA DE ENDEREÇOS
              */
             pessoaEncontrada.getListaPessoaEndereco().clear();
             pessoaEncontrada.getListaPessoaEndereco().addAll(pessoa.getListaPessoaEndereco());
             pessoaEncontrada.getListaPessoaEndereco().forEach(c -> c.setPessoa(pessoaEncontrada));
+            /*
+                ADICIONANDO A LISTA DE AUDITORIA
+             */
+            pessoaEncontrada.getListaPessoaAuditoria().clear();
+            pessoaEncontrada.getListaPessoaAuditoria().addAll(pessoa.getListaPessoaAuditoria());
+            pessoaEncontrada.getListaPessoaAuditoria().forEach(c -> c.setPessoa(pessoaEncontrada));
 
-            BeanUtils.copyProperties(pessoa, pessoaEncontrada, "id", "listaPessoaTelefone", "listaPessoaContato", "listaPessoaEndereco");
+            BeanUtils.copyProperties(pessoa, pessoaEncontrada, "id", "listaPessoaTelefone", "listaPessoaContato", "listaPessoaEndereco", "listaPessoaAuditoria");
         }
         /**
          * CONSTROI O OBJETO DE AUDITORIA
@@ -238,7 +242,7 @@ public class PessoaService {
 
         //TODO: Adicionar usuario logado que fez a alteração
         aud.setObjetoAlterado(txt.toString());
-
+        aud.setControle(new PropriedadesComuns());
         return aud;
     }
 }
