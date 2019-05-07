@@ -25,7 +25,9 @@ INSERT INTO usuario (nome, email, senha) VALUES ('Willian Vagner Vicente Corrêa
 
 -- ADICIONA O FILTRO PADRAO QUE SERA UTILIZADO NOS COMBOBOX
 INSERT INTO permissao (nome, descricao) values ('ROLE_CMB-PADRAO', 'Permissão utilizada em todos os combobox');
+INSERT INTO permissao (nome, descricao) values ('ROLE_DESENVOLVIMENTO', 'TELAS QUE MOSTRAN SOMENTE NO AMBIENTE DE DESENVOLVIMENTO');
 INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_CMB-PADRAO'));
+INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from usuario where email='willian.vag@gmail.com'), (select id from permissao where nome='ROLE_DESENVOLVIMENTO'));
 
 
 

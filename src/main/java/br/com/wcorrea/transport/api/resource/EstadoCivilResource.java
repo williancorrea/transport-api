@@ -2,10 +2,10 @@ package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.EstadoCivil;
+import br.com.wcorrea.transport.api.model.EstadoCivilResumo;
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilFiltro;
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
 import br.com.wcorrea.transport.api.service.EstadoCivilService;
-import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/estado-civil")
@@ -40,6 +42,18 @@ public class EstadoCivilResource {
     @PreAuthorize("hasAuthority('ROLE_LISTAR_ESTADO_CIVIL') and #oauth2.hasScope('read')")
     public Page<EstadoCivil> findAll(EstadoCivilFiltro filtro, Pageable paginacao) {
         return estadoCivilRepository.findAll(filtro, paginacao);
+    }
+
+    @GetMapping("/cmb")
+    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
+    public List<EstadoCivilResumo> listAllComboBox(EstadoCivilFiltro combustivelFiltro, Pageable pageable) {
+        combustivelFiltro.setSomenteAtivo(true);
+        Page<EstadoCivil> page = estadoCivilRepository.findAll(combustivelFiltro, pageable);
+        List<EstadoCivilResumo> lista = new ArrayList<>();
+        for (EstadoCivil c : page.getContent()) {
+            lista.add(new EstadoCivilResumo(c));
+        }
+        return lista;
     }
 
     /**

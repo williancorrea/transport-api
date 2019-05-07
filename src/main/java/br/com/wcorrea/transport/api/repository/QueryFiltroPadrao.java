@@ -2,6 +2,7 @@ package br.com.wcorrea.transport.api.repository;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 public class QueryFiltroPadrao {
 
@@ -21,6 +22,6 @@ public class QueryFiltroPadrao {
     private boolean somenteAtivo;
 
     public String getOrdemClassificacao() {
-        return ordemClassificacao.isEmpty() ? "ASC" : ordemClassificacao.toUpperCase();
+        return StringUtils.isEmpty(ordemClassificacao) ? "ASC" : ordemClassificacao.toUpperCase();
     }
 }

@@ -29,6 +29,15 @@ public class PessoaService {
     public Pessoa save(Pessoa pessoaNovo) {
         pessoaNovo.setId(null);
         pessoaNovo = validarPessoa(pessoaNovo);
+
+        if (pessoaNovo.getTipo().equals(PessoaTipo.FISICA)) {
+            pessoaNovo.setPessoaJuridica(null);
+            pessoaNovo = this.validarPessoaFisica(pessoaNovo);
+        } else {
+            pessoaNovo.setPessoaFisica(null);
+            pessoaNovo = this.validarPessoaJuridica(pessoaNovo);
+        }
+
         return pessoaRepository.saveAndFlush(pessoaNovo);
     }
 

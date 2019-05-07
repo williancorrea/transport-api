@@ -1,7 +1,7 @@
 CREATE TABLE itinerario (
     id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(150) NOT NULL,
-    codigo VARCHAR(15) NOT NULL,
+    codigo VARCHAR(15),
     descricao TEXT,
     valido_ate date NOT NULL,
 

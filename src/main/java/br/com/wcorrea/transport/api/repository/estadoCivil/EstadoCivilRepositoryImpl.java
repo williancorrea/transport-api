@@ -66,6 +66,10 @@ public class EstadoCivilRepositoryImpl implements EstadoCivilRepositoryQuery {
             }
         }
 
+        if (filtro.isSomenteAtivo()) {
+            sql += " and inativo = " + false;
+        }
+
         sql = UtilsRepository.adicionarOrdenacaoConsulta(sql, count, filtro.getCampoOrdenacao(), filtro.getOrdemClassificacao());
         return sql;
     }
