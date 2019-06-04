@@ -2,6 +2,7 @@ CREATE TABLE veiculo (
     id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     placa VARCHAR(8) NOT NULL,
     frota VARCHAR(15) NOT NULL,
+    inativo BOOLEAN DEFAULT FALSE,
 
     obs TEXT,
     odometro_inicial BIGINT(20) DEFAULT 0,

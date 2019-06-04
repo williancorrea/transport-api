@@ -2,6 +2,7 @@ package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.Veiculo;
+import br.com.wcorrea.transport.api.model.VeiculoResumo;
 import br.com.wcorrea.transport.api.repository.veiculo.VeiculoFiltro;
 import br.com.wcorrea.transport.api.repository.veiculo.VeiculoRepository;
 import br.com.wcorrea.transport.api.service.VeiculoService;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/veiculo")
@@ -39,6 +42,18 @@ public class VeiculoResource {
     @PreAuthorize("hasAuthority('ROLE_LISTAR_VEICULO') and #oauth2.hasScope('read')")
     public Page<Veiculo> findAll(VeiculoFiltro filtro, Pageable paginacao) {
         return veiculoRepository.findAll(filtro, paginacao);
+    }
+
+    @GetMapping("/cmb")
+    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
+    public List<VeiculoResumo> listAllComboBox(VeiculoFiltro filtro, Pageable pageable) {
+        filtro.setSomenteAtivo(true);
+        Page<Veiculo> page = veiculoRepository.findAll(filtro, pageable);
+        List<VeiculoResumo> lista = new ArrayList<>();
+        for (Veiculo c : page.getContent()) {
+            lista.add(new VeiculoResumo(c));
+        }
+        return lista;
     }
 
     /**

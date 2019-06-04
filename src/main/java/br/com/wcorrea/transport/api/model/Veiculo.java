@@ -35,6 +35,8 @@ public class Veiculo extends IdentificadorComum implements Serializable {
     @Column(name = "odometro_inicial")
     private int odometroInicial;
 
+    private boolean inativo;
+
     public Veiculo() {
     }
 

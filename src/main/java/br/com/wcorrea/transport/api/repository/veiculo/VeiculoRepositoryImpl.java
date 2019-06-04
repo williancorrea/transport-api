@@ -1,15 +1,16 @@
 package br.com.wcorrea.transport.api.repository.veiculo;
 
 import br.com.wcorrea.transport.api.model.Veiculo;
-import br.com.wcorrea.transport.api.repository.utils.UtilsRepository;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 public class VeiculoRepositoryImpl implements VeiculoRepositoryQuery {
 
@@ -25,49 +26,69 @@ public class VeiculoRepositoryImpl implements VeiculoRepositoryQuery {
      */
     @Override
     public Page<Veiculo> findAll(VeiculoFiltro filtro, Pageable paginacao) {
-        TypedQuery<Veiculo> queryList = manager.createQuery(this.createQuery(filtro, false), Veiculo.class);
-        TypedQuery<Long> totalRegistros = manager.createQuery(this.createQuery(filtro, true), Long.class);
+        //Criterios da pesquisa
+        Criteria criteria = criarCriteriaParaFiltro(filtro);
 
-        UtilsRepository.adicionarRestricoesPaginacao(queryList, paginacao);
-        return new PageImpl<>(queryList.getResultList(), paginacao, totalRegistros.getSingleResult());
+        //Paginacao
+        criteria.setFirstResult(paginacao.getPageNumber() * paginacao.getPageSize());
+        criteria.setMaxResults(paginacao.getPageSize());
+
+        //Ordenacao
+        if (filtro.getCampoOrdenacao() != null && filtro.getOrdemClassificacao() != null) {
+            if (filtro.getOrdemClassificacao().equalsIgnoreCase("ASC")) {
+                criteria.addOrder(Order.asc(filtro.getCampoOrdenacao()));
+            } else {
+                criteria.addOrder(Order.desc(filtro.getCampoOrdenacao()));
+            }
+        }
+
+        //Consulta paginada
+        return new PageImpl<>(criteria.list(), paginacao, quantidadeRegistrosFiltrados(filtro));
+    }
+
+
+    /**
+     * RECUPERA A QUANTIDADE DE REGISTRO
+     *
+     * @param filtro
+     * @return
+     */
+    public int quantidadeRegistrosFiltrados(VeiculoFiltro filtro) {
+        Criteria criteria = criarCriteriaParaFiltro(filtro);
+        criteria.setProjection(Projections.rowCount());
+        return ((Number) criteria.uniqueResult()).intValue();
     }
 
     /**
-     * Cria as consultas da aplicação
+     * MONTA OS CRITERIOS PARA A PESQUISA
      *
      * @param filtro
-     * @param count
      * @return
      */
-    private String createQuery(VeiculoFiltro filtro, boolean count) {
-
-        filtro.setFiltroGlobal(UtilsRepository.removeCaracteresProblematicos(filtro.getFiltroGlobal()));
-        filtro.setPlaca(UtilsRepository.removeCaracteresProblematicos(filtro.getPlaca()));
-        filtro.setFrota(UtilsRepository.removeCaracteresProblematicos(filtro.getFrota()));
-
-        String sql;
-        if (count) {
-            sql = "select count(a) from veiculo a where 1=1 ";
-        } else {
-            sql = "from veiculo a where 1=1 ";
-        }
+    private Criteria criarCriteriaParaFiltro(VeiculoFiltro filtro) {
+        Session session = manager.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(Veiculo.class);
 
         if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
-            sql += " and (";
-            sql += " upper(a.placa) like '%" + filtro.getFiltroGlobal().toUpperCase().trim() + "%'";
-            sql += " or upper(a.frota) like '%" + filtro.getFiltroGlobal().toUpperCase().trim() + "%'";
-            sql += " )";
-        } else {
-            if (StringUtils.isNotBlank(filtro.getPlaca())) {
-                sql += " and upper(a.placa) like '%" + filtro.getPlaca().toUpperCase().trim() + "%'";
-            }
-            if (StringUtils.isNotBlank(filtro.getFrota())) {
-                sql += " and upper(a.frota) like '%" + filtro.getFrota().toUpperCase().trim() + "%'";
-            }
+            Disjunction disjunction = Restrictions.disjunction(); // Restricao com OR
+            disjunction.add(Restrictions.ilike("nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+            disjunction.add(Restrictions.ilike("placa", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+            criteria.add(disjunction);
+
+            return criteria;
         }
 
-        sql = UtilsRepository.adicionarOrdenacaoConsulta(sql, count, filtro.getCampoOrdenacao(), filtro.getOrdemClassificacao());
-        return sql;
+        if (StringUtils.isNotBlank(filtro.getFrota())) {
+            criteria.add(Restrictions.ilike("frota", filtro.getFrota(), MatchMode.ANYWHERE));
+        }
+        if (StringUtils.isNotBlank(filtro.getPlaca())) {
+            criteria.add(Restrictions.ilike("placa", filtro.getPlaca(), MatchMode.ANYWHERE));
+        }
+
+        if (filtro.isSomenteAtivo()) {
+            criteria.add(Restrictions.eq("inativo", false));
+        }
+        return criteria;
     }
 
 }
