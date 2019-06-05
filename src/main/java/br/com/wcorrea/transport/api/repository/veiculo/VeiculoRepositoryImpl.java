@@ -71,8 +71,12 @@ public class VeiculoRepositoryImpl implements VeiculoRepositoryQuery {
 
         if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
             Disjunction disjunction = Restrictions.disjunction(); // Restricao com OR
-            disjunction.add(Restrictions.ilike("nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+            disjunction.add(Restrictions.ilike("frota", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
             disjunction.add(Restrictions.ilike("placa", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+
+            disjunction.add(
+                    Restrictions.sqlRestriction(" concat(lower({alias}.frota), ' - ', lower({alias}.placa)) like '%" + filtro.getFiltroGlobal() + "%' ")
+            );
             criteria.add(disjunction);
 
             return criteria;
