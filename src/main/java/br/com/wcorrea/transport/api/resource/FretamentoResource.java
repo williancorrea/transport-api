@@ -37,7 +37,7 @@ public class FretamentoResource {
 //    }
 //
     @GetMapping("/{key}")
-//    @PreAuthorize("hasAuthority('ROLE_LISTAR_BANCO') and #oauth2.hasScope('read')")
+    @PreAuthorize("hasAuthority('ROLE_LISTAR_BANCO') and #oauth2.hasScope('read')")
     public ResponseEntity<String> findOne(@Valid @PathVariable String key) {
 //        Banco bancoEncontrado = bancoService.findOne(bancoService.buscarPorKey(key));
 //        return bancoEncontrado != null ? ResponseEntity.ok(bancoEncontrado) : ResponseEntity.notFound().build();
