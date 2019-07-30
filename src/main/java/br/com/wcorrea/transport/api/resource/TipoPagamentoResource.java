@@ -31,11 +31,6 @@ public class TipoPagamentoResource {
     @Autowired
     private TipoPagamentoService tipoPagamentoService;
 
-    /**
-     * RECUPERA A LISTA DE REGISTRO DE TIPO-PAGAMENTO
-     *
-     * @return
-     */
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_LISTAR_TIPO-PAGAMENTO') and #oauth2.hasScope('read')")
     public Page<TipoPagamento> findAll(TipoPagamentoFiltro filtro, Pageable paginacao) {
@@ -48,24 +43,12 @@ public class TipoPagamentoResource {
         return tipoPagamentoRepository.listarTudoAtivo();
     }
 
-    /**
-     * RECUPERA UM TIPO-PAGAMENTO ESPECIFICO
-     *
-     * @return
-     */
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_TIPO-PAGAMENTO') and #oauth2.hasScope('read')")
     public ResponseEntity<TipoPagamento> findOne(@Valid @PathVariable String key) {
         return ResponseEntity.ok(tipoPagamentoService.buscarPorId(tipoPagamentoService.buscarPorKey(key)));
     }
 
-    /**
-     * SALVA UM TIPO-PAGAMENTO
-     *
-     * @param tipoPagamento
-     * @param response
-     * @return
-     */
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_SALVAR_TIPO-PAGAMENTO') and #oauth2.hasScope('write')")
     public ResponseEntity<TipoPagamento> save(@Valid @RequestBody TipoPagamento tipoPagamento, HttpServletResponse response) {
@@ -74,28 +57,17 @@ public class TipoPagamentoResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(tipoPagamentoSalvo);
     }
 
-    /**
-     * ATUALIZA O OBJETO PASSADO POR PARAMETRO
-     *
-     * @param tipoPagamento
-     * @return
-     */
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_TIPO-PAGAMENTO') and #oauth2.hasScope('write')")
     public ResponseEntity<TipoPagamento> update(@Valid @PathVariable String key, @Valid @RequestBody TipoPagamento tipoPagamento) {
         return ResponseEntity.status(HttpStatus.OK).body(tipoPagamentoService.atualizar(tipoPagamentoService.buscarPorKey(key), tipoPagamento));
     }
 
-    /**
-     * REMOVE O OBJETO PASSADO
-     *
-     * @return
-     */
     @DeleteMapping("/{key}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETAR_TIPO-PAGAMENTO') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
         TipoPagamento tipoPagamento = tipoPagamentoService.buscarPorId(tipoPagamentoService.buscarPorKey(key));
-        tipoPagamentoRepository.delete(tipoPagamento.getId());
+        tipoPagamentoRepository.deleteById(tipoPagamento.getId());
     }
 }

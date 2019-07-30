@@ -8,23 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
-/**
- * Class responsible for performing the entire business rule by manipulating bank information
- */
 @Service
 public class BancoService {
 
     @Autowired
     private BancoRepository bancoRepository;
 
-    /**
-     * Update banco
-     *
-     * @param id
-     * @param banco
-     * @return
-     */
     public Banco update(Long id, Banco banco) {
         Banco updateFound = findOne(id);
         banco.setId(updateFound.getId());
@@ -33,15 +24,12 @@ public class BancoService {
         return bancoRepository.save(banco);
     }
 
-    /**
-     * Find bank by id
-     */
     public Banco findOne(Long id) {
-        Banco banco = bancoRepository.findOne(id);
-        if (banco == null) {
+        Optional<Banco> banco = bancoRepository.findById(id);
+        if (!banco.isPresent()) {
             throw new BancoNaoEncontrado();
         }
-        return banco;
+        return banco.get();
     }
 
     public Long buscarPorKey(String key) {

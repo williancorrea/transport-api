@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EstadoCidadeService {
@@ -21,27 +22,14 @@ public class EstadoCidadeService {
     @Autowired
     private CidadeRepository cidadeRepository;
 
-
-    /**
-     * Buscar estado por id;
-     *
-     * @param id
-     * @return
-     */
     public Estado buscarEstadoPorId(Long id) {
-        Estado estado = estadoRepository.findOne(id);
-        if (estado == null) {
+        Optional<Estado> estado = estadoRepository.findById(id);
+        if (!estado.isPresent()) {
             throw new EstadoNaoEncontrado();
         }
-        return estado;
+        return estado.get();
     }
 
-    /**
-     * Retorna uma lista de cidades de acordo com o estado passado por parametro
-     *
-     * @param estadoId
-     * @return
-     */
     public List<Cidade> buscarCidadePorEstado(Long estadoId) {
         List<Cidade> cidades = cidadeRepository.findByEstadoId(estadoId);
         if (cidades == null) {
@@ -49,7 +37,6 @@ public class EstadoCidadeService {
         }
         return cidades;
     }
-
 
     public Long buscarEstadoPorKey(String key) {
         try {

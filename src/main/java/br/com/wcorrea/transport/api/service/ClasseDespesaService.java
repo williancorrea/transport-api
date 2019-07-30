@@ -8,23 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
-/**
- * ClasseDespesa responsavel por manipular todas as informcoes do objeto classeDespesa
- */
 @Service
 public class ClasseDespesaService {
 
     @Autowired
     private ClasseDespesaRepository classeDespesaRepository;
 
-    /**
-     * Atualizar
-     *
-     * @param id
-     * @param classeDespesa
-     * @return
-     */
     public ClasseDespesa atualizar(Long id, ClasseDespesa classeDespesa) {
         ClasseDespesa objFound = classeDespesaRepository.save(buscarPorId(id));
         classeDespesa.setId(objFound.getId());
@@ -39,15 +30,12 @@ public class ClasseDespesaService {
         return classeDespesaRepository.saveAndFlush(classeDespesa);
     }
 
-    /**
-     * Buscar por ID
-     */
     public ClasseDespesa buscarPorId(Long id) {
-        ClasseDespesa classeDespesa = classeDespesaRepository.findOne(id);
-        if (classeDespesa == null) {
+        Optional<ClasseDespesa> classeDespesa = classeDespesaRepository.findById(id);
+        if (!classeDespesa.isPresent()) {
             throw new ClasseDespesaNaoEncontrada();
         }
-        return classeDespesa;
+        return classeDespesa.get();
     }
 
     public Long buscarPorKey(String key) {

@@ -7,37 +7,26 @@ import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Class responsible for performing the entire business rule by manipulating information
- */
+import java.util.Optional;
+
 @Service
 public class NivelFormacaoService {
 
     @Autowired
     private NivelFormacaoRepository nivelFormacaoRepository;
 
-    /**
-     * Update
-     *
-     * @param id
-     * @param levelOfEducation
-     * @return
-     */
     public NivelFormacao update(Long id, NivelFormacao levelOfEducation) {
         NivelFormacao objFound = nivelFormacaoRepository.save(findOne(id));
         levelOfEducation.setId(objFound.getId());
         return nivelFormacaoRepository.save(levelOfEducation);
     }
 
-    /**
-     * Find tipo obj by id
-     */
     private NivelFormacao findOne(Long id) {
-        NivelFormacao levelOfEducation = nivelFormacaoRepository.findOne(id);
-        if (levelOfEducation == null) {
+        Optional<NivelFormacao> levelOfEducation = nivelFormacaoRepository.findById(id);
+        if (!levelOfEducation.isPresent()) {
             throw new NivelEducacaoNaoEncontrado();
         }
-        return levelOfEducation;
+        return levelOfEducation.get();
     }
 
     public Long buscarPorKey(String key) {

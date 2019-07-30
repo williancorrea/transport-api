@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * Class responsible for performing the entire business rule by manipulating bank information
@@ -39,15 +40,12 @@ public class TanqueCombustivelService {
         return tanqueCombustivelRepository.save(tanqueCombustivel);
     }
 
-    /**
-     * Find by id
-     */
     public TanqueCombustivel findOne(Long id) {
-        TanqueCombustivel tanqueCombustivel = tanqueCombustivelRepository.findOne(id);
-        if (tanqueCombustivel == null) {
+        Optional<TanqueCombustivel> tanqueCombustivel = tanqueCombustivelRepository.findById(id);
+        if (!tanqueCombustivel.isPresent()) {
             throw new CombustivelNaoEncontrado();
         }
-        return tanqueCombustivel;
+        return tanqueCombustivel.get();
     }
 
     public Long buscarPorKey(String key) {

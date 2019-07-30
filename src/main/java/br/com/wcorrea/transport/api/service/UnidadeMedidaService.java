@@ -7,22 +7,14 @@ import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Class responsible for performing the entire business rule by manipulating product unit information
- */
+import java.util.Optional;
+
 @Service
 public class UnidadeMedidaService {
 
     @Autowired
     private UnidadeMedidaRepository unidadeMedidaRepository;
 
-    /**
-     * Update product unit
-     *
-     * @param id
-     * @param unidadeMedida
-     * @return
-     */
     public UnidadeMedida update(Long id, UnidadeMedida unidadeMedida) {
         UnidadeMedida updateFound = findOne(id);
         unidadeMedida.setId(updateFound.getId());
@@ -31,15 +23,12 @@ public class UnidadeMedidaService {
         return unidadeMedidaRepository.save(unidadeMedida);
     }
 
-    /**
-     * Find product unit by id
-     */
     private UnidadeMedida findOne(Long id) {
-        UnidadeMedida unidadeMedida = unidadeMedidaRepository.findOne(id);
-        if (unidadeMedida == null) {
+        Optional<UnidadeMedida> unidadeMedida = unidadeMedidaRepository.findById(id);
+        if (!unidadeMedida.isPresent()) {
             throw new UnidadeMedidaNaoEncontrada();
         }
-        return unidadeMedida;
+        return unidadeMedida.get();
     }
 
     public Long buscarPorKey(String key) {

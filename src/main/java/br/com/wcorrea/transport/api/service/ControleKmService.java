@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * ClasseDespesa responsavel por manipular toda a regra de negocio de um ControleKm
@@ -54,11 +55,11 @@ public class ControleKmService {
      * Buscar por ID
      */
     public ControleKm buscarPorId(Long id) {
-        ControleKm controleKm = controleKmRepository.findOne(id);
-        if (controleKm == null) {
+        Optional<ControleKm> controleKm = controleKmRepository.findById(id);
+        if (!controleKm.isPresent()) {
             throw new ControleKmNaoEncontrado();
         }
-        return controleKm;
+        return controleKm.get();
     }
 
     public Long buscarPorKey(String key) {

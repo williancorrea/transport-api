@@ -26,34 +26,18 @@ public class ConfiguracaoSistemaResource {
     @Autowired
     private ConfiguracaoSistemaService configuracaoSistemaService;
 
-    /**
-     * RECUPERA A LISTA DE REGISTRO DE TIPO-PAGAMENTO
-     *
-     * @return
-     */
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_LISTAR_TIPO-PAGAMENTO') and #oauth2.hasScope('read')")
     public List<ConfiguracaoSistema> findAll() {
         return configuracaoSistemaRepository.findAll();
     }
 
-    /**
-     * RECUPERA UM TIPO-PAGAMENTO ESPECIFICO
-     *
-     * @return
-     */
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_TIPO-PAGAMENTO') and #oauth2.hasScope('read')")
     public ResponseEntity<ConfiguracaoSistema> findOne(@Valid @PathVariable String key) {
         return ResponseEntity.ok(configuracaoSistemaService.buscarPorId(configuracaoSistemaService.buscarPorKey(key)));
     }
 
-    /**
-     * ATUALIZA O OBJETO PASSADO POR PARAMETRO
-     *
-     * @param configuracaoSistema
-     * @return
-     */
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_TIPO-PAGAMENTO') and #oauth2.hasScope('write')")
     public ResponseEntity<ConfiguracaoSistema> update(@Valid @PathVariable String key, @Valid @RequestBody ConfiguracaoSistema configuracaoSistema) {

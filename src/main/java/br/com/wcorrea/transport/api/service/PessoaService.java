@@ -14,6 +14,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * ClasseDespesa responsavel por manipular as regras de negocio de pessoa
  */
@@ -68,11 +70,11 @@ public class PessoaService {
     }
 
     public Pessoa buscarPorId(Long id) {
-        Pessoa pessoaEncontrada = pessoaRepository.findOne(id);
-        if (pessoaEncontrada == null) {
+        Optional<Pessoa> pessoaEncontrada = pessoaRepository.findById(id);
+        if (!pessoaEncontrada.isPresent()) {
             throw new PessoaNaoEncontrada();
         }
-        return pessoaEncontrada;
+        return pessoaEncontrada.get();
     }
 
     public Pessoa buscarPorId(Pessoa pessoa) {
@@ -194,11 +196,11 @@ public class PessoaService {
          */
         if (pessoa.getPessoaFisica().getEstadoCivil() != null && pessoa.getPessoaFisica().getId() != null) {
             try {
-                EstadoCivil estadoCivilEncontrado = estadoCivilRepository.findOne(pessoa.getPessoaFisica().getEstadoCivil().getId());
-                if (estadoCivilEncontrado == null) {
+                Optional<EstadoCivil> estadoCivilEncontrado = estadoCivilRepository.findById(pessoa.getPessoaFisica().getEstadoCivil().getId());
+                if (!estadoCivilEncontrado.isPresent()) {
                     throw new EstadoCivilNaoEncontrado();
                 }
-                pessoa.getPessoaFisica().setEstadoCivil(estadoCivilEncontrado);
+                pessoa.getPessoaFisica().setEstadoCivil(estadoCivilEncontrado.get());
             } catch (Exception e) {
                 throw new EstadoCivilNaoEncontrado();
             }

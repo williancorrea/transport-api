@@ -9,23 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
-/**
- * TipoPagamento responsavel por manipular todas as informcoes do objeto tipoPagamento
- */
 @Service
 public class TipoPagamentoService {
 
     @Autowired
     private TipoPagamentoRepository tipoPagamentoRepository;
 
-    /**
-     * Atualizar
-     *
-     * @param id
-     * @param tipoPagamento
-     * @return
-     */
     public TipoPagamento atualizar(Long id, TipoPagamento tipoPagamento) {
         TipoPagamento objFound = tipoPagamentoRepository.save(buscarPorId(id));
         tipoPagamento.setId(objFound.getId());
@@ -40,15 +31,12 @@ public class TipoPagamentoService {
         return tipoPagamentoRepository.saveAndFlush(tipoPagamento);
     }
 
-    /**
-     * Buscar por ID
-     */
     public TipoPagamento buscarPorId(Long id) {
-        TipoPagamento tipoPagamento = tipoPagamentoRepository.findOne(id);
-        if (tipoPagamento == null) {
+        Optional<TipoPagamento> tipoPagamento = tipoPagamentoRepository.findById(id);
+        if (!tipoPagamento.isPresent()) {
             throw new TipoPagamentoNaoEncontrado();
         }
-        return tipoPagamento;
+        return tipoPagamento.get();
     }
 
     public Long buscarPorKey(String key) {

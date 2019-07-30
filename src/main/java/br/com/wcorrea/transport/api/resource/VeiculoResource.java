@@ -33,11 +33,6 @@ public class VeiculoResource {
     @Autowired
     private VeiculoService veiculoService;
 
-    /**
-     * RECUPERA A LISTA DE REGISTRO DE VEICULO
-     *
-     * @return
-     */
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_LISTAR_VEICULO') and #oauth2.hasScope('read')")
     public Page<Veiculo> findAll(VeiculoFiltro filtro, Pageable paginacao) {
@@ -56,24 +51,12 @@ public class VeiculoResource {
         return lista;
     }
 
-    /**
-     * RECUPERA UM VEICULO ESPECIFICO
-     *
-     * @return
-     */
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_VEICULO') and #oauth2.hasScope('read')")
     public ResponseEntity<Veiculo> findOne(@Valid @PathVariable String key) {
         return ResponseEntity.ok(veiculoService.buscarPorId(veiculoService.buscarPorKey(key)));
     }
 
-    /**
-     * SALVA UM VEICULO
-     *
-     * @param veiculo
-     * @param response
-     * @return
-     */
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_SALVAR_VEICULO') and #oauth2.hasScope('write')")
     public ResponseEntity<Veiculo> save(@Valid @RequestBody Veiculo veiculo, HttpServletResponse response) {
@@ -82,28 +65,17 @@ public class VeiculoResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(veiculoSalvo);
     }
 
-    /**
-     * ATUALIZA O OBJETO PASSADO POR PARAMETRO
-     *
-     * @param veiculo
-     * @return
-     */
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_VEICULO') and #oauth2.hasScope('write')")
     public ResponseEntity<Veiculo> update(@Valid @PathVariable String key, @Valid @RequestBody Veiculo veiculo) {
         return ResponseEntity.status(HttpStatus.OK).body(veiculoService.atualizar(veiculoService.buscarPorKey(key), veiculo));
     }
 
-    /**
-     * REMOVE O OBJETO PASSADO
-     *
-     * @return
-     */
     @DeleteMapping("/{key}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETAR_VEICULO') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
         Veiculo veiculo = veiculoService.buscarPorId(veiculoService.buscarPorKey(key));
-        veiculoRepository.delete(veiculo.getId());
+        veiculoRepository.deleteById(veiculo.getId());
     }
 }

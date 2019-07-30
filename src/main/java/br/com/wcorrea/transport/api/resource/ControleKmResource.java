@@ -5,7 +5,6 @@ import br.com.wcorrea.transport.api.model.ControleKm;
 import br.com.wcorrea.transport.api.repository.controleKm.ControleKmFiltro;
 import br.com.wcorrea.transport.api.repository.controleKm.ControleKmRepository;
 import br.com.wcorrea.transport.api.service.ControleKmService;
-import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -33,22 +32,12 @@ public class ControleKmResource {
     @Autowired
     private ControleKmService controleKmService;
 
-    /**
-     * RECUPERA A LISTA DE REGISTRO DE CONTROLE-KM
-     *
-     * @return
-     */
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_LISTAR_CONTROLE-KM') and #oauth2.hasScope('read')")
     public Page<ControleKm> findAll(ControleKmFiltro filtro, Pageable paginacao) {
         return controleKmRepository.findAll(filtro, paginacao);
     }
 
-    /**
-     * RECUPERA UM CONTROLE-KM ESPECIFICO
-     *
-     * @return
-     */
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_CONTROLE-KM') and #oauth2.hasScope('read')")
     public ResponseEntity<ControleKm> findOne(@Valid @PathVariable String key) {
@@ -57,10 +46,6 @@ public class ControleKmResource {
 
     /**
      * Busca o km minimo a ser informado no periodo
-     *
-     * @param veiculoId
-     * @param dataSaida
-     * @return
      */
     @GetMapping("/kmMinimoPeriodo")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_CONTROLE-KM') and #oauth2.hasScope('read')")
@@ -72,9 +57,6 @@ public class ControleKmResource {
 
     /**
      * Busca o Km máximo a ser informado no periodo
-     * @param veiculoId
-     * @param dataChegada
-     * @return
      */
     @GetMapping("/kmMaximoPeriodo")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_CONTROLE-KM') and #oauth2.hasScope('read')")
@@ -84,13 +66,6 @@ public class ControleKmResource {
         return ResponseEntity.ok(controleKmService.buscarKmMaximoPeloPeriodo(dataChegada, controleKmService.buscarPorKey(veiculoId)));
     }
 
-    /**
-     * SALVA UM CONTROLE-KM
-     *
-     * @param controleKm
-     * @param response
-     * @return
-     */
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_SALVAR_CONTROLE-KM') and #oauth2.hasScope('write')")
     public ResponseEntity<ControleKm> save(@Valid @RequestBody ControleKm controleKm, HttpServletResponse response) {
@@ -99,28 +74,17 @@ public class ControleKmResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(controleKmSalvo);
     }
 
-    /**
-     * ATUALIZA O OBJETO PASSADO POR PARAMETRO
-     *
-     * @param controleKm
-     * @return
-     */
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_CONTROLE-KM') and #oauth2.hasScope('write')")
     public ResponseEntity<ControleKm> update(@Valid @PathVariable String key, @Valid @RequestBody ControleKm controleKm) {
         return ResponseEntity.status(HttpStatus.OK).body(controleKmService.atualizar(controleKmService.buscarPorKey(key), controleKm));
     }
 
-    /**
-     * REMOVE O OBJETO PASSADO
-     *
-     * @return
-     */
     @DeleteMapping("/{key}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETAR_CONTROLE-KM') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
         ControleKm controleKm = controleKmService.buscarPorId(controleKmService.buscarPorKey(key));
-        controleKmRepository.delete(controleKm.getId());
+        controleKmRepository.deleteById(controleKm.getId());
     }
 }

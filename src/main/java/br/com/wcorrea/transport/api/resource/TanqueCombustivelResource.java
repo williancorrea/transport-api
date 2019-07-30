@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-/**
- * Classe responsavel por fornecer todos os recursos para manipular os dados de Combustivels
- */
 @RestController
 @RequestMapping("/tanque-combustivel")
 public class TanqueCombustivelResource {
@@ -33,23 +30,12 @@ public class TanqueCombustivelResource {
     @Autowired
     private TanqueCombustivelService tanqueCombustivelService;
 
-    /**
-     * Recupera a lista de registros dos combustivel
-     *
-     * @return
-     */
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_LISTAR_TANQUE-COMBUSTIVEL') and #oauth2.hasScope('read')")
     public Page<TanqueCombustivel> findAll(TanqueCombustivelFiltro tanqueCombustivelFiltro, Pageable pageable) {
         return tanqueCombustivelRepository.findAll(tanqueCombustivelFiltro, pageable);
     }
 
-    /**
-     * Recupera um combustivel especifico
-     *
-     * @param key country id
-     * @return
-     */
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_TANQUE-COMBUSTIVEL') and #oauth2.hasScope('read')")
     public ResponseEntity<TanqueCombustivel> findOne(@Valid @PathVariable String key) {
@@ -57,13 +43,6 @@ public class TanqueCombustivelResource {
         return tanqueCombustivelEncontrado != null ? ResponseEntity.ok(tanqueCombustivelEncontrado) : ResponseEntity.notFound().build();
     }
 
-    /**
-     * Salva um novo Combustivel
-     *
-     * @param tanqueCombustivel Combustivel
-     * @param response          HttpServletResponse
-     * @return
-     */
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_SALVAR_TANQUE-COMBUSTIVEL') and #oauth2.hasScope('write')")
     public ResponseEntity<TanqueCombustivel> save(@Valid @RequestBody TanqueCombustivel tanqueCombustivel, HttpServletResponse response) throws Exception {
@@ -72,27 +51,16 @@ public class TanqueCombustivelResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(tanqueCombustivel);
     }
 
-    /**
-     * Atualizar tanqueCombustivel
-     *
-     * @param tanqueCombustivel Combustivel
-     * @return
-     */
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_TANQUE-COMBUSTIVEL') and #oauth2.hasScope('write')")
     public ResponseEntity<TanqueCombustivel> update(@Valid @PathVariable String key, @Valid @RequestBody TanqueCombustivel tanqueCombustivel) {
         return ResponseEntity.status(HttpStatus.OK).body(tanqueCombustivelService.update(tanqueCombustivelService.buscarPorKey(key), tanqueCombustivel));
     }
 
-    /**
-     * Deletar Combustivel
-     *
-     * @return
-     */
     @DeleteMapping("/{key}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETAR_TANQUE-COMBUSTIVEL') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        tanqueCombustivelRepository.delete(tanqueCombustivelService.buscarPorKey(key));
+        tanqueCombustivelRepository.deleteById(tanqueCombustivelService.buscarPorKey(key));
     }
 }

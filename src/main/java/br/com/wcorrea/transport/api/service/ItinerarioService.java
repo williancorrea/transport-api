@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * ClasseDespesa responsavel por manipular toda a regra de negocio de um Itinerario
@@ -19,13 +20,6 @@ public class ItinerarioService {
     @Autowired
     private ItinerarioRepository itinerarioRepository;
 
-    /**
-     * Atualizar
-     *
-     * @param id
-     * @param itinerario
-     * @return
-     */
     public Itinerario atualizar(Long id, Itinerario itinerario) {
         Itinerario objFound = itinerarioRepository.save(buscarPorId(id));
         itinerario.setId(objFound.getId());
@@ -34,15 +28,12 @@ public class ItinerarioService {
         return itinerarioRepository.save(itinerario);
     }
 
-    /**
-     * Buscar por ID
-     */
     public Itinerario buscarPorId(Long id) {
-        Itinerario itinerario = itinerarioRepository.findOne(id);
-        if (itinerario == null) {
+        Optional<Itinerario> itinerario = itinerarioRepository.findById(id);
+        if (!itinerario.isPresent()) {
             throw new ItinerarioNaoEncontrado();
         }
-        return itinerario;
+        return itinerario.get();
     }
 
     public Itinerario buscarPorId(Itinerario itinerario) {

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * Class responsible for performing the entire business rule by manipulating bank information
@@ -37,11 +38,11 @@ public class CombustivelService {
      * Find by id
      */
     public Combustivel findOne(Long id) {
-        Combustivel combustivel = combustivelRepository.findOne(id);
-        if (combustivel == null) {
+        Optional<Combustivel> combustivel = combustivelRepository.findById(id);
+        if (!combustivel.isPresent()) {
             throw new CombustivelNaoEncontrado();
         }
-        return combustivel;
+        return combustivel.get();
     }
 
     public Long buscarPorKey(String key) {

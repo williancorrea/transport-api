@@ -2,8 +2,8 @@ package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.UnidadeMedida;
-import br.com.wcorrea.transport.api.repository.UnidadeMedida.UnidadeMedidaRepository;
 import br.com.wcorrea.transport.api.repository.UnidadeMedida.UnidadeMedidaFilter;
+import br.com.wcorrea.transport.api.repository.UnidadeMedida.UnidadeMedidaRepository;
 import br.com.wcorrea.transport.api.service.UnidadeMedidaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Optional;
 
-/**
- * Class responsible for providing all the resources needed to handle product unit trash
- */
 @RestController
 @RequestMapping("/unidade-medidas")
 public class UnidadeMedidaResource {
@@ -33,36 +31,19 @@ public class UnidadeMedidaResource {
     @Autowired
     private UnidadeMedidaService unidadeMedidaService;
 
-    /**
-     * Retrieve the list of registered product units
-     *
-     * @return List of product units
-     */
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_LISTAR_UNIDADE-MEDIDA') and #oauth2.hasScope('read')")
     public Page<UnidadeMedida> findAll(UnidadeMedidaFilter unidadeMedidaFilter, Pageable pageable) {
         return unidadeMedidaRepository.findAll(unidadeMedidaFilter, pageable);
     }
 
-    /**
-     * Retrieve a specific product unit
-     *
-     * @return
-     */
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_UNIDADE-MEDIDA') and #oauth2.hasScope('read')")
     public ResponseEntity<UnidadeMedida> findOne(@Valid @PathVariable String key) {
-        UnidadeMedida unidadeMedidaFound = unidadeMedidaRepository.findOne(unidadeMedidaService.buscarPorKey(key));
-        return unidadeMedidaFound != null ? ResponseEntity.ok(unidadeMedidaFound) : ResponseEntity.notFound().build();
+        Optional<UnidadeMedida> unidadeMedidaFound = unidadeMedidaRepository.findById(unidadeMedidaService.buscarPorKey(key));
+        return unidadeMedidaFound.isPresent() ? ResponseEntity.ok(unidadeMedidaFound.get()) : ResponseEntity.notFound().build();
     }
 
-    /**
-     * Save a new product unit
-     *
-     * @param unidadeMedida Product Unit
-     * @param response    HttpServletResponse
-     * @return
-     */
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_SALVAR_UNIDADE-MEDIDA') and #oauth2.hasScope('write')")
     public ResponseEntity<UnidadeMedida> save(@Valid @RequestBody UnidadeMedida unidadeMedida, HttpServletResponse response) {
@@ -71,12 +52,6 @@ public class UnidadeMedidaResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(salvedUnidadeMedida);
     }
 
-    /**
-     * Update product unit
-     *
-     * @param unidadeMedida UnidadeMedida
-     * @return
-     */
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_UNIDADE-MEDIDA') and #oauth2.hasScope('write')")
     public ResponseEntity<UnidadeMedida> update(@Valid @PathVariable String key, @Valid @RequestBody UnidadeMedida unidadeMedida) {
@@ -92,6 +67,6 @@ public class UnidadeMedidaResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETE_UNIDADE-MEDIDA') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        unidadeMedidaRepository.delete(unidadeMedidaService.buscarPorKey(key));
+        unidadeMedidaRepository.deleteById(unidadeMedidaService.buscarPorKey(key));
     }
 }

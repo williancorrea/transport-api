@@ -7,6 +7,8 @@ import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ConfiguracaoSistemaService {
 
@@ -24,11 +26,11 @@ public class ConfiguracaoSistemaService {
     }
 
     public ConfiguracaoSistema buscarPorId(Long id) {
-        ConfiguracaoSistema configuracaoSistema = configuracaoSistemaRepository.findOne(id);
-        if (configuracaoSistema == null) {
+        Optional<ConfiguracaoSistema> configuracaoSistema = configuracaoSistemaRepository.findById(id);
+        if (!configuracaoSistema.isPresent()) {
             throw new ConfiguracaoSistemaNaoEncontrado();
         }
-        return configuracaoSistema;
+        return configuracaoSistema.get();
     }
 
     public Long buscarPorKey(String key) {

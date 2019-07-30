@@ -9,23 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
-/**
- * ClasseDespesa responsavel por manipular toda a regra de negocio de um Veiculo
- */
 @Service
 public class VeiculoService {
 
     @Autowired
     private VeiculoRepository veiculoRepository;
 
-    /**
-     * Atualizar
-     *
-     * @param id
-     * @param veiculo
-     * @return
-     */
     public Veiculo atualizar(Long id, Veiculo veiculo) {
         Veiculo objFound = veiculoRepository.save(buscarPorId(id));
         veiculo.setId(objFound.getId());
@@ -34,12 +25,6 @@ public class VeiculoService {
         return veiculoRepository.save(veiculo);
     }
 
-    /**
-     * SALVAR
-     *
-     * @param veiculo
-     * @return
-     */
     public Veiculo salvar(Veiculo veiculo) {
         if (veiculoExiste(veiculo.getPlaca())) {
             throw new VeiculoJaCadastrado();
@@ -47,15 +32,12 @@ public class VeiculoService {
         return veiculoRepository.saveAndFlush(veiculo);
     }
 
-    /**
-     * Buscar por ID
-     */
     public Veiculo buscarPorId(Long id) {
-        Veiculo veiculo = veiculoRepository.findOne(id);
-        if (veiculo == null) {
+        Optional<Veiculo> veiculo = veiculoRepository.findById(id);
+        if (!veiculo.isPresent()) {
             throw new VeiculoNaoEncontrado();
         }
-        return veiculo;
+        return veiculo.get();
     }
 
     public Veiculo buscarPorId(Veiculo veiculo) {
@@ -81,12 +63,6 @@ public class VeiculoService {
         return veiculo;
     }
 
-    /**
-     * Verifica se o veiculo ja existe na base de dados
-     *
-     * @param placa
-     * @return
-     */
     public boolean veiculoExiste(String placa) {
         Veiculo veiculo = veiculoRepository.findByPlaca(placa);
         if (veiculo == null) {

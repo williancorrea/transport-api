@@ -30,35 +30,18 @@ public class CentroDeCustoResource {
     @Autowired
     private CentroDeCustoService centroDeCustoService;
 
-    /**
-     * RECUPERA A LISTA DE REGISTRO DE CENTRO-DE-CUSTO
-     *
-     * @return
-     */
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_LISTAR_CENTRO-DE-CUSTO') and #oauth2.hasScope('read')")
     public Page<CentroDeCusto> findAll(CentroDeCustoFiltro filtro, Pageable paginacao) {
         return centroDeCustoRepository.findAll(filtro, paginacao);
     }
 
-    /**
-     * RECUPERA UM CENTRO-DE-CUSTO ESPECIFICO
-     *
-     * @return
-     */
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_CENTRO-DE-CUSTO') and #oauth2.hasScope('read')")
     public ResponseEntity<CentroDeCusto> findOne(@Valid @PathVariable String key) {
         return ResponseEntity.ok(centroDeCustoService.buscarPorId(centroDeCustoService.buscarPorKey(key)));
     }
 
-    /**
-     * SALVA UM CENTRO-DE-CUSTO
-     *
-     * @param centroDeCusto
-     * @param response
-     * @return
-     */
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_SALVAR_CENTRO-DE-CUSTO') and #oauth2.hasScope('write')")
     public ResponseEntity<CentroDeCusto> save(@Valid @RequestBody CentroDeCusto centroDeCusto, HttpServletResponse response) {
@@ -67,28 +50,17 @@ public class CentroDeCustoResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(centroDeCustoSalvo);
     }
 
-    /**
-     * ATUALIZA O OBJETO PASSADO POR PARAMETRO
-     *
-     * @param centroDeCusto
-     * @return
-     */
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_CENTRO-DE-CUSTO') and #oauth2.hasScope('write')")
     public ResponseEntity<CentroDeCusto> update(@Valid @PathVariable String key, @Valid @RequestBody CentroDeCusto centroDeCusto) {
         return ResponseEntity.status(HttpStatus.OK).body(centroDeCustoService.atualizar(centroDeCustoService.buscarPorKey(key), centroDeCusto));
     }
 
-    /**
-     * REMOVE O OBJETO PASSADO
-     *
-     * @return
-     */
     @DeleteMapping("/{key}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETAR_CENTRO-DE-CUSTO') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
         CentroDeCusto centroDeCusto = centroDeCustoService.buscarPorId(centroDeCustoService.buscarPorKey(key));
-        centroDeCustoRepository.delete(centroDeCusto.getId());
+        centroDeCustoRepository.deleteById(centroDeCusto.getId());
     }
 }

@@ -3,31 +3,19 @@ package br.com.wcorrea.transport.api.service;
 import br.com.wcorrea.transport.api.model.EstadoCivil;
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
 import br.com.wcorrea.transport.api.service.exception.EstadoCivilNaoEncontrado;
-import br.com.wcorrea.transport.api.service.exception.veiculo.ItinerarioNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Optional;
 
-/**
- * Class responsible for performing the entire business rule by manipulating information
- * ClasseDespesa responsavel por manipular toda a regra de negocio de um EstadoCivil
- */
 @Service
 public class EstadoCivilService {
 
     @Autowired
     private EstadoCivilRepository estadoCivilRepository;
 
-    /**
-     * Atualizar
-     *
-     * @param id
-     * @param estadoCivil
-     * @return
-     */
     public EstadoCivil atualizar(Long id, EstadoCivil estadoCivil) {
         EstadoCivil objFound = estadoCivilRepository.save(buscarPorId(id));
         estadoCivil.setId(objFound.getId());
@@ -36,15 +24,12 @@ public class EstadoCivilService {
         return estadoCivilRepository.save(estadoCivil);
     }
 
-    /**
-     * Buscar por ID
-     */
     public EstadoCivil buscarPorId(Long id) {
-        EstadoCivil estadoCivil = estadoCivilRepository.findOne(id);
-        if (estadoCivil == null) {
+        Optional<EstadoCivil> estadoCivil = estadoCivilRepository.findById(id);
+        if (!estadoCivil.isPresent()) {
             throw new EstadoCivilNaoEncontrado();
         }
-        return estadoCivil;
+        return estadoCivil.get();
     }
 
     public Long buscarPorKey(String key) {

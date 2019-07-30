@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
-/**
- * centroDeCusto responsavel por manipular todas as informcoes do objeto Centro de Custo
- */
 @Service
 public class CentroDeCustoService {
 
@@ -22,13 +20,6 @@ public class CentroDeCustoService {
     @Autowired
     private ClasseDespesaService classeDespesaService;
 
-    /**
-     * Atualizar
-     *
-     * @param id
-     * @param centroDeCusto
-     * @return
-     */
     public CentroDeCusto atualizar(Long id, CentroDeCusto centroDeCusto) {
         CentroDeCusto objFound = centroDeCustoRepository.save(buscarPorId(id));
         centroDeCusto.setId(objFound.getId());
@@ -41,21 +32,18 @@ public class CentroDeCustoService {
 
     public CentroDeCusto salvar(CentroDeCusto centroDeCusto) {
         centroDeCusto.setClasseDespesa(classeDespesaService.buscarPorId(centroDeCusto.getClasseDespesa().getId()));
-        if(centroDeCusto.getClasseDespesa() == null){
+        if (centroDeCusto.getClasseDespesa() == null) {
             throw new ClasseDespesaNaoEncontrada();
         }
         return centroDeCustoRepository.saveAndFlush(centroDeCusto);
     }
 
-    /**
-     * Buscar por ID
-     */
     public CentroDeCusto buscarPorId(Long id) {
-        CentroDeCusto centroDeCusto = centroDeCustoRepository.findOne(id);
-        if (centroDeCusto == null) {
+        Optional<CentroDeCusto> centroDeCusto = centroDeCustoRepository.findById(id);
+        if (!centroDeCusto.isPresent()) {
             throw new CentroDeCustoNaoEncontrado();
         }
-        return centroDeCusto;
+        return centroDeCusto.get();
     }
 
     public Long buscarPorKey(String key) {

@@ -33,11 +33,6 @@ public class EstadoCivilResource {
     @Autowired
     private EstadoCivilService estadoCivilService;
 
-    /**
-     * RECUPERA A LISTA DE REGISTRO DE ESTADO CIVIL
-     *
-     * @return
-     */
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_LISTAR_ESTADO_CIVIL') and #oauth2.hasScope('read')")
     public Page<EstadoCivil> findAll(EstadoCivilFiltro filtro, Pageable paginacao) {
@@ -56,24 +51,12 @@ public class EstadoCivilResource {
         return lista;
     }
 
-    /**
-     * RECUPERA UM ESTADO CIVIL ESPECIFICO
-     *
-     * @return
-     */
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_ESTADO_CIVIL') and #oauth2.hasScope('read')")
     public ResponseEntity<EstadoCivil> findOne(@Valid @PathVariable String key) {
         return ResponseEntity.ok(estadoCivilService.buscarPorId(estadoCivilService.buscarPorKey(key)));
     }
 
-    /**
-     * SALVA UM ESTADO CIVIL
-     *
-     * @param estadoCivil
-     * @param response
-     * @return
-     */
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_SALVAR_ESTADO_CIVIL') and #oauth2.hasScope('write')")
     public ResponseEntity<EstadoCivil> save(@Valid @RequestBody EstadoCivil estadoCivil, HttpServletResponse response) {
@@ -82,28 +65,17 @@ public class EstadoCivilResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(estadoCivilSalvo);
     }
 
-    /**
-     * ATUALIZA O OBJETO PASSADO POR PARAMETRO
-     *
-     * @param estadoCivil
-     * @return
-     */
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_ESTADO_CIVIL') and #oauth2.hasScope('write')")
     public ResponseEntity<EstadoCivil> update(@Valid @PathVariable String key, @Valid @RequestBody EstadoCivil estadoCivil) {
         return ResponseEntity.status(HttpStatus.OK).body(estadoCivilService.atualizar(estadoCivilService.buscarPorKey(key), estadoCivil));
     }
 
-    /**
-     * REMOVE O OBJETO PASSADO
-     *
-     * @return
-     */
     @DeleteMapping("/{key}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETAR_ESTADO_CIVIL') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
         EstadoCivil estadoCivil = estadoCivilService.buscarPorId(estadoCivilService.buscarPorKey(key));
-        estadoCivilRepository.delete(estadoCivil.getId());
+        estadoCivilRepository.deleteById(estadoCivil.getId());
     }
 }
