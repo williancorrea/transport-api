@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="1922.9099999999999" y="1215.0">br.com.wcorrea.transport.api.model.EstadoCivilResumo</node>
+    <node x="571.75" y="1739.0">br.com.wcorrea.transport.api.model.Itinerario</node>
+    <node x="1049.875" y="807.0">br.com.wcorrea.transport.api.model.Cidade</node>
+    <node x="2108.91" y="1204.0">br.com.wcorrea.transport.api.model.PessoaAuditoria</node>
+    <node x="1316.9099999999999" y="1182.0">br.com.wcorrea.transport.api.model.PessoaTelefone</node>
+    <node x="2511.91" y="619.0">br.com.wcorrea.transport.api.model.ClasseDespesa</node>
+    <node x="39.75" y="1739.0">br.com.wcorrea.transport.api.model.Veiculo</node>
+    <node x="1229.9510952380954" y="1618.0">br.com.wcorrea.transport.api.model.Pessoa</node>
+    <node x="2889.91" y="586.0">br.com.wcorrea.transport.api.model.Banco</node>
+    <node x="1094.875" y="608.0">br.com.wcorrea.transport.api.model.Estado</node>
+    <node x="751.75" y="1127.0">br.com.wcorrea.transport.api.model.PessoaJuridica</node>
+    <node x="1680.0766666666668" y="0.0">br.com.wcorrea.transport.api.model.common.PropriedadesComuns</node>
+    <node x="3068.91" y="608.0">br.com.wcorrea.transport.api.model.TipoRelacionamento</node>
+    <node x="1501.9099999999999" y="243.0">br.com.wcorrea.transport.api.model.common.IdentificadorComum</node>
+    <node x="3464.91" y="597.0">br.com.wcorrea.transport.api.model.UnidadeMedida</node>
+    <node x="952.75" y="1204.0">br.com.wcorrea.transport.api.model.PessoaTipo</node>
+    <node x="1707.9099999999999" y="984.0">br.com.wcorrea.transport.api.model.PessoaFisica</node>
+    <node x="3260.91" y="586.0">br.com.wcorrea.transport.api.model.NivelFormacao</node>
+    <node x="2289.91" y="608.0">br.com.wcorrea.transport.api.model.TipoPagamento</node>
+    <node x="1103.75" y="1105.0">br.com.wcorrea.transport.api.model.PessoaEndereco</node>
+    <node x="1523.9099999999999" y="1149.0">br.com.wcorrea.transport.api.model.PessoaContato</node>
+    <node x="469.875" y="2167.0">br.com.wcorrea.transport.api.model.ItinerarioParada</node>
+    <node x="331.75" y="829.0">br.com.wcorrea.transport.api.model.CombustivelResumo</node>
+    <node x="20.0" y="2434.701171875">br.com.wcorrea.transport.api.model.seguranca</node>
+    <node x="1780.2010952380954" y="2145.0">br.com.wcorrea.transport.api.model.Colaborador</node>
+    <node x="678.8146428571429" y="2090.0">br.com.wcorrea.transport.api.model.ControleKm</node>
+    <node x="129.75" y="796.0">br.com.wcorrea.transport.api.model.TanqueCombustivel</node>
+    <node x="1729.9099999999999" y="144.0">br.com.wcorrea.transport.api.model.ZipCode</node>
+    <node x="1306.9099999999999" y="807.0">br.com.wcorrea.transport.api.model.TelefoneTipo</node>
+    <node x="297.75" y="619.0">br.com.wcorrea.transport.api.model.Combustivel</node>
+    <node x="2446.41" y="807.0">br.com.wcorrea.transport.api.model.CentroDeCusto</node>
+    <node x="1884.9099999999999" y="818.0">br.com.wcorrea.transport.api.model.EstadoCivil</node>
+    <node x="0.0" y="2178.0">br.com.wcorrea.transport.api.model.VeiculoResumo</node>
+    <node x="2690.91" y="608.0">br.com.wcorrea.transport.api.model.ConfiguracaoSistema</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="br.com.wcorrea.transport.api.model.Banco" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="0.0" y="-80.0" />
+      <point x="2969.41" y="486.0" />
+      <point x="1680.79" y="486.0" />
+      <point x="74.87999999999988" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.UnidadeMedida" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="0.0" y="-69.0" />
+      <point x="3549.41" y="456.0" />
+      <point x="1705.75" y="456.0" />
+      <point x="99.83999999999992" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Pessoa" target="br.com.wcorrea.transport.api.model.PessoaFisica">
+      <point x="73.33333333333314" y="-201.0" />
+      <point x="1440.7844285714286" y="1568.0" />
+      <point x="1756.6599999999999" y="1568.0" />
+      <point x="-48.75" y="267.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.PessoaContato" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="0.0" y="-102.0" />
+      <point x="0.0" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.VeiculoResumo" target="br.com.wcorrea.transport.api.model.Veiculo">
+      <point x="0.0" y="-58.0" />
+      <point x="-39.75" y="80.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.TipoPagamento" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="0.0" y="-58.0" />
+      <point x="2390.41" y="526.0" />
+      <point x="1647.5099999999998" y="526.0" />
+      <point x="41.59999999999991" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.ClasseDespesa" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="0.0" y="-47.0" />
+      <point x="2591.41" y="506.0" />
+      <point x="1664.15" y="506.0" />
+      <point x="58.24000000000001" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.EstadoCivilResumo" target="br.com.wcorrea.transport.api.model.EstadoCivil">
+      <point x="41.5" y="-36.0" />
+      <point x="2047.4099999999999" y="959.0" />
+      <point x="2017.4099999999999" y="959.0" />
+      <point x="53.0" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.PessoaEndereco" target="br.com.wcorrea.transport.api.model.Pessoa">
+      <point x="45.25" y="146.0" />
+      <point x="1239.5" y="1548.0" />
+      <point x="1330.7844285714286" y="1548.0" />
+      <point x="-36.666666666666856" y="-201.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Colaborador" target="br.com.wcorrea.transport.api.model.Pessoa">
+      <point x="-39.75" y="-91.0" />
+      <point x="1819.9510952380954" y="2070.0" />
+      <point x="1436.2010952380951" y="2070.0" />
+      <point x="68.74999999999989" y="201.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.PessoaEndereco" target="br.com.wcorrea.transport.api.model.Cidade">
+      <point x="-45.25" y="-146.0" />
+      <point x="1149.0" y="959.0" />
+      <point x="1129.375" y="959.0" />
+      <point x="0.0" y="58.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.PessoaTelefone" target="br.com.wcorrea.transport.api.model.TelefoneTipo">
+      <point x="-46.75" y="-69.0" />
+      <point x="1363.6599999999999" y="959.0" />
+      <point x="1372.4099999999999" y="959.0" />
+      <point x="0.0" y="58.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.PessoaFisica" target="br.com.wcorrea.transport.api.model.Pessoa">
+      <point x="48.75" y="267.0" />
+      <point x="1854.1599999999999" y="1578.0" />
+      <point x="1459.1177619047621" y="1578.0" />
+      <point x="91.66666666666663" y="-201.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.TanqueCombustivel" target="br.com.wcorrea.transport.api.model.Combustivel">
+      <point x="45.5" y="-69.0" />
+      <point x="266.25" y="771.0" />
+      <point x="324.25" y="771.0" />
+      <point x="-53.0" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Cidade" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="-39.75" y="-58.0" />
+      <point x="1089.625" y="771.0" />
+      <point x="1084.375" y="771.0" />
+      <point x="1084.375" y="526.0" />
+      <point x="1564.31" y="526.0" />
+      <point x="-41.59999999999991" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.PessoaJuridica" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="0.0" y="-124.0" />
+      <point x="842.25" y="516.0" />
+      <point x="1555.9899999999998" y="516.0" />
+      <point x="-49.92000000000007" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.PessoaAuditoria" target="br.com.wcorrea.transport.api.model.Pessoa">
+      <point x="40.0" y="47.0" />
+      <point x="2228.91" y="1598.0" />
+      <point x="1495.7844285714286" y="1598.0" />
+      <point x="128.33333333333314" y="-201.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Pessoa" target="br.com.wcorrea.transport.api.model.PessoaAuditoria">
+      <point x="109.99999999999989" y="-201.0" />
+      <point x="1477.4510952380951" y="1588.0" />
+      <point x="2148.91" y="1588.0" />
+      <point x="-40.0" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.ControleKm" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="21.5" y="-146.0" />
+      <point x="786.3146428571429" y="2040.0" />
+      <point x="741.25" y="2040.0" />
+      <point x="741.25" y="506.0" />
+      <point x="1547.67" y="506.0" />
+      <point x="-58.24000000000001" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Pessoa" target="br.com.wcorrea.transport.api.model.PessoaContato">
+      <point x="36.66666666666663" y="-201.0" />
+      <point x="1404.1177619047621" y="1548.0" />
+      <point x="1564.9099999999999" y="1548.0" />
+      <point x="-41.0" y="102.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Pessoa" target="br.com.wcorrea.transport.api.model.PessoaEndereco">
+      <point x="-55.000000000000114" y="-201.0" />
+      <point x="1312.4510952380951" y="1558.0" />
+      <point x="1149.0" y="1558.0" />
+      <point x="-45.25" y="146.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.PessoaEndereco" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="45.25" y="-146.0" />
+      <point x="1239.5" y="959.0" />
+      <point x="1264.375" y="959.0" />
+      <point x="1264.375" y="546.0" />
+      <point x="1580.9499999999998" y="546.0" />
+      <point x="-24.960000000000036" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.CentroDeCusto" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="-50.0" y="-58.0" />
+      <point x="2496.41" y="771.0" />
+      <point x="2501.41" y="771.0" />
+      <point x="2501.41" y="516.0" />
+      <point x="1655.83" y="516.0" />
+      <point x="49.919999999999845" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.seguranca" target="br.com.wcorrea.transport.api.model.seguranca">
+      <point x="0.0" y="13.0" />
+      <point x="94.5" y="2480.701171875" />
+      <point x="0.0" y="2480.701171875" />
+      <point x="0.0" y="2447.701171875" />
+      <point x="-74.5" y="-0.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.PessoaTelefone" target="br.com.wcorrea.transport.api.model.Pessoa">
+      <point x="46.75" y="69.0" />
+      <point x="1457.1599999999999" y="1538.0" />
+      <point x="1385.7844285714286" y="1538.0" />
+      <point x="18.333333333333258" y="-201.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.TanqueCombustivel" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="-45.5" y="-69.0" />
+      <point x="175.25" y="466.0" />
+      <point x="1514.3899999999999" y="466.0" />
+      <point x="-91.51999999999998" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.PessoaFisica" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="-48.75" y="-267.0" />
+      <point x="1756.6599999999999" y="566.0" />
+      <point x="1614.23" y="566.0" />
+      <point x="8.319999999999936" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.NivelFormacao" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="0.0" y="-80.0" />
+      <point x="3352.91" y="466.0" />
+      <point x="1697.4299999999998" y="466.0" />
+      <point x="91.51999999999998" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Itinerario" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="0.0" y="-80.0" />
+      <point x="651.25" y="496.0" />
+      <point x="1539.35" y="496.0" />
+      <point x="-66.55999999999995" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Pessoa" target="br.com.wcorrea.transport.api.model.PessoaTipo">
+      <point x="-91.66666666666686" y="-201.0" />
+      <point x="1275.7844285714286" y="1578.0" />
+      <point x="985.5" y="1578.0" />
+      <point x="-32.75" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Pessoa" target="br.com.wcorrea.transport.api.model.PessoaTelefone">
+      <point x="-1.1368683772161603E-13" y="-201.0" />
+      <point x="1367.4510952380951" y="1598.0" />
+      <point x="1363.6599999999999" y="1598.0" />
+      <point x="-46.75" y="69.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.PessoaContato" target="br.com.wcorrea.transport.api.model.Pessoa">
+      <point x="41.0" y="102.0" />
+      <point x="1646.9099999999999" y="1558.0" />
+      <point x="1422.4510952380951" y="1558.0" />
+      <point x="54.999999999999886" y="-201.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.CombustivelResumo" target="br.com.wcorrea.transport.api.model.Combustivel">
+      <point x="45.5" y="-36.0" />
+      <point x="468.25" y="771.0" />
+      <point x="430.25" y="771.0" />
+      <point x="53.0" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Colaborador" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="39.75" y="-91.0" />
+      <point x="1899.4510952380954" y="2070.0" />
+      <point x="2279.41" y="2070.0" />
+      <point x="2279.41" y="536.0" />
+      <point x="1639.19" y="536.0" />
+      <point x="33.27999999999997" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.PessoaAuditoria" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="0.0" y="-47.0" />
+      <point x="2188.91" y="546.0" />
+      <point x="1630.87" y="546.0" />
+      <point x="24.960000000000036" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.CentroDeCusto" target="br.com.wcorrea.transport.api.model.ClasseDespesa">
+      <point x="50.0" y="-58.0" />
+      <point x="2596.41" y="771.0" />
+      <point x="2591.41" y="771.0" />
+      <point x="0.0" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Pessoa" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="-18.333333333333485" y="-201.0" />
+      <point x="1349.117761904762" y="1538.0" />
+      <point x="1296.4099999999999" y="1538.0" />
+      <point x="1296.4099999999999" y="556.0" />
+      <point x="1589.27" y="556.0" />
+      <point x="-16.6400000000001" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.ItinerarioParada" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="-39.75" y="-69.0" />
+      <point x="509.625" y="2070.0" />
+      <point x="524.25" y="2070.0" />
+      <point x="524.25" y="486.0" />
+      <point x="1531.0299999999997" y="486.0" />
+      <point x="-74.88000000000011" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.EstadoCivil" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="0.0" y="-47.0" />
+      <point x="1964.4099999999999" y="556.0" />
+      <point x="1622.5499999999997" y="556.0" />
+      <point x="16.639999999999873" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.ControleKm" target="br.com.wcorrea.transport.api.model.Veiculo">
+      <point x="-64.5" y="-146.0" />
+      <point x="700.3146428571429" y="2060.0" />
+      <point x="159.0" y="2060.0" />
+      <point x="39.75" y="80.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.PessoaTelefone" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="46.75" y="-69.0" />
+      <point x="1457.1599999999999" y="959.0" />
+      <point x="1448.4099999999999" y="959.0" />
+      <point x="1448.4099999999999" y="566.0" />
+      <point x="1597.5900000000001" y="566.0" />
+      <point x="-8.319999999999936" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.PessoaJuridica" target="br.com.wcorrea.transport.api.model.Pessoa">
+      <point x="45.25" y="124.0" />
+      <point x="887.5" y="1588.0" />
+      <point x="1257.4510952380951" y="1588.0" />
+      <point x="-110.00000000000011" y="-201.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.PessoaFisica" target="br.com.wcorrea.transport.api.model.EstadoCivil">
+      <point x="48.75" y="-267.0" />
+      <point x="1854.1599999999999" y="959.0" />
+      <point x="1911.4099999999999" y="959.0" />
+      <point x="-53.0" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Pessoa" target="br.com.wcorrea.transport.api.model.PessoaJuridica">
+      <point x="-128.33333333333348" y="-201.0" />
+      <point x="1239.117761904762" y="1598.0" />
+      <point x="797.0" y="1598.0" />
+      <point x="-45.25" y="124.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.ControleKm" target="br.com.wcorrea.transport.api.model.Itinerario">
+      <point x="-21.5" y="-146.0" />
+      <point x="743.3146428571429" y="2050.0" />
+      <point x="691.0" y="2050.0" />
+      <point x="39.75" y="80.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Cidade" target="br.com.wcorrea.transport.api.model.Estado">
+      <point x="39.75" y="-58.0" />
+      <point x="1169.125" y="771.0" />
+      <point x="1174.375" y="771.0" />
+      <point x="0.0" y="58.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Combustivel" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="0.0" y="-47.0" />
+      <point x="377.25" y="476.0" />
+      <point x="1522.71" y="476.0" />
+      <point x="-83.20000000000005" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.ItinerarioParada" target="br.com.wcorrea.transport.api.model.Itinerario">
+      <point x="39.75" y="-69.0" />
+      <point x="589.125" y="2070.0" />
+      <point x="611.5" y="2070.0" />
+      <point x="-39.75" y="80.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.ControleKm" target="br.com.wcorrea.transport.api.model.Pessoa">
+      <point x="64.5" y="-146.0" />
+      <point x="829.3146428571429" y="2070.0" />
+      <point x="1298.7010952380954" y="2070.0" />
+      <point x="-68.75" y="201.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.ZipCode" target="br.com.wcorrea.transport.api.model.common.PropriedadesComuns">
+      <point x="0.0" y="-146.0" />
+      <point x="1838.4099999999999" y="124.0" />
+      <point x="1800.476666666667" y="124.0" />
+      <point x="34.40000000000009" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.TipoRelacionamento" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="0.0" y="-58.0" />
+      <point x="3154.91" y="476.0" />
+      <point x="1689.1099999999997" y="476.0" />
+      <point x="83.19999999999982" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Veiculo" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="0.0" y="-80.0" />
+      <point x="119.25" y="456.0" />
+      <point x="1506.0700000000002" y="456.0" />
+      <point x="-99.83999999999992" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.common.IdentificadorComum" target="br.com.wcorrea.transport.api.model.common.PropriedadesComuns">
+      <point x="52.0" y="-47.0" />
+      <point x="1657.9099999999999" y="124.0" />
+      <point x="1731.6766666666667" y="124.0" />
+      <point x="-34.40000000000009" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.Estado" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="0.0" y="-58.0" />
+      <point x="1174.375" y="536.0" />
+      <point x="1572.63" y="536.0" />
+      <point x="-33.27999999999997" y="47.0" />
+    </edge>
+    <edge source="br.com.wcorrea.transport.api.model.ConfiguracaoSistema" target="br.com.wcorrea.transport.api.model.common.IdentificadorComum">
+      <point x="0.0" y="-58.0" />
+      <point x="2780.41" y="496.0" />
+      <point x="1672.4699999999998" y="496.0" />
+      <point x="66.55999999999995" y="47.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="591.0" y="1002.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>Project Files</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
