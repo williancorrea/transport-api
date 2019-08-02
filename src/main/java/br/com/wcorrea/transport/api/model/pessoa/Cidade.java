@@ -1,9 +1,7 @@
-package br.com.wcorrea.transport.api.model;
+package br.com.wcorrea.transport.api.model.pessoa;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
-import br.com.wcorrea.transport.api.service.exception.EstadoCivilNaoEncontrado;
-import br.com.wcorrea.transport.api.utils.Criptografia;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import br.com.wcorrea.transport.api.model.pessoa.Estado;
 import lombok.*;
 
 import javax.persistence.*;

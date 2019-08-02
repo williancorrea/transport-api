@@ -1,8 +1,8 @@
 package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
-import br.com.wcorrea.transport.api.model.EstadoCivil;
-import br.com.wcorrea.transport.api.model.EstadoCivilResumo;
+import br.com.wcorrea.transport.api.model.pessoa.EstadoCivil;
+import br.com.wcorrea.transport.api.model.pessoa.EstadoCivilResumo;
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilFiltro;
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
 import br.com.wcorrea.transport.api.service.EstadoCivilService;

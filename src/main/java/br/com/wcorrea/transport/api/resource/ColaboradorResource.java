@@ -1,22 +1,9 @@
 package br.com.wcorrea.transport.api.resource;
 
-import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
-import br.com.wcorrea.transport.api.model.Pessoa;
 import br.com.wcorrea.transport.api.repository.pessoa.Colaborador.ColaboradorRepository;
-import br.com.wcorrea.transport.api.repository.pessoa.PessoaFiltro;
-import br.com.wcorrea.transport.api.repository.pessoa.PessoaRepository;
-import br.com.wcorrea.transport.api.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/colaboradores")

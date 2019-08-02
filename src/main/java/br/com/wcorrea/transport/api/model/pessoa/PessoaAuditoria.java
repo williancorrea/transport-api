@@ -1,18 +1,12 @@
-package br.com.wcorrea.transport.api.model;
+package br.com.wcorrea.transport.api.model.pessoa;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
-import br.com.wcorrea.transport.api.service.exception.PessoaTelefoneNaoEncontrado;
-import br.com.wcorrea.transport.api.utils.Criptografia;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
 
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)

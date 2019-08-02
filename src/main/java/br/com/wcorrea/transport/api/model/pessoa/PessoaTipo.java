@@ -1,16 +1,15 @@
-package br.com.wcorrea.transport.api.model;
+package br.com.wcorrea.transport.api.model.pessoa;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @JsonFormat(shape = JsonFormat.Shape.STRING)
-public enum TelefoneTipo {
-    RESIDENCIAL("RESIDENCIAL"),
-    COMERCIAL("COMERCIAL"),
-    PARTICULAR("PARTICULAR");
+public enum PessoaTipo {
+    FISICA("FISICA"),
+    JURIDICA("JURIDICA");
 
     private String descricao;
 
-    TelefoneTipo(String descricao) {
+    PessoaTipo(String descricao) {
         this.descricao = descricao;
     }
 

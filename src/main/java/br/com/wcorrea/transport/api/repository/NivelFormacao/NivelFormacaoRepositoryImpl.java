@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.repository.NivelFormacao;
 
-import br.com.wcorrea.transport.api.model.NivelFormacao;
+import br.com.wcorrea.transport.api.model.pessoa.NivelFormacao;
 import br.com.wcorrea.transport.api.repository.utils.UtilsRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;

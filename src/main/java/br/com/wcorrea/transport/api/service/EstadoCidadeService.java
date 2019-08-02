@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.service;
 
-import br.com.wcorrea.transport.api.model.Cidade;
-import br.com.wcorrea.transport.api.model.Estado;
+import br.com.wcorrea.transport.api.model.pessoa.Cidade;
+import br.com.wcorrea.transport.api.model.pessoa.Estado;
 import br.com.wcorrea.transport.api.repository.CidadeRepository;
 import br.com.wcorrea.transport.api.repository.EstadoRepository;
 import br.com.wcorrea.transport.api.service.exception.CidadeNaoEncontrada;

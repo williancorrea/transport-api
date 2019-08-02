@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.model;
+package br.com.wcorrea.transport.api.model.pessoa;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

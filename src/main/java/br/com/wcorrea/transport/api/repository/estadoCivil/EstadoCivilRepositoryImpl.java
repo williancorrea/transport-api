@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.repository.estadoCivil;
 
-import br.com.wcorrea.transport.api.model.EstadoCivil;
+import br.com.wcorrea.transport.api.model.pessoa.EstadoCivil;
 import br.com.wcorrea.transport.api.repository.utils.UtilsRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;

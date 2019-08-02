@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.model;
+package br.com.wcorrea.transport.api.model.pessoa;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,6 +38,10 @@ public class Pessoa extends IdentificadorComum implements Serializable {
 
     @Size(max = 250)
     private String site;
+
+    @Lob
+    @Column(name = "obs")
+    private String obs;
 
     private boolean cliente;
 

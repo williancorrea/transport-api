@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.service;
 
-import br.com.wcorrea.transport.api.model.NivelFormacao;
+import br.com.wcorrea.transport.api.model.pessoa.NivelFormacao;
 import br.com.wcorrea.transport.api.repository.NivelFormacao.NivelFormacaoRepository;
 import br.com.wcorrea.transport.api.service.exception.NivelEducacaoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;

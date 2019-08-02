@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.service;
 
-import br.com.wcorrea.transport.api.model.TipoRelacionamento;
+import br.com.wcorrea.transport.api.model.pessoa.TipoRelacionamento;
 import br.com.wcorrea.transport.api.repository.TipoRelacionamento.TipoRelacionamentoRepository;
 import br.com.wcorrea.transport.api.service.exception.TipoRelacionamentoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;

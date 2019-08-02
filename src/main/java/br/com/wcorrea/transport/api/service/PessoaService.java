@@ -1,9 +1,9 @@
 package br.com.wcorrea.transport.api.service;
 
-import br.com.wcorrea.transport.api.model.EstadoCivil;
-import br.com.wcorrea.transport.api.model.Pessoa;
-import br.com.wcorrea.transport.api.model.PessoaAuditoria;
-import br.com.wcorrea.transport.api.model.PessoaTipo;
+import br.com.wcorrea.transport.api.model.pessoa.EstadoCivil;
+import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
+import br.com.wcorrea.transport.api.model.pessoa.PessoaAuditoria;
+import br.com.wcorrea.transport.api.model.pessoa.PessoaTipo;
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
 import br.com.wcorrea.transport.api.repository.pessoa.PessoaRepository;

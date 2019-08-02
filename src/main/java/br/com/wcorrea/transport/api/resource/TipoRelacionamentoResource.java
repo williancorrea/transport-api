@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
-import br.com.wcorrea.transport.api.model.TipoRelacionamento;
+import br.com.wcorrea.transport.api.model.pessoa.TipoRelacionamento;
 import br.com.wcorrea.transport.api.repository.TipoRelacionamento.TipoRelacionamentoFilter;
 import br.com.wcorrea.transport.api.repository.TipoRelacionamento.TipoRelacionamentoRepository;
 import br.com.wcorrea.transport.api.service.TipoRelacionamentoService;

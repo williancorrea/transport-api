@@ -1,6 +1,7 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
+import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

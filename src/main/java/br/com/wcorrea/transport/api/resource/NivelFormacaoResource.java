@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
-import br.com.wcorrea.transport.api.model.NivelFormacao;
+import br.com.wcorrea.transport.api.model.pessoa.NivelFormacao;
 import br.com.wcorrea.transport.api.repository.NivelFormacao.NivelFormacaoFilter;
 import br.com.wcorrea.transport.api.repository.NivelFormacao.NivelFormacaoRepository;
 import br.com.wcorrea.transport.api.service.NivelFormacaoService;

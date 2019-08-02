@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.model;
+package br.com.wcorrea.transport.api.model.pessoa;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import lombok.Data;

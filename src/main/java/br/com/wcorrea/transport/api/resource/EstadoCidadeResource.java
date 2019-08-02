@@ -1,12 +1,10 @@
 package br.com.wcorrea.transport.api.resource;
 
-import br.com.wcorrea.transport.api.model.Cidade;
-import br.com.wcorrea.transport.api.model.Estado;
+import br.com.wcorrea.transport.api.model.pessoa.Cidade;
+import br.com.wcorrea.transport.api.model.pessoa.Estado;
 import br.com.wcorrea.transport.api.repository.EstadoRepository;
 import br.com.wcorrea.transport.api.service.EstadoCidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

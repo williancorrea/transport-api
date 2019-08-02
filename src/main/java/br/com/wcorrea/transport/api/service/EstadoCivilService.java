@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.service;
 
-import br.com.wcorrea.transport.api.model.EstadoCivil;
+import br.com.wcorrea.transport.api.model.pessoa.EstadoCivil;
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
 import br.com.wcorrea.transport.api.service.exception.EstadoCivilNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;

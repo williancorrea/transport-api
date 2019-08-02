@@ -1,16 +1,5 @@
 package br.com.wcorrea.transport.api.service;
 
-import br.com.wcorrea.transport.api.model.EstadoCivil;
-import br.com.wcorrea.transport.api.model.Pessoa;
-import br.com.wcorrea.transport.api.model.PessoaAuditoria;
-import br.com.wcorrea.transport.api.model.PessoaTipo;
-import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
-import br.com.wcorrea.transport.api.repository.pessoa.PessoaRepository;
-import br.com.wcorrea.transport.api.service.exception.*;
-import br.com.wcorrea.transport.api.utils.Criptografia;
-import br.com.wcorrea.transport.api.utils.Utils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**

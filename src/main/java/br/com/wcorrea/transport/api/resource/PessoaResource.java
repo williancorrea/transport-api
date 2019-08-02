@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
-import br.com.wcorrea.transport.api.model.Pessoa;
+import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.repository.pessoa.PessoaFiltro;
 import br.com.wcorrea.transport.api.repository.pessoa.PessoaRepository;
 import br.com.wcorrea.transport.api.service.PessoaService;

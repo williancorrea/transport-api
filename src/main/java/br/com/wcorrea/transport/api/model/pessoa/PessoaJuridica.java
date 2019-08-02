@@ -1,14 +1,10 @@
-package br.com.wcorrea.transport.api.model;
+package br.com.wcorrea.transport.api.model.pessoa;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
-import br.com.wcorrea.transport.api.service.exception.PessoaJuridicaNaoEncontrada;
-import br.com.wcorrea.transport.api.utils.Criptografia;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CNPJ;
-import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;

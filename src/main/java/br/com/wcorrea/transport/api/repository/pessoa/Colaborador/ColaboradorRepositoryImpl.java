@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.repository.pessoa.Colaborador;
 
-import br.com.wcorrea.transport.api.model.Pessoa;
+import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.repository.utils.UtilsRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
