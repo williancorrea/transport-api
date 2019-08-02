@@ -1,7 +1,7 @@
 CREATE TABLE fretamento (
     id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
 
-    data_cadastro DATE,
+    data_cadastro  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     data_contrato DATE,
     observacao longblob,
 
