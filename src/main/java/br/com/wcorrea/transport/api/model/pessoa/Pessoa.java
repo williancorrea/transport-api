@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -56,7 +56,7 @@ public class Pessoa extends IdentificadorComum implements Serializable {
     private boolean inativo;
 
     @JsonProperty("pessoaFisica")
-    @JsonIgnoreProperties("pessoa")
+    @JsonIgnoreProperties({"pessoa", "controle", "orgaoRg", "dataEmissaoRg", "dataNascimento", "naturalidade", "nacionalidade", "tipoSangue", "cnhNumero", "cnhCategoria", "cnhVencimento", "tituloEleitoralNumero", "tituloEleitoralZona", "tituloEleitoralSecao", "reservistaNumero", "reservistaCategoria", "nomeMae", "nomePai", "estadoCivil"})
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     private PessoaFisica pessoaFisica;
 

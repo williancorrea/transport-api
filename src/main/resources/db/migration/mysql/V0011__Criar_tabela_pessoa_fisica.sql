@@ -9,7 +9,7 @@ CREATE TABLE pessoa_fisica (
     orgao_rg VARCHAR(6),
     data_emissao_rg  DATE,
     data_nascimento DATE,
-    sexo VARCHAR(1) NOT NULL,
+    sexo VARCHAR(1),
     naturalidade VARCHAR(250),
     nacionalidade VARCHAR(250),
     tipo_sangue VARCHAR(5),

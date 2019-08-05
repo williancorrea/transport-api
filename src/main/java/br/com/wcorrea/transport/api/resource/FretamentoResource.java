@@ -1,20 +1,14 @@
 package br.com.wcorrea.transport.api.resource;
 
-import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.Banco;
-import br.com.wcorrea.transport.api.repository.banco.BancoFiltro;
-import br.com.wcorrea.transport.api.repository.banco.BancoRepository;
-import br.com.wcorrea.transport.api.service.BancoService;
+import br.com.wcorrea.transport.api.model.Fretamento;
+import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
+import br.com.wcorrea.transport.api.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
@@ -27,8 +21,8 @@ public class FretamentoResource {
 //    @Autowired
 //    private ApplicationEventPublisher publisher;
 //
-//    @Autowired
-//    private BancoService bancoService;
+    @Autowired
+    private PessoaService pessoaService;
 //
 //    @GetMapping
 //    @PreAuthorize("hasAuthority('ROLE_LISTAR_BANCO') and #oauth2.hasScope('read')")
@@ -38,10 +32,16 @@ public class FretamentoResource {
 //
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_BANCO') and #oauth2.hasScope('read')")
-    public ResponseEntity<String> findOne(@Valid @PathVariable String key) {
-//        Banco bancoEncontrado = bancoService.findOne(bancoService.buscarPorKey(key));
+    public ResponseEntity<Fretamento> findOne(@Valid @PathVariable String key) {
+//        Pessoa obj = pessoaService.findOne(pessoaService.buscarPorKey(key));
+
+        Fretamento fretamento = new Fretamento();
+        fretamento.setId(1l);
+        //TODO: Remover mascara do campo
+        fretamento.setPessoa(pessoaService.findOneByCPF("330.669.088-01"));
+
 //        return bancoEncontrado != null ? ResponseEntity.ok(bancoEncontrado) : ResponseEntity.notFound().build();
-        return ResponseEntity.ok("ACHO QUE DEU " + key);
+        return ResponseEntity.ok(fretamento);
     }
 //
 //    @PostMapping

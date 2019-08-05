@@ -7,7 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -21,11 +21,11 @@ import java.io.Serializable;
 public class Estado extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @NotNull
+    @NotBlank
     @Size(min = 3, max = 150)
     private String descricao;
 
-    @NotNull
+    @NotBlank
     @Size(min = 2, max = 2)
     private String iniciais;
 

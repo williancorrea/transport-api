@@ -2,13 +2,14 @@ package br.com.wcorrea.transport.api.model.pessoa;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
@@ -46,7 +47,7 @@ public class PessoaFisica extends IdentificadorComum implements Serializable {
     private Date dataNascimento;
 
     @Column(name = "sexo")
-    @Size(min = 1, max = 1)
+    @Size(max = 1)
     private String sexo;
 
     @Column(name = "naturalidade")
@@ -105,6 +106,7 @@ public class PessoaFisica extends IdentificadorComum implements Serializable {
 
     @JoinColumn(name = "estado_civil_id", referencedColumnName = "id")
     @ManyToOne()
+    @JsonIgnoreProperties({"controle", "descricao"})
     private EstadoCivil estadoCivil;
 
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
