@@ -5,12 +5,12 @@ CREATE TABLE pessoa (
     email VARCHAR(250),
     site VARCHAR(250),
 
-    estudante BOOLEAN DEFAULT FALSE,
-    cliente BOOLEAN DEFAULT FALSE,
-    fornecedor BOOLEAN DEFAULT FALSE,
-    colaborador BOOLEAN DEFAULT FALSE,
-    transportadora BOOLEAN DEFAULT FALSE,
-    inativo BOOLEAN DEFAULT FALSE,
+#     estudante BOOLEAN DEFAULT FALSE,
+#     cliente BOOLEAN DEFAULT FALSE,
+#     fornecedor BOOLEAN DEFAULT FALSE,
+#     colaborador BOOLEAN DEFAULT FALSE,
+#     transportadora BOOLEAN DEFAULT FALSE,
+#     inativo BOOLEAN DEFAULT FALSE,
 
     obs LONGBLOB,
 
