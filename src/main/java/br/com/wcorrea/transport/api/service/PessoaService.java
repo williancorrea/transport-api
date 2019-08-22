@@ -1,19 +1,22 @@
 package br.com.wcorrea.transport.api.service;
 
+import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
 import br.com.wcorrea.transport.api.model.pessoa.EstadoCivil;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.model.pessoa.PessoaAuditoria;
 import br.com.wcorrea.transport.api.model.pessoa.PessoaTipo;
-import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
+import br.com.wcorrea.transport.api.repository.pessoa.PessoaFiltro;
 import br.com.wcorrea.transport.api.repository.pessoa.PessoaRepository;
 import br.com.wcorrea.transport.api.service.exception.*;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import br.com.wcorrea.transport.api.utils.Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -94,6 +97,10 @@ public class PessoaService {
 
     public Pessoa findOneByCPF(String cpf) {
         return pessoaRepository.findOneByCPF(cpf);
+    }
+
+    public List<Pessoa> pesquisaClienteFornecedorCmb(PessoaFiltro filtro, Pageable pageable){
+        return pessoaRepository.findAll(filtro, pageable).getContent();
     }
 
     public Pessoa findOneByCNPJ(String cnpj) {

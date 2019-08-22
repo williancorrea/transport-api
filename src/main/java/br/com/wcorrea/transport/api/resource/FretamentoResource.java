@@ -1,21 +1,26 @@
 package br.com.wcorrea.transport.api.resource;
 
-import br.com.wcorrea.transport.api.model.Banco;
 import br.com.wcorrea.transport.api.model.Fretamento;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
+import br.com.wcorrea.transport.api.repository.pessoa.PessoaFiltro;
 import br.com.wcorrea.transport.api.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/fretamentos")
 public class FretamentoResource {
 
-//    @Autowired
+    //    @Autowired
 //    private BancoRepository bancoRepository;
 //
 //    @Autowired
@@ -23,7 +28,8 @@ public class FretamentoResource {
 //
     @Autowired
     private PessoaService pessoaService;
-//
+
+    //
 //    @GetMapping
 //    @PreAuthorize("hasAuthority('ROLE_LISTAR_BANCO') and #oauth2.hasScope('read')")
 //    public Page<Banco> findAll(BancoFiltro bancoFiltro, Pageable pageable) {
@@ -42,6 +48,14 @@ public class FretamentoResource {
 
 //        return bancoEncontrado != null ? ResponseEntity.ok(bancoEncontrado) : ResponseEntity.notFound().build();
         return ResponseEntity.ok(fretamento);
+    }
+
+    @GetMapping("/cmbCliente")
+    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
+    public List<Pessoa> listAllComboBox(PessoaFiltro filtro, Pageable pageable) {
+        filtro.setSomenteAtivo(true);
+
+        return pessoaService.pesquisaClienteFornecedorCmb(filtro, pageable);
     }
 //
 //    @PostMapping
