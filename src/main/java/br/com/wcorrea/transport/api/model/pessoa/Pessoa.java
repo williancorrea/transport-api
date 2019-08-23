@@ -28,6 +28,13 @@ public class Pessoa extends IdentificadorComum implements Serializable {
     @Size(min = 5, max = 250)
     private String nome;
 
+    @Size(max = 250)
+    private String fantasia;
+
+    @Lob
+    @Column(name = "imagem_base_64")
+    private String imagem;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private PessoaTipo tipo;
@@ -38,6 +45,27 @@ public class Pessoa extends IdentificadorComum implements Serializable {
 
     @Size(max = 250)
     private String site;
+
+    @Size(max = 20)
+    private String telefone1;
+
+    @Size(max = 100)
+    private String telefone1Obs;
+
+    @Size(max = 20)
+    private String telefone2;
+
+    @Size(max = 100)
+    private String telefone2Obs;
+
+    @Size(max = 250)
+    private String endereco;
+
+    @Size(max = 100)
+    private String bairro;
+
+    @Size(max = 9)
+    private String cep;
 
     @Lob
     @Column(name = "obs")
@@ -54,6 +82,16 @@ public class Pessoa extends IdentificadorComum implements Serializable {
     @JsonIgnoreProperties("pessoa")
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     private PessoaJuridica pessoaJuridica;
+
+    @JoinColumn(name = "cidade_id", referencedColumnName = "id")
+    @ManyToOne()
+    private Cidade cidade;
+
+
+
+
+
+
 
     @JsonProperty("listaPessoaEndereco")
     @JsonIgnoreProperties("pessoa")

@@ -1,6 +1,13 @@
 CREATE TABLE fretamento (
     id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
 
+    situacao VARCHAR(100),
+
+    nome VARCHAR(150),
+    telefone1 VARCHAR(20),
+    telefone2 VARCHAR(20),
+    obs LONGBLOB,
+
     data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

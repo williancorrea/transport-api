@@ -3,7 +3,6 @@ CREATE TABLE pessoa_juridica (
 
     cnpj VARCHAR(18) NOT NULL,
 
-    fantasia VARCHAR(250),
     inscricao_municipal VARCHAR(50),
     inscricao_estadual VARCHAR(50),
     data_constituicao DATE,
