@@ -43,16 +43,6 @@ public class Pessoa extends IdentificadorComum implements Serializable {
     @Column(name = "obs")
     private String obs;
 
-//    private boolean cliente;
-//
-//    private boolean estudante;
-//
-//    private boolean fornecedor;
-//
-//    private boolean colaborador;
-//
-//    private boolean transportadora;
-
     private boolean inativo;
 
     @JsonProperty("pessoaFisica")
