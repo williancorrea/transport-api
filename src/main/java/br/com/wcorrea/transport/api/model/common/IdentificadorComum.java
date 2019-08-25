@@ -58,13 +58,14 @@ public abstract class IdentificadorComum implements Serializable {
         return id != null;
     }
 
-//    @PrePersist
+    @PrePersist
     public void prePersist() {
         this.controle = new PropriedadesComuns();
     }
 
-//    @PreUpdate
+    @PreUpdate
     public void preUpdate() {
         this.getControle().setDataAlteracao(new Date());
     }
+
 }

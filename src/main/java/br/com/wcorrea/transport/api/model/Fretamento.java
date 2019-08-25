@@ -3,7 +3,6 @@ package br.com.wcorrea.transport.api.model;
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.model.pessoa.FretamentoTipo;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -23,10 +22,8 @@ public class Fretamento extends IdentificadorComum implements Serializable {
     @Enumerated(EnumType.STRING)
     private FretamentoTipo situacao;
 
-    @JsonIgnoreProperties({"controle", "listaPessoaAuditoria"})
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
-    @ManyToOne(cascade = CascadeType.MERGE, optional = false)
-    @NotNull
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, optional = false)
     private Pessoa cliente;
 
     @Embedded

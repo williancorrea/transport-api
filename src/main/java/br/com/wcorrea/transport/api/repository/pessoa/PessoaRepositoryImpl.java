@@ -16,13 +16,6 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
     @PersistenceContext
     private EntityManager manager;
 
-    /**
-     * Encontra todas as Pessoas e retornar o valor de forma paginada
-     *
-     * @param pessoaFiltro
-     * @param pageable
-     * @return
-     */
     @Override
     public Page<Pessoa> findAll(PessoaFiltro pessoaFiltro, Pageable pageable) {
         TypedQuery<Pessoa> queryList = manager.createQuery(this.createQuery(pessoaFiltro, false), Pessoa.class);
@@ -69,13 +62,10 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
         return sql;
     }
 
-    //TODO: Colocar no repositorio abstrato
     @Override
     public Pessoa findOneByCPF(String cpf) {
         StringBuilder sb = new StringBuilder();
-        sb.append("from pessoa p ");
-        sb.append("where 1=1 ");
-        sb.append("and p.pessoaFisica.cpf = :cpf ");
+        sb.append("from pessoa p where 1=1 and p.pessoaFisica.cpf = :cpf");
 
         TypedQuery<Pessoa> query = manager.createQuery(sb.toString(), Pessoa.class);
         query.setParameter("cpf", cpf);
@@ -83,45 +73,38 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
         return query.getResultList().size() == 0 ? null : query.getResultList().get(0);
     }
 
-    //TODO: Colocar no repositorio abstrato
     @Override
     public Boolean verificarCPFJaCadastrado(String cpf, Long id) {
         StringBuilder sb = new StringBuilder();
-        sb.append("select count(p.id) from pessoa p where 1=1 and p.pessoaFisica.cpf = :cpf and (p.id =null or p.id not in(:id))");
+        sb.append("select p from pessoa p where 1=1 and p.pessoaFisica.cpf = :cpf");
 
-        TypedQuery<Long> query = manager.createQuery(sb.toString(), Long.class);
+        TypedQuery<Pessoa> query = manager.createQuery(sb.toString(), Pessoa.class);
         query.setParameter("cpf", cpf);
-        query.setParameter("id", id);
 
-        if (query.getSingleResult() == 0) {
+        if (query.getResultList().size() == 0 || query.getSingleResult().getId() == id) {
             return false;
         }
         return true;
     }
 
-    //TODO: Colocar no repositorio abstrato
     @Override
     public Boolean verificarCNPJJaCadastrado(String cnpj, Long id) {
         StringBuilder sb = new StringBuilder();
-        sb.append("select count(p.id) from pessoa p where 1=1 and p.pessoaJuridica.cnpj = :cnpj and (p.id =null or p.id not in(:id))");
+        sb.append("select p from pessoa p where 1=1 and p.pessoaJuridica.cnpj = :cnpj");
 
-        TypedQuery<Long> query = manager.createQuery(sb.toString(), Long.class);
+        TypedQuery<Pessoa> query = manager.createQuery(sb.toString(), Pessoa.class);
         query.setParameter("cnpj", cnpj);
-        query.setParameter("id", id);
 
-        if (query.getSingleResult() == 0) {
+        if (query.getResultList().size() == 0 || query.getSingleResult().getId() == id) {
             return false;
         }
         return true;
     }
 
-    //TODO: Colocar no repositorio abstrato
     @Override
     public Pessoa findOneByCNPJ(String cnpj) {
         StringBuilder sb = new StringBuilder();
-        sb.append("from pessoa p ");
-        sb.append("where 1=1 ");
-        sb.append("and p.pessoaJuridica.cnpj = :cnpj ");
+        sb.append("from pessoa p where 1=1 and p.pessoaJuridica.cnpj = :cnpj");
 
         TypedQuery<Pessoa> query = manager.createQuery(sb.toString(), Pessoa.class);
         query.setParameter("cnpj", cnpj);

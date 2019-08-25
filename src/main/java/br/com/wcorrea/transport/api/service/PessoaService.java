@@ -1,10 +1,8 @@
 package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.common.PropriedadesComuns;
-import br.com.wcorrea.transport.api.model.pessoa.EstadoCivil;
-import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
-import br.com.wcorrea.transport.api.model.pessoa.PessoaAuditoria;
-import br.com.wcorrea.transport.api.model.pessoa.PessoaTipo;
+import br.com.wcorrea.transport.api.model.pessoa.*;
+import br.com.wcorrea.transport.api.repository.CidadeRepository;
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
 import br.com.wcorrea.transport.api.repository.pessoa.PessoaFiltro;
 import br.com.wcorrea.transport.api.repository.pessoa.PessoaRepository;
@@ -30,6 +28,9 @@ public class PessoaService {
 
     @Autowired
     private EstadoCivilRepository estadoCivilRepository;
+
+    @Autowired
+    private CidadeRepository cidadeRepository;
 
     public Pessoa save(Pessoa pessoaNovo) {
         pessoaNovo.setId(null);
@@ -99,7 +100,7 @@ public class PessoaService {
         return pessoaRepository.findOneByCPF(cpf);
     }
 
-    public List<Pessoa> pesquisaClienteFornecedorCmb(PessoaFiltro filtro, Pageable pageable){
+    public List<Pessoa> pesquisaClienteFornecedorCmb(PessoaFiltro filtro, Pageable pageable) {
         return pessoaRepository.findAll(filtro, pageable).getContent();
     }
 
@@ -107,101 +108,107 @@ public class PessoaService {
         return pessoaRepository.findOneByCNPJ(cnpj);
     }
 
-    private Pessoa validarPessoa(Pessoa pessoa) {
+    public Pessoa validarPessoa(Pessoa pessoa) {
         Pessoa pessoaEncontrada = pessoa.getId() != null ? this.buscarPorId(pessoa.getId()) : null;
+
 
 
         if (pessoa.getTipo().equals(PessoaTipo.FISICA)) {
             if (pessoa.getId() == null) {
                 pessoa.getPessoaFisica().setId(null);
             }
+            pessoa.setPessoaJuridica(null);
             pessoa = this.validarPessoaFisica(pessoa);
         } else {
             if (pessoa.getId() == null) {
                 pessoa.getPessoaJuridica().setId(null);
             }
+            pessoa.setPessoaFisica(null);
             pessoa = this.validarPessoaJuridica(pessoa);
         }
 
-        /**
-         * IMPEDE A ALTERACAO DO CPF
-         */
         if (pessoaEncontrada != null) {
+            // IMPEDE A ALTERACAO DO CPF
             if (pessoa.getPessoaFisica() != null && !pessoa.getPessoaFisica().getCpf().equals(pessoaEncontrada.getPessoaFisica().getCpf())) {
                 throw new PessoaFisicaNaoPodeAlterarValorCPF();
             }
-        }
-        /**
-         * IMPEDE A ALTERACAO DO CNPJ
-         */
-        if (pessoa.getPessoaJuridica() != null && !pessoa.getPessoaJuridica().getCnpj().equals(pessoaEncontrada.getPessoaJuridica().getCnpj())) {
-            throw new PessoaJuridicaNaoPodeAlterarValorCNPJ();
+
+            // IMPEDE A ALTERACAO DO CNPJ - PARA CADASTROS JA REALIZADOS
+            if (pessoa.getPessoaJuridica() != null && !pessoa.getPessoaJuridica().getCnpj().equals(pessoaEncontrada.getPessoaJuridica().getCnpj())) {
+                throw new PessoaJuridicaNaoPodeAlterarValorCNPJ();
+            }
         }
 
+        // VERIFICA SE A CIDADE SELECIONADA EXISTE NA BASE DE DADOS
+        if (pessoa.getCidade() != null) {
+            try {
+                Optional<Cidade> cidadeEncontrada = cidadeRepository.findById(pessoa.getCidade().getId());
+                if (!cidadeEncontrada.isPresent()) {
+                    throw new CidadeNaoEncontrada();
+                }
+                pessoa.setCidade(cidadeEncontrada.get());
+            } catch (Exception e) {
+                throw new CidadeNaoEncontrada();
+            }
+        }
+
+
         if (pessoa.getId() == null) {
-            Pessoa finalPessoa = pessoa;
-            pessoa.getListaPessoaTelefone().forEach(c -> c.setPessoa(finalPessoa));
-            pessoa.getListaPessoaContato().forEach(c -> c.setPessoa(finalPessoa));
-            pessoa.getListaPessoaEndereco().forEach(c -> c.setPessoa(finalPessoa));
-            pessoa.getListaPessoaAuditoria().forEach(c -> c.setPessoa(finalPessoa));
+//            Pessoa finalPessoa = pessoa;
+//            pessoa.getListaPessoaTelefone().forEach(c -> c.setPessoa(finalPessoa));
+//            pessoa.getListaPessoaContato().forEach(c -> c.setPessoa(finalPessoa));
+//            pessoa.getListaPessoaEndereco().forEach(c -> c.setPessoa(finalPessoa));
+//            pessoa.getListaPessoaAuditoria().forEach(c -> c.setPessoa(finalPessoa));
         } else {
             /*
                 ADICIONANDO A LISTA DE TELEFONES
              */
-            pessoaEncontrada.getListaPessoaTelefone().clear();
-            pessoaEncontrada.getListaPessoaTelefone().addAll(pessoa.getListaPessoaTelefone());
-            pessoaEncontrada.getListaPessoaTelefone().forEach(c -> c.setPessoa(pessoaEncontrada));
+//            pessoaEncontrada.getListaPessoaTelefone().clear();
+//            pessoaEncontrada.getListaPessoaTelefone().addAll(pessoa.getListaPessoaTelefone());
+//            pessoaEncontrada.getListaPessoaTelefone().forEach(c -> c.setPessoa(pessoaEncontrada));
             /*
                 ADICIONANDO A LISTA DE CONTATOS
              */
-            pessoaEncontrada.getListaPessoaContato().clear();
-            pessoaEncontrada.getListaPessoaContato().addAll(pessoa.getListaPessoaContato());
-            pessoaEncontrada.getListaPessoaContato().forEach(c -> c.setPessoa(pessoaEncontrada));
+//            pessoaEncontrada.getListaPessoaContato().clear();
+//            pessoaEncontrada.getListaPessoaContato().addAll(pessoa.getListaPessoaContato());
+//            pessoaEncontrada.getListaPessoaContato().forEach(c -> c.setPessoa(pessoaEncontrada));
             /*
                 ADICIONANDO A LISTA DE ENDEREÇOS
              */
-            pessoaEncontrada.getListaPessoaEndereco().clear();
-            pessoaEncontrada.getListaPessoaEndereco().addAll(pessoa.getListaPessoaEndereco());
-            pessoaEncontrada.getListaPessoaEndereco().forEach(c -> c.setPessoa(pessoaEncontrada));
+//            pessoaEncontrada.getListaPessoaEndereco().clear();
+//            pessoaEncontrada.getListaPessoaEndereco().addAll(pessoa.getListaPessoaEndereco());
+//            pessoaEncontrada.getListaPessoaEndereco().forEach(c -> c.setPessoa(pessoaEncontrada));
             /*
                 ADICIONANDO A LISTA DE AUDITORIA
              */
-            pessoaEncontrada.getListaPessoaAuditoria().clear();
-            pessoaEncontrada.getListaPessoaAuditoria().addAll(pessoa.getListaPessoaAuditoria());
-            pessoaEncontrada.getListaPessoaAuditoria().forEach(c -> c.setPessoa(pessoaEncontrada));
+//            pessoaEncontrada.getListaPessoaAuditoria().clear();
+//            pessoaEncontrada.getListaPessoaAuditoria().addAll(pessoa.getListaPessoaAuditoria());
+//            pessoaEncontrada.getListaPessoaAuditoria().forEach(c -> c.setPessoa(pessoaEncontrada));
 
             BeanUtils.copyProperties(pessoa, pessoaEncontrada, "id", "listaPessoaTelefone", "listaPessoaContato", "listaPessoaEndereco", "listaPessoaAuditoria");
         }
         /**
          * CONSTROI O OBJETO DE AUDITORIA
          */
-        pessoa.getListaPessoaAuditoria().add(construirObjAuditoria(pessoa, pessoaEncontrada));
+//        pessoa.getListaPessoaAuditoria().add(construirObjAuditoria(pessoa, pessoaEncontrada));
         return pessoa;
     }
 
     private Pessoa validarPessoaFisica(Pessoa pessoa) {
-        /**
-         * GARANTE QUE OS DADOS DE PESSOA FISICA EXITEM
-         */
+        // GARANTE QUE OS DADOS DE PESSOA FISICA EXITEM
         if (pessoa.getPessoaFisica() == null) {
             throw new PessoaFisicaNaoEncontrada();
         }
-        /**
-         * GARANTE UM CPF VALIDO
-         */
+        // GARANTE UM CPF VALIDO
         if (Utils.validarCPF(pessoa.getPessoaFisica().getCpf()) == false) {
             throw new PessoaFisicaCPFInvalido();
         }
-        /**
-         * GARANTE UM CPF UNICO
-         */
+        // GARANTE UM CPF UNICO
         if (this.pessoaRepository.verificarCPFJaCadastrado(pessoa.getPessoaFisica().getCpf(), pessoa.getId())) {
             throw new PessoaFisicaJaCadastrada();
         }
-        /**
-         * VERIFICA SE O ESTADO CIVIL EXISTE NA BASE DE DADOS
-         */
-        if (pessoa.getPessoaFisica().getEstadoCivil() != null && pessoa.getPessoaFisica().getId() != null) {
+        // VERIFICA SE O ESTADO CIVIL EXISTE NA BASE DE DADOS
+        if (pessoa.getPessoaFisica().getEstadoCivil() != null) {
             try {
                 Optional<EstadoCivil> estadoCivilEncontrado = estadoCivilRepository.findById(pessoa.getPessoaFisica().getEstadoCivil().getId());
                 if (!estadoCivilEncontrado.isPresent()) {
@@ -211,37 +218,28 @@ public class PessoaService {
             } catch (Exception e) {
                 throw new EstadoCivilNaoEncontrado();
             }
-        } else {
-            pessoa.getPessoaFisica().setEstadoCivil(null);
         }
 
         pessoa.getPessoaFisica().setPessoa(pessoa);
         return pessoa;
     }
 
-    public Pessoa validarPessoaJuridica(Pessoa pessoa) {
-        /**
-         * GARANTE QUE OS DADOS DE PESSOA JURIDICA EXISTE
-         */
+    private Pessoa validarPessoaJuridica(Pessoa pessoa) {
+        // GARANTE QUE OS DADOS DE PESSOA JURIDICA EXISTE
         if (pessoa.getPessoaJuridica() == null) {
             throw new PessoaJuridicaNaoEncontrada();
         }
-        /**
-         * GARANTE UM CNPJ VALIDO
-         */
-        if (this.pessoaRepository.verificarCNPJJaCadastrado(pessoa.getPessoaJuridica().getCnpj(), pessoa.getId())) {
+        // GARANTE UM CNPJ VALIDO
+        if (Utils.validarCNPJ(pessoa.getPessoaJuridica().getCnpj()) == false) {
             throw new PessoaJuridicaCNPJInvalido();
         }
-        /**
-         * GARANTE UM CPNJ UNICO
-         */
-        if (this.findOneByCNPJ(pessoa.getPessoaJuridica().getCnpj()) != null) {
+        // GARANTE UM CNPJ UNICO
+        if (this.pessoaRepository.verificarCNPJJaCadastrado(pessoa.getPessoaJuridica().getCnpj(), pessoa.getId())) {
             throw new PessoaJuridicaJaCadastrada();
         }
+
         pessoa.getPessoaJuridica().setPessoa(pessoa);
-
         return pessoa;
-
     }
 
     private PessoaAuditoria construirObjAuditoria(Pessoa novo, Pessoa antigo) {

@@ -74,7 +74,7 @@ public class Pessoa extends IdentificadorComum implements Serializable {
     private boolean inativo;
 
     @JsonProperty("pessoaFisica")
-    @JsonIgnoreProperties({"pessoa", "controle", "orgaoRg", "dataEmissaoRg", "dataNascimento", "naturalidade", "nacionalidade", "tipoSangue", "cnhNumero", "cnhCategoria", "cnhVencimento", "tituloEleitoralNumero", "tituloEleitoralZona", "tituloEleitoralSecao", "reservistaNumero", "reservistaCategoria", "nomeMae", "nomePai", "estadoCivil"})
+    @JsonIgnoreProperties({"pessoa", "controle", "orgaoRg", "dataEmissaoRg", "dataNascimento", "naturalidade", "nacionalidade", "tipoSangue", "cnhNumero", "cnhCategoria", "cnhVencimento", "tituloEleitoralNumero", "tituloEleitoralZona", "tituloEleitoralSecao", "reservistaNumero", "reservistaCategoria", "nomeMae", "nomePai", "estadoCivil", "sexo"})
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     private PessoaFisica pessoaFisica;
 
@@ -86,8 +86,6 @@ public class Pessoa extends IdentificadorComum implements Serializable {
     @JoinColumn(name = "cidade_id", referencedColumnName = "id")
     @ManyToOne()
     private Cidade cidade;
-
-
 
 
 

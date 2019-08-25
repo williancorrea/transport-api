@@ -21,13 +21,9 @@ public class PessoaJuridica extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotBlank
-    @Size(min = 18, max = 18)
+    @Size(min = 14, max = 18)
     @CNPJ
     private String cnpj;
-
-    @Column(name = "fantasia")
-    @Size(max = 250)
-    private String fantasia;
 
     @Column(name = "inscricao_municipal")
     @Size(max = 50)
