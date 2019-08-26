@@ -9,13 +9,11 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.List;
 
 @ToString(exclude = {"pessoaFisica"})
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
@@ -58,6 +56,10 @@ public class Pessoa extends IdentificadorComum implements Serializable {
     @Size(max = 100)
     private String telefone2Obs;
 
+    @JoinColumn(name = "cidade_id", referencedColumnName = "id")
+    @ManyToOne()
+    private Cidade cidade;
+
     @Size(max = 250)
     private String endereco;
 
@@ -82,38 +84,6 @@ public class Pessoa extends IdentificadorComum implements Serializable {
     @JsonIgnoreProperties("pessoa")
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     private PessoaJuridica pessoaJuridica;
-
-    @JoinColumn(name = "cidade_id", referencedColumnName = "id")
-    @ManyToOne()
-    private Cidade cidade;
-
-
-
-
-
-    @JsonProperty("listaPessoaEndereco")
-    @JsonIgnoreProperties("pessoa")
-    @Valid
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PessoaEndereco> listaPessoaEndereco;
-
-    @JsonProperty("listaPessoaTelefone")
-    @JsonIgnoreProperties("pessoa")
-    @Valid
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PessoaTelefone> listaPessoaTelefone;
-
-
-    @JsonProperty("listaPessoaContato")
-    @JsonIgnoreProperties("pessoa")
-    @Valid
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PessoaContato> listaPessoaContato;
-
-    @JsonProperty("listaPessoaAuditoria")
-    @JsonIgnoreProperties("pessoa")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.MERGE)
-    private List<PessoaAuditoria> listaPessoaAuditoria;
 
 //    @ManyToMany(fetch = FetchType.EAGER)
 //    @JoinTable(nome = "EMPRESA_PESSOA", joinColumns = { @JoinColumn(nome = "ID_PESSOA") }, inverseJoinColumns = { @JoinColumn(nome = "ID_EMPRESA") })
