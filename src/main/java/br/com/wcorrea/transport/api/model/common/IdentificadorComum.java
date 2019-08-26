@@ -41,7 +41,11 @@ public abstract class IdentificadorComum implements Serializable {
     @Transient
     public void setKey(String key) {
         try {
-            this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
+            if (key != null) {
+                this.id = Long.parseLong(new Criptografia().decryptFromHex(key));
+            } else {
+                this.id = null;
+            }
         } catch (Exception e) {
             /*
              * TODO: SOLUCAO ENCONTRADA PARA APRESENTAR O A EXCECAO PARA O USUARIO (REFATORAR)
