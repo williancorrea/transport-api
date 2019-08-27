@@ -4,13 +4,14 @@ import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import br.com.wcorrea.transport.api.model.pessoa.EstadoCivil;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.model.pessoa.PessoaTipo;
-import br.com.wcorrea.transport.api.repository.CidadeRepository;
+import br.com.wcorrea.transport.api.repository.estadoCidade.CidadeRepository;
 import br.com.wcorrea.transport.api.repository.estadoCivil.EstadoCivilRepository;
 import br.com.wcorrea.transport.api.repository.pessoa.PessoaFiltro;
 import br.com.wcorrea.transport.api.repository.pessoa.PessoaRepository;
 import br.com.wcorrea.transport.api.service.exception.*;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import br.com.wcorrea.transport.api.utils.Utils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -87,6 +88,20 @@ public class PessoaService {
         return this.buscarPorId(pessoa.getId());
     }
 
+    public Pessoa buscarPorCPF(String cpf) {
+        if (StringUtils.isBlank(cpf)) {
+            throw new PessoaNaoEncontrada();
+        }
+        return pessoaRepository.findOneByCPF(cpf);
+    }
+
+    public Pessoa buscarPorCNPJ(String cnpj) {
+        if (StringUtils.isBlank(cnpj)) {
+            throw new PessoaNaoEncontrada();
+        }
+        return pessoaRepository.findOneByCNPJ(cnpj);
+    }
+
     public Long buscarPorKey(String key) {
         try {
             return new Criptografia().getKey(key);
@@ -137,7 +152,10 @@ public class PessoaService {
             } catch (Exception e) {
                 throw new CidadeNaoEncontrada();
             }
+        } else {
+            throw new CidadeNaoEncontrada();
         }
+
         // FAZ A COPIA DAS PROPRIEDADES DO OBJETO
         if (pessoa.getId() != null) {
             BeanUtils.copyProperties(pessoa, pessoaEncontrada, "id", "controle");

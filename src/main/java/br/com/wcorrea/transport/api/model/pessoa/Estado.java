@@ -23,7 +23,7 @@ public class Estado extends IdentificadorComum implements Serializable {
 
     @NotBlank
     @Size(min = 3, max = 150)
-    private String descricao;
+    private String nome;
 
     @NotBlank
     @Size(min = 2, max = 2)

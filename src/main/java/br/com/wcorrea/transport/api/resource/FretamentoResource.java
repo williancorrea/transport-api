@@ -2,15 +2,17 @@ package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.Fretamento;
+import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
+import br.com.wcorrea.transport.api.repository.QueryFiltroPadrao;
 import br.com.wcorrea.transport.api.repository.pessoa.PessoaFiltro;
+import br.com.wcorrea.transport.api.service.EstadoCidadeService;
 import br.com.wcorrea.transport.api.service.FretamentoService;
 import br.com.wcorrea.transport.api.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +33,9 @@ public class FretamentoResource {
     @Autowired
     private FretamentoService fretamentoService;
 
+    @Autowired
+    private EstadoCidadeService estadoCidadeService;
+
     @GetMapping("/{key}")
 //    @PreAuthorize("hasAuthority('ROLE_LISTAR_FRETAMENTO') and #oauth2.hasScope('read')")
     public ResponseEntity<Fretamento> findOne(@Valid @PathVariable String key) {
@@ -38,11 +43,31 @@ public class FretamentoResource {
         return fretamentoEncontrado != null ? ResponseEntity.ok(fretamentoEncontrado) : ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/cmbCliente")
+    @GetMapping("/cmbClientes")
 //    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
-    public List<Pessoa> listAllComboBox(PessoaFiltro filtro, Pageable pageable) {
+    public List<Pessoa> listAllComboBoxClientes(PessoaFiltro filtro, Pageable pageable) {
         filtro.setSomenteAtivo(true);
         return pessoaService.pesquisaClienteFornecedorCmb(filtro, pageable);
+    }
+
+    @GetMapping("/cmbClientes/cpf/{cpf}")
+//    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
+    public ResponseEntity<Pessoa> buscarPorCPF(@Valid @PathVariable String cpf) {
+        Pessoa p = pessoaService.buscarPorCPF(cpf);
+        return p != null ? ResponseEntity.ok(p) : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/cmbClientes/cnpj/{cnpj}")
+//    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
+    public ResponseEntity<Pessoa> buscarPorCNPJ(@Valid @PathVariable String cnpj) {
+        Pessoa p = pessoaService.buscarPorCNPJ(cnpj);
+        return p != null ? ResponseEntity.ok(p) : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/cmbCidades")
+    public List<Cidade> listAllComboBoxCidades(QueryFiltroPadrao filtro, Pageable pageable) {
+        filtro.setSomenteAtivo(true);
+        return estadoCidadeService.buscarCidades(filtro, pageable);
     }
 
     @PostMapping

@@ -18,7 +18,7 @@ public class Cidade extends IdentificadorComum implements Serializable {
 
     @NotNull
     @Size(min = 3, max = 150)
-    private String descricao;
+    private String nome;
 
     @Column(name = "codigo_ibge")
     private Integer codigoIbge;

@@ -40,7 +40,7 @@ public class FretamentoService {
 
     public Fretamento atualizar(Long id, Fretamento fretamento) {
 
-        //VERIFICAR A ATUALIZACAO
+        //TODO: VERIFICAR A ATUALIZACAO
         return fretamentoRepository.saveAndFlush(fretamento);
     }
 

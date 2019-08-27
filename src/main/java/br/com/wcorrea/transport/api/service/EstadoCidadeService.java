@@ -1,13 +1,11 @@
 package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
-import br.com.wcorrea.transport.api.model.pessoa.Estado;
-import br.com.wcorrea.transport.api.repository.CidadeRepository;
-import br.com.wcorrea.transport.api.repository.EstadoRepository;
+import br.com.wcorrea.transport.api.repository.QueryFiltroPadrao;
+import br.com.wcorrea.transport.api.repository.estadoCidade.CidadeRepository;
 import br.com.wcorrea.transport.api.service.exception.CidadeNaoEncontrada;
-import br.com.wcorrea.transport.api.service.exception.EstadoNaoEncontrado;
-import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,41 +15,17 @@ import java.util.Optional;
 public class EstadoCidadeService {
 
     @Autowired
-    private EstadoRepository estadoRepository;
-
-    @Autowired
     private CidadeRepository cidadeRepository;
 
-    public Estado buscarEstadoPorId(Long id) {
-        Optional<Estado> estado = estadoRepository.findById(id);
-        if (!estado.isPresent()) {
-            throw new EstadoNaoEncontrado();
-        }
-        return estado.get();
+    public List<Cidade> buscarCidades(QueryFiltroPadrao filtro, Pageable page) {
+        return cidadeRepository.findAll(filtro, page).getContent();
     }
 
-    public List<Cidade> buscarCidadePorEstado(Long estadoId) {
-        List<Cidade> cidades = cidadeRepository.findByEstadoId(estadoId);
-        if (cidades == null) {
+    public Cidade buscarPorId(Long id) {
+        Optional<Cidade> c = cidadeRepository.findById(id);
+        if (!c.isPresent()) {
             throw new CidadeNaoEncontrada();
         }
-        return cidades;
+        return c.get();
     }
-
-    public Long buscarEstadoPorKey(String key) {
-        try {
-            return new Criptografia().getKey(key);
-        } catch (Exception e) {
-            throw new EstadoNaoEncontrado();
-        }
-    }
-
-    public Long buscarCidadePorKey(String key) {
-        try {
-            return new Criptografia().getKey(key);
-        } catch (Exception e) {
-            throw new CidadeNaoEncontrada();
-        }
-    }
-
 }
