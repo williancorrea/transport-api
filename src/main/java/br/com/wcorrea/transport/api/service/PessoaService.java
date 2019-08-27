@@ -140,7 +140,8 @@ public class PessoaService {
         }
         // FAZ A COPIA DAS PROPRIEDADES DO OBJETO
         if (pessoa.getId() != null) {
-            BeanUtils.copyProperties(pessoa, pessoaEncontrada, "id");
+            BeanUtils.copyProperties(pessoa, pessoaEncontrada, "id", "controle");
+            pessoa = pessoaEncontrada;
         }
         return pessoa;
     }

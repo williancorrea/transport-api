@@ -2,12 +2,12 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.Fretamento;
 import br.com.wcorrea.transport.api.model.pessoa.FretamentoTipo;
-import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.repository.fretamento.FretamentoRepository;
 import br.com.wcorrea.transport.api.service.exception.FretamentoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -21,20 +21,11 @@ public class FretamentoService {
     private PessoaService pessoaService;
 
     public Fretamento salvar(Fretamento fretamento) {
-
         if (fretamento.getSituacao().equals(FretamentoTipo.ORCAMENTO)) {
             fretamento.setCliente(null);
         } else {
-
-            // FAZENDO A VERIFICACAO DO CADASTRO DE PESSOA
-//            if (fretamento.getCliente().getId() > 0) {
-//                Pessoa clienteEncontrado = pessoaService.buscarPorId(fretamento.getCliente().getId());
-//                fretamento.getCliente().setId(clienteEncontrado.getId());
-//                fretamento.getCliente().setControle(clienteEncontrado.getControle());
-//            }
             fretamento.setCliente(pessoaService.validarPessoa(fretamento.getCliente()));
         }
-
         return fretamentoRepository.save(fretamento);
     }
 

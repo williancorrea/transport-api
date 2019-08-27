@@ -23,7 +23,7 @@ public class Fretamento extends IdentificadorComum implements Serializable {
     private FretamentoTipo situacao;
 
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, optional = false)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, optional = false)
     private Pessoa cliente;
 
     @Embedded
