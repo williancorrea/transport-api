@@ -8,18 +8,18 @@ CREATE TABLE fretamento_eventual (
     telefone2 VARCHAR(20),
     obs LONGBLOB,
 
-    partida_cidade_id BIGINT(20),
+    partida_cidade_id BIGINT(20) NOT NULL,
     FOREIGN KEY (partida_cidade_id) REFERENCES cidade(id),
-    retorno_cidade_id  BIGINT(20),
+    retorno_cidade_id  BIGINT(20) NOT NULL,
     FOREIGN KEY (retorno_cidade_id) REFERENCES cidade(id),
-    partida TIMESTAMP NOT NULL,
+    partida TIMESTAMP NULL,
     partida_obs LONGBLOB,
-    retorno TIMESTAMP NOT NULL,
+    retorno TIMESTAMP NULL,
     retorno_obs LONGBLOB,
 
 
     data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     pessoa_id BIGINT(20),
     FOREIGN KEY (pessoa_id) REFERENCES pessoa(id)

@@ -2,7 +2,7 @@ package br.com.wcorrea.transport.api.exceptionHandler;
 
 import br.com.wcorrea.transport.api.exceptionHandler.defaultException.ApiError;
 import br.com.wcorrea.transport.api.exceptionHandler.defaultException.DefaultExceptionHandler;
-import br.com.wcorrea.transport.api.service.exception.FretamentoEventualNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.RegraDeNegocio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -17,16 +17,19 @@ import java.util.List;
 import java.util.Locale;
 
 @ControllerAdvice
-public class FretamentoException extends DefaultExceptionHandler {
+public class RegraDeNegocioException extends DefaultExceptionHandler {
 
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler({FretamentoEventualNaoEncontrado.class})
-    public ResponseEntity<Object> handleFretamentoEventualNaoEncontrado(FretamentoEventualNaoEncontrado ex, WebRequest request, Locale loc) {
-        String userMessage = messageSource.getMessage("recurso.fretamento-eventual-nao-encontrado", null, loc);
+    @ExceptionHandler({RegraDeNegocio.class})
+    public ResponseEntity<Object> handleRegraDeNegocio(RegraDeNegocio ex, WebRequest request, Locale loc) {
+//        String userMessage = messageSource.getMessage(ex.getMessage(), null, loc); // procura a mensagem no arquivo de recurso
+        String userMessage = ex.getMessage();
+
         String developerMessage = ex.toString();
-        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
-        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+        List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.BAD_REQUEST));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
+
 }

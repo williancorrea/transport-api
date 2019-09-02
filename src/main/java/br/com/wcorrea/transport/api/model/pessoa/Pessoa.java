@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -42,6 +43,7 @@ public class Pessoa extends IdentificadorComum implements Serializable {
     private String email;
 
     @Size(max = 250)
+    @URL
     private String site;
 
     @Size(max = 20)

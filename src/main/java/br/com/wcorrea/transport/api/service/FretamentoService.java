@@ -1,11 +1,11 @@
 package br.com.wcorrea.transport.api.service;
 
-import br.com.wcorrea.transport.api.model.FretamentoEventual;
 import br.com.wcorrea.transport.api.model.FretamentoEventalTipo;
+import br.com.wcorrea.transport.api.model.FretamentoEventual;
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualEventualRepository;
 import br.com.wcorrea.transport.api.service.exception.FretamentoEventualNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.RegraDeNegocio;
 import br.com.wcorrea.transport.api.utils.Criptografia;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +25,10 @@ public class FretamentoService {
             fretamentoEventual.setCliente(null);
         } else {
             fretamentoEventual.setCliente(pessoaService.validarPessoa(fretamentoEventual.getCliente()));
+        }
+
+        if (true) {
+            throw new RegraDeNegocio("Deu merda em alguma coisa ae!");
         }
 
         // TODO: VALIDAR DATA DE PARTIDA

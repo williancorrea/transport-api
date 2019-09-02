@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -26,9 +27,12 @@ public class FretamentoEventual extends IdentificadorComum implements Serializab
     private Pessoa cliente;
 
     @Embedded
+    @Valid
     private FretamentoEventualContato contato;
 
+    @NotNull
     @Embedded
+    @Valid
     private FretamentoEventualItinerario itinerario;
 
 }
