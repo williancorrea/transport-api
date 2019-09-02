@@ -2,7 +2,7 @@ package br.com.wcorrea.transport.api.exceptionHandler;
 
 import br.com.wcorrea.transport.api.exceptionHandler.defaultException.ApiError;
 import br.com.wcorrea.transport.api.exceptionHandler.defaultException.DefaultExceptionHandler;
-import br.com.wcorrea.transport.api.service.exception.FretamentoNaoEncontrado;
+import br.com.wcorrea.transport.api.service.exception.FretamentoEventualNaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -22,9 +22,9 @@ public class FretamentoException extends DefaultExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler({FretamentoNaoEncontrado.class})
-    public ResponseEntity<Object> handleFretamentoNaoEncontrado(FretamentoNaoEncontrado ex, WebRequest request, Locale loc) {
-        String userMessage = messageSource.getMessage("recurso.fretamento-nao-encontrado", null, loc);
+    @ExceptionHandler({FretamentoEventualNaoEncontrado.class})
+    public ResponseEntity<Object> handleFretamentoEventualNaoEncontrado(FretamentoEventualNaoEncontrado ex, WebRequest request, Locale loc) {
+        String userMessage = messageSource.getMessage("recurso.fretamento-eventual-nao-encontrado", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_FOUND, request);

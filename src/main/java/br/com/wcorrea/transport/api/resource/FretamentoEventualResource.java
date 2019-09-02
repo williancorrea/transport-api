@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
-import br.com.wcorrea.transport.api.model.Fretamento;
+import br.com.wcorrea.transport.api.model.FretamentoEventual;
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.repository.QueryFiltroPadrao;
@@ -21,8 +21,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/fretamentos")
-public class FretamentoResource {
+@RequestMapping("/fretamentosEventuais")
+public class FretamentoEventualResource {
 
     @Autowired
     private ApplicationEventPublisher publisher;
@@ -37,10 +37,10 @@ public class FretamentoResource {
     private EstadoCidadeService estadoCidadeService;
 
     @GetMapping("/{key}")
-//    @PreAuthorize("hasAuthority('ROLE_LISTAR_FRETAMENTO') and #oauth2.hasScope('read')")
-    public ResponseEntity<Fretamento> findOne(@Valid @PathVariable String key) {
-        Fretamento fretamentoEncontrado = fretamentoService.findOne(fretamentoService.buscarPorKey(key));
-        return fretamentoEncontrado != null ? ResponseEntity.ok(fretamentoEncontrado) : ResponseEntity.notFound().build();
+//    @PreAuthorize("hasAuthority('ROLE_LISTAR_FRETAMENTO_EVENTUAL') and #oauth2.hasScope('read')")
+    public ResponseEntity<FretamentoEventual> buscarporKey(@Valid @PathVariable String key) {
+        FretamentoEventual fretamentoEventualEncontrado = fretamentoService.findOne(fretamentoService.buscarPorKey(key));
+        return fretamentoEventualEncontrado != null ? ResponseEntity.ok(fretamentoEventualEncontrado) : ResponseEntity.notFound().build();
     }
 
     @GetMapping("/cmbClientes")
@@ -71,23 +71,23 @@ public class FretamentoResource {
     }
 
     @PostMapping
-//    @PreAuthorize("hasAuthority('ROLE_SALVAR_FRETAMENTO') and #oauth2.hasScope('write')")
-    public ResponseEntity<Fretamento> save(@Valid @RequestBody Fretamento fretamento, HttpServletResponse response) throws Exception {
-        fretamento = fretamentoService.salvar(fretamento);
-        publisher.publishEvent(new EventResourceCreated(this, response, fretamento.getKey()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(fretamento);
+//    @PreAuthorize("hasAuthority('ROLE_SALVAR_FRETAMENTO_EVENTUAL') and #oauth2.hasScope('write')")
+    public ResponseEntity<FretamentoEventual> salvar(@Valid @RequestBody FretamentoEventual fretamentoEventual, HttpServletResponse response) throws Exception {
+        fretamentoEventual = fretamentoService.salvar(fretamentoEventual);
+        publisher.publishEvent(new EventResourceCreated(this, response, fretamentoEventual.getKey()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(fretamentoEventual);
     }
 
     //
     @PutMapping("/{key}")
-//    @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_FRETAMENTO') and #oauth2.hasScope('write')")
-    public ResponseEntity<Fretamento> update(@Valid @PathVariable String key, @Valid @RequestBody Fretamento fretamento) {
-        return ResponseEntity.status(HttpStatus.OK).body(fretamentoService.atualizar(fretamentoService.buscarPorKey(key), fretamento));
+//    @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_FRETAMENTO_EVENTUAL') and #oauth2.hasScope('write')")
+    public ResponseEntity<FretamentoEventual> atualizar(@Valid @PathVariable String key, @Valid @RequestBody FretamentoEventual fretamentoEventual) {
+        return ResponseEntity.status(HttpStatus.OK).body(fretamentoService.atualizar(fretamentoService.buscarPorKey(key), fretamentoEventual));
     }
 //
 //    @DeleteMapping("/{key}")
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @PreAuthorize("hasAuthority('ROLE_DELETAR_FRETAMENTO') and #oauth2.hasScope('write')")
+//    @PreAuthorize("hasAuthority('ROLE_DELETAR_FRETAMENTO_EVENTUAL') and #oauth2.hasScope('write')")
 //    public void delete(@PathVariable String key) {
 //        bancoRepository.delete(bancoService.buscarPorKey(key));
 //    }

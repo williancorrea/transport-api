@@ -1,6 +1,6 @@
-package br.com.wcorrea.transport.api.repository.fretamento;
+package br.com.wcorrea.transport.api.repository.fretamentoEventual;
 
-import br.com.wcorrea.transport.api.model.Fretamento;
+import br.com.wcorrea.transport.api.model.FretamentoEventual;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -15,13 +15,13 @@ import org.springframework.data.domain.Pageable;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-public class FretamentoRepositoryImpl implements FretamentoRepositoryQuery {
+public class FretamentoEventualEventualRepositoryImpl implements FretamentoEventualRepositoryQuery {
 
     @PersistenceContext
     private EntityManager manager;
 
     @Override
-    public Page<Fretamento> findAll(FretamentoFiltro filtro, Pageable pageable) {
+    public Page<FretamentoEventual> findAll(FretamentoEventualFiltro filtro, Pageable pageable) {
 
         //Criterios da pesquisa
         Criteria criteria = criarCriteriaParaFiltro(filtro);
@@ -49,7 +49,7 @@ public class FretamentoRepositoryImpl implements FretamentoRepositoryQuery {
      * @param filtro
      * @return
      */
-    public int quantidadeRegistrosFiltrados(FretamentoFiltro filtro) {
+    public int quantidadeRegistrosFiltrados(FretamentoEventualFiltro filtro) {
         Criteria criteria = criarCriteriaParaFiltro(filtro);
         criteria.setProjection(Projections.rowCount());
         return ((Number) criteria.uniqueResult()).intValue();
@@ -61,9 +61,9 @@ public class FretamentoRepositoryImpl implements FretamentoRepositoryQuery {
      * @param filtro
      * @return
      */
-    private Criteria criarCriteriaParaFiltro(FretamentoFiltro filtro) {
+    private Criteria criarCriteriaParaFiltro(FretamentoEventualFiltro filtro) {
         Session session = manager.unwrap(Session.class);
-        Criteria criteria = session.createCriteria(Fretamento.class);
+        Criteria criteria = session.createCriteria(FretamentoEventual.class);
 
         if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
             Disjunction disjunction = Restrictions.disjunction(); // Restricao com OR

@@ -1,13 +1,13 @@
 package br.com.wcorrea.transport.api.service;
 
-import br.com.wcorrea.transport.api.model.Fretamento;
-import br.com.wcorrea.transport.api.model.pessoa.FretamentoTipo;
-import br.com.wcorrea.transport.api.repository.fretamento.FretamentoRepository;
-import br.com.wcorrea.transport.api.service.exception.FretamentoNaoEncontrado;
+import br.com.wcorrea.transport.api.model.FretamentoEventual;
+import br.com.wcorrea.transport.api.model.FretamentoEventalTipo;
+import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualEventualRepository;
+import br.com.wcorrea.transport.api.service.exception.FretamentoEventualNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -15,33 +15,40 @@ import java.util.Optional;
 public class FretamentoService {
 
     @Autowired
-    private FretamentoRepository fretamentoRepository;
+    private FretamentoEventualEventualRepository fretamentoEventualRepository;
 
     @Autowired
     private PessoaService pessoaService;
 
-    public Fretamento salvar(Fretamento fretamento) {
-        if (fretamento.getSituacao().equals(FretamentoTipo.ORCAMENTO)) {
-            fretamento.setCliente(null);
+    public FretamentoEventual salvar(FretamentoEventual fretamentoEventual) {
+        if (fretamentoEventual.getSituacao().equals(FretamentoEventalTipo.ORCAMENTO)) {
+            fretamentoEventual.setCliente(null);
         } else {
-            fretamento.setCliente(pessoaService.validarPessoa(fretamento.getCliente()));
+            fretamentoEventual.setCliente(pessoaService.validarPessoa(fretamentoEventual.getCliente()));
         }
-        return fretamentoRepository.save(fretamento);
+
+        // TODO: VALIDAR DATA DE PARTIDA
+        // TODO: CIDADE DE PARTIDA
+        // TODO: VALIDAR DATA DE RETORNO
+        // TODO: CIDADE DE RETORNO
+        // TODO: VALIDAR PERIODO ENTRE AS DATA DE PARTIDA E RETORNO
+
+        return fretamentoEventualRepository.save(fretamentoEventual);
     }
 
-    public Fretamento findOne(Long id) {
-        Optional<Fretamento> fretamento = fretamentoRepository.findById(id);
+    public FretamentoEventual findOne(Long id) {
+        Optional<FretamentoEventual> fretamento = fretamentoEventualRepository.findById(id);
         if (!fretamento.isPresent()) {
-            throw new FretamentoNaoEncontrado();
+            throw new FretamentoEventualNaoEncontrado();
         }
         return fretamento.get();
     }
 
 
-    public Fretamento atualizar(Long id, Fretamento fretamento) {
+    public FretamentoEventual atualizar(Long id, FretamentoEventual fretamentoEventual) {
 
         //TODO: VERIFICAR A ATUALIZACAO
-        return fretamentoRepository.saveAndFlush(fretamento);
+        return fretamentoEventualRepository.saveAndFlush(fretamentoEventual);
     }
 
     //    public Banco update(Long id, Banco banco) {
@@ -56,7 +63,7 @@ public class FretamentoService {
         try {
             return new Criptografia().getKey(key);
         } catch (Exception e) {
-            throw new FretamentoNaoEncontrado();
+            throw new FretamentoEventualNaoEncontrado();
         }
     }
 }

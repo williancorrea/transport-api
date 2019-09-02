@@ -10,8 +10,8 @@ import java.io.Serializable;
 
 @Embeddable
 @Data
-public class FretamentoContato implements Serializable {
-    private static final long serialVersionUID = -6649170818493314243L;
+public class FretamentoEventualContato implements Serializable {
+    private static final long serialVersionUID = -3982075058435584113L;
 
     @Size(max = 150)
     private String nome;
@@ -26,6 +26,6 @@ public class FretamentoContato implements Serializable {
     @Column(name = "obs")
     private String obs;
 
-    public FretamentoContato() {
+    public FretamentoEventualContato() {
     }
 }

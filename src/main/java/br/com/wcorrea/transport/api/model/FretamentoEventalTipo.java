@@ -1,9 +1,9 @@
-package br.com.wcorrea.transport.api.model.pessoa;
+package br.com.wcorrea.transport.api.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @JsonFormat(shape = JsonFormat.Shape.STRING)
-public enum FretamentoTipo {
+public enum FretamentoEventalTipo {
     ORCAMENTO("ORCAMENTO"),
     AGENDADO("AGENDADO"),
     NAO_CONTRATADO("NAO_CONTRATADO"),
@@ -11,7 +11,7 @@ public enum FretamentoTipo {
 
     private String descricao;
 
-    FretamentoTipo(String descricao) {
+    FretamentoEventalTipo(String descricao) {
         this.descricao = descricao;
     }
 

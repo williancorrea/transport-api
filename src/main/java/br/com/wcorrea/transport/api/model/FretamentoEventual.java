@@ -1,7 +1,6 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
-import br.com.wcorrea.transport.api.model.pessoa.FretamentoTipo;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,20 +12,23 @@ import java.io.Serializable;
 
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-@Entity(name = "fretamento")
+@Entity(name = "fretamento_eventual")
 @Data
-public class Fretamento extends IdentificadorComum implements Serializable {
+public class FretamentoEventual extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 6855045965253378941L;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private FretamentoTipo situacao;
+    private FretamentoEventalTipo situacao;
 
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, optional = false)
     private Pessoa cliente;
 
     @Embedded
-    private FretamentoContato contato;
+    private FretamentoEventualContato contato;
+
+    @Embedded
+    private FretamentoEventualItinerario itinerario;
 
 }

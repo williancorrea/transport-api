@@ -35,7 +35,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
 
 
-                .antMatchers("/fretamentos/**").permitAll()
+                .antMatchers("/fretamentosEventuais/**").permitAll()
 
 
                 .anyRequest().authenticated()
