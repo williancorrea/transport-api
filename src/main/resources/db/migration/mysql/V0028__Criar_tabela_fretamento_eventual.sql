@@ -13,9 +13,8 @@ CREATE TABLE fretamento_eventual (
     retorno_cidade_id  BIGINT(20) NOT NULL,
     FOREIGN KEY (retorno_cidade_id) REFERENCES cidade(id),
     partida TIMESTAMP NULL,
-    partida_obs LONGBLOB,
     retorno TIMESTAMP NULL,
-    retorno_obs LONGBLOB,
+    obs_itineratio LONGBLOB,
 
 
     data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -31,6 +31,7 @@ public class FretamentoService {
             fretamentoEventual.setCliente(pessoaService.validarPessoa(fretamentoEventual.getCliente()));
         }
 
+        //VERIFICA SE O PERIODO ENTRE AS DATA É VALIDO
         if (fretamentoEventual.getItinerario().getPartida().after(fretamentoEventual.getItinerario().getRetorno())) {
             throw new RegraDeNegocio("Data de partida n\u00e3o pode ser maior que a data de retorno");
         }
@@ -45,7 +46,6 @@ public class FretamentoService {
         } catch (Exception e) {
             throw new RegraDeNegocio("Cidade de partida n\u00e3o encontrada.");
         }
-
 
         //VERIFICA SE A CIDADE DE RETORNO EXISTE
         try {

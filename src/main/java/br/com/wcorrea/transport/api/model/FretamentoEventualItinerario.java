@@ -26,11 +26,6 @@ public class FretamentoEventualItinerario implements Serializable {
     @NotNull
     private Date partida;
 
-    @Lob
-    @Column(name = "partida_obs")
-    private String partidaObs;
-
-
     @ManyToOne()
     @JoinColumn(name = "retorno_cidade_id", referencedColumnName = "id")
     @NotNull
@@ -43,8 +38,8 @@ public class FretamentoEventualItinerario implements Serializable {
     private Date retorno;
 
     @Lob
-    @Column(name = "retorno_obs")
-    private String retornoOs;
+    @Column(name = "obs_itineratio")
+    private String obsItineratio;
 
     public FretamentoEventualItinerario() {
     }
