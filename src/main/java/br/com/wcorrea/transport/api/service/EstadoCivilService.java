@@ -25,11 +25,13 @@ public class EstadoCivilService {
     }
 
     public EstadoCivil buscarPorId(Long id) {
-        Optional<EstadoCivil> estadoCivil = estadoCivilRepository.findById(id);
-        if (!estadoCivil.isPresent()) {
-            throw new EstadoCivilNaoEncontrado();
+        if (id != null && id > 0) {
+            Optional<EstadoCivil> obj = estadoCivilRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return estadoCivil.get();
+        throw new EstadoCivilNaoEncontrado();
     }
 
     public Long buscarPorKey(String key) {

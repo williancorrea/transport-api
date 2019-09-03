@@ -24,11 +24,13 @@ public class UnidadeMedidaService {
     }
 
     private UnidadeMedida findOne(Long id) {
-        Optional<UnidadeMedida> unidadeMedida = unidadeMedidaRepository.findById(id);
-        if (!unidadeMedida.isPresent()) {
-            throw new UnidadeMedidaNaoEncontrada();
+        if (id != null && id > 0) {
+            Optional<UnidadeMedida> obj = unidadeMedidaRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return unidadeMedida.get();
+        throw new UnidadeMedidaNaoEncontrada();
     }
 
     public Long buscarPorKey(String key) {

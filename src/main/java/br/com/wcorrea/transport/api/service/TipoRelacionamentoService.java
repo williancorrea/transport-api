@@ -22,11 +22,13 @@ public class TipoRelacionamentoService {
     }
 
     private TipoRelacionamento findOne(Long id) {
-        Optional<TipoRelacionamento> tipoRelacionamento = tipoRelacionamentoRepository.findById(id);
-        if (!tipoRelacionamento.isPresent()) {
-            throw new TipoRelacionamentoNaoEncontrado();
+        if (id != null && id > 0) {
+            Optional<TipoRelacionamento> obj = tipoRelacionamentoRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return tipoRelacionamento.get();
+        throw new TipoRelacionamentoNaoEncontrado();
     }
 
     public Long buscarPorKey(String key) {

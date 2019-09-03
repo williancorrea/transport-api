@@ -55,11 +55,13 @@ public class ControleKmService {
      * Buscar por ID
      */
     public ControleKm buscarPorId(Long id) {
-        Optional<ControleKm> controleKm = controleKmRepository.findById(id);
-        if (!controleKm.isPresent()) {
-            throw new ControleKmNaoEncontrado();
+        if (id != null && id > 0) {
+            Optional<ControleKm> obj = controleKmRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return controleKm.get();
+        throw new ControleKmNaoEncontrado();
     }
 
     public Long buscarPorKey(String key) {

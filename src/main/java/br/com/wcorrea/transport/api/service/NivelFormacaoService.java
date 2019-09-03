@@ -22,11 +22,13 @@ public class NivelFormacaoService {
     }
 
     private NivelFormacao findOne(Long id) {
-        Optional<NivelFormacao> levelOfEducation = nivelFormacaoRepository.findById(id);
-        if (!levelOfEducation.isPresent()) {
-            throw new NivelEducacaoNaoEncontrado();
+        if (id != null && id > 0) {
+            Optional<NivelFormacao> obj = nivelFormacaoRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return levelOfEducation.get();
+        throw new NivelEducacaoNaoEncontrado();
     }
 
     public Long buscarPorKey(String key) {

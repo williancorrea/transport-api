@@ -2,6 +2,7 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.FretamentoEventalTipo;
 import br.com.wcorrea.transport.api.model.FretamentoEventual;
+import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualEventualRepository;
 import br.com.wcorrea.transport.api.service.exception.FretamentoEventualNaoEncontrado;
 import br.com.wcorrea.transport.api.service.exception.RegraDeNegocio;
@@ -20,6 +21,9 @@ public class FretamentoService {
     @Autowired
     private PessoaService pessoaService;
 
+    @Autowired
+    private EstadoCidadeService estadoCidadeService;
+
     public FretamentoEventual salvar(FretamentoEventual fretamentoEventual) {
         if (fretamentoEventual.getSituacao().equals(FretamentoEventalTipo.ORCAMENTO)) {
             fretamentoEventual.setCliente(null);
@@ -27,25 +31,45 @@ public class FretamentoService {
             fretamentoEventual.setCliente(pessoaService.validarPessoa(fretamentoEventual.getCliente()));
         }
 
-        if (true) {
-            throw new RegraDeNegocio("Deu merda em alguma coisa ae!");
+        if (fretamentoEventual.getItinerario().getPartida().after(fretamentoEventual.getItinerario().getRetorno())) {
+            throw new RegraDeNegocio("Data de partida n\u00e3o pode ser maior que a data de retorno");
         }
 
-        // TODO: VALIDAR DATA DE PARTIDA
-        // TODO: CIDADE DE PARTIDA
-        // TODO: VALIDAR DATA DE RETORNO
-        // TODO: CIDADE DE RETORNO
-        // TODO: VALIDAR PERIODO ENTRE AS DATA DE PARTIDA E RETORNO
+        // VERIFICA SE A CIDADE DE PARTIDA EXISTE
+        try {
+            Cidade c1 = estadoCidadeService.buscarPorId(fretamentoEventual.getItinerario().getPartidaCidade().getId());
+            if (c1 == null) {
+                throw new RegraDeNegocio("Cidade de partida n\u00e3o encontrada.");
+            }
+            fretamentoEventual.getItinerario().setPartidaCidade(c1);
+        } catch (Exception e) {
+            throw new RegraDeNegocio("Cidade de partida n\u00e3o encontrada.");
+        }
+
+
+        //VERIFICA SE A CIDADE DE RETORNO EXISTE
+        try {
+            Cidade c2 = estadoCidadeService.buscarPorId(fretamentoEventual.getItinerario().getRetornoCidade().getId());
+            if (c2 == null) {
+                throw new RegraDeNegocio("Cidade de retorno n\u00e3o encontrada.");
+            }
+            fretamentoEventual.getItinerario().setRetornoCidade(c2);
+        } catch (Exception e) {
+            throw new RegraDeNegocio("Cidade de retorno n\u00e3o encontrada.");
+        }
+
 
         return fretamentoEventualRepository.save(fretamentoEventual);
     }
 
     public FretamentoEventual findOne(Long id) {
-        Optional<FretamentoEventual> fretamento = fretamentoEventualRepository.findById(id);
-        if (!fretamento.isPresent()) {
-            throw new FretamentoEventualNaoEncontrado();
+        if (id != null && id > 0) {
+            Optional<FretamentoEventual> obj = fretamentoEventualRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return fretamento.get();
+        throw new FretamentoEventualNaoEncontrado();
     }
 
 

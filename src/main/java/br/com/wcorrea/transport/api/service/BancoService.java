@@ -25,11 +25,13 @@ public class BancoService {
     }
 
     public Banco findOne(Long id) {
-        Optional<Banco> banco = bancoRepository.findById(id);
-        if (!banco.isPresent()) {
-            throw new BancoNaoEncontrado();
+        if (id != null && id > 0) {
+            Optional<Banco> obj = bancoRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return banco.get();
+        throw new BancoNaoEncontrado();
     }
 
     public Long buscarPorKey(String key) {

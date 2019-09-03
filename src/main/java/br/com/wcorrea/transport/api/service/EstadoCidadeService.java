@@ -22,10 +22,13 @@ public class EstadoCidadeService {
     }
 
     public Cidade buscarPorId(Long id) {
-        Optional<Cidade> c = cidadeRepository.findById(id);
-        if (!c.isPresent()) {
-            throw new CidadeNaoEncontrada();
+        if (id != null && id > 0) {
+            Optional<Cidade> c = cidadeRepository.findById(id);
+            if (c.isPresent()) {
+                return c.get();
+            }
         }
-        return c.get();
+        throw new CidadeNaoEncontrada();
     }
+
 }

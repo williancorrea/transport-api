@@ -2,15 +2,10 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.ZipCode;
 import br.com.wcorrea.transport.api.repository.ZipCodeRepository;
-//import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
+//import org.json.JSONObject;
 
 /**
  * Class responsible for performing the entire business rule by manipulating tipo of zip code information
@@ -35,12 +30,12 @@ public class ZipCodeService {
             zipCodeFound = searchZipCodeByCepAberto(zipCode);
 
             if (zipCodeFound != null) {
-                if(zipCodeFound.getZipCode() != null) {
+                if (zipCodeFound.getZipCode() != null) {
                     zipCodeFound = zipCodeRepository.save(zipCodeFound);
-                }else{
+                } else {
                     zipCodeFound = null;
                 }
-            }else{
+            } else {
                 //TODO: REMOVER ESSA GAMBIARRA
                 //FEITO SOMENTE PARA PEGAR O ULTIMO ITEM CONSULTADO
                 zipCodeRepository.save(new ZipCode(zipCode));

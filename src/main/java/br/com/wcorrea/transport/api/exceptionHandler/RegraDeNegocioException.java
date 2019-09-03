@@ -24,8 +24,12 @@ public class RegraDeNegocioException extends DefaultExceptionHandler {
 
     @ExceptionHandler({RegraDeNegocio.class})
     public ResponseEntity<Object> handleRegraDeNegocio(RegraDeNegocio ex, WebRequest request, Locale loc) {
-//        String userMessage = messageSource.getMessage(ex.getMessage(), null, loc); // procura a mensagem no arquivo de recurso
-        String userMessage = ex.getMessage();
+        String userMessage = "";
+        try {
+            userMessage = messageSource.getMessage(ex.getMessage(), null, loc); // procura a mensagem no arquivo de recurso
+        } catch (Exception e) {
+            userMessage = ex.getMessage();
+        }
 
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.BAD_REQUEST));

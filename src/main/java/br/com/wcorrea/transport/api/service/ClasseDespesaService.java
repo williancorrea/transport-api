@@ -31,11 +31,13 @@ public class ClasseDespesaService {
     }
 
     public ClasseDespesa buscarPorId(Long id) {
-        Optional<ClasseDespesa> classeDespesa = classeDespesaRepository.findById(id);
-        if (!classeDespesa.isPresent()) {
-            throw new ClasseDespesaNaoEncontrada();
+        if (id != null && id > 0) {
+            Optional<ClasseDespesa> obj = classeDespesaRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return classeDespesa.get();
+        throw new ClasseDespesaNaoEncontrada();
     }
 
     public Long buscarPorKey(String key) {

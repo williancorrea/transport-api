@@ -38,11 +38,13 @@ public class CombustivelService {
      * Find by id
      */
     public Combustivel findOne(Long id) {
-        Optional<Combustivel> combustivel = combustivelRepository.findById(id);
-        if (!combustivel.isPresent()) {
-            throw new CombustivelNaoEncontrado();
+        if (id != null && id > 0) {
+            Optional<Combustivel> obj = combustivelRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return combustivel.get();
+        throw new CombustivelNaoEncontrado();
     }
 
     public Long buscarPorKey(String key) {

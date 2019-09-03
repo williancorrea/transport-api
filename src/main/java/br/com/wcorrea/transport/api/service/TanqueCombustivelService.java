@@ -41,11 +41,13 @@ public class TanqueCombustivelService {
     }
 
     public TanqueCombustivel findOne(Long id) {
-        Optional<TanqueCombustivel> tanqueCombustivel = tanqueCombustivelRepository.findById(id);
-        if (!tanqueCombustivel.isPresent()) {
-            throw new CombustivelNaoEncontrado();
+        if (id != null && id > 0) {
+            Optional<TanqueCombustivel> obj = tanqueCombustivelRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return tanqueCombustivel.get();
+        throw new CombustivelNaoEncontrado();
     }
 
     public Long buscarPorKey(String key) {

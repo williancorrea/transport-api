@@ -39,11 +39,13 @@ public class CentroDeCustoService {
     }
 
     public CentroDeCusto buscarPorId(Long id) {
-        Optional<CentroDeCusto> centroDeCusto = centroDeCustoRepository.findById(id);
-        if (!centroDeCusto.isPresent()) {
-            throw new CentroDeCustoNaoEncontrado();
+        if (id != null && id > 0) {
+            Optional<CentroDeCusto> obj = centroDeCustoRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return centroDeCusto.get();
+        throw new CentroDeCustoNaoEncontrado();
     }
 
     public Long buscarPorKey(String key) {

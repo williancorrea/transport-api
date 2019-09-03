@@ -26,11 +26,13 @@ public class ConfiguracaoSistemaService {
     }
 
     public ConfiguracaoSistema buscarPorId(Long id) {
-        Optional<ConfiguracaoSistema> configuracaoSistema = configuracaoSistemaRepository.findById(id);
-        if (!configuracaoSistema.isPresent()) {
-            throw new ConfiguracaoSistemaNaoEncontrado();
+        if (id != null && id > 0) {
+            Optional<ConfiguracaoSistema> obj = configuracaoSistemaRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return configuracaoSistema.get();
+        throw new ConfiguracaoSistemaNaoEncontrado();
     }
 
     public Long buscarPorKey(String key) {

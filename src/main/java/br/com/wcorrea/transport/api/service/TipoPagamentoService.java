@@ -32,11 +32,13 @@ public class TipoPagamentoService {
     }
 
     public TipoPagamento buscarPorId(Long id) {
-        Optional<TipoPagamento> tipoPagamento = tipoPagamentoRepository.findById(id);
-        if (!tipoPagamento.isPresent()) {
-            throw new TipoPagamentoNaoEncontrado();
+        if (id != null && id > 0) {
+            Optional<TipoPagamento> obj = tipoPagamentoRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return tipoPagamento.get();
+        throw new TipoPagamentoNaoEncontrado();
     }
 
     public Long buscarPorKey(String key) {

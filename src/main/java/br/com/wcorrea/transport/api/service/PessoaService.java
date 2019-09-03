@@ -74,11 +74,13 @@ public class PessoaService {
     }
 
     public Pessoa buscarPorId(Long id) {
-        Optional<Pessoa> pessoaEncontrada = pessoaRepository.findById(id);
-        if (!pessoaEncontrada.isPresent()) {
-            throw new PessoaNaoEncontrada();
+        if (id != null && id > 0) {
+            Optional<Pessoa> obj = pessoaRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return pessoaEncontrada.get();
+        throw new PessoaNaoEncontrada();
     }
 
     public Pessoa buscarPorId(Pessoa pessoa) {

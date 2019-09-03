@@ -29,11 +29,13 @@ public class ItinerarioService {
     }
 
     public Itinerario buscarPorId(Long id) {
-        Optional<Itinerario> itinerario = itinerarioRepository.findById(id);
-        if (!itinerario.isPresent()) {
-            throw new ItinerarioNaoEncontrado();
+        if (id != null && id > 0) {
+            Optional<Itinerario> obj = itinerarioRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return itinerario.get();
+        throw new ItinerarioNaoEncontrado();
     }
 
     public Itinerario buscarPorId(Itinerario itinerario) {

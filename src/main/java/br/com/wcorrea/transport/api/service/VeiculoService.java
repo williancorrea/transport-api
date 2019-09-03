@@ -33,11 +33,13 @@ public class VeiculoService {
     }
 
     public Veiculo buscarPorId(Long id) {
-        Optional<Veiculo> veiculo = veiculoRepository.findById(id);
-        if (!veiculo.isPresent()) {
-            throw new VeiculoNaoEncontrado();
+        if (id != null && id > 0) {
+            Optional<Veiculo> obj = veiculoRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
         }
-        return veiculo.get();
+        throw new VeiculoNaoEncontrado();
     }
 
     public Veiculo buscarPorId(Veiculo veiculo) {
