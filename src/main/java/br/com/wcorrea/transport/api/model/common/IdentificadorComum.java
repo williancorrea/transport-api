@@ -9,7 +9,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @ToString
 @EqualsAndHashCode
@@ -25,8 +24,8 @@ public abstract class IdentificadorComum implements Serializable {
     @JsonIgnore
     private Long id;
 
-    @Embedded
-    private PropriedadesComuns controle;
+//    @Embedded
+//    private PropriedadesComuns controle;
 
 
     @Transient
@@ -61,15 +60,4 @@ public abstract class IdentificadorComum implements Serializable {
     public boolean isEditando() {
         return id != null;
     }
-
-    @PrePersist
-    public void prePersist() {
-        this.controle = new PropriedadesComuns();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        this.getControle().setDataAlteracao(new Date());
-    }
-
 }

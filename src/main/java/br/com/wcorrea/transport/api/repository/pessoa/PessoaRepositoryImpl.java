@@ -1,8 +1,11 @@
 package br.com.wcorrea.transport.api.repository.pessoa;
 
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
-import br.com.wcorrea.transport.api.repository.utils.UtilsRepository;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.*;
+import org.hibernate.sql.JoinType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -17,49 +20,66 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
     private EntityManager manager;
 
     @Override
-    public Page<Pessoa> findAll(PessoaFiltro pessoaFiltro, Pageable pageable) {
-        TypedQuery<Pessoa> queryList = manager.createQuery(this.createQuery(pessoaFiltro, false), Pessoa.class);
-        TypedQuery<Long> queryTotalRecords = manager.createQuery(this.createQuery(pessoaFiltro, true), Long.class);
+    public Page<Pessoa> findAll(PessoaFiltro filtro, Pageable pageable) {
 
-        UtilsRepository.adicionarRestricoesPaginacao(queryList, pageable);
+        //Criterios da pesquisa
+        Criteria criteria = criarCriteriaParaFiltro(filtro);
 
-        return new PageImpl<>(queryList.getResultList(), pageable, queryTotalRecords.getSingleResult());
+        //Paginacao
+        criteria.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        criteria.setMaxResults(pageable.getPageSize());
+
+        //Ordenacao
+        if (filtro.getCampoOrdenacao() != null && filtro.getOrdemClassificacao() != null) {
+            if (filtro.getOrdemClassificacao().equalsIgnoreCase("ASC")) {
+                criteria.addOrder(Order.asc(filtro.getCampoOrdenacao()));
+            } else {
+                criteria.addOrder(Order.desc(filtro.getCampoOrdenacao()));
+            }
+        }
+
+        //Consulta paginada
+        return new PageImpl<>(criteria.list(), pageable, quantidadeRegistrosFiltrados(filtro));
     }
 
-    private String createQuery(PessoaFiltro pessoaFiltro, boolean count) {
-        String sql;
-        if (count) {
-            sql = "select count(a) from pessoa a where 1=1 ";
-        } else {
-            sql = "from pessoa a where 1=1 ";
+    public int quantidadeRegistrosFiltrados(PessoaFiltro filtro) {
+        Criteria criteria = criarCriteriaParaFiltro(filtro);
+        criteria.setProjection(Projections.rowCount());
+        return ((Number) criteria.uniqueResult()).intValue();
+    }
+
+    private Criteria criarCriteriaParaFiltro(PessoaFiltro filtro) {
+        Session session = manager.unwrap(Session.class);
+        Criteria criteria = session.createCriteria(Pessoa.class);
+
+        criteria.createAlias("pessoaFisica", "pf", JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("pessoaJuridica", "pj", JoinType.LEFT_OUTER_JOIN);
+
+        if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
+            Disjunction disjunction = Restrictions.disjunction(); // Restricao com OR
+            disjunction.add(Restrictions.ilike("nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+
+            criteria.add(disjunction);
+            return criteria;
         }
 
-        if (StringUtils.isNotBlank(pessoaFiltro.getFiltroGlobal())) {
-            sql += " and (";
-            sql += " upper(a.nome) like '%" + pessoaFiltro.getFiltroGlobal().toUpperCase().trim() + "%'";
-//            sql += " or upper(a.name) like '%" + pessoaFiltro.getGlobalFilter().toUpperCase().trim() + "%'";
-            sql += " )";
-        } else {
-//            if (StringUtils.isNotBlank(pessoaFiltro.getDescricao())) {
-//                sql += " and upper(a.description) like '%" + pessoaFiltro.getDescricao().toUpperCase().trim() + "%'";
-//            }
-            if (StringUtils.isNotBlank(pessoaFiltro.getNome())) {
-                sql += " and upper(a.nome) like '%" + pessoaFiltro.getNome().toUpperCase().trim() + "%'";
-            }
+        if (StringUtils.isNotBlank(filtro.getNome())) {
+            criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
         }
 
-        /**
-         * ORDERING THE LIST
-         */
-        if (count == false) {
-            if (StringUtils.isNotBlank(pessoaFiltro.getCampoOrdenacao())) {
-                sql += " order by a." + pessoaFiltro.getCampoOrdenacao();
-            }
-            if (StringUtils.isNotBlank(pessoaFiltro.getOrdemClassificacao()) && StringUtils.isNotBlank(pessoaFiltro.getCampoOrdenacao())) {
-                sql += " " + pessoaFiltro.getOrdemClassificacao();
-            }
+        //FILRTAR SOMENTE OS MOTORISTAS
+        if (filtro.isMotorista()) {
+            Conjunction c = Restrictions.conjunction();
+            c.add(Restrictions.isNotNull("pf.cnhNumero"));
+            c.add(Restrictions.ne("pf.cnhNumero", ""));
+            criteria.add(c);
         }
-        return sql;
+
+        //SOMENTE CADASTROS ATIVOS
+        if (filtro.isSomenteAtivo()) {
+            criteria.add(Restrictions.eq("inativo", false));
+        }
+        return criteria;
     }
 
     @Override

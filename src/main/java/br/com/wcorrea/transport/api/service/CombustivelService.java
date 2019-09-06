@@ -29,8 +29,6 @@ public class CombustivelService {
     public Combustivel update(Long id, Combustivel combustivel) {
         Combustivel updateFound = findOne(id);
         combustivel.setId(updateFound.getId());
-        combustivel.setControle(updateFound.getControle());
-        combustivel.getControle().setDataAlteracao(new Date());
         return combustivelRepository.save(combustivel);
     }
 

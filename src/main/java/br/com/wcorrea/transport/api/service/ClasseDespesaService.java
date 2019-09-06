@@ -20,9 +20,6 @@ public class ClasseDespesaService {
         ClasseDespesa objFound = classeDespesaRepository.save(buscarPorId(id));
         classeDespesa.setId(objFound.getId());
 
-        classeDespesa.setControle(objFound.getControle());
-        classeDespesa.getControle().setDataAlteracao(new Date());
-
         return salvar(classeDespesa);
     }
 

@@ -51,7 +51,6 @@ public class PessoaService {
         Pessoa objFound = buscarPorId(id);
 
         pessoa.setId(objFound.getId());
-        pessoa.setControle(objFound.getControle());
 
         if (objFound.getTipo().equals(PessoaTipo.FISICA)) {
             pessoa.getPessoaFisica().setId(objFound.getPessoaFisica().getId());
@@ -113,6 +112,13 @@ public class PessoaService {
     }
 
     public List<Pessoa> pesquisaClienteFornecedorCmb(PessoaFiltro filtro, Pageable pageable) {
+        filtro.setSomenteAtivo(true);
+        return pessoaRepository.findAll(filtro, pageable).getContent();
+    }
+
+    public List<Pessoa> pesquisaMotoristaCmb(PessoaFiltro filtro, Pageable pageable) {
+        filtro.setMotorista(true);
+        filtro.setSomenteAtivo(true);
         return pessoaRepository.findAll(filtro, pageable).getContent();
     }
 

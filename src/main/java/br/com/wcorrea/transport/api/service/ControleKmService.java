@@ -39,8 +39,6 @@ public class ControleKmService {
     public ControleKm atualizar(Long id, ControleKm controleKm) {
         ControleKm objFound = controleKmRepository.save(buscarPorId(id));
         controleKm.setId(objFound.getId());
-        controleKm.setControle(objFound.getControle());
-        controleKm.getControle().setDataAlteracao(new Date());
 
         controleKm = this.validarControleKm(controleKm);
         return controleKmRepository.save(controleKm);

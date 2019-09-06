@@ -23,8 +23,6 @@ public class ItinerarioService {
     public Itinerario atualizar(Long id, Itinerario itinerario) {
         Itinerario objFound = itinerarioRepository.save(buscarPorId(id));
         itinerario.setId(objFound.getId());
-        itinerario.setControle(objFound.getControle());
-        itinerario.getControle().setDataAlteracao(new Date());
         return itinerarioRepository.save(itinerario);
     }
 

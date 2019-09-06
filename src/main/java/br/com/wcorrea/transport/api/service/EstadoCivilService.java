@@ -19,8 +19,6 @@ public class EstadoCivilService {
     public EstadoCivil atualizar(Long id, EstadoCivil estadoCivil) {
         EstadoCivil objFound = estadoCivilRepository.save(buscarPorId(id));
         estadoCivil.setId(objFound.getId());
-        estadoCivil.setControle(objFound.getControle());
-        estadoCivil.getControle().setDataAlteracao(new Date());
         return estadoCivilRepository.save(estadoCivil);
     }
 

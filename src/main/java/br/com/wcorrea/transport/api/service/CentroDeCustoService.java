@@ -24,9 +24,6 @@ public class CentroDeCustoService {
         CentroDeCusto objFound = centroDeCustoRepository.save(buscarPorId(id));
         centroDeCusto.setId(objFound.getId());
 
-        centroDeCusto.setControle(objFound.getControle());
-        centroDeCusto.getControle().setDataAlteracao(new Date());
-
         return salvar(centroDeCusto);
     }
 

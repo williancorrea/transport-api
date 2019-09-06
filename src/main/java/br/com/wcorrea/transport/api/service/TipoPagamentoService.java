@@ -21,9 +21,6 @@ public class TipoPagamentoService {
         TipoPagamento objFound = tipoPagamentoRepository.save(buscarPorId(id));
         tipoPagamento.setId(objFound.getId());
 
-        tipoPagamento.setControle(objFound.getControle());
-        tipoPagamento.getControle().setDataAlteracao(new Date());
-
         return salvar(tipoPagamento);
     }
 

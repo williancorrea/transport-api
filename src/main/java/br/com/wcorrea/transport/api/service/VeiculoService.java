@@ -20,8 +20,6 @@ public class VeiculoService {
     public Veiculo atualizar(Long id, Veiculo veiculo) {
         Veiculo objFound = veiculoRepository.save(buscarPorId(id));
         veiculo.setId(objFound.getId());
-        veiculo.setControle(objFound.getControle());
-        veiculo.getControle().setDataAlteracao(new Date());
         return veiculoRepository.save(veiculo);
     }
 

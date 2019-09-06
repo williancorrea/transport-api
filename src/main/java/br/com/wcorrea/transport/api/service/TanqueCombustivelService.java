@@ -33,9 +33,6 @@ public class TanqueCombustivelService {
     public TanqueCombustivel update(Long id, TanqueCombustivel tanqueCombustivel) {
         TanqueCombustivel updateFound = findOne(id);
         tanqueCombustivel.setId(updateFound.getId());
-        tanqueCombustivel.setControle(updateFound.getControle());
-        tanqueCombustivel.getControle().setDataAlteracao(new Date());
-
         tanqueCombustivel.setCombustivel(combustivelService.findOne(tanqueCombustivel.getCombustivel().getId()));
         return tanqueCombustivelRepository.save(tanqueCombustivel);
     }

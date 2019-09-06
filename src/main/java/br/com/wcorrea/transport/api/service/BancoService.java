@@ -19,8 +19,6 @@ public class BancoService {
     public Banco update(Long id, Banco banco) {
         Banco updateFound = findOne(id);
         banco.setId(updateFound.getId());
-        banco.setControle(updateFound.getControle());
-        banco.getControle().setDataAlteracao(new Date());
         return bancoRepository.save(banco);
     }
 
