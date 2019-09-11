@@ -7,7 +7,7 @@ import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.repository.QueryFiltroPadrao;
 import br.com.wcorrea.transport.api.repository.pessoa.PessoaFiltro;
 import br.com.wcorrea.transport.api.service.EstadoCidadeService;
-import br.com.wcorrea.transport.api.service.FretamentoService;
+import br.com.wcorrea.transport.api.service.FretamentoEventualService;
 import br.com.wcorrea.transport.api.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -31,7 +31,7 @@ public class FretamentoEventualResource {
     private PessoaService pessoaService;
 
     @Autowired
-    private FretamentoService fretamentoService;
+    private FretamentoEventualService fretamentoEventualService;
 
     @Autowired
     private EstadoCidadeService estadoCidadeService;
@@ -39,7 +39,7 @@ public class FretamentoEventualResource {
     @GetMapping("/{key}")
 //    @PreAuthorize("hasAuthority('ROLE_LISTAR_FRETAMENTO_EVENTUAL') and #oauth2.hasScope('read')")
     public ResponseEntity<FretamentoEventual> buscarporKey(@Valid @PathVariable String key) {
-        FretamentoEventual fretamentoEventualEncontrado = fretamentoService.findOne(fretamentoService.buscarPorKey(key));
+        FretamentoEventual fretamentoEventualEncontrado = fretamentoEventualService.findOne(fretamentoEventualService.buscarPorKey(key));
         return fretamentoEventualEncontrado != null ? ResponseEntity.ok(fretamentoEventualEncontrado) : ResponseEntity.notFound().build();
     }
 
@@ -78,7 +78,7 @@ public class FretamentoEventualResource {
     @PostMapping
 //    @PreAuthorize("hasAuthority('ROLE_SALVAR_FRETAMENTO_EVENTUAL') and #oauth2.hasScope('write')")
     public ResponseEntity<FretamentoEventual> salvar(@Valid @RequestBody FretamentoEventual fretamentoEventual, HttpServletResponse response) throws Exception {
-        fretamentoEventual = fretamentoService.salvar(fretamentoEventual);
+        fretamentoEventual = fretamentoEventualService.salvar(fretamentoEventual);
         publisher.publishEvent(new EventResourceCreated(this, response, fretamentoEventual.getKey()));
         return ResponseEntity.status(HttpStatus.CREATED).body(fretamentoEventual);
     }
@@ -87,7 +87,7 @@ public class FretamentoEventualResource {
     @PutMapping("/{key}")
 //    @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_FRETAMENTO_EVENTUAL') and #oauth2.hasScope('write')")
     public ResponseEntity<FretamentoEventual> atualizar(@Valid @PathVariable String key, @Valid @RequestBody FretamentoEventual fretamentoEventual) {
-        return ResponseEntity.status(HttpStatus.OK).body(fretamentoService.atualizar(fretamentoService.buscarPorKey(key), fretamentoEventual));
+        return ResponseEntity.status(HttpStatus.OK).body(fretamentoEventualService.atualizar(fretamentoEventualService.buscarPorKey(key), fretamentoEventual));
     }
 //
 //    @DeleteMapping("/{key}")

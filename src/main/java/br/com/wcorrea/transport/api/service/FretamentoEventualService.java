@@ -3,6 +3,7 @@ package br.com.wcorrea.transport.api.service;
 import br.com.wcorrea.transport.api.model.FretamentoEventalTipo;
 import br.com.wcorrea.transport.api.model.FretamentoEventual;
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
+import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualEventualRepository;
 import br.com.wcorrea.transport.api.service.exception.FretamentoEventualNaoEncontrado;
 import br.com.wcorrea.transport.api.service.exception.RegraDeNegocio;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class FretamentoService {
+public class FretamentoEventualService {
 
     @Autowired
     private FretamentoEventualEventualRepository fretamentoEventualRepository;
@@ -56,6 +57,28 @@ public class FretamentoService {
             fretamentoEventual.getItinerario().setRetornoCidade(c2);
         } catch (Exception e) {
             throw new RegraDeNegocio("Cidade de retorno n\u00e3o encontrada.");
+        }
+
+        // VERIFICA SE O MOTORISTA 1 SELECIONADO EXISTE
+        try {
+            Pessoa m1 = pessoaService.buscarPorId(fretamentoEventual.getCusto().getMotorista1().getId());
+            if (m1 == null) {
+                throw new RegraDeNegocio("Motorista n\u00e3o encontrado.");
+            }
+            fretamentoEventual.getCusto().setMotorista1(m1);
+        } catch (Exception e) {
+            throw new RegraDeNegocio("Motorista n\u00e3o encontrado.");
+        }
+
+        // VERIFICA SE O MOTORISTA 2 SELECIONADO EXISTE
+        try {
+            Pessoa m2 = pessoaService.buscarPorId(fretamentoEventual.getCusto().getMotorista2().getId());
+            if (m2 == null) {
+                throw new RegraDeNegocio("Motorista n\u00e3o encontrado.");
+            }
+            fretamentoEventual.getCusto().setMotorista2(m2);
+        } catch (Exception e) {
+            throw new RegraDeNegocio("Motorista n\u00e3o encontrado.");
         }
 
 

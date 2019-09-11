@@ -22,7 +22,7 @@ public class FretamentoEventual extends IdentificadorComum implements Serializab
     @Enumerated(EnumType.STRING)
     private FretamentoEventalTipo situacao;
 
-    @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
+    @JoinColumn(name = "pessoa_cliente_id", referencedColumnName = "id")
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, optional = false)
     private Pessoa cliente;
 
@@ -35,4 +35,7 @@ public class FretamentoEventual extends IdentificadorComum implements Serializab
     @Valid
     private FretamentoEventualItinerario itinerario;
 
+    @Embedded
+    @Valid
+    private FretamentoEventualCusto custo;
 }
