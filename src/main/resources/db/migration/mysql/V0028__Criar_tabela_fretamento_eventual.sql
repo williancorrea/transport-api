@@ -15,8 +15,6 @@ CREATE TABLE fretamento_eventual (
     partida TIMESTAMP NULL,
     retorno TIMESTAMP NULL,
     obs_itineratio LONGBLOB,
-    obs_custo LONGBLOB,
-
 
     data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -24,9 +22,24 @@ CREATE TABLE fretamento_eventual (
     pessoa_cliente_id BIGINT(20),     FOREIGN KEY (pessoa_cliente_id) REFERENCES pessoa(id),
     pessoa_motorista1_id BIGINT(20),  FOREIGN KEY (pessoa_motorista1_id) REFERENCES pessoa(id),
     pessoa_motorista2_id BIGINT(20),  FOREIGN KEY (pessoa_motorista2_id) REFERENCES pessoa(id),
+    veiculo_id BIGINT(20),  FOREIGN KEY (veiculo_id) REFERENCES veiculo(id),
 
-    motorista1Diaria decimal(20,2),
-    motorista2Diaria decimal(20,2)
+    tipo_nota_fiscal VARCHAR(150) NOT NULL ,
+    valor_motorista1_diaria decimal(20,2),
+    valor_motorista2_diaria decimal(20,2),
+    valor_estacionamento decimal(20,2),
+    valor_agua_gelo decimal(20,2),
+    valor_despesas_adicionais decimal(20,2),
+    valor_dinheiro_reserva decimal(20,2),
+    valor_km decimal(20,2),
+    valor_combustivel decimal(20,2),
+    valor_hospedagem decimal(20,2),
+    valor_pedagio decimal(20,2),
+
+    cobranca_automatica BOOLEAN DEFAULT FALSE,
+    km_percorrido_quantidade int,
+
+    obs_custo LONGBLOB
 
 )
 ENGINE = InnoDB DEFAULT CHARSET = utf8;

@@ -4,7 +4,6 @@ import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
@@ -18,23 +17,75 @@ public class FretamentoEventualCusto implements Serializable {
 
     @JoinColumn(name = "pessoa_motorista1_id", referencedColumnName = "id")
     @ManyToOne
-
-    //TODO: Depois que criar o cadastro de motorista, este campo deve ser notnull
-//    @NotNull
+    @NotNull
     private Pessoa motorista1;
 
     @JoinColumn(name = "pessoa_motorista2_id", referencedColumnName = "id")
     @ManyToOne
     private Pessoa motorista2;
 
+    @JoinColumn(name = "veiculo_id", referencedColumnName = "id")
+    @ManyToOne
+    private Veiculo veiculo;
+
     @NotNull
     @Digits(integer = 20, fraction = 2)
     @DecimalMin("0.00")
-    private BigDecimal motorista1Diaria;
+    @Column(name = "valor_motorista1_diaria")
+    private BigDecimal valorMotorista1Diaria;
 
     @Digits(integer = 20, fraction = 2)
     @DecimalMin("0.00")
-    private BigDecimal motorista2Diaria;
+//    @Column(columnDefinition="Decimal(10,2) default '0.00'")
+//    @Column(name = "valor_motorista2_diaria", nullable = false, columnDefinition = "big_decimal default 0.00", precision = 20, scale = 2)
+    @Column(name = "valor_motorista2_diaria")
+    private BigDecimal valorMotorista2Diaria;
+
+    @Digits(integer = 20, fraction = 2)
+    @DecimalMin("0.00")
+    @Column(name = "valor_estacionamento")
+    private BigDecimal valorEstacionamento;
+
+    @Digits(integer = 20, fraction = 2)
+    @DecimalMin("0.00")
+    @Column(name = "valor_agua_gelo")
+    private BigDecimal valorAguaGelo;
+
+    @Digits(integer = 20, fraction = 2)
+    @DecimalMin("0.00")
+    @Column(name = "valor_despesas_adicionais")
+    private BigDecimal valorDespesasAdicionais;
+
+    @Digits(integer = 20, fraction = 2)
+    @DecimalMin("0.00")
+    @Column(name = "valor_pedagio")
+    private BigDecimal valorPedagio;
+
+    @Digits(integer = 20, fraction = 2)
+    @DecimalMin("0.00")
+    @Column(name = "valor_dinheiro_reserva")
+    private BigDecimal valorDinheiroReserva;
+
+    @Digits(integer = 20, fraction = 2)
+    @DecimalMin("0.00")
+    @Column(name = "valor_km")
+    private BigDecimal valorKm;
+
+    @Digits(integer = 20, fraction = 2)
+    @DecimalMin("0.00")
+    @Column(name = "valor_combustivel")
+    private BigDecimal valorCombustivel;
+
+    @Digits(integer = 20, fraction = 2)
+    @DecimalMin("0.00")
+    @Column(name = "valor_hospedagem")
+    private BigDecimal valorHospedagem;
+
+    @Column(name = "cobranca_automatica")
+    private boolean cobrancaAutomatica;
+
+    @Column(name = "km_percorrido_quantidade")
+    private int kmPercorridoQuantidade;
 
     @Lob
     @Column(name = "obs_custo")
