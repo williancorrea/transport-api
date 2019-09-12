@@ -24,7 +24,7 @@ CREATE TABLE fretamento_eventual (
     pessoa_motorista2_id BIGINT(20),  FOREIGN KEY (pessoa_motorista2_id) REFERENCES pessoa(id),
     veiculo_id BIGINT(20),  FOREIGN KEY (veiculo_id) REFERENCES veiculo(id),
 
-    tipo_nota_fiscal VARCHAR(150) NOT NULL ,
+    nota_fiscal_tipo VARCHAR(150) NOT NULL ,
     valor_motorista1_diaria decimal(20,2),
     valor_motorista2_diaria decimal(20,2),
     valor_estacionamento decimal(20,2),

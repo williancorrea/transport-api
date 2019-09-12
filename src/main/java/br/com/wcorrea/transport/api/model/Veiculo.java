@@ -25,7 +25,7 @@ public class Veiculo extends IdentificadorComum implements Serializable {
     @Column(name = "placa", nullable = false, unique = true)
     private String placa;
 
-    @Size(max = 15)
+    @Size(max = 10)
     private String frota;
 
     @Size(max = 512)

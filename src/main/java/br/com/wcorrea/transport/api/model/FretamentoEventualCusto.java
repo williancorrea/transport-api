@@ -41,6 +41,11 @@ public class FretamentoEventualCusto implements Serializable {
     @Column(name = "valor_motorista2_diaria")
     private BigDecimal valorMotorista2Diaria;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "nota_fiscal_tipo")
+    private NotaFiscalTipo notaFiscalTipo;
+
     @Digits(integer = 20, fraction = 2)
     @DecimalMin("0.00")
     @Column(name = "valor_estacionamento")
@@ -89,7 +94,7 @@ public class FretamentoEventualCusto implements Serializable {
 
     @Lob
     @Column(name = "obs_custo")
-    private String obs;
+    private String obsCusto;
 
     public FretamentoEventualCusto() {
     }

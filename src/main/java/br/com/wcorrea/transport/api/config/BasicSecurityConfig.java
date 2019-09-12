@@ -32,10 +32,12 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        //TODO: REMOVER ACESSO PUBLICO E COLOCAR AS PERMISSOES
         http.authorizeRequests()
 
 
                 .antMatchers("/fretamentosEventuais/**").permitAll()
+                .antMatchers("/veiculos/**").permitAll()
 
 
                 .anyRequest().authenticated()
