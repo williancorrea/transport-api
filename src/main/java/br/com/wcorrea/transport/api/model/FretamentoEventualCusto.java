@@ -48,13 +48,23 @@ public class FretamentoEventualCusto implements Serializable {
 
     @Digits(integer = 20, fraction = 2)
     @DecimalMin("0.00")
+    @Column(name = "nota_fiscal_imposto")
+    private BigDecimal notaFiscalImposto;
+
+    @Digits(integer = 20, fraction = 2)
+    @DecimalMin("0.00")
     @Column(name = "valor_estacionamento")
     private BigDecimal valorEstacionamento;
 
     @Digits(integer = 20, fraction = 2)
     @DecimalMin("0.00")
-    @Column(name = "valor_agua_gelo")
-    private BigDecimal valorAguaGelo;
+    @Column(name = "valor_agua")
+    private BigDecimal valorAgua;
+
+    @Digits(integer = 20, fraction = 2)
+    @DecimalMin("0.00")
+    @Column(name = "valor_gelo")
+    private BigDecimal valorGelo;
 
     @Digits(integer = 20, fraction = 2)
     @DecimalMin("0.00")
@@ -91,6 +101,21 @@ public class FretamentoEventualCusto implements Serializable {
 
     @Column(name = "km_percorrido_quantidade")
     private int kmPercorridoQuantidade;
+
+    @Digits(integer = 20, fraction = 2)
+    @DecimalMin("0.00")
+    @Column(name = "valor_total_despesas")
+    private BigDecimal valorTotalDespesas;
+
+    @Digits(integer = 20, fraction = 2)
+    @DecimalMin("0.00")
+    @Column(name = "viagem_preco_sugerido")
+    private BigDecimal viagemPrecoSugerido;
+
+    @Digits(integer = 20, fraction = 2)
+    @DecimalMin("0.00")
+    @Column(name = "viagem_preco_final")
+    private BigDecimal viagemPrecoFinal;
 
     @Lob
     @Column(name = "obs_custo")

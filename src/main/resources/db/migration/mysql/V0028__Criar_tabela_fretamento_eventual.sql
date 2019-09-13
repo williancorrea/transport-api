@@ -28,13 +28,20 @@ CREATE TABLE fretamento_eventual (
     valor_motorista1_diaria decimal(20,2),
     valor_motorista2_diaria decimal(20,2),
     valor_estacionamento decimal(20,2),
-    valor_agua_gelo decimal(20,2),
+    valor_agua decimal(20,2),
+    valor_gelo decimal(20,2),
     valor_despesas_adicionais decimal(20,2),
     valor_dinheiro_reserva decimal(20,2),
     valor_km decimal(20,2),
-    valor_combustivel decimal(20,2),
     valor_hospedagem decimal(20,2),
     valor_pedagio decimal(20,2),
+
+    valor_combustivel decimal(20,2),
+    nota_fiscal_imposto decimal(20,2),
+
+    valor_total_despesas decimal(20,2),
+    viagem_preco_sugerido decimal(20,2),
+    viagem_preco_final decimal(20,2),
 
     cobranca_automatica BOOLEAN DEFAULT FALSE,
     km_percorrido_quantidade int,
