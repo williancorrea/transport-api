@@ -2,6 +2,7 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.FretamentoEventalTipo;
 import br.com.wcorrea.transport.api.model.FretamentoEventual;
+import br.com.wcorrea.transport.api.model.Veiculo;
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualEventualRepository;
@@ -24,6 +25,9 @@ public class FretamentoEventualService {
 
     @Autowired
     private EstadoCidadeService estadoCidadeService;
+
+    @Autowired
+    private VeiculoService veiculoService;
 
     public FretamentoEventual salvar(FretamentoEventual fretamentoEventual) {
         if (fretamentoEventual.getSituacao().equals(FretamentoEventalTipo.ORCAMENTO)) {
@@ -81,6 +85,16 @@ public class FretamentoEventualService {
             throw new RegraDeNegocio("Motorista n\u00e3o encontrado.");
         }
 
+        // VERIFICA SE O VEICULO SELECIONADO EXISTE
+        try {
+            Veiculo v = veiculoService.buscarPorId(fretamentoEventual.getCusto().getVeiculo().getId());
+            if (v == null) {
+                throw new RegraDeNegocio("Ve\u00edculo n\u00e3o encontrado.");
+            }
+            fretamentoEventual.getCusto().setVeiculo(v);
+        } catch (Exception e) {
+            throw new RegraDeNegocio("Ve\u00edculo n\u00e3o encontrado.");
+        }
 
         return fretamentoEventualRepository.save(fretamentoEventual);
     }
