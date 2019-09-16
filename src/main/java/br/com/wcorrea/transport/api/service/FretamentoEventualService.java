@@ -87,11 +87,11 @@ public class FretamentoEventualService {
 
         // VERIFICA SE O VEICULO SELECIONADO EXISTE
         try {
-            Veiculo v = veiculoService.buscarPorId(fretamentoEventual.getCusto().getVeiculo().getId());
+            Veiculo v = veiculoService.buscarPorId(fretamentoEventual.getItinerario().getVeiculo().getId());
             if (v == null) {
                 throw new RegraDeNegocio("Ve\u00edculo n\u00e3o encontrado.");
             }
-            fretamentoEventual.getCusto().setVeiculo(v);
+            fretamentoEventual.getItinerario().setVeiculo(v);
         } catch (Exception e) {
             throw new RegraDeNegocio("Ve\u00edculo n\u00e3o encontrado.");
         }

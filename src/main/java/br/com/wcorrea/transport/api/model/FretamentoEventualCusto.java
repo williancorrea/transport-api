@@ -24,10 +24,6 @@ public class FretamentoEventualCusto implements Serializable {
     @ManyToOne
     private Pessoa motorista2;
 
-    @JoinColumn(name = "veiculo_id", referencedColumnName = "id")
-    @ManyToOne
-    private Veiculo veiculo;
-
     @NotNull
     @Digits(integer = 20, fraction = 2)
     @DecimalMin("0.00")
@@ -98,9 +94,6 @@ public class FretamentoEventualCusto implements Serializable {
 
     @Column(name = "cobranca_automatica")
     private boolean cobrancaAutomatica;
-
-    @Column(name = "km_percorrido_quantidade")
-    private int kmPercorridoQuantidade;
 
     @Digits(integer = 20, fraction = 2)
     @DecimalMin("0.00")

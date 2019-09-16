@@ -37,6 +37,13 @@ public class FretamentoEventualItinerario implements Serializable {
     @NotNull
     private Date retorno;
 
+    @JoinColumn(name = "veiculo_id", referencedColumnName = "id")
+    @ManyToOne
+    private Veiculo veiculo;
+
+    @Column(name = "km_percorrido_quantidade")
+    private int kmPercorridoQuantidade;
+
     @Lob
     @Column(name = "obs_itineratio")
     private String obsItineratio;
