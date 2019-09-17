@@ -44,6 +44,18 @@ public class FretamentoEventualItinerario implements Serializable {
     @Column(name = "km_percorrido_quantidade")
     private int kmPercorridoQuantidade;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    @Column(name = "previsao_chegada_partida")
+    private Date previsaoChegadaPartida;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    @Column(name = "previsao_chegada_retorno")
+    private Date previsaoChegadaRetorno;
+
     @Lob
     @Column(name = "obs_itineratio")
     private String obsItineratio;

@@ -8,8 +8,8 @@ CREATE TABLE veiculo (
     obs TEXT,
     odometro_inicial BIGINT(20) DEFAULT 0,
     velocidade_media INT(20) DEFAULT 70,
-    consumo_real decimal(20,2),
-    consumo_atual decimal(20,2),
+    consumo_real decimal(20,2) DEFAULT 1.0,
+    consumo_atual decimal(20,2) DEFAULT 1.0,
 
     data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     data_alteracao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP

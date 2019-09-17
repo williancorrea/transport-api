@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -16,6 +17,9 @@ public class VeiculoResumo implements Serializable {
     private String key;
     private String placa;
     private String frota;
+    private int odometroInicial;
+    private BigDecimal consumoReal;
+    private int velocidadeMedia;
 
     public VeiculoResumo() {
     }
@@ -24,6 +28,9 @@ public class VeiculoResumo implements Serializable {
         this.key = veiculo.getKey();
         this.placa = veiculo.getPlaca();
         this.frota = veiculo.getFrota();
+        this.odometroInicial = veiculo.getOdometroInicial();
+        this.consumoReal = veiculo.getConsumoReal();
+        this.velocidadeMedia = veiculo.getVelocidadeMedia();
     }
 
 
