@@ -6,12 +6,16 @@ import br.com.wcorrea.transport.api.model.Veiculo;
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualEventualRepository;
+import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualFiltro;
 import br.com.wcorrea.transport.api.service.exception.FretamentoEventualNaoEncontrado;
 import br.com.wcorrea.transport.api.service.exception.RegraDeNegocio;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -29,6 +33,7 @@ public class FretamentoEventualService {
     @Autowired
     private VeiculoService veiculoService;
 
+    @Transactional
     public FretamentoEventual salvar(FretamentoEventual fretamentoEventual) {
         if (fretamentoEventual.getSituacao().equals(FretamentoEventalTipo.ORCAMENTO)) {
             fretamentoEventual.setCliente(null);
@@ -111,9 +116,12 @@ public class FretamentoEventualService {
 
 
     public FretamentoEventual atualizar(Long id, FretamentoEventual fretamentoEventual) {
-
         //TODO: VERIFICAR A ATUALIZACAO
         return fretamentoEventualRepository.saveAndFlush(fretamentoEventual);
+    }
+
+    public Page<FretamentoEventual> listarTodos(FretamentoEventualFiltro filtro, Pageable paginacao){
+        return fretamentoEventualRepository.findAll(filtro, paginacao);
     }
 
     //    public Banco update(Long id, Banco banco) {

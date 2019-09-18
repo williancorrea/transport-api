@@ -5,12 +5,14 @@ import br.com.wcorrea.transport.api.model.FretamentoEventual;
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.repository.QueryFiltroPadrao;
+import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualFiltro;
 import br.com.wcorrea.transport.api.repository.pessoa.PessoaFiltro;
 import br.com.wcorrea.transport.api.service.EstadoCidadeService;
 import br.com.wcorrea.transport.api.service.FretamentoEventualService;
 import br.com.wcorrea.transport.api.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,12 @@ public class FretamentoEventualResource {
 
     @Autowired
     private EstadoCidadeService estadoCidadeService;
+
+    @GetMapping
+//    @PreAuthorize("hasAuthority('ROLE_LISTAR_ESTADO_CIVIL') and #oauth2.hasScope('read')")
+    public Page<FretamentoEventual> findAll(FretamentoEventualFiltro filtro, Pageable paginacao) {
+        return fretamentoEventualService.listarTodos(filtro, paginacao);
+    }
 
     @GetMapping("/{key}")
 //    @PreAuthorize("hasAuthority('ROLE_LISTAR_FRETAMENTO_EVENTUAL') and #oauth2.hasScope('read')")

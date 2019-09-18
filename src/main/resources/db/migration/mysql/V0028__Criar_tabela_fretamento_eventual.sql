@@ -39,10 +39,12 @@ CREATE TABLE fretamento_eventual (
     valor_pedagio decimal(20,2),
 
     valor_combustivel decimal(20,2),
+    combustivel_lts decimal(20,2),
+    combustivel_total decimal(20,2),
+
     nota_fiscal_imposto decimal(20,2),
 
     valor_total_despesas decimal(20,2),
-    viagem_preco_sugerido decimal(20,2),
     viagem_preco_final decimal(20,2),
 
     cobranca_automatica BOOLEAN DEFAULT FALSE,

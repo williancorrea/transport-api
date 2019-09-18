@@ -1,7 +1,9 @@
 package br.com.wcorrea.transport.api.model;
 
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.Parent;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
@@ -9,6 +11,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Embeddable
 @Data
@@ -85,7 +88,7 @@ public class FretamentoEventualCusto implements Serializable {
     @Digits(integer = 20, fraction = 2)
     @DecimalMin("0.00")
     @Column(name = "valor_combustivel")
-    private BigDecimal valorCombustivel;
+    private BigDecimal combustivelValor;
 
     @Digits(integer = 20, fraction = 2)
     @DecimalMin("0.00")
@@ -102,11 +105,6 @@ public class FretamentoEventualCusto implements Serializable {
 
     @Digits(integer = 20, fraction = 2)
     @DecimalMin("0.00")
-    @Column(name = "viagem_preco_sugerido")
-    private BigDecimal viagemPrecoSugerido;
-
-    @Digits(integer = 20, fraction = 2)
-    @DecimalMin("0.00")
     @Column(name = "viagem_preco_final")
     private BigDecimal viagemPrecoFinal;
 
@@ -114,6 +112,17 @@ public class FretamentoEventualCusto implements Serializable {
     @Column(name = "obs_custo")
     private String obsCusto;
 
+    @Digits(integer = 20, fraction = 2)
+    @DecimalMin("0.00")
+    @Column(name = "combustivel_lts")
+    private BigDecimal combustivelLts;
+
+    @Digits(integer = 20, fraction = 2)
+    @DecimalMin("0.00")
+    @Column(name = "combustivel_total")
+    private BigDecimal combustivelTotal;
+
     public FretamentoEventualCusto() {
+        super();
     }
 }
