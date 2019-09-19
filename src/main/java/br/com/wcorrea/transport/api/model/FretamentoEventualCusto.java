@@ -35,8 +35,6 @@ public class FretamentoEventualCusto implements Serializable {
 
     @Digits(integer = 20, fraction = 2)
     @DecimalMin("0.00")
-//    @Column(columnDefinition="Decimal(10,2) default '0.00'")
-//    @Column(name = "valor_motorista2_diaria", nullable = false, columnDefinition = "big_decimal default 0.00", precision = 20, scale = 2)
     @Column(name = "valor_motorista2_diaria")
     private BigDecimal valorMotorista2Diaria;
 

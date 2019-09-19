@@ -9,6 +9,7 @@ import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEven
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualFiltro;
 import br.com.wcorrea.transport.api.service.exception.FretamentoEventualNaoEncontrado;
 import br.com.wcorrea.transport.api.service.exception.RegraDeNegocio;
+import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,8 +34,41 @@ public class FretamentoEventualService {
     @Autowired
     private VeiculoService veiculoService;
 
+    public Page<FretamentoEventual> listarTodos(FretamentoEventualFiltro filtro, Pageable paginacao){
+        return fretamentoEventualRepository.findAll(filtro, paginacao);
+    }
+
+    public FretamentoEventual findOne(Long id) {
+        if (id != null && id > 0) {
+            Optional<FretamentoEventual> obj = fretamentoEventualRepository.findById(id);
+            if (obj.isPresent()) {
+                return obj.get();
+            }
+        }
+        throw new FretamentoEventualNaoEncontrado();
+    }
+
+    public Long buscarPorKey(String key) {
+        try {
+            return new Criptografia().getKey(key);
+        } catch (Exception e) {
+            throw new FretamentoEventualNaoEncontrado();
+        }
+    }
+
     @Transactional
     public FretamentoEventual salvar(FretamentoEventual fretamentoEventual) {
+        fretamentoEventual = this.preppararFretamentoParaPersistencia(fretamentoEventual);
+        return fretamentoEventualRepository.save(fretamentoEventual);
+    }
+
+    @Transactional
+    public FretamentoEventual atualizar(Long id, FretamentoEventual fretamentoEventual) {
+        fretamentoEventual = this.preppararFretamentoParaPersistencia(fretamentoEventual);
+        return fretamentoEventualRepository.saveAndFlush(fretamentoEventual);
+    }
+
+    private FretamentoEventual preppararFretamentoParaPersistencia(FretamentoEventual fretamentoEventual){
         if (fretamentoEventual.getSituacao().equals(FretamentoEventalTipo.ORCAMENTO)) {
             fretamentoEventual.setCliente(null);
         } else {
@@ -94,49 +128,13 @@ public class FretamentoEventualService {
         try {
             Veiculo v = veiculoService.buscarPorId(fretamentoEventual.getItinerario().getVeiculo().getId());
             if (v == null) {
-                throw new RegraDeNegocio("Ve\u00edculo n\u00e3o encontrado.");
+                throw new VeiculoNaoEncontrado();
             }
             fretamentoEventual.getItinerario().setVeiculo(v);
         } catch (Exception e) {
-            throw new RegraDeNegocio("Ve\u00edculo n\u00e3o encontrado.");
+            throw new VeiculoNaoEncontrado();
         }
 
-        return fretamentoEventualRepository.save(fretamentoEventual);
-    }
-
-    public FretamentoEventual findOne(Long id) {
-        if (id != null && id > 0) {
-            Optional<FretamentoEventual> obj = fretamentoEventualRepository.findById(id);
-            if (obj.isPresent()) {
-                return obj.get();
-            }
-        }
-        throw new FretamentoEventualNaoEncontrado();
-    }
-
-
-    public FretamentoEventual atualizar(Long id, FretamentoEventual fretamentoEventual) {
-        //TODO: VERIFICAR A ATUALIZACAO
-        return fretamentoEventualRepository.saveAndFlush(fretamentoEventual);
-    }
-
-    public Page<FretamentoEventual> listarTodos(FretamentoEventualFiltro filtro, Pageable paginacao){
-        return fretamentoEventualRepository.findAll(filtro, paginacao);
-    }
-
-    //    public Banco update(Long id, Banco banco) {
-//        Banco updateFound = findOne(id);
-//        banco.setId(updateFound.getId());
-//        banco.setControle(updateFound.getControle());
-//        banco.getControle().setDataAlteracao(new Date());
-//        return bancoRepository.save(banco);
-//    }
-
-    public Long buscarPorKey(String key) {
-        try {
-            return new Criptografia().getKey(key);
-        } catch (Exception e) {
-            throw new FretamentoEventualNaoEncontrado();
-        }
+        return fretamentoEventual;
     }
 }

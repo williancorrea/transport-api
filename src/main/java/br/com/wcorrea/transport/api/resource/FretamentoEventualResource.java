@@ -91,13 +91,12 @@ public class FretamentoEventualResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(fretamentoEventual);
     }
 
-    //
     @PutMapping("/{key}")
 //    @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_FRETAMENTO_EVENTUAL') and #oauth2.hasScope('write')")
     public ResponseEntity<FretamentoEventual> atualizar(@Valid @PathVariable String key, @Valid @RequestBody FretamentoEventual fretamentoEventual) {
         return ResponseEntity.status(HttpStatus.OK).body(fretamentoEventualService.atualizar(fretamentoEventualService.buscarPorKey(key), fretamentoEventual));
     }
-//
+
 //    @DeleteMapping("/{key}")
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
 //    @PreAuthorize("hasAuthority('ROLE_DELETAR_FRETAMENTO_EVENTUAL') and #oauth2.hasScope('write')")
