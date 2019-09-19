@@ -5,12 +5,14 @@ import br.com.wcorrea.transport.api.model.FretamentoEventual;
 import br.com.wcorrea.transport.api.model.Veiculo;
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
+import br.com.wcorrea.transport.api.model.pessoa.PessoaTipo;
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualEventualRepository;
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualFiltro;
 import br.com.wcorrea.transport.api.service.exception.FretamentoEventualNaoEncontrado;
 import br.com.wcorrea.transport.api.service.exception.RegraDeNegocio;
 import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -58,20 +60,52 @@ public class FretamentoEventualService {
 
     @Transactional
     public FretamentoEventual salvar(FretamentoEventual fretamentoEventual) {
-        fretamentoEventual = this.preppararFretamentoParaPersistencia(fretamentoEventual);
+        fretamentoEventual = this.prepararFretamentoParaPersistencia(fretamentoEventual);
         return fretamentoEventualRepository.save(fretamentoEventual);
     }
 
     @Transactional
     public FretamentoEventual atualizar(Long id, FretamentoEventual fretamentoEventual) {
-        fretamentoEventual = this.preppararFretamentoParaPersistencia(fretamentoEventual);
+        fretamentoEventual.setId(findOne(id).getId());
+        fretamentoEventual = this.prepararFretamentoParaPersistencia(fretamentoEventual);
         return fretamentoEventualRepository.saveAndFlush(fretamentoEventual);
     }
 
-    private FretamentoEventual preppararFretamentoParaPersistencia(FretamentoEventual fretamentoEventual){
+    private FretamentoEventual prepararFretamentoParaPersistencia(FretamentoEventual fretamentoEventual){
         if (fretamentoEventual.getSituacao().equals(FretamentoEventalTipo.ORCAMENTO)) {
             fretamentoEventual.setCliente(null);
         } else {
+
+            /**
+             * FAZ A ATUALIZACAO DO CLIENTE SOMENTE NOS CAMPOS ALTERADOS NO FRETAMENTO
+             */
+            if(fretamentoEventual.getCliente() != null && fretamentoEventual.getCliente().isEditando()){
+                Pessoa pEncontrada = pessoaService.buscarPorId(fretamentoEventual.getCliente().getId());
+
+                if(pEncontrada.getTipo() == PessoaTipo.FISICA){
+                    pEncontrada.getPessoaFisica().setRg(fretamentoEventual.getCliente().getPessoaFisica().getRg());
+                }
+
+                if(pEncontrada.getTipo() == PessoaTipo.JURIDICA){
+                    pEncontrada.getPessoaJuridica().setInscricaoEstadual(fretamentoEventual.getCliente().getPessoaJuridica().getInscricaoEstadual());
+                }
+
+                pEncontrada.setFantasia(fretamentoEventual.getCliente().getFantasia());
+                pEncontrada.setNome(fretamentoEventual.getCliente().getNome());
+                pEncontrada.setEmail(fretamentoEventual.getCliente().getEmail());
+                pEncontrada.setTelefone1(fretamentoEventual.getCliente().getTelefone1());
+                pEncontrada.setTelefone1Obs(fretamentoEventual.getCliente().getTelefone1Obs());
+                pEncontrada.setTelefone2(fretamentoEventual.getCliente().getTelefone2());
+                pEncontrada.setTelefone2Obs(fretamentoEventual.getCliente().getTelefone2Obs());
+                pEncontrada.setCidade(fretamentoEventual.getCliente().getCidade());
+                pEncontrada.setBairro(fretamentoEventual.getCliente().getBairro());
+                pEncontrada.setCep(fretamentoEventual.getCliente().getCep());
+                pEncontrada.setEndereco(fretamentoEventual.getCliente().getEndereco());
+                pEncontrada.setObs(fretamentoEventual.getCliente().getObs());
+
+                fretamentoEventual.setCliente(pEncontrada);
+            }
+
             fretamentoEventual.setCliente(pessoaService.validarPessoa(fretamentoEventual.getCliente()));
         }
 

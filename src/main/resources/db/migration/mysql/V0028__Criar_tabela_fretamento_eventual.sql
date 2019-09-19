@@ -27,28 +27,28 @@ CREATE TABLE fretamento_eventual (
     veiculo_id BIGINT(20),  FOREIGN KEY (veiculo_id) REFERENCES veiculo(id),
 
     nota_fiscal_tipo VARCHAR(150) NOT NULL ,
-    valor_motorista1_diaria decimal(20,2),
-    valor_motorista2_diaria decimal(20,2),
-    valor_estacionamento decimal(20,2),
-    valor_agua decimal(20,2),
-    valor_gelo decimal(20,2),
-    valor_despesas_adicionais decimal(20,2),
-    valor_dinheiro_reserva decimal(20,2),
-    valor_km decimal(20,2),
-    valor_hospedagem decimal(20,2),
-    valor_pedagio decimal(20,2),
+    valor_motorista1_diaria     decimal(20,2) DEFAULT 0.00,
+    valor_motorista2_diaria     decimal(20,2) DEFAULT 0.00,
+    valor_estacionamento        decimal(20,2) DEFAULT 0.00,
+    valor_agua                  decimal(20,2) DEFAULT 0.00,
+    valor_gelo                  decimal(20,2) DEFAULT 0.00,
+    valor_despesas_adicionais   decimal(20,2) DEFAULT 0.00,
+    valor_dinheiro_reserva      decimal(20,2) DEFAULT 0.00,
+    valor_km                    decimal(20,2) not null ,
+    valor_hospedagem decimal(20,2) DEFAULT 0.00,
+    valor_pedagio decimal(20,2) DEFAULT 0.00,
 
-    valor_combustivel decimal(20,2),
-    combustivel_lts decimal(20,2),
-    combustivel_total decimal(20,2),
+    valor_combustivel decimal(20,2) DEFAULT 0.00,
+    combustivel_lts decimal(20,2) DEFAULT 0.00,
+    combustivel_total decimal(20,2) DEFAULT 0.00,
 
-    nota_fiscal_imposto decimal(20,2),
+    nota_fiscal_imposto decimal(20,2) DEFAULT 0.00,
 
-    valor_total_despesas decimal(20,2),
-    viagem_preco_final decimal(20,2),
+    valor_total_despesas decimal(20,2) DEFAULT 0.00,
+    viagem_preco_final decimal(20,2) DEFAULT 0.00,
 
     cobranca_automatica BOOLEAN DEFAULT FALSE,
-    km_percorrido_quantidade int,
+    km_percorrido_quantidade int not null ,
 
     obs_custo LONGBLOB
 
