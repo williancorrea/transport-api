@@ -90,6 +90,7 @@ public class FretamentoEventualService {
                     pEncontrada.getPessoaJuridica().setInscricaoEstadual(fretamentoEventual.getCliente().getPessoaJuridica().getInscricaoEstadual());
                 }
 
+                pEncontrada.setImagem(fretamentoEventual.getCliente().getImagem());
                 pEncontrada.setFantasia(fretamentoEventual.getCliente().getFantasia());
                 pEncontrada.setNome(fretamentoEventual.getCliente().getNome());
                 pEncontrada.setEmail(fretamentoEventual.getCliente().getEmail());
