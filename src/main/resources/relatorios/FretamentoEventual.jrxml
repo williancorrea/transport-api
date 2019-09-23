@@ -4,21 +4,66 @@
 	<property name="ireport.zoom" value="1.610510000000001"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<title>
-		<band height="52">
+	<pageHeader>
+		<band height="94">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
-				<reportElement x="254" y="22" width="100" height="30" uuid="15754b57-0ad8-41ab-8f2e-ff1fab025519"/>
-				<text><![CDATA[TITULO]]></text>
+				<reportElement x="200" y="16" width="319" height="15" uuid="15754b57-0ad8-41ab-8f2e-ff1fab025519">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ROSA MARIA PEREIRA CORRÊA LOCADORA - ME]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="25" width="180" height="53" uuid="f31847e3-cdab-4820-af75-48b2a62205f1"/>
+				<imageExpression><![CDATA["/Users/willian/Google Drive/Rosinha Turismo/Imagens/Logo/Rosinha Turismo e Transportes LTDA-me/OFICIAL.PNG"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="220" y="49" width="287" height="10" uuid="64a5b9ee-9038-4960-8b7b-5fcfaf262552">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Rua Av. Brasil, 1649, Vila Athaide - Paraguaçu Paulista/SP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="59" width="287" height="10" uuid="b47416bd-9db4-46b7-b283-ce81142e38c1">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CEP: 19700-000 - Fone: (18) 3361-7978]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="69" width="287" height="10" uuid="fccd50e5-0b8c-4da0-a0c3-194bd7e901cb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[E-mail: rosinhalocadora@gmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="32" width="287" height="10" uuid="f71ae189-7c2a-4578-abd3-6088e3ec9658"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CNPJ: 09.325.160/0001-85      IE: 503.101.390.118]]></text>
 			</staticText>
 		</band>
-	</title>
+	</pageHeader>
 	<detail>
-		<band height="752" splitType="Stretch">
+		<band height="663" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 			<textField isStretchWithOverflow="true" evaluationTime="Auto">
-				<reportElement x="0" y="0" width="555" height="752" uuid="c37e30eb-8197-48ce-a0fc-4c850950b056"/>
+				<reportElement x="0" y="0" width="555" height="663" uuid="c37e30eb-8197-48ce-a0fc-4c850950b056"/>
 				<textElement textAlignment="Justified" markup="html"/>
-				<textFieldExpression><![CDATA["<p style='text-indent: 1.5em;'>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p><p>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p><p>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p>" + "<p style='text-indent: 1.5em;'>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p><p>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p><p>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p>" + 
+				<textFieldExpression><![CDATA[("1234" == null) ? "A BAGACA É IGUAL!!     " : "A BAGACA NAO É IGUAL" +
+"<p style='text-indent: 1.5em;'>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p><p>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p><p>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p>" + "<p style='text-indent: 1.5em;'>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p><p>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p><p>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p>" + 
 "<p style='text-indent: 1.5em;'>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p><p>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p><p>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p>" + 
 "<p style='text-indent: 1.5em;'>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p><p>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p><p>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p>" + 
 "<p style='text-indent: 1.5em;'>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p><p>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p><p>Duis nec lacus purus. <b>MAIUSCULO</>, gravida posuere risus porta sit amet. Ut et nisl blandit, laoreet sem nec, interdum magna. Donec eu odio porta, dapibus nulla sit amet, sodales diam. Nunc accumsan arcu sem, ut consectetur risus vestibulum eget. Etiam laoreet sapien iaculis, semper nisl sed, elementum dui. Vivamus nec condimentum massa, in tempor diam. Etiam fringilla aliquet malesuada. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla imperdiet ut magna pharetra pellentesque. Aliquam ac lectus a ipsum dignissim facilisis eu eget enim.</p>" + 
@@ -33,7 +78,7 @@
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="50">
+		<band height="45">
 			<rectangle>
 				<reportElement x="320" y="15" width="235" height="2" forecolor="#F20E0A" backcolor="#F20E0A" uuid="2e527a56-855e-42b5-8687-4971b24c82a6">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -41,35 +86,42 @@
 				</reportElement>
 			</rectangle>
 			<textField>
-				<reportElement x="175" y="10" width="100" height="30" uuid="f313385e-e213-4307-8df4-d849eb75ad5d"/>
+				<reportElement x="175" y="10" width="100" height="19" uuid="f313385e-e213-4307-8df4-d849eb75ad5d"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="275" y="10" width="100" height="30" uuid="fb4df931-17cd-462a-bf31-7ea238beb040"/>
+				<reportElement x="275" y="10" width="100" height="18" uuid="fb4df931-17cd-462a-bf31-7ea238beb040"/>
 				<textElement textAlignment="Left"/>
 				<textFieldExpression><![CDATA[" / " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement x="0" y="15" width="235" height="2" forecolor="#F20E0A" backcolor="#F20E0A" uuid="9db01e3e-7bec-44d9-bed8-3c5f9639d0fe">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="20" width="235" height="1" forecolor="#AD117C" backcolor="#AD117C" uuid="599b0d7d-756d-43af-b570-03f3bae38ba7">
+				<reportElement x="0" y="19" width="235" height="1" forecolor="#AD117C" backcolor="#AD117C" uuid="599b0d7d-756d-43af-b570-03f3bae38ba7">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="320" y="20" width="235" height="1" forecolor="#AD117C" backcolor="#AD117C" uuid="967e8531-c47b-421a-becb-0556bc6c3879">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<reportElement x="320" y="19" width="235" height="1" forecolor="#AD117C" backcolor="#AD117C" uuid="967e8531-c47b-421a-becb-0556bc6c3879">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 			</rectangle>
+			<staticText>
+				<reportElement x="160" y="30" width="235" height="10" uuid="9ff9afed-6ba1-4965-8937-6062d1e126be"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[www.rosinhaturismo.com.br]]></text>
+			</staticText>
 		</band>
 	</pageFooter>
 </jasperReport>
