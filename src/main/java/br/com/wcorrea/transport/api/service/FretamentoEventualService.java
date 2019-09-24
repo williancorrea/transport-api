@@ -6,6 +6,7 @@ import br.com.wcorrea.transport.api.model.Veiculo;
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.model.pessoa.PessoaTipo;
+import br.com.wcorrea.transport.api.model.relatorios.ContratoFretamentoEventual;
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualEventualRepository;
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualFiltro;
 import br.com.wcorrea.transport.api.service.exception.FretamentoEventualNaoEncontrado;
@@ -188,14 +189,14 @@ public class FretamentoEventualService {
         dados.add(f);
 
         Map<String, Object> parametros = new HashMap<>();
-//        parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
-//        parametros.put("CONTRATO", "VAI FILHAO");
-//        parametros.put("IMAGEM_LOGO", this.getClass().getResourceAsStream("/relatorios/Logo.png"));
+        parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
+        parametros.put("CONTRATO", new ContratoFretamentoEventual(f).getContratoFretamentoEventual());
         parametros.put("IMAGEM_LOGO", this.getClass().getResource("/relatorios/Logo.png").getPath());
 
         InputStream inputStream = this.getClass().getResourceAsStream("/relatorios/FretamentoEventual.jasper");
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros, new JRBeanCollectionDataSource(dados));
+//        JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros);
 
         return JasperExportManager.exportReportToPdf(jasperPrint);
     }
