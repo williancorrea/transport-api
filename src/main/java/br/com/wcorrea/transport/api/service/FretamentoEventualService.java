@@ -12,14 +12,19 @@ import br.com.wcorrea.transport.api.service.exception.FretamentoEventualNaoEncon
 import br.com.wcorrea.transport.api.service.exception.RegraDeNegocio;
 import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
-import org.springframework.beans.BeanUtils;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
-import java.util.Optional;
+import java.io.InputStream;
+import java.util.*;
 
 @Service
 public class FretamentoEventualService {
@@ -36,7 +41,10 @@ public class FretamentoEventualService {
     @Autowired
     private VeiculoService veiculoService;
 
-    public Page<FretamentoEventual> listarTodos(FretamentoEventualFiltro filtro, Pageable paginacao){
+    @Autowired
+    ServletContext context;
+
+    public Page<FretamentoEventual> listarTodos(FretamentoEventualFiltro filtro, Pageable paginacao) {
         return fretamentoEventualRepository.findAll(filtro, paginacao);
     }
 
@@ -71,7 +79,7 @@ public class FretamentoEventualService {
         return fretamentoEventualRepository.saveAndFlush(fretamentoEventual);
     }
 
-    private FretamentoEventual prepararFretamentoParaPersistencia(FretamentoEventual fretamentoEventual){
+    private FretamentoEventual prepararFretamentoParaPersistencia(FretamentoEventual fretamentoEventual) {
         if (fretamentoEventual.getSituacao().equals(FretamentoEventalTipo.ORCAMENTO)) {
             fretamentoEventual.setCliente(null);
         } else {
@@ -79,14 +87,14 @@ public class FretamentoEventualService {
             /**
              * FAZ A ATUALIZACAO DO CLIENTE SOMENTE NOS CAMPOS ALTERADOS NO FRETAMENTO
              */
-            if(fretamentoEventual.getCliente() != null && fretamentoEventual.getCliente().isEditando()){
+            if (fretamentoEventual.getCliente() != null && fretamentoEventual.getCliente().isEditando()) {
                 Pessoa pEncontrada = pessoaService.buscarPorId(fretamentoEventual.getCliente().getId());
 
-                if(pEncontrada.getTipo() == PessoaTipo.FISICA){
+                if (pEncontrada.getTipo() == PessoaTipo.FISICA) {
                     pEncontrada.getPessoaFisica().setRg(fretamentoEventual.getCliente().getPessoaFisica().getRg());
                 }
 
-                if(pEncontrada.getTipo() == PessoaTipo.JURIDICA){
+                if (pEncontrada.getTipo() == PessoaTipo.JURIDICA) {
                     pEncontrada.getPessoaJuridica().setInscricaoEstadual(fretamentoEventual.getCliente().getPessoaJuridica().getInscricaoEstadual());
                 }
 
@@ -171,5 +179,24 @@ public class FretamentoEventualService {
         }
 
         return fretamentoEventual;
+    }
+
+    public byte[] contratoPorFretamento(String key) throws Exception {
+        FretamentoEventual f = findOne(buscarPorKey(key));
+
+        List<FretamentoEventual> dados = new ArrayList<>();
+        dados.add(f);
+
+        Map<String, Object> parametros = new HashMap<>();
+//        parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
+//        parametros.put("CONTRATO", "VAI FILHAO");
+//        parametros.put("IMAGEM_LOGO", this.getClass().getResourceAsStream("/relatorios/Logo.png"));
+        parametros.put("IMAGEM_LOGO", this.getClass().getResource("/relatorios/Logo.png").getPath());
+
+        InputStream inputStream = this.getClass().getResourceAsStream("/relatorios/FretamentoEventual.jasper");
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros, new JRBeanCollectionDataSource(dados));
+
+        return JasperExportManager.exportReportToPdf(jasperPrint);
     }
 }

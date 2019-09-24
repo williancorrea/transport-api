@@ -4,11 +4,15 @@
 	<property name="ireport.zoom" value="1.610510000000001"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="IMAGEM_LOGO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["logo.png"]]></defaultValueExpression>
+	</parameter>
 	<pageHeader>
 		<band height="94">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
-				<reportElement x="200" y="16" width="319" height="15" uuid="15754b57-0ad8-41ab-8f2e-ff1fab025519">
+				<reportElement x="200" y="16" width="319" height="16" uuid="15754b57-0ad8-41ab-8f2e-ff1fab025519">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -17,11 +21,11 @@
 				<text><![CDATA[ROSA MARIA PEREIRA CORRÊA LOCADORA - ME]]></text>
 			</staticText>
 			<image>
-				<reportElement x="10" y="25" width="180" height="53" uuid="f31847e3-cdab-4820-af75-48b2a62205f1"/>
-				<imageExpression><![CDATA["/Users/willian/Google Drive/Rosinha Turismo/Imagens/Logo/Rosinha Turismo e Transportes LTDA-me/OFICIAL.PNG"]]></imageExpression>
+				<reportElement x="10" y="22" width="180" height="53" uuid="f31847e3-cdab-4820-af75-48b2a62205f1"/>
+				<imageExpression><![CDATA[$P{IMAGEM_LOGO}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="220" y="49" width="287" height="10" uuid="64a5b9ee-9038-4960-8b7b-5fcfaf262552">
+				<reportElement x="220" y="49" width="287" height="11" uuid="64a5b9ee-9038-4960-8b7b-5fcfaf262552">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -30,7 +34,7 @@
 				<text><![CDATA[Rua Av. Brasil, 1649, Vila Athaide - Paraguaçu Paulista/SP]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="220" y="59" width="287" height="10" uuid="b47416bd-9db4-46b7-b283-ce81142e38c1">
+				<reportElement x="220" y="59" width="287" height="11" uuid="b47416bd-9db4-46b7-b283-ce81142e38c1">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -39,7 +43,7 @@
 				<text><![CDATA[CEP: 19700-000 - Fone: (18) 3361-7978]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="220" y="69" width="287" height="10" uuid="fccd50e5-0b8c-4da0-a0c3-194bd7e901cb">
+				<reportElement x="220" y="69" width="287" height="11" uuid="fccd50e5-0b8c-4da0-a0c3-194bd7e901cb">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -48,7 +52,9 @@
 				<text><![CDATA[E-mail: rosinhalocadora@gmail.com]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="220" y="32" width="287" height="10" uuid="f71ae189-7c2a-4578-abd3-6088e3ec9658"/>
+				<reportElement x="220" y="32" width="287" height="11" uuid="f71ae189-7c2a-4578-abd3-6088e3ec9658">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Center">
 					<font size="8" isBold="true"/>
 				</textElement>
