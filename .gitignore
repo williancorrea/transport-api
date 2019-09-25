@@ -28,7 +28,11 @@ hs_err_pid*
 
 
 target/
+
+#NAO VAI REMOVER ESTE DOIS ARQUIVOS
 !.mvn/wrapper/maven-wrapper.jar
+!lib/htmlcomponent.jar
+
 
 ### STS ###
 .apt_generated

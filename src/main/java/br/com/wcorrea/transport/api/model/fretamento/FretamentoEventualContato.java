@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.model;
+package br.com.wcorrea.transport.api.model.fretamento;
 
 import lombok.Data;
 

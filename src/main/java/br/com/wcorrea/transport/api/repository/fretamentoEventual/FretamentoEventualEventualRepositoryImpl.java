@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.repository.fretamentoEventual;
 
-import br.com.wcorrea.transport.api.model.FretamentoEventual;
+import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventual;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;

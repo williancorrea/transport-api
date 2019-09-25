@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
-import br.com.wcorrea.transport.api.model.FretamentoEventual;
+import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventual;
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.repository.QueryFiltroPadrao;

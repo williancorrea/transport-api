@@ -64,14 +64,19 @@
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="663" splitType="Stretch">
+		<band height="663">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
-			<componentElement>
-				<reportElement x="0" y="0" width="555" height="663" uuid="c6031e84-e5f8-47cb-8111-8671cfe0d4ca"/>
-				<hc:html xmlns:hc="http://jasperreports.sourceforge.net/htmlcomponent" xsi:schemaLocation="http://jasperreports.sourceforge.net/htmlcomponent http://jasperreports.sourceforge.net/xsd/htmlcomponent.xsd" scaleType="RetainShape" horizontalAlign="Left" verticalAlign="Middle">
-					<hc:htmlContentExpression><![CDATA[$P{CONTRATO}]]></hc:htmlContentExpression>
-				</hc:html>
-			</componentElement>
+			<textField isStretchWithOverflow="true" evaluationTime="Auto">
+				<reportElement x="0" y="0" width="555" height="663" uuid="12e26bc8-3f9f-4fcc-9b0b-eac03da6101e">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" markup="styled">
+					<paragraph firstLineIndent="30" leftIndent="10" rightIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CONTRATO}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>

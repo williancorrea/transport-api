@@ -1,5 +1,6 @@
-package br.com.wcorrea.transport.api.model;
+package br.com.wcorrea.transport.api.model.fretamento;
 
+import br.com.wcorrea.transport.api.model.Veiculo;
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

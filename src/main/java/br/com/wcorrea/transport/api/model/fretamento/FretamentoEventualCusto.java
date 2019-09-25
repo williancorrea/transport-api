@@ -1,5 +1,6 @@
-package br.com.wcorrea.transport.api.model;
+package br.com.wcorrea.transport.api.model.fretamento;
 
+import br.com.wcorrea.transport.api.model.NotaFiscalTipo;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
