@@ -91,6 +91,15 @@ public class Pessoa extends IdentificadorComum implements Serializable {
 //    @JoinTable(nome = "EMPRESA_PESSOA", joinColumns = { @JoinColumn(nome = "ID_PESSOA") }, inverseJoinColumns = { @JoinColumn(nome = "ID_EMPRESA") })
 //    private Set<Empresa> listaEmpresa;
 
+    @JsonIgnore
+    @Column(name = "representante_comercial_rosinha_transportes")
+    private boolean representanteComercialRosinhaTransportes;
+
+    @JsonIgnore
+    @Column(name = "empresa_rosinha_transportes")
+    private boolean empresaRosinhaTransportes;
+
+
     public Pessoa() {
     }
 

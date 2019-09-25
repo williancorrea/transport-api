@@ -2,6 +2,7 @@ package br.com.wcorrea.transport.api.utils;
 
 import org.apache.commons.codec.binary.Base64;
 
+import javax.swing.text.MaskFormatter;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
@@ -15,6 +16,25 @@ import java.util.UUID;
 
 public class Utils {
     private Integer TIMEOUT_VALUE = 5000;
+
+    /**
+     * Exemplo
+     * CPF - ###.###.###-#
+     * CNPJ - ##.###.###/####-##
+     *
+     * @param valor
+     * @param mascara
+     * @return
+     */
+    public static String formatarValor(String valor, String mascara) {
+        try {
+            MaskFormatter mask = new MaskFormatter(mascara);
+            mask.setValueContainsLiteralCharacters(false);
+            return mask.valueToString(valor);
+        } catch (Exception ex) {
+            return " --> ERRO <--";
+        }
+    }
 
     public static String StrZeroEsquerda(String value, int n) {
         String s = value.trim();
@@ -201,6 +221,7 @@ public class Utils {
 
     /**
      * Converte uma imagem em base64
+     *
      * @param file
      * @return
      */
@@ -208,7 +229,7 @@ public class Utils {
         String encodedfile = null;
         try {
             FileInputStream fileInputStreamReader = new FileInputStream(file);
-            byte[] bytes = new byte[(int)file.length()];
+            byte[] bytes = new byte[(int) file.length()];
             fileInputStreamReader.read(bytes);
             encodedfile = new String(Base64.encodeBase64(bytes), "UTF-8");
         } catch (FileNotFoundException e) {

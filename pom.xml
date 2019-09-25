@@ -206,9 +206,8 @@
             <artifactId>jasperreports-custom-visualization</artifactId>
             <version>6.8.0</version>
         </dependency>
-
         <!--
-            ADICIONANDO UM JAR EXTERNO AO PROJETO
+            ADICIONANDO UM JAR EXTERNO AO PROJETO P
             https://stackoverflow.com/questions/1091760/export-html-content-to-pdf-using-jasperreports
         -->
         <dependency>

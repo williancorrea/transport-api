@@ -2,6 +2,7 @@ package br.com.wcorrea.transport.api.model.fretamento;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -39,4 +40,14 @@ public class FretamentoEventual extends IdentificadorComum implements Serializab
     @Embedded
     @Valid
     private FretamentoEventualCusto custo;
+
+    @NotNull
+    @JoinColumn(name = "empresa_id", referencedColumnName = "id")
+    @ManyToOne
+    private Pessoa empresa;
+
+    @NotNull
+    @JoinColumn(name = "empresa_representante_id", referencedColumnName = "id")
+    @ManyToOne
+    private Pessoa representanteComercial;
 }

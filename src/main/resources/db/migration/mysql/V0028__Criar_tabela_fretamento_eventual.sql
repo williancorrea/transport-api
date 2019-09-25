@@ -50,6 +50,9 @@ CREATE TABLE fretamento_eventual (
     cobranca_automatica BOOLEAN DEFAULT FALSE,
     km_percorrido_quantidade int not null ,
 
+    empresa_id BIGINT(20), FOREIGN KEY (empresa_id) REFERENCES pessoa(id),
+    empresa_representante_id BIGINT(20), FOREIGN KEY (empresa_representante_id) REFERENCES pessoa(id),
+
     obs_custo LONGBLOB
 
 )

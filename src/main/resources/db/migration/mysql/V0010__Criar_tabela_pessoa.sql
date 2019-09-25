@@ -21,10 +21,12 @@ CREATE TABLE pessoa (
 #     fornecedor BOOLEAN DEFAULT FALSE,
 #     colaborador BOOLEAN DEFAULT FALSE,
 #     transportadora BOOLEAN DEFAULT FALSE,
-#     inativo BOOLEAN DEFAULT FALSE,
 
     obs LONGBLOB,
     inativo BOOLEAN DEFAULT FALSE,
+
+    representante_comercial_rosinha_transportes BOOLEAN DEFAULT FALSE,
+    empresa_rosinha_transportes BOOLEAN DEFAULT FALSE,
 
     data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
