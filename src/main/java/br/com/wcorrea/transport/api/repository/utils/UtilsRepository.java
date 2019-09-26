@@ -42,7 +42,6 @@ public class UtilsRepository {
         return sql;
     }
 
-    //TODO: MELHORAR ESSE METODO, FAZER ELE FICAR GENERICO O SUFICIENTE PARA PODER RECEBER UM OBJETO POR PARAMETRO
     public static String removeCaracteresProblematicos(String txt) {
         if (txt == null) {
             return null;

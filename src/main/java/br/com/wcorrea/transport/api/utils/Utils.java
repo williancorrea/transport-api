@@ -6,12 +6,14 @@ import javax.swing.text.MaskFormatter;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.UUID;
 
 public class Utils {
@@ -34,6 +36,21 @@ public class Utils {
         } catch (Exception ex) {
             return " --> ERRO <--";
         }
+    }
+
+    public static String getDataPorExtenso(Date data){
+        // CRIO AQUI UM FORMATADOR PASSANDO UM ESTILO DE FORMATAÇÃO : DateFormat.FULL E PASSANDO UM LOCAL DA DATA : new Locale("pt", "BR")
+        DateFormat formatador = DateFormat.getDateInstance(DateFormat.FULL, new Locale("pt", "BR"));
+
+        // FORMATO A DATA, O FORMATADOR ME RETORNA A STRING DA DATA FORMATADA
+        String dataExtenso = formatador.format(data);
+
+        // AQUI É CASO VOCÊ QUEIRA TIRAR O DIA DA SEMANA QUE APARECE NO PRIMEIRO EXEMPLO
+        int index  = dataExtenso.indexOf(",");
+        int lenght = dataExtenso.length();
+
+        // MOSTRA A DATA
+        return dataExtenso.substring(++index, lenght);
     }
 
     public static String StrZeroEsquerda(String value, int n) {

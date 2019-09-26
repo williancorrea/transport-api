@@ -9,65 +9,83 @@
 		<defaultValueExpression><![CDATA["logo.png"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CONTRATO" class="java.lang.String"/>
+	<parameter name="EMPRESA_RAZAO" class="java.lang.String"/>
+	<parameter name="EMPRESA_CNPJ_IE" class="java.lang.String"/>
+	<parameter name="EMPRESA_ENDERECO" class="java.lang.String"/>
+	<parameter name="EMPRESA_CEP_FONE" class="java.lang.String"/>
+	<parameter name="EMPRESA_EMAIL" class="java.lang.String"/>
+	<parameter name="CONTRATO_CODIGO" class="java.lang.String"/>
 	<pageHeader>
-		<band height="94">
+		<band height="106">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<staticText>
-				<reportElement x="216" y="16" width="319" height="16" uuid="15754b57-0ad8-41ab-8f2e-ff1fab025519">
+			<image>
+				<reportElement x="26" y="17" width="180" height="53" uuid="f31847e3-cdab-4820-af75-48b2a62205f1"/>
+				<imageExpression><![CDATA[$P{IMAGEM_LOGO}]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="0" y="90" width="555" height="1" forecolor="#F20E0A" backcolor="#F20E0A" uuid="8a3b307a-5b76-4121-99ed-cc13267e3d64">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</rectangle>
+			<textField>
+				<reportElement x="206" y="16" width="345" height="16" uuid="d2558fc4-84f3-42d4-b106-25e39b37edd9">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ROSA MARIA PEREIRA CORRÊA LOCADORA - ME]]></text>
-			</staticText>
-			<image>
-				<reportElement x="26" y="22" width="180" height="53" uuid="f31847e3-cdab-4820-af75-48b2a62205f1"/>
-				<imageExpression><![CDATA[$P{IMAGEM_LOGO}]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement x="236" y="49" width="287" height="11" uuid="64a5b9ee-9038-4960-8b7b-5fcfaf262552">
+				<textFieldExpression><![CDATA[$P{EMPRESA_RAZAO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="236" y="32" width="287" height="11" uuid="1952c4b1-7032-4a64-8e27-34a08d042826"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{EMPRESA_CNPJ_IE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="236" y="50" width="287" height="11" uuid="2be5a057-b0ce-4b41-a1be-8ee3d1d83dfa">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Rua Av. Brasil, 1649, Vila Athaide - Paraguaçu Paulista/SP]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="236" y="59" width="287" height="11" uuid="b47416bd-9db4-46b7-b283-ce81142e38c1">
+				<textFieldExpression><![CDATA[$P{EMPRESA_ENDERECO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="236" y="60" width="287" height="11" uuid="c1ac8458-0737-4b66-9532-7815bca3d42b"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{EMPRESA_CEP_FONE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="236" y="69" width="287" height="11" uuid="bb689beb-fddc-46e3-a3fd-29e20bbe8453">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[CEP: 19700-000 - Fone: (18) 3361-7978]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="236" y="69" width="287" height="11" uuid="fccd50e5-0b8c-4da0-a0c3-194bd7e901cb">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[E-mail: rosinhalocadora@gmail.com]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="236" y="32" width="287" height="11" uuid="f71ae189-7c2a-4578-abd3-6088e3ec9658">
+				<textFieldExpression><![CDATA[$P{EMPRESA_EMAIL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="26" y="75" width="180" height="11" uuid="d80ddb73-5a5b-43e6-b32a-17f372e6053f">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[CNPJ: 09.325.160/0001-85      IE: 503.101.390.118]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{CONTRATO_CODIGO}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="663">
+		<band height="651">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 			<textField isStretchWithOverflow="true" evaluationTime="Auto">
-				<reportElement x="0" y="0" width="555" height="663" uuid="12e26bc8-3f9f-4fcc-9b0b-eac03da6101e">
+				<reportElement x="0" y="0" width="555" height="651" uuid="12e26bc8-3f9f-4fcc-9b0b-eac03da6101e">
 					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>

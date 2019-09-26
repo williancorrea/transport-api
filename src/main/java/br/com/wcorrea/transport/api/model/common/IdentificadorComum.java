@@ -47,8 +47,6 @@ public abstract class IdentificadorComum implements Serializable {
             }
         } catch (Exception e) {
             /*
-             * TODO: SOLUCAO ENCONTRADA PARA APRESENTAR O A EXCECAO PARA O USUARIO (REFATORAR)
-             *
              * Estava apresentando erro de parse para o usuario assim que recebia o objeto
              */
             this.id = (long) -1;

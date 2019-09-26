@@ -51,6 +51,9 @@ public class Veiculo extends IdentificadorComum implements Serializable {
     @Column(name = "velocidade_media")
     private int velocidadeMedia;
 
+    @Column(name = "quantidade_lugares")
+    private int qtdLugares;
+
     private boolean inativo;
 
     public Veiculo() {

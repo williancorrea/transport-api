@@ -2,6 +2,7 @@ package br.com.wcorrea.transport.api.model.fretamento;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
@@ -50,4 +52,9 @@ public class FretamentoEventual extends IdentificadorComum implements Serializab
     @JoinColumn(name = "empresa_representante_id", referencedColumnName = "id")
     @ManyToOne
     private Pessoa representanteComercial;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "data_contratacao")
+    private Date dataContratacao;
 }

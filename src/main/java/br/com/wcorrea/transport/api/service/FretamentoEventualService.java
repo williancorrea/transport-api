@@ -13,6 +13,7 @@ import br.com.wcorrea.transport.api.service.exception.FretamentoEventualNaoEncon
 import br.com.wcorrea.transport.api.service.exception.RegraDeNegocio;
 import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
+import br.com.wcorrea.transport.api.utils.Utils;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -191,6 +192,12 @@ public class FretamentoEventualService {
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
         parametros.put("CONTRATO", new FretamentoEventualRelatorio(f).getContratoFretamentoEventual());
+        parametros.put("EMPRESA_RAZAO", f.getEmpresa().getNome().toUpperCase());
+        parametros.put("EMPRESA_CNPJ_IE", "CNPJ:" + f.getEmpresa().getPessoaJuridica().getCnpjFormatado() + "            " + "IE:" + f.getEmpresa().getPessoaJuridica().getInscricaoEstadualFormatada());
+        parametros.put("EMPRESA_ENDERECO", f.getEmpresa().getEndereco() + ", "+ f.getEmpresa().getBairro() + " - " + f.getEmpresa().getCidade().getNome() + "/" + f.getEmpresa().getCidade().getEstado().getIniciais());
+        parametros.put("EMPRESA_CEP_FONE", "CEP: "+ f.getEmpresa().getCep() + "  -  FONE: " + f.getEmpresa().getTelefone1());
+        parametros.put("EMPRESA_EMAIL", f.getEmpresa().getEmail());
+        parametros.put("CONTRATO_CODIGO", "Contrato Eventual: " + Utils.StrZeroEsquerda(f.getId().toString(), 5));
         parametros.put("IMAGEM_LOGO", this.getClass().getResource("/relatorios/Logo.png").getPath());
 
         InputStream inputStream = this.getClass().getResourceAsStream("/relatorios/FretamentoEventualContrato.jasper");
