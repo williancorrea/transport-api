@@ -59,6 +59,16 @@ public class FretamentoEventualResource {
         return pessoaService.pesquisaClienteFornecedorCmb(filtro, pageable);
     }
 
+    @GetMapping("/cmbEmpresaRosinha")
+    public List<Pessoa> listAllComboBoxEmpresaRosinha(PessoaFiltro filtro, Pageable pageable) {
+        return pessoaService.pesquisaEmpresaRosinhaCmb(filtro, pageable);
+    }
+
+    @GetMapping("/cmbRepresentanteComercialEmpresaRosinha")
+    public List<Pessoa> listAllComboBoxRepresentanteComercialEmpresaRosinha(PessoaFiltro filtro, Pageable pageable) {
+        return pessoaService.pesquisaRepresentanteComercialEmpresaRosinhaCmb(filtro, pageable);
+    }
+
     @GetMapping("/cmbMotoristas")
 //    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
     public List<Pessoa> listAllComboBoxMotoristas(PessoaFiltro filtro, Pageable pageable) {

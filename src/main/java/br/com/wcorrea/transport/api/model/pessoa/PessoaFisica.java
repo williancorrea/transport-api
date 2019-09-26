@@ -26,7 +26,7 @@ public class PessoaFisica extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotBlank
-    @Size(min = 11, max = 14)
+    @Size(min = 14, max = 14)
     @CPF
     private String cpf;
 

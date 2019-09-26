@@ -75,6 +75,20 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
             criteria.add(c);
         }
 
+        //Filtrar somente empresa do Grupo Rosinha Transportes
+        if(filtro.isEmpresaRosinhaTransportes()){
+            Conjunction c = Restrictions.conjunction();
+            c.add(Restrictions.eq("empresaRosinhaTransportes", true));
+            criteria.add(c);
+        }
+
+        //Filtrar somente empresa do Grupo Rosinha Transportes
+        if(filtro.isRepresentanteComercialRosinhaTransportes()){
+            Conjunction c = Restrictions.conjunction();
+            c.add(Restrictions.eq("representanteComercialRosinhaTransportes", true));
+            criteria.add(c);
+        }
+
         //SOMENTE CADASTROS ATIVOS
         if (filtro.isSomenteAtivo()) {
             criteria.add(Restrictions.eq("inativo", false));

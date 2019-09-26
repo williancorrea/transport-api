@@ -122,6 +122,19 @@ public class PessoaService {
         return pessoaRepository.findAll(filtro, pageable).getContent();
     }
 
+    public List<Pessoa> pesquisaEmpresaRosinhaCmb(PessoaFiltro filtro, Pageable pageable) {
+        filtro.setEmpresaRosinhaTransportes(true);
+        filtro.setSomenteAtivo(true);
+        return pessoaRepository.findAll(filtro, pageable).getContent();
+    }
+
+    public List<Pessoa> pesquisaRepresentanteComercialEmpresaRosinhaCmb(PessoaFiltro filtro, Pageable pageable) {
+        filtro.setRepresentanteComercialRosinhaTransportes(true);
+        filtro.setSomenteAtivo(true);
+        return pessoaRepository.findAll(filtro, pageable).getContent();
+    }
+
+
     public Pessoa validarPessoa(Pessoa pessoa) {
         Pessoa pessoaEncontrada = pessoa.getId() != null ? this.buscarPorId(pessoa.getId()) : null;
 
