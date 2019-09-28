@@ -197,7 +197,7 @@ public class FretamentoEventualService {
         parametros.put("EMPRESA_ENDERECO", f.getEmpresa().getEndereco() + ", "+ f.getEmpresa().getBairro() + " - " + f.getEmpresa().getCidade().getNome() + "/" + f.getEmpresa().getCidade().getEstado().getIniciais());
         parametros.put("EMPRESA_CEP_FONE", "CEP: "+ f.getEmpresa().getCep() + "  -  FONE: " + f.getEmpresa().getTelefone1());
         parametros.put("EMPRESA_EMAIL", f.getEmpresa().getEmail());
-        parametros.put("CONTRATO_CODIGO", "Contrato de Fretamento Eventual: " + Utils.StrZeroEsquerda(f.getId().toString(), 5));
+        parametros.put("CONTRATO_CODIGO", "Contrato de Fretamento Eventual: " + f.getNumeroContrato());
         parametros.put("IMAGEM_LOGO", this.getClass().getResource("/relatorios/Logo.png").getPath());
 
         InputStream inputStream = this.getClass().getResourceAsStream("/relatorios/FretamentoEventualContrato.jasper");

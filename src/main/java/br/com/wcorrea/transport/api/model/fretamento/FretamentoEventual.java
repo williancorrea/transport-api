@@ -2,8 +2,8 @@ package br.com.wcorrea.transport.api.model.fretamento;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
+import br.com.wcorrea.transport.api.utils.Utils;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -57,4 +57,11 @@ public class FretamentoEventual extends IdentificadorComum implements Serializab
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_contratacao")
     private Date dataContratacao;
+
+    @Transient
+    private String numeroContrato;
+
+    public String getNumeroContrato() {
+        return Utils.StrZeroEsquerda(this.getId().toString(), 5);
+    }
 }
