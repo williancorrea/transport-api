@@ -53,7 +53,7 @@ CREATE TABLE fretamento_eventual (
     empresa_id BIGINT(20), FOREIGN KEY (empresa_id) REFERENCES pessoa(id),
     empresa_representante_id BIGINT(20), FOREIGN KEY (empresa_representante_id) REFERENCES pessoa(id),
 
-    data_contratacao TIMESTAMP NULL,
+    data_contratacao DATE NULL,
 
     obs_custo LONGBLOB
 

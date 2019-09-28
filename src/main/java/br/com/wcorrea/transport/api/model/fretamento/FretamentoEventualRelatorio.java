@@ -36,14 +36,14 @@ public class FretamentoEventualRelatorio {
 
                 .append("Pelo presente instrumento particular de contrato, de um lado <b>" + f.getEmpresa().getNome()+"</b>, com sede no Município de "
                     + f.getEmpresa().getCidade().getNome() +" / "+ f.getEmpresa().getCidade().getEstado().getIniciais() + " na Rua " + f.getEmpresa().getEndereco() + " - " + f.getEmpresa().getBairro()
-                    + ", inscrita no CNPJ sob o n.º "+ f.getEmpresa().getPessoaJuridica().getCnpjFormatado() + " I.E. " + f.getEmpresa().getPessoaJuridica().getInscricaoEstadualFormatada()
+                    + ", inscrita no CNPJ sob o n.º "+ f.getEmpresa().getPessoaJuridica().getCnpj() + " I.E. " + f.getEmpresa().getPessoaJuridica().getInscricaoEstadual()
                     + ", doravante simplesmente denominada CONTRATADA e de outro lado " + ((f.getCliente().getTipo().equals(PessoaTipo.FISICA)) ? "o <b>Sr.(a) " : "<b>") + f.getCliente().getNome()
                     + "</b>, com sede no Município de " + f.getCliente().getCidade().getNome() +" / "+ f.getCliente().getCidade().getEstado().getIniciais() + ", na Rua. "
                     + f.getCliente().getEndereco() + " - "+f.getCliente().getBairro() +", inscrita no " +
                         (
                             (f.getCliente().getTipo().equals(PessoaTipo.FISICA))
-                                ? "CPF sob o nº " + f.getCliente().getPessoaFisica().getCpfFormatado() + (StringUtils.isBlank(f.getCliente().getPessoaFisica().getRg()) ? "" : " e RG " + f.getCliente().getPessoaFisica().getRg())
-                                : "CNPJ sob o nº " + f.getCliente().getPessoaJuridica().getCnpjFormatado() + (StringUtils.isBlank(f.getCliente().getPessoaJuridica().getInscricaoEstadual()) ? "" : " e Insc. Estadual " + f.getCliente().getPessoaJuridica().getInscricaoEstadualFormatada())
+                                ? "CPF sob o nº " + f.getCliente().getPessoaFisica().getCpf() + (StringUtils.isBlank(f.getCliente().getPessoaFisica().getRg()) ? "" : " e RG " + f.getCliente().getPessoaFisica().getRg())
+                                : "CNPJ sob o nº " + f.getCliente().getPessoaJuridica().getCnpj() + (StringUtils.isBlank(f.getCliente().getPessoaJuridica().getInscricaoEstadual()) ? "" : " e Insc. Estadual " + f.getCliente().getPessoaJuridica().getInscricaoEstadual())
                         )
                     +", doravante denominada simplesmente CONTRATANTE, têm entre si, como justo e pactuado, a contratação dos " +
                     "serviços de transporte de pessoas, mediante as cláusulas e condições seguintes:")
@@ -91,11 +91,11 @@ public class FretamentoEventualRelatorio {
 
                 .append("______________________________________________").append("\n")
                 .append("CONTRATADA: " + f.getEmpresa().getNome()).append("\n")
-                .append("CNPJ: " + f.getEmpresa().getPessoaJuridica().getCnpjFormatado()).append("\n\n\n\n")
+                .append("CNPJ: " + f.getEmpresa().getPessoaJuridica().getCnpj()).append("\n\n\n\n")
 
                 .append("______________________________________________").append("\n")
                 .append("CONTRATANTE: " + f.getCliente().getNome()).append("\n")
-                .append(f.getCliente().getTipo().equals(PessoaTipo.FISICA) ? "CPF: " + f.getCliente().getPessoaFisica().getCpfFormatado(): "CNPJ: " + f.getCliente().getPessoaJuridica().getCnpjFormatado())
+                .append(f.getCliente().getTipo().equals(PessoaTipo.FISICA) ? "CPF: " + f.getCliente().getPessoaFisica().getCpf(): "CNPJ: " + f.getCliente().getPessoaJuridica().getCnpj())
                 .append("\n\n\n\n")
 
                 .append("______________________________________________").append("\n")

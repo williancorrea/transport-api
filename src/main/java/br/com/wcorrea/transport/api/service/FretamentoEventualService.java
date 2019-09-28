@@ -193,7 +193,8 @@ public class FretamentoEventualService {
         parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
         parametros.put("CONTRATO", new FretamentoEventualRelatorio(f).getContratoFretamentoEventual());
         parametros.put("EMPRESA_RAZAO", f.getEmpresa().getNome().toUpperCase());
-        parametros.put("EMPRESA_CNPJ_IE", "CNPJ:" + f.getEmpresa().getPessoaJuridica().getCnpjFormatado() + "            " + "IE:" + f.getEmpresa().getPessoaJuridica().getInscricaoEstadualFormatada());
+//        parametros.put("EMPRESA_CNPJ_IE", "CNPJ:" + f.getEmpresa().getPessoaJuridica().getCnpjFormatado() + "            " + "IE:" + f.getEmpresa().getPessoaJuridica().getInscricaoEstadualFormatada());
+        parametros.put("EMPRESA_CNPJ_IE", "CNPJ:" + f.getEmpresa().getPessoaJuridica().getCnpj() + "            " + "IE:" + f.getEmpresa().getPessoaJuridica().getInscricaoEstadual());
         parametros.put("EMPRESA_ENDERECO", f.getEmpresa().getEndereco() + ", "+ f.getEmpresa().getBairro() + " - " + f.getEmpresa().getCidade().getNome() + "/" + f.getEmpresa().getCidade().getEstado().getIniciais());
         parametros.put("EMPRESA_CEP_FONE", "CEP: "+ f.getEmpresa().getCep() + "  -  FONE: " + f.getEmpresa().getTelefone1());
         parametros.put("EMPRESA_EMAIL", f.getEmpresa().getEmail());

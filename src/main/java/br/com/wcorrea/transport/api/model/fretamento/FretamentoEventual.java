@@ -53,8 +53,8 @@ public class FretamentoEventual extends IdentificadorComum implements Serializab
     @ManyToOne
     private Pessoa representanteComercial;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     @Column(name = "data_contratacao")
     private Date dataContratacao;
 

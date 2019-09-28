@@ -84,7 +84,7 @@ public class Pessoa extends IdentificadorComum implements Serializable {
     private PessoaFisica pessoaFisica;
 
     @JsonProperty("pessoaJuridica")
-    @JsonIgnoreProperties("pessoa")
+    @JsonIgnoreProperties({"pessoa"})
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     private PessoaJuridica pessoaJuridica;
 
