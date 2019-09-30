@@ -76,6 +76,9 @@ public class PessoaFisica extends IdentificadorComum implements Serializable {
     @Column(name = "cnh_vencimento")
     private Date cnhVencimento;
 
+    @Column(name = "inativo_motorista")
+    private Boolean inativoMotorista;
+
     @Column(name = "titulo_eleitoral_numero")
     @Size(max = 30)
     private String tituloEleitoralNumero;
@@ -103,7 +106,6 @@ public class PessoaFisica extends IdentificadorComum implements Serializable {
     @Column(name = "nome_pai")
     @Size(max = 250)
     private String nomePai;
-
 
     @JoinColumn(name = "estado_civil_id", referencedColumnName = "id")
     @ManyToOne()

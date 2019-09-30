@@ -15,6 +15,7 @@ CREATE TABLE pessoa_fisica (
     cnh_numero VARCHAR(30),
     cnh_categoria VARCHAR(2),
     cnh_vencimento DATE,
+    inativo_motorista BOOLEAN DEFAULT TRUE,
 
     titulo_eleitoral_numero VARCHAR(30),
     titulo_eleitoral_zona VARCHAR(3),
