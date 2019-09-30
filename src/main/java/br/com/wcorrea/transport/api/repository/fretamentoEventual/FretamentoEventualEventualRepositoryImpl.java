@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.*;
+import org.hibernate.sql.JoinType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -62,13 +63,23 @@ public class FretamentoEventualEventualRepositoryImpl implements FretamentoEvent
         Session session = manager.unwrap(Session.class);
         Criteria criteria = session.createCriteria(FretamentoEventual.class);
 
+        criteria.createAlias("cliente", "c",  JoinType.LEFT_OUTER_JOIN);
+
+        // Objetos embedded não precisa ter um Alias
+        criteria.createAlias("itinerario.partidaCidade", "pc",  JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("itinerario.retornoCidade", "pr",  JoinType.LEFT_OUTER_JOIN);
+
         if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
             Disjunction disjunction = Restrictions.disjunction(); // Restricao com OR
-//            disjunction.add(Restrictions.ilike("codigo", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
-//            disjunction.add(Restrictions.ilike("nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
-//            disjunction.add(Restrictions.ilike("url", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
-            criteria.add(disjunction);
+            disjunction.add(Restrictions.ilike("numeroContrato", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+            disjunction.add(Restrictions.ilike("c.nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+            disjunction.add(Restrictions.ilike("pc.nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+            disjunction.add(Restrictions.ilike("pr.nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
 
+            // Objetos embedded não precisa ter um Alias
+            disjunction.add(Restrictions.ilike("contato.nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+
+            criteria.add(disjunction);
             return criteria;
         }
 

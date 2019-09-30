@@ -109,17 +109,16 @@ public class FretamentoEventualResource {
         return ResponseEntity.status(HttpStatus.OK).body(fretamentoEventualService.atualizar(fretamentoEventualService.buscarPorKey(key), fretamentoEventual));
     }
 
+    @PutMapping("/{key}/cancelarContrato")
+//    @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_FRETAMENTO_EVENTUAL') and #oauth2.hasScope('write')")
+    public ResponseEntity<FretamentoEventual> cancelarContrato(@Valid @PathVariable String key) {
+        return ResponseEntity.status(HttpStatus.OK).body(fretamentoEventualService.cancelarContrato(fretamentoEventualService.buscarPorKey(key)));
+    }
+
     @GetMapping("/{key}/contrato")
 //    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
     public ResponseEntity<byte[]> contratoPorFretamento(@Valid @PathVariable String key) throws Exception {
         byte[] relatorio = fretamentoEventualService.contratoPorFretamento(key);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(relatorio);
     }
-
-//    @DeleteMapping("/{key}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @PreAuthorize("hasAuthority('ROLE_DELETAR_FRETAMENTO_EVENTUAL') and #oauth2.hasScope('write')")
-//    public void delete(@PathVariable String key) {
-//        bancoRepository.delete(bancoService.buscarPorKey(key));
-//    }
 }

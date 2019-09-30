@@ -54,6 +54,7 @@ CREATE TABLE fretamento_eventual (
     empresa_representante_id BIGINT(20), FOREIGN KEY (empresa_representante_id) REFERENCES pessoa(id),
 
     data_contratacao DATE NULL,
+    numero_contrato VARCHAR(15),
 
     obs_custo LONGBLOB
 

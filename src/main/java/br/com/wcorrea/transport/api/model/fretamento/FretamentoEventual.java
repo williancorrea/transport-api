@@ -58,10 +58,17 @@ public class FretamentoEventual extends IdentificadorComum implements Serializab
     @Column(name = "data_contratacao")
     private Date dataContratacao;
 
-    @Transient
+    @Column(name = "numero_contrato")
     private String numeroContrato;
 
     public String getNumeroContrato() {
         return Utils.StrZeroEsquerda(this.getId().toString(), 5);
     }
+
+    @PostPersist
+    public void postPersist() {
+        this.numeroContrato = Utils.StrZeroEsquerda(this.getId().toString(), 5);
+    }
+
+
 }

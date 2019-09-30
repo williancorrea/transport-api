@@ -81,6 +81,13 @@ public class FretamentoEventualService {
         return fretamentoEventualRepository.saveAndFlush(fretamentoEventual);
     }
 
+    @Transactional
+    public FretamentoEventual cancelarContrato(Long id) {
+        FretamentoEventual f = findOne(id);
+        f.setSituacao(FretamentoEventalTipo.NAO_CONTRATADO);
+        return fretamentoEventualRepository.saveAndFlush(f);
+    }
+
     private FretamentoEventual prepararFretamentoParaPersistencia(FretamentoEventual fretamentoEventual) {
         if (fretamentoEventual.getSituacao().equals(FretamentoEventalTipo.ORCAMENTO)) {
             fretamentoEventual.setCliente(null);
@@ -185,6 +192,10 @@ public class FretamentoEventualService {
 
     public byte[] contratoPorFretamento(String key) throws Exception {
         FretamentoEventual f = findOne(buscarPorKey(key));
+
+        if(f.getCliente() == null){
+            throw new RegraDeNegocio("Fretamento não contém um cadastro de cliente completo, verifique e tente novamente!");
+        }
 
         List<FretamentoEventual> dados = new ArrayList<>();
         dados.add(f);
