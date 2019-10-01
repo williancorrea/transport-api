@@ -25,6 +25,11 @@ public class FretamentoEventual extends IdentificadorComum implements Serializab
     @Enumerated(EnumType.STRING)
     private FretamentoEventalTipo situacao;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "situacao_data")
+    private Date situacaoData;
+
     @JoinColumn(name = "pessoa_cliente_id", referencedColumnName = "id")
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private Pessoa cliente;
@@ -55,8 +60,8 @@ public class FretamentoEventual extends IdentificadorComum implements Serializab
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
-    @Column(name = "data_contratacao")
-    private Date dataContratacao;
+    @Column(name = "data_impressao_contratato")
+    private Date dataImpressaoContrato;
 
     @Column(name = "numero_contrato")
     private String numeroContrato;
@@ -69,6 +74,5 @@ public class FretamentoEventual extends IdentificadorComum implements Serializab
     public void postPersist() {
         this.numeroContrato = Utils.StrZeroEsquerda(this.getId().toString(), 5);
     }
-
 
 }

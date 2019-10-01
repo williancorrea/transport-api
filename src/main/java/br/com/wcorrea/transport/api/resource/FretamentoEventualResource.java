@@ -115,6 +115,19 @@ public class FretamentoEventualResource {
         return ResponseEntity.status(HttpStatus.OK).body(fretamentoEventualService.cancelarContrato(fretamentoEventualService.buscarPorKey(key)));
     }
 
+    @PutMapping("/{key}/ativarContrato")
+//    @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_FRETAMENTO_EVENTUAL') and #oauth2.hasScope('write')")
+    public ResponseEntity<FretamentoEventual> ativarContrato(@Valid @PathVariable String key) {
+        return ResponseEntity.status(HttpStatus.OK).body(fretamentoEventualService.ativarContrato(fretamentoEventualService.buscarPorKey(key)));
+    }
+
+    @PutMapping("/{key}/contratarFretamento")
+//    @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_FRETAMENTO_EVENTUAL') and #oauth2.hasScope('write')")
+    public ResponseEntity<FretamentoEventual> contratarFretamento(@Valid @PathVariable String key) {
+        return ResponseEntity.status(HttpStatus.OK).body(fretamentoEventualService.contratarFretamento(fretamentoEventualService.buscarPorKey(key)));
+    }
+
+
     @GetMapping("/{key}/contrato")
 //    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
     public ResponseEntity<byte[]> contratoPorFretamento(@Valid @PathVariable String key) throws Exception {

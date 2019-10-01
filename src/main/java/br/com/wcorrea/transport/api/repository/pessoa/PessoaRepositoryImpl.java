@@ -70,7 +70,7 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
         //FILRTAR SOMENTE OS MOTORISTAS
         if (filtro.isMotorista()) {
             Conjunction c = Restrictions.conjunction();
-            c.add(Restrictions.eq("pf.inativo_motorista", true));
+            c.add(Restrictions.eq("pf.inativoMotorista", false));
 //            c.add(Restrictions.isNotNull("pf.cnhNumero"));
 //            c.add(Restrictions.ne("pf.cnhNumero", ""));
             criteria.add(c);

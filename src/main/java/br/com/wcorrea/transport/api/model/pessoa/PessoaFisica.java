@@ -118,8 +118,4 @@ public class PessoaFisica extends IdentificadorComum implements Serializable {
 
     public PessoaFisica() {
     }
-
-    public String getCpfFormatado() {
-        return Utils.formatarValor(this.cpf, "###.###.###-##");
-    }
 }

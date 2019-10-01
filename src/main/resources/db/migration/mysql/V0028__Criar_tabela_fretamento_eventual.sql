@@ -2,6 +2,7 @@ CREATE TABLE fretamento_eventual (
     id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
 
     situacao VARCHAR(100),
+    situacao_data DATE NULL,
 
     nome VARCHAR(150),
     telefone1 VARCHAR(20),
@@ -53,7 +54,7 @@ CREATE TABLE fretamento_eventual (
     empresa_id BIGINT(20), FOREIGN KEY (empresa_id) REFERENCES pessoa(id),
     empresa_representante_id BIGINT(20), FOREIGN KEY (empresa_representante_id) REFERENCES pessoa(id),
 
-    data_contratacao DATE NULL,
+    data_impressao_contratato DATE NULL,
     numero_contrato VARCHAR(15),
 
     obs_custo LONGBLOB

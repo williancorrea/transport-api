@@ -87,7 +87,7 @@ public class FretamentoEventualRelatorio {
                 .append("\n\n\n\n")
 
 
-                .append("<font color='white'>_ _ _ _ _ _ _ _ _ _ _ _ _ _  </font>" +f.getEmpresa().getCidade().getNome() +", " + Utils.getDataPorExtenso(f.getDataContratacao())).append("\n\n\n\n")
+                .append("<font color='white'>_ _ _ _ _ _ _ _ _ _ _ _ _ _  </font>" +f.getEmpresa().getCidade().getNome() +", " + Utils.getDataPorExtenso(f.getDataImpressaoContrato())).append("\n\n\n\n")
 
                 .append("______________________________________________").append("\n")
                 .append("CONTRATADA: " + f.getEmpresa().getNome()).append("\n")

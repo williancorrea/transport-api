@@ -1,12 +1,12 @@
 package br.com.wcorrea.transport.api.service;
 
+import br.com.wcorrea.transport.api.model.Veiculo;
 import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventalTipo;
 import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventual;
-import br.com.wcorrea.transport.api.model.Veiculo;
+import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventualRelatorio;
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.model.pessoa.PessoaTipo;
-import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventualRelatorio;
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualEventualRepository;
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualFiltro;
 import br.com.wcorrea.transport.api.service.exception.FretamentoEventualNaoEncontrado;
@@ -18,6 +18,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -76,7 +77,12 @@ public class FretamentoEventualService {
 
     @Transactional
     public FretamentoEventual atualizar(Long id, FretamentoEventual fretamentoEventual) {
-        fretamentoEventual.setId(findOne(id).getId());
+        FretamentoEventual fretamentoEncontrado = findOne(id);
+
+        fretamentoEventual.setId(fretamentoEncontrado.getId());
+        fretamentoEventual.setNumeroContrato(Utils.StrZeroEsquerda(fretamentoEncontrado.getId().toString(), 5));
+        fretamentoEventual.setSituacaoData(fretamentoEncontrado.getSituacaoData());
+
         fretamentoEventual = this.prepararFretamentoParaPersistencia(fretamentoEventual);
         return fretamentoEventualRepository.saveAndFlush(fretamentoEventual);
     }
@@ -85,14 +91,35 @@ public class FretamentoEventualService {
     public FretamentoEventual cancelarContrato(Long id) {
         FretamentoEventual f = findOne(id);
         f.setSituacao(FretamentoEventalTipo.NAO_CONTRATADO);
+        f.setSituacaoData(new Date());
         return fretamentoEventualRepository.saveAndFlush(f);
     }
 
-    private FretamentoEventual prepararFretamentoParaPersistencia(FretamentoEventual fretamentoEventual) {
-        if (fretamentoEventual.getSituacao().equals(FretamentoEventalTipo.ORCAMENTO)) {
-            fretamentoEventual.setCliente(null);
-        } else {
+    @Transactional
+    public FretamentoEventual ativarContrato(Long id) {
+        FretamentoEventual f = findOne(id);
+        f.setSituacaoData(new Date());
+        f.setSituacao(FretamentoEventalTipo.AGENDADO);
+        if(f.getCliente() == null){
+            f.setSituacao(FretamentoEventalTipo.ORCAMENTO);
+        }
 
+        return fretamentoEventualRepository.saveAndFlush(f);
+    }
+
+    @Transactional
+    public FretamentoEventual contratarFretamento(Long id) {
+        FretamentoEventual f = findOne(id);
+        f.setSituacaoData(new Date());
+        f.setSituacao(FretamentoEventalTipo.CONTRATADO);
+        return fretamentoEventualRepository.saveAndFlush(f);
+    }
+
+
+
+    private FretamentoEventual prepararFretamentoParaPersistencia(FretamentoEventual fretamentoEventual) {
+
+        if (fretamentoEventual.getCliente() != null && ((fretamentoEventual.getCliente().getPessoaFisica() != null && StringUtils.isNotBlank(fretamentoEventual.getCliente().getPessoaFisica().getCpf())) || (fretamentoEventual.getCliente().getPessoaJuridica() != null && StringUtils.isNotBlank(fretamentoEventual.getCliente().getPessoaJuridica().getCnpj())))) {
             /**
              * FAZ A ATUALIZACAO DO CLIENTE SOMENTE NOS CAMPOS ALTERADOS NO FRETAMENTO
              */
@@ -125,6 +152,13 @@ public class FretamentoEventualService {
             }
 
             fretamentoEventual.setCliente(pessoaService.validarPessoa(fretamentoEventual.getCliente()));
+        }else{
+            fretamentoEventual.setCliente(null);
+        }
+
+        //VERIFICA A DATA INICIAL DO ESTATUDO DO ORÇAMENTO
+        if(fretamentoEventual.getSituacaoData() == null){
+            fretamentoEventual.setSituacaoData(new Date());
         }
 
         //VERIFICA SE O PERIODO ENTRE AS DATA É VALIDO
@@ -193,7 +227,7 @@ public class FretamentoEventualService {
     public byte[] contratoPorFretamento(String key) throws Exception {
         FretamentoEventual f = findOne(buscarPorKey(key));
 
-        if(f.getCliente() == null){
+        if (f.getCliente() == null) {
             throw new RegraDeNegocio("Fretamento não contém um cadastro de cliente completo, verifique e tente novamente!");
         }
 
@@ -206,8 +240,8 @@ public class FretamentoEventualService {
         parametros.put("EMPRESA_RAZAO", f.getEmpresa().getNome().toUpperCase());
 //        parametros.put("EMPRESA_CNPJ_IE", "CNPJ:" + f.getEmpresa().getPessoaJuridica().getCnpjFormatado() + "            " + "IE:" + f.getEmpresa().getPessoaJuridica().getInscricaoEstadualFormatada());
         parametros.put("EMPRESA_CNPJ_IE", "CNPJ:" + f.getEmpresa().getPessoaJuridica().getCnpj() + "            " + "IE:" + f.getEmpresa().getPessoaJuridica().getInscricaoEstadual());
-        parametros.put("EMPRESA_ENDERECO", f.getEmpresa().getEndereco() + ", "+ f.getEmpresa().getBairro() + " - " + f.getEmpresa().getCidade().getNome() + "/" + f.getEmpresa().getCidade().getEstado().getIniciais());
-        parametros.put("EMPRESA_CEP_FONE", "CEP: "+ f.getEmpresa().getCep() + "  -  FONE: " + f.getEmpresa().getTelefone1());
+        parametros.put("EMPRESA_ENDERECO", f.getEmpresa().getEndereco() + ", " + f.getEmpresa().getBairro() + " - " + f.getEmpresa().getCidade().getNome() + "/" + f.getEmpresa().getCidade().getEstado().getIniciais());
+        parametros.put("EMPRESA_CEP_FONE", "CEP: " + f.getEmpresa().getCep() + "  -  FONE: " + f.getEmpresa().getTelefone1());
         parametros.put("EMPRESA_EMAIL", f.getEmpresa().getEmail());
         parametros.put("CONTRATO_CODIGO", "Contrato de Fretamento Eventual: " + f.getNumeroContrato());
         parametros.put("IMAGEM_LOGO", this.getClass().getResource("/relatorios/Logo.png").getPath());
