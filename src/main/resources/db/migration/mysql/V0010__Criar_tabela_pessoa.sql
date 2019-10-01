@@ -31,8 +31,7 @@ CREATE TABLE pessoa (
     data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    cidade_id BIGINT(20),
-    FOREIGN KEY (cidade_id) REFERENCES cidade(id)
+    cidade_id BIGINT(20), FOREIGN KEY (cidade_id) REFERENCES cidade(id)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8;

@@ -14,7 +14,10 @@ CREATE TABLE pessoa_fisica (
 
     cnh_numero VARCHAR(30),
     cnh_categoria VARCHAR(2),
-    cnh_vencimento DATE,
+    cnh_vencimento DATE NULL,
+    cnh_primeira_habilitacao DATE NULL,
+    cnh_emissao_data DATE NULL,
+    cnh_emissao_cidade_id BIGINT(20), FOREIGN KEY (cnh_emissao_cidade_id) REFERENCES cidade(id),
     inativo_motorista BOOLEAN DEFAULT TRUE,
 
     titulo_eleitoral_numero VARCHAR(30),

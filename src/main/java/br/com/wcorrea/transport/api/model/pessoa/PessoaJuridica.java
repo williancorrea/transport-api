@@ -62,12 +62,4 @@ public class PessoaJuridica extends IdentificadorComum implements Serializable {
 
     public PessoaJuridica() {
     }
-
-    public String getCnpjFormatado() {
-        return Utils.formatarValor(this.cnpj, "##.###.###/####-##");
-    }
-
-    public String getInscricaoEstadualFormatada() {
-        return Utils.formatarValor(this.inscricaoEstadual, "###.###.###.####");
-    }
 }

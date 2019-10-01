@@ -76,6 +76,23 @@ public class PessoaFisica extends IdentificadorComum implements Serializable {
     @Column(name = "cnh_vencimento")
     private Date cnhVencimento;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "cnh_primeira_habilitacao")
+    private Date cnhPrimeiraHabilitacao;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "cnh_emissao_data")
+    private Date cnhEmissaoData;
+
+    @JoinColumn(name = "cnh_emissao_cidade_id", referencedColumnName = "id")
+    @ManyToOne()
+    private Cidade cnhEmissaoCidade;
+
+
+
+
     @Column(name = "inativo_motorista")
     private Boolean inativoMotorista;
 

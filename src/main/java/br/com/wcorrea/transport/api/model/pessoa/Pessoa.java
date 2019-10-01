@@ -79,12 +79,16 @@ public class Pessoa extends IdentificadorComum implements Serializable {
     private boolean inativo;
 
     @JsonProperty("pessoaFisica")
-    @JsonIgnoreProperties({"pessoa", "controle", "orgaoRg", "dataEmissaoRg", "dataNascimento", "naturalidade", "nacionalidade", "tipoSangue", "cnhNumero", "cnhCategoria", "cnhVencimento", "tituloEleitoralNumero", "tituloEleitoralZona", "tituloEleitoralSecao", "reservistaNumero", "reservistaCategoria", "nomeMae", "nomePai", "estadoCivil", "sexo", "inativoMotorista"})
+    @JsonIgnoreProperties({"pessoa", "controle", "orgaoRg", "dataEmissaoRg", "dataNascimento",
+            "naturalidade", "nacionalidade", "tipoSangue", "cnhNumero", "cnhCategoria",
+            "cnhVencimento", "tituloEleitoralNumero", "tituloEleitoralZona", "tituloEleitoralSecao",
+            "reservistaNumero", "reservistaCategoria", "nomeMae", "nomePai", "estadoCivil", "sexo",
+            "inativoMotorista", "cnhPrimeiraHabilitacao", "cnhEmissaoData", "cnhEmissaoCidade"})
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     private PessoaFisica pessoaFisica;
 
     @JsonProperty("pessoaJuridica")
-    @JsonIgnoreProperties({"pessoa"})
+    @JsonIgnoreProperties({"pessoa", "tipoRegime", "crt", "suframa", "dataConstituicao"})
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     private PessoaJuridica pessoaJuridica;
 
