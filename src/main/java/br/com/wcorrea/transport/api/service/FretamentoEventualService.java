@@ -224,6 +224,37 @@ public class FretamentoEventualService {
         return fretamentoEventual;
     }
 
+    public byte[] contratoTermoResponsabilidade(String key) throws Exception {
+        FretamentoEventual f = findOne(buscarPorKey(key));
+
+        if (f.getCliente() == null) {
+            throw new RegraDeNegocio("Fretamento não contém um cadastro de cliente completo, verifique e tente novamente!");
+        }
+
+        List<FretamentoEventual> dados = new ArrayList<>();
+        dados.add(f);
+
+        if(f.getCusto().getMotorista2() != null){
+            dados.add(f);
+        }
+
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
+        parametros.put("CONTRATO", new FretamentoEventualRelatorio(f).getContratoTermoResponsabilidadeMotorista());
+        parametros.put("EMPRESA_RAZAO", f.getEmpresa().getNome().toUpperCase());
+        parametros.put("EMPRESA_CNPJ_IE", "CNPJ:" + f.getEmpresa().getPessoaJuridica().getCnpj() + "            " + "IE:" + f.getEmpresa().getPessoaJuridica().getInscricaoEstadual());
+        parametros.put("EMPRESA_ENDERECO", f.getEmpresa().getEndereco() + ", " + f.getEmpresa().getBairro() + " - " + f.getEmpresa().getCidade().getNome() + "/" + f.getEmpresa().getCidade().getEstado().getIniciais());
+        parametros.put("EMPRESA_CEP_FONE", "CEP: " + f.getEmpresa().getCep() + "  -  FONE: " + f.getEmpresa().getTelefone1());
+        parametros.put("EMPRESA_EMAIL", f.getEmpresa().getEmail());
+        parametros.put("CONTRATO_CODIGO", "Contrato de Fretamento Eventual: " + f.getNumeroContrato());
+        parametros.put("IMAGEM_LOGO", this.getClass().getResource("/relatorios/Logo.png").getPath());
+
+        InputStream inputStream = this.getClass().getResourceAsStream("/relatorios/FretamentoEventualContratoTermoResponsabilidade.jasper");
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros, new JRBeanCollectionDataSource(dados));
+        return JasperExportManager.exportReportToPdf(jasperPrint);
+    }
+
     public byte[] contratoPorFretamento(String key) throws Exception {
         FretamentoEventual f = findOne(buscarPorKey(key));
 
