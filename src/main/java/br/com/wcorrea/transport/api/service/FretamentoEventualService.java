@@ -90,7 +90,8 @@ public class FretamentoEventualService {
     @Transactional
     public FretamentoEventual cancelarContrato(Long id) {
         FretamentoEventual f = findOne(id);
-        f.setSituacao(FretamentoEventalTipo.NAO_CONTRATADO);
+
+        f.setSituacao(f.getCliente() != null ? FretamentoEventalTipo.NAO_CONTRATADO_CLIENTE : FretamentoEventalTipo.NAO_CONTRATADO_CONTATO);
         f.setSituacaoData(new Date());
         return fretamentoEventualRepository.saveAndFlush(f);
     }
@@ -99,11 +100,7 @@ public class FretamentoEventualService {
     public FretamentoEventual ativarContrato(Long id) {
         FretamentoEventual f = findOne(id);
         f.setSituacaoData(new Date());
-        f.setSituacao(FretamentoEventalTipo.AGENDADO);
-        if(f.getCliente() == null){
-            f.setSituacao(FretamentoEventalTipo.ORCAMENTO);
-        }
-
+        f.setSituacao(f.getCliente() != null ?  FretamentoEventalTipo.ORCAMENTO_CLIENTE : FretamentoEventalTipo.ORCAMENTO_CONTATO);
         return fretamentoEventualRepository.saveAndFlush(f);
     }
 

@@ -207,16 +207,16 @@
             <version>6.8.0</version>
         </dependency>
         <!--
-            ADICIONANDO UM JAR EXTERNO AO PROJETO P
+            ADICIONANDO UM JAR EXTERNO AO PROJETO
             https://stackoverflow.com/questions/1091760/export-html-content-to-pdf-using-jasperreports
         -->
-        <dependency>
-            <groupId>htmlComponent</groupId>
-            <artifactId>htmlComponent</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/htmlcomponent.jar</systemPath>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>htmlComponent</groupId>-->
+<!--            <artifactId>htmlComponent</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${basedir}/lib/htmlcomponent.jar</systemPath>-->
+<!--        </dependency>-->
 
     </dependencies>
 
