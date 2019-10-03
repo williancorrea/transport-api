@@ -189,22 +189,24 @@ public class FretamentoEventualService {
         try {
             Pessoa m1 = pessoaService.buscarPorId(fretamentoEventual.getCusto().getMotorista1().getId());
             if (m1 == null) {
-                throw new RegraDeNegocio("Motorista n\u00e3o encontrado.");
+                throw new RegraDeNegocio("Motorista 1 n\u00e3o encontrado.");
             }
             fretamentoEventual.getCusto().setMotorista1(m1);
         } catch (Exception e) {
-            throw new RegraDeNegocio("Motorista n\u00e3o encontrado.");
+            throw new RegraDeNegocio("Motorista 1 n\u00e3o encontrado.");
         }
 
         // VERIFICA SE O MOTORISTA 2 SELECIONADO EXISTE
-        try {
-            Pessoa m2 = pessoaService.buscarPorId(fretamentoEventual.getCusto().getMotorista2().getId());
-            if (m2 == null) {
-                throw new RegraDeNegocio("Motorista n\u00e3o encontrado.");
+        if(fretamentoEventual.getCusto().getMotorista2() != null) {
+            try {
+                Pessoa m2 = pessoaService.buscarPorId(fretamentoEventual.getCusto().getMotorista2().getId());
+                if (m2 == null) {
+                    throw new RegraDeNegocio("Motorista 2 n\u00e3o encontrado.");
+                }
+                fretamentoEventual.getCusto().setMotorista2(m2);
+            } catch (Exception e) {
+                throw new RegraDeNegocio("Motorista 2 n\u00e3o encontrado.");
             }
-            fretamentoEventual.getCusto().setMotorista2(m2);
-        } catch (Exception e) {
-            throw new RegraDeNegocio("Motorista n\u00e3o encontrado.");
         }
 
         // VERIFICA SE O VEICULO SELECIONADO EXISTE
@@ -221,23 +223,27 @@ public class FretamentoEventualService {
         return fretamentoEventual;
     }
 
-    public byte[] contratoTermoResponsabilidade(String key) throws Exception {
+    public byte[] contratoTermoResponsabilidadeMotorista(String key) throws Exception {
         FretamentoEventual f = findOne(buscarPorKey(key));
 
         if (f.getCliente() == null) {
             throw new RegraDeNegocio("Fretamento não contém um cadastro de cliente completo, verifique e tente novamente!");
         }
 
-        List<FretamentoEventual> dados = new ArrayList<>();
-        dados.add(f);
-
+        List<FretamentoEventualRelatorio.TermoResponsabilidadeMotorista> dados = new ArrayList<>();
+        dados.add(new FretamentoEventualRelatorio.TermoResponsabilidadeMotorista(f.getCusto().getMotorista1())) ;
         if(f.getCusto().getMotorista2() != null){
-            dados.add(f);
+          dados.add(new FretamentoEventualRelatorio.TermoResponsabilidadeMotorista(f.getCusto().getMotorista2()));
         }
 
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
-        parametros.put("CONTRATO", new FretamentoEventualRelatorio(f).getContratoTermoResponsabilidadeMotorista());
+
+        parametros.put("VEICULO", f.getItinerario().getVeiculo().getPlaca().toUpperCase());
+        parametros.put("DATA_PARTIDA", Utils.getDataPorExtenso(f.getItinerario().getPartida()));
+        parametros.put("DATA_RETORNO", Utils.getDataPorExtenso(f.getItinerario().getRetorno()));
+        parametros.put("DATA_REALIZACAO_VIAGEM", f.getEmpresa().getCidade().getNome() +", " + Utils.getDataPorExtenso(f.getItinerario().getPartida()));
+
         parametros.put("EMPRESA_RAZAO", f.getEmpresa().getNome().toUpperCase());
         parametros.put("EMPRESA_CNPJ_IE", "CNPJ:" + f.getEmpresa().getPessoaJuridica().getCnpj() + "            " + "IE:" + f.getEmpresa().getPessoaJuridica().getInscricaoEstadual());
         parametros.put("EMPRESA_ENDERECO", f.getEmpresa().getEndereco() + ", " + f.getEmpresa().getBairro() + " - " + f.getEmpresa().getCidade().getNome() + "/" + f.getEmpresa().getCidade().getEstado().getIniciais());
@@ -246,7 +252,7 @@ public class FretamentoEventualService {
         parametros.put("CONTRATO_CODIGO", "Contrato de Fretamento Eventual: " + f.getNumeroContrato());
         parametros.put("IMAGEM_LOGO", this.getClass().getResource("/relatorios/Logo.png").getPath());
 
-        InputStream inputStream = this.getClass().getResourceAsStream("/relatorios/FretamentoEventualContratoTermoResponsabilidade.jasper");
+        InputStream inputStream = this.getClass().getResourceAsStream("/relatorios/FretamentoEventualContratoTermoResponsabilidadeMotorista.jasper");
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros, new JRBeanCollectionDataSource(dados));
         return JasperExportManager.exportReportToPdf(jasperPrint);

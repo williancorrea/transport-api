@@ -1,5 +1,6 @@
 package br.com.wcorrea.transport.api.model.fretamento;
 
+import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.model.pessoa.PessoaTipo;
 import br.com.wcorrea.transport.api.utils.NumeroExtenso;
 import br.com.wcorrea.transport.api.utils.Utils;
@@ -7,6 +8,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class FretamentoEventualRelatorio {
@@ -15,43 +18,6 @@ public class FretamentoEventualRelatorio {
 
     public FretamentoEventualRelatorio(FretamentoEventual fretamentoEventual) {
         this.f = fretamentoEventual;
-    }
-
-    public String getContratoTermoResponsabilidadeMotorista(){
-        StringBuilder contrato = new StringBuilder();
-
-        contrato.append("\n")
-                .append("<style size='12' isBold='true'>        TERMO DE RESPONSABILIDADE DO MOTORISTA           </style>")
-                .append("\n\n")
-
-                .append("Eu, " + f.getCusto().getMotorista1().getNome() + ", brasileiro, maior, devidamente inscrito na cédula de identidade sob o nº "
-                        + f.getCusto().getMotorista1().getPessoaFisica().getRg() + "  e no CPF sob o nº "+ f.getCusto().getMotorista1().getPessoaFisica().getCpf()
-                        + ", residente e domiciliado na "+ f.getCusto().getMotorista1().getEndereco() + " - " + f.getCusto().getMotorista1().getBairro()+" na cidade de "
-                        + f.getCusto().getMotorista1().getCidade().getNome() + "/" + f.getCusto().getMotorista1().getCidade().getEstado().getIniciais()
-                        + ", DECLARO, para os devidos fins, perante aos órgãos de transito competentes, que eu estava conduzindo o veiculo placas nº "
-                        + f.getItinerario().getVeiculo().getPlaca()+ ", no período de " + Utils.getDataPorExtenso(f.getItinerario().getPartida())
-                        + " à " +Utils.getDataPorExtenso(f.getItinerario().getRetorno())+ ", sendo que me responsabilizo por total e qualquer infração " +
-                        "cometida e, portanto, a possível pontuação decorrente da citada infração deverá a mim ser atribuída.\n")
-                .append("Por ser a expressão da verdade, peço deferimento\n\n\n")
-
-
-
-                .append("<font color='white'>_ _ _ _ _ _ _ _ _ _ _ _ _ _  </font>" +f.getEmpresa().getCidade().getNome() +", " + Utils.getDataPorExtenso(f.getItinerario().getPartida())).append("\n\n\n\n")
-
-                .append("______________________________________________").append("\n")
-                .append("MOTORISTA: " + f.getCusto().getMotorista1().getNome()).append("\n")
-                .append("CPF: " + f.getCusto().getMotorista1().getPessoaFisica().getCpf()).append("\n\n\n\n")
-
-                .append("______________________________________________").append("\n")
-                .append("Testemunha 1 - Nome: ").append("\n")
-                .append("CPF:   ")
-                .append("\n\n\n\n")
-
-                .append("______________________________________________").append("\n")
-                .append("Testemunha 2 - Nome: ").append("\n")
-                .append("CPF: ");
-
-        return contrato.toString();
     }
 
     public String getContratoFretamentoEventual() {
@@ -136,5 +102,21 @@ public class FretamentoEventualRelatorio {
                 .append("CPF: ");
 
         return contrato.toString();
+    }
+
+
+    public static class TermoResponsabilidadeMotorista{
+
+        private Pessoa motorista;
+        public TermoResponsabilidadeMotorista() {
+        }
+
+        public TermoResponsabilidadeMotorista(Pessoa motorista) {
+            this.motorista = motorista;
+        }
+
+        public Pessoa getMotorista() {
+            return motorista;
+        }
     }
 }

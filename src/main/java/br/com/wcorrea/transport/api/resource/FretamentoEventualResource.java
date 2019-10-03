@@ -135,10 +135,10 @@ public class FretamentoEventualResource {
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(relatorio);
     }
 
-    @GetMapping("/{key}/contratoTermoResponsabilidade")
+    @GetMapping("/{key}/contratoTermoResponsabilidadeMotorista")
 //    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
-    public ResponseEntity<byte[]> contratoTermoResponsabilidade(@Valid @PathVariable String key) throws Exception {
-        byte[] relatorio = fretamentoEventualService.contratoTermoResponsabilidade(key);
+    public ResponseEntity<byte[]> contratoTermoResponsabilidadeMotorista(@Valid @PathVariable String key) throws Exception {
+        byte[] relatorio = fretamentoEventualService.contratoTermoResponsabilidadeMotorista(key);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(relatorio);
     }
 }

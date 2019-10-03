@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c1857ce0-9ddb-43d6-94ef-2151a0f3de91">
 	<property name="ireport.zoom" value="1.610510000000001"/>
 	<property name="ireport.x" value="0"/>
@@ -15,8 +15,11 @@
 	<parameter name="EMPRESA_CEP_FONE" class="java.lang.String"/>
 	<parameter name="EMPRESA_EMAIL" class="java.lang.String"/>
 	<parameter name="CONTRATO_CODIGO" class="java.lang.String"/>
-	<field name="custo" class="br.com.wcorrea.transport.api.model.fretamento.FretamentoEventualCusto"/>
-	<field name="empresa" class="br.com.wcorrea.transport.api.model.pessoa.Pessoa"/>
+	<parameter name="VEICULO" class="java.lang.String"/>
+	<parameter name="DATA_PARTIDA" class="java.lang.String"/>
+	<parameter name="DATA_RETORNO" class="java.lang.String"/>
+	<parameter name="DATA_REALIZACAO_VIAGEM" class="java.lang.String"/>
+	<field name="motorista" class="br.com.wcorrea.transport.api.model.pessoa.Pessoa"/>
 	<pageHeader>
 		<band height="106">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -95,7 +98,34 @@
 				<textElement textAlignment="Justified" markup="styled">
 					<paragraph firstLineIndent="30" leftIndent="30" rightIndent="50"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{CONTRATO} + "PESSOA" + $F{custo}.getMotorista1().getNome()]]></textFieldExpression>
+				<textFieldExpression><![CDATA["\n"
++"<style size='12' isBold='true'>        TERMO DE RESPONSABILIDADE DO MOTORISTA           </style>"
++ "\n\n"
+
++"Eu, " +$F{motorista}.getNome() + ", brasileiro, maior, devidamente inscrito na cédula de identidade sob o nº "
++ $F{motorista}.getPessoaFisica().getRg() + "  e no CPF sob o nº "+ $F{motorista}.getPessoaFisica().getCpf()
++ ", residente e domiciliado na "+ $F{motorista}.getEndereco() + " - " + $F{motorista}.getBairro()
++ " na cidade de " + $F{motorista}.getCidade().getNome() + "/" + $F{motorista}.getCidade().getEstado().getIniciais()
++ ", DECLARO, para os devidos fins, perante aos órgãos de transito competentes, que eu estava conduzindo o veiculo placa nº "
++ $P{VEICULO} + ", no período de " + $P{DATA_PARTIDA} + " à " +$P{DATA_RETORNO} + ", sendo que me responsabilizo por total e qualquer infração " 
++ "cometida e, portanto, a possível pontuação decorrente da citada infração deverá a mim ser atribuída.\n"
+
++ "Por ser a expressão da verdade, peço deferimento\n\n\n"
++ "<font color='white'>_ _ _ _ _ _ _ _ _ _ _ _ _ _  </font>" + $P{DATA_REALIZACAO_VIAGEM} 
++ "\n\n\n\n\n"
+
++"______________________________________________" +"\n"
++ "MOTORISTA: " + $F{motorista}.getNome() + "\n"
++ "CPF: " + $F{motorista}.getPessoaFisica().getCpf() + "\n\n\n\n"
+
++ "______________________________________________" + "\n"
++ "Testemunha 1 - Nome: " + "\n"
++ "CPF:   "
++ "\n\n\n\n"
+
++ "______________________________________________" + "\n"
++ "Testemunha 2 - Nome: " + "\n"
++ "CPF:   "]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
