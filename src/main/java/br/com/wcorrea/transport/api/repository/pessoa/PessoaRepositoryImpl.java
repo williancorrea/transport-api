@@ -54,18 +54,8 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
 
         criteria.createAlias("pessoaFisica", "pf", JoinType.LEFT_OUTER_JOIN);
         criteria.createAlias("pessoaJuridica", "pj", JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("cidade", "cid", JoinType.LEFT_OUTER_JOIN);
 
-        if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
-            Disjunction disjunction = Restrictions.disjunction(); // Restricao com OR
-            disjunction.add(Restrictions.ilike("nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
-
-            criteria.add(disjunction);
-            return criteria;
-        }
-
-        if (StringUtils.isNotBlank(filtro.getNome())) {
-            criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
-        }
 
         //FILRTAR SOMENTE OS MOTORISTAS
         if (filtro.isMotorista()) {
@@ -94,6 +84,23 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
         if (filtro.isSomenteAtivo()) {
             criteria.add(Restrictions.eq("inativo", false));
         }
+
+        if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
+            Disjunction disjunction = Restrictions.disjunction(); // Restricao com OR
+            disjunction.add(Restrictions.ilike("nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+            disjunction.add(Restrictions.ilike("endereco", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+            disjunction.add(Restrictions.ilike("bairro", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+            disjunction.add(Restrictions.ilike("cid.nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+            disjunction.add(Restrictions.ilike("cep", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+
+            criteria.add(disjunction);
+            return criteria;
+        }
+
+        if (StringUtils.isNotBlank(filtro.getNome())) {
+            criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
+        }
+
         return criteria;
     }
 

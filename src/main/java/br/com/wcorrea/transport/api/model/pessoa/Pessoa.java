@@ -119,4 +119,12 @@ public class Pessoa extends IdentificadorComum implements Serializable {
     public boolean isPessoaJuridica() {
         return PessoaTipo.JURIDICA.equals(tipo);
     }
+
+    public String getTelefone1Formatado() {
+        return Utils.formatarTelefone(this.telefone1) ;
+    }
+
+    public String getTelefone2Formatado() {
+        return Utils.formatarTelefone(this.telefone2) ;
+    }
 }

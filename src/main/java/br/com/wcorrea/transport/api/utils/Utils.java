@@ -38,6 +38,18 @@ public class Utils {
         }
     }
 
+    public static String formatarTelefone(String valor) {
+        try {
+            String mascara = valor.length() == 10 ? "(##) ####-####" : "(##) #####-####";
+
+            MaskFormatter mask = new MaskFormatter(mascara);
+            mask.setValueContainsLiteralCharacters(false);
+            return mask.valueToString(valor);
+        } catch (Exception ex) {
+            return "";
+        }
+    }
+
     public static String getDataPorExtenso(Date data){
         // CRIO AQUI UM FORMATADOR PASSANDO UM ESTILO DE FORMATAÇÃO : DateFormat.FULL E PASSANDO UM LOCAL DA DATA : new Locale("pt", "BR")
         DateFormat formatador = DateFormat.getDateInstance(DateFormat.FULL, new Locale("pt", "BR"));
