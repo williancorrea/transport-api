@@ -10,6 +10,7 @@ public class PessoaFiltro extends QueryFiltroPadrao {
 
     private String nome;
     private boolean motorista;
+    private boolean cnh;
     private boolean representanteComercialRosinhaTransportes;
     private boolean empresaRosinhaTransportes;
 }

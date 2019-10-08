@@ -39,7 +39,7 @@ public class FretamentoEventualService {
     private PessoaService pessoaService;
 
     @Autowired
-    private EstadoCidadeService estadoCidadeService;
+    private CidadeService cidadeService;
 
     @Autowired
     private VeiculoService veiculoService;
@@ -165,7 +165,7 @@ public class FretamentoEventualService {
 
         // VERIFICA SE A CIDADE DE PARTIDA EXISTE
         try {
-            Cidade c1 = estadoCidadeService.buscarPorId(fretamentoEventual.getItinerario().getPartidaCidade().getId());
+            Cidade c1 = cidadeService.buscarPorId(fretamentoEventual.getItinerario().getPartidaCidade().getId());
             if (c1 == null) {
                 throw new RegraDeNegocio("Cidade de partida n\u00e3o encontrada.");
             }
@@ -176,7 +176,7 @@ public class FretamentoEventualService {
 
         //VERIFICA SE A CIDADE DE RETORNO EXISTE
         try {
-            Cidade c2 = estadoCidadeService.buscarPorId(fretamentoEventual.getItinerario().getRetornoCidade().getId());
+            Cidade c2 = cidadeService.buscarPorId(fretamentoEventual.getItinerario().getRetornoCidade().getId());
             if (c2 == null) {
                 throw new RegraDeNegocio("Cidade de retorno n\u00e3o encontrada.");
             }

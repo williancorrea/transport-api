@@ -7,7 +7,7 @@ import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.repository.QueryFiltroPadrao;
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualFiltro;
 import br.com.wcorrea.transport.api.repository.pessoa.PessoaFiltro;
-import br.com.wcorrea.transport.api.service.EstadoCidadeService;
+import br.com.wcorrea.transport.api.service.CidadeService;
 import br.com.wcorrea.transport.api.service.FretamentoEventualService;
 import br.com.wcorrea.transport.api.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class FretamentoEventualResource {
     private FretamentoEventualService fretamentoEventualService;
 
     @Autowired
-    private EstadoCidadeService estadoCidadeService;
+    private CidadeService cidadeService;
 
     @GetMapping
 //    @PreAuthorize("hasAuthority('ROLE_LISTAR_ESTADO_CIVIL') and #oauth2.hasScope('read')")
@@ -87,12 +87,6 @@ public class FretamentoEventualResource {
     public ResponseEntity<Pessoa> buscarPorCNPJ(@Valid @PathVariable String cnpj) {
         Pessoa p = pessoaService.buscarPorCNPJ(cnpj);
         return p != null ? ResponseEntity.ok(p) : ResponseEntity.notFound().build();
-    }
-
-    @GetMapping("/cmbCidades")
-    public List<Cidade> listAllComboBoxCidades(QueryFiltroPadrao filtro, Pageable pageable) {
-        filtro.setSomenteAtivo(true);
-        return estadoCidadeService.buscarCidades(filtro, pageable);
     }
 
     @PostMapping

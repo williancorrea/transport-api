@@ -57,24 +57,30 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
         criteria.createAlias("cidade", "cid", JoinType.LEFT_OUTER_JOIN);
 
 
-        //FILRTAR SOMENTE OS MOTORISTAS
+        //Filtrar somente os Motoristas
         if (filtro.isMotorista()) {
             Conjunction c = Restrictions.conjunction();
             c.add(Restrictions.eq("pf.inativoMotorista", false));
-//            c.add(Restrictions.isNotNull("pf.cnhNumero"));
-//            c.add(Restrictions.ne("pf.cnhNumero", ""));
+            criteria.add(c);
+        }
+
+        // Filtrar somente as pessoas que tem a cnh cadastrada
+        if (filtro.isCnh()) {
+            Conjunction c = Restrictions.conjunction();
+            c.add(Restrictions.isNotNull("pf.cnhNumero"));
+            c.add(Restrictions.ne("pf.cnhNumero", ""));
             criteria.add(c);
         }
 
         //Filtrar somente empresa do Grupo Rosinha Transportes
-        if(filtro.isEmpresaRosinhaTransportes()){
+        if (filtro.isEmpresaRosinhaTransportes()) {
             Conjunction c = Restrictions.conjunction();
             c.add(Restrictions.eq("empresaRosinhaTransportes", true));
             criteria.add(c);
         }
 
         //Filtrar somente empresa do Grupo Rosinha Transportes
-        if(filtro.isRepresentanteComercialRosinhaTransportes()){
+        if (filtro.isRepresentanteComercialRosinhaTransportes()) {
             Conjunction c = Restrictions.conjunction();
             c.add(Restrictions.eq("representanteComercialRosinhaTransportes", true));
             criteria.add(c);

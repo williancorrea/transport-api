@@ -40,6 +40,10 @@ public class Utils {
 
     public static String formatarTelefone(String valor) {
         try {
+            if(valor.isEmpty()){
+                return "";
+            }
+
             String mascara = valor.length() == 10 ? "(##) ####-####" : "(##) #####-####";
 
             MaskFormatter mask = new MaskFormatter(mascara);

@@ -90,9 +90,6 @@ public class PessoaFisica extends IdentificadorComum implements Serializable {
     @ManyToOne()
     private Cidade cnhEmissaoCidade;
 
-
-
-
     @Column(name = "inativo_motorista")
     private Boolean inativoMotorista;
 

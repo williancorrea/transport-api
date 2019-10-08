@@ -103,7 +103,7 @@ public class PessoaService {
         return pessoaRepository.findOneByCNPJ(cnpj);
     }
 
-    public Long buscarPorKey(String key) {
+    public Long descriptografarKey(String key) {
         try {
             return new Criptografia().getKey(key);
         } catch (Exception e) {
@@ -132,6 +132,24 @@ public class PessoaService {
         filtro.setRepresentanteComercialRosinhaTransportes(true);
         filtro.setSomenteAtivo(true);
         return pessoaRepository.findAll(filtro, pageable).getContent();
+    }
+
+    public Pessoa motoristaAtivar(String key){
+        Pessoa p = buscarPorId(descriptografarKey(key));
+        if(p.getTipo().equals(PessoaTipo.JURIDICA)){
+            throw new RegraDeNegocio("Pessoa jur\u00eddica não pode ser motorista");
+        }
+        p.getPessoaFisica().setInativoMotorista(false);
+        return update(p.getId(),  p);
+    }
+
+    public Pessoa motoristaDesativar(String key){
+        Pessoa p = buscarPorId(descriptografarKey(key));
+        if(p.getTipo().equals(PessoaTipo.JURIDICA)){
+            throw new RegraDeNegocio("Pessoa jur\u00eddica não pode ser motorista");
+        }
+        p.getPessoaFisica().setInativoMotorista(true);
+        return update(p.getId(),  p);
     }
 
 

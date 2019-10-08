@@ -31,20 +31,20 @@ public class PessoaResource {
     private PessoaService pessoaService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_LIST_PERSON') and #oauth2.hasScope('read')")
+//    @PreAuthorize("hasAuthority('ROLE_LIST_PERSON') and #oauth2.hasScope('read')")
     public Page<Pessoa> findAll(PessoaFiltro pessoaFiltro, Pageable paginavel) {
         return pessoaRepository.findAll(pessoaFiltro, paginavel);
     }
 
     @GetMapping("/{key}")
-    @PreAuthorize("hasAuthority('ROLE_LIST_PERSON') and #oauth2.hasScope('read')")
+//    @PreAuthorize("hasAuthority('ROLE_LIST_PERSON') and #oauth2.hasScope('read')")
     public ResponseEntity<Pessoa> findOne(@Valid @PathVariable String key) {
-        Pessoa pessoaEncontrada = pessoaService.buscarPorId(pessoaService.buscarPorKey(key));
+        Pessoa pessoaEncontrada = pessoaService.buscarPorId(pessoaService.descriptografarKey(key));
         return pessoaEncontrada != null ? ResponseEntity.ok(pessoaEncontrada) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ROLE_SAVE_PERSON') and #oauth2.hasScope('write')")
+//    @PreAuthorize("hasAuthority('ROLE_SAVE_PERSON') and #oauth2.hasScope('write')")
     public ResponseEntity<Pessoa> save(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
         Pessoa pessoaSalva = pessoaService.save(pessoa);
         publisher.publishEvent(new EventResourceCreated(this, response, pessoaSalva.getKey()));
@@ -52,15 +52,27 @@ public class PessoaResource {
     }
 
     @PutMapping("/{key}")
-    @PreAuthorize("hasAuthority('ROLE_UPDATE_PERSON') and #oauth2.hasScope('write')")
+//    @PreAuthorize("hasAuthority('ROLE_UPDATE_PERSON') and #oauth2.hasScope('write')")
     public ResponseEntity<Pessoa> update(@Valid @PathVariable String key, @Valid @RequestBody Pessoa Pessoa) {
-        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.update(pessoaService.buscarPorKey(key), Pessoa));
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.update(pessoaService.descriptografarKey(key), Pessoa));
     }
 
-    @DeleteMapping("/{key}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAuthority('ROLE_DELETE_PERSON') and #oauth2.hasScope('write')")
-    public void delete(@PathVariable String key) {
-        pessoaRepository.deleteById(pessoaService.buscarPorKey(key));
+    @PutMapping("/{key}/motorista/ativar")
+//    @PreAuthorize("hasAuthority('ROLE_UPDATE_PERSON') and #oauth2.hasScope('write')")
+    public ResponseEntity<Pessoa> motoristaAtivar(@Valid @PathVariable String key) {
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.motoristaAtivar(key));
     }
+
+    @PutMapping("/{key}/motorista/desativar")
+//    @PreAuthorize("hasAuthority('ROLE_UPDATE_PERSON') and #oauth2.hasScope('write')")
+    public ResponseEntity<Pessoa> motoristaDesativar(@Valid @PathVariable String key) {
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.motoristaDesativar(key));
+    }
+
+//    @DeleteMapping("/{key}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    @PreAuthorize("hasAuthority('ROLE_DELETE_PERSON') and #oauth2.hasScope('write')")
+//    public void delete(@PathVariable String key) {
+//        pessoaRepository.deleteById(pessoaService.descriptografarKey(key));
+//    }
 }

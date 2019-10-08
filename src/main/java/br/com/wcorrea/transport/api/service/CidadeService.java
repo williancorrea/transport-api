@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EstadoCidadeService {
+public class CidadeService {
 
     @Autowired
     private CidadeRepository cidadeRepository;
