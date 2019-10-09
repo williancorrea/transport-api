@@ -1,7 +1,6 @@
 package br.com.wcorrea.transport.api.model.pessoa;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
-import br.com.wcorrea.transport.api.utils.Utils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -10,13 +9,10 @@ import lombok.ToString;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
-import javax.swing.text.MaskFormatter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
@@ -131,5 +127,11 @@ public class PessoaFisica extends IdentificadorComum implements Serializable {
     private Pessoa pessoa;
 
     public PessoaFisica() {
+    }
+
+    public void setOrgaoRg(String orgaoRg) {
+        if (orgaoRg != null) {
+            this.orgaoRg = orgaoRg.toUpperCase();
+        }
     }
 }

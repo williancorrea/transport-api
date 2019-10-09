@@ -12,7 +12,6 @@ import br.com.wcorrea.transport.api.service.exception.*;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import br.com.wcorrea.transport.api.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -45,6 +44,45 @@ public class PessoaService {
         }
 
         return pessoaRepository.saveAndFlush(pessoaNovo);
+    }
+
+    /**
+     * Prepara os dados de motorista para atualização
+     *
+     * @param id
+     * @param pessoa
+     * @return
+     */
+    public Pessoa updateMotorista(Long id, Pessoa pessoa) {
+        Pessoa objFound = buscarPorId(id);
+
+//        objFound.getPessoaFisica().setCpf(pessoa.getPessoaFisica().getCpf());
+        objFound.setNome(pessoa.getNome());
+        objFound.setFantasia(pessoa.getFantasia());
+        objFound.getPessoaFisica().setRg(pessoa.getPessoaFisica().getRg());
+        objFound.setEmail(pessoa.getEmail());
+        objFound.setTelefone1(pessoa.getTelefone1());
+        objFound.setTelefone1Obs(pessoa.getTelefone1Obs());
+        objFound.setTelefone2(pessoa.getTelefone2());
+        objFound.setTelefone2Obs(pessoa.getTelefone2Obs());
+        objFound.setCidade(pessoa.getCidade());
+        objFound.setBairro(pessoa.getBairro());
+        objFound.setCep(pessoa.getCep());
+        objFound.setEndereco(pessoa.getEndereco());
+        objFound.setObs(pessoa.getObs());
+        objFound.getPessoaFisica().setCnhNumero(pessoa.getPessoaFisica().getCnhNumero());
+        objFound.getPessoaFisica().setOrgaoRg(pessoa.getPessoaFisica().getOrgaoRg());
+        objFound.getPessoaFisica().setCnhPrimeiraHabilitacao(pessoa.getPessoaFisica().getCnhPrimeiraHabilitacao());
+        objFound.getPessoaFisica().setCnhEmissaoData(pessoa.getPessoaFisica().getCnhEmissaoData());
+        objFound.getPessoaFisica().setCnhEmissaoCidade(pessoa.getPessoaFisica().getCnhEmissaoCidade());
+        objFound.getPessoaFisica().setCnhVencimento(pessoa.getPessoaFisica().getCnhVencimento());
+        objFound.getPessoaFisica().setDataNascimento(pessoa.getPessoaFisica().getDataNascimento());
+        objFound.getPessoaFisica().setNomeMae(pessoa.getPessoaFisica().getNomeMae());
+        objFound.getPessoaFisica().setNomePai(pessoa.getPessoaFisica().getNomePai());
+        objFound.getPessoaFisica().setSexo(pessoa.getPessoaFisica().getSexo());
+        objFound.getPessoaFisica().setCnhCategoria(pessoa.getPessoaFisica().getCnhCategoria());
+
+        return update(objFound.getId(), objFound);
     }
 
     public Pessoa update(Long id, Pessoa pessoa) {
@@ -134,22 +172,22 @@ public class PessoaService {
         return pessoaRepository.findAll(filtro, pageable).getContent();
     }
 
-    public Pessoa motoristaAtivar(String key){
+    public Pessoa motoristaAtivar(String key) {
         Pessoa p = buscarPorId(descriptografarKey(key));
-        if(p.getTipo().equals(PessoaTipo.JURIDICA)){
+        if (p.getTipo().equals(PessoaTipo.JURIDICA)) {
             throw new RegraDeNegocio("Pessoa jur\u00eddica não pode ser motorista");
         }
         p.getPessoaFisica().setInativoMotorista(false);
-        return update(p.getId(),  p);
+        return update(p.getId(), p);
     }
 
-    public Pessoa motoristaDesativar(String key){
+    public Pessoa motoristaDesativar(String key) {
         Pessoa p = buscarPorId(descriptografarKey(key));
-        if(p.getTipo().equals(PessoaTipo.JURIDICA)){
+        if (p.getTipo().equals(PessoaTipo.JURIDICA)) {
             throw new RegraDeNegocio("Pessoa jur\u00eddica não pode ser motorista");
         }
         p.getPessoaFisica().setInativoMotorista(true);
-        return update(p.getId(),  p);
+        return update(p.getId(), p);
     }
 
 
@@ -195,11 +233,6 @@ public class PessoaService {
             throw new CidadeNaoEncontrada();
         }
 
-        // FAZ A COPIA DAS PROPRIEDADES DO OBJETO
-        if (pessoa.getId() != null) {
-            BeanUtils.copyProperties(pessoa, pessoaEncontrada, "id", "controle");
-            pessoa = pessoaEncontrada;
-        }
         return pessoa;
     }
 

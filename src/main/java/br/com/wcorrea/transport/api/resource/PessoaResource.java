@@ -57,6 +57,12 @@ public class PessoaResource {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.update(pessoaService.descriptografarKey(key), Pessoa));
     }
 
+    @PutMapping("/{key}/motorista")
+//    @PreAuthorize("hasAuthority('ROLE_UPDATE_PERSON') and #oauth2.hasScope('write')")
+    public ResponseEntity<Pessoa> updateMotorista(@Valid @PathVariable String key, @Valid @RequestBody Pessoa Pessoa) {
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.updateMotorista(pessoaService.descriptografarKey(key), Pessoa));
+    }
+
     @GetMapping("/cmbClientes")
 //    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
     public List<Pessoa> listAllComboBoxClientes(PessoaFiltro filtro, Pageable pageable) {

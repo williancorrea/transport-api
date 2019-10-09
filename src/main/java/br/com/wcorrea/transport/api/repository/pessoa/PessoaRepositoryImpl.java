@@ -94,6 +94,7 @@ public class PessoaRepositoryImpl implements PessoaRepositoryQuery {
         if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
             Disjunction disjunction = Restrictions.disjunction(); // Restricao com OR
             disjunction.add(Restrictions.ilike("nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+            disjunction.add(Restrictions.ilike("fantasia", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
             disjunction.add(Restrictions.ilike("endereco", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
             disjunction.add(Restrictions.ilike("bairro", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
             disjunction.add(Restrictions.ilike("cid.nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
