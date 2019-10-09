@@ -11,11 +11,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/pessoas")
@@ -57,6 +57,42 @@ public class PessoaResource {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.update(pessoaService.descriptografarKey(key), Pessoa));
     }
 
+    @GetMapping("/cmbClientes")
+//    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
+    public List<Pessoa> listAllComboBoxClientes(PessoaFiltro filtro, Pageable pageable) {
+        return pessoaService.pesquisaClienteFornecedorCmb(filtro, pageable);
+    }
+
+    @GetMapping("/cmbEmpresaRosinha")
+    public List<Pessoa> listAllComboBoxEmpresaRosinha(PessoaFiltro filtro, Pageable pageable) {
+        return pessoaService.pesquisaEmpresaRosinhaCmb(filtro, pageable);
+    }
+
+    @GetMapping("/cmbRepresentanteComercialEmpresaRosinha")
+    public List<Pessoa> listAllComboBoxRepresentanteComercialEmpresaRosinha(PessoaFiltro filtro, Pageable pageable) {
+        return pessoaService.pesquisaRepresentanteComercialEmpresaRosinhaCmb(filtro, pageable);
+    }
+
+    @GetMapping("/cmbMotoristas")
+//    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
+    public List<Pessoa> listAllComboBoxMotoristas(PessoaFiltro filtro, Pageable pageable) {
+        return pessoaService.pesquisaMotoristaCmb(filtro, pageable);
+    }
+
+    @GetMapping("/cmbClientes/cpf/{cpf}")
+//    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
+    public ResponseEntity<Pessoa> buscarPorCPF(@Valid @PathVariable String cpf) {
+        Pessoa p = pessoaService.buscarPorCPF(cpf);
+        return p != null ? ResponseEntity.ok(p) : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/cmbClientes/cnpj/{cnpj}")
+//    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
+    public ResponseEntity<Pessoa> buscarPorCNPJ(@Valid @PathVariable String cnpj) {
+        Pessoa p = pessoaService.buscarPorCNPJ(cnpj);
+        return p != null ? ResponseEntity.ok(p) : ResponseEntity.notFound().build();
+    }
+
     @PutMapping("/{key}/motorista/ativar")
 //    @PreAuthorize("hasAuthority('ROLE_UPDATE_PERSON') and #oauth2.hasScope('write')")
     public ResponseEntity<Pessoa> motoristaAtivar(@Valid @PathVariable String key) {
@@ -69,10 +105,4 @@ public class PessoaResource {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.motoristaDesativar(key));
     }
 
-//    @DeleteMapping("/{key}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @PreAuthorize("hasAuthority('ROLE_DELETE_PERSON') and #oauth2.hasScope('write')")
-//    public void delete(@PathVariable String key) {
-//        pessoaRepository.deleteById(pessoaService.descriptografarKey(key));
-//    }
 }

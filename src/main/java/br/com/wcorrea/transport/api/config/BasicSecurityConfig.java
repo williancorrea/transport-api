@@ -39,6 +39,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/fretamentosEventuais/**").permitAll()
                 .antMatchers("/veiculos/**").permitAll()
                 .antMatchers("/pessoas/**").permitAll()
+                .antMatchers("/cidades/**").permitAll()
 
 
                 .anyRequest().authenticated()

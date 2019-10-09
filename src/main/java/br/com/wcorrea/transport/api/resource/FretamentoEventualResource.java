@@ -2,14 +2,8 @@ package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventual;
-import br.com.wcorrea.transport.api.model.pessoa.Cidade;
-import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
-import br.com.wcorrea.transport.api.repository.QueryFiltroPadrao;
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualFiltro;
-import br.com.wcorrea.transport.api.repository.pessoa.PessoaFiltro;
-import br.com.wcorrea.transport.api.service.CidadeService;
 import br.com.wcorrea.transport.api.service.FretamentoEventualService;
-import br.com.wcorrea.transport.api.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -22,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/fretamentosEventuais")
@@ -32,13 +25,7 @@ public class FretamentoEventualResource {
     private ApplicationEventPublisher publisher;
 
     @Autowired
-    private PessoaService pessoaService;
-
-    @Autowired
     private FretamentoEventualService fretamentoEventualService;
-
-    @Autowired
-    private CidadeService cidadeService;
 
     @GetMapping
 //    @PreAuthorize("hasAuthority('ROLE_LISTAR_ESTADO_CIVIL') and #oauth2.hasScope('read')")
@@ -51,42 +38,6 @@ public class FretamentoEventualResource {
     public ResponseEntity<FretamentoEventual> buscarporKey(@Valid @PathVariable String key) {
         FretamentoEventual fretamentoEventualEncontrado = fretamentoEventualService.findOne(fretamentoEventualService.buscarPorKey(key));
         return fretamentoEventualEncontrado != null ? ResponseEntity.ok(fretamentoEventualEncontrado) : ResponseEntity.notFound().build();
-    }
-
-    @GetMapping("/cmbClientes")
-//    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
-    public List<Pessoa> listAllComboBoxClientes(PessoaFiltro filtro, Pageable pageable) {
-        return pessoaService.pesquisaClienteFornecedorCmb(filtro, pageable);
-    }
-
-    @GetMapping("/cmbEmpresaRosinha")
-    public List<Pessoa> listAllComboBoxEmpresaRosinha(PessoaFiltro filtro, Pageable pageable) {
-        return pessoaService.pesquisaEmpresaRosinhaCmb(filtro, pageable);
-    }
-
-    @GetMapping("/cmbRepresentanteComercialEmpresaRosinha")
-    public List<Pessoa> listAllComboBoxRepresentanteComercialEmpresaRosinha(PessoaFiltro filtro, Pageable pageable) {
-        return pessoaService.pesquisaRepresentanteComercialEmpresaRosinhaCmb(filtro, pageable);
-    }
-
-    @GetMapping("/cmbMotoristas")
-//    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
-    public List<Pessoa> listAllComboBoxMotoristas(PessoaFiltro filtro, Pageable pageable) {
-        return pessoaService.pesquisaMotoristaCmb(filtro, pageable);
-    }
-
-    @GetMapping("/cmbClientes/cpf/{cpf}")
-//    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
-    public ResponseEntity<Pessoa> buscarPorCPF(@Valid @PathVariable String cpf) {
-        Pessoa p = pessoaService.buscarPorCPF(cpf);
-        return p != null ? ResponseEntity.ok(p) : ResponseEntity.notFound().build();
-    }
-
-    @GetMapping("/cmbClientes/cnpj/{cnpj}")
-//    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
-    public ResponseEntity<Pessoa> buscarPorCNPJ(@Valid @PathVariable String cnpj) {
-        Pessoa p = pessoaService.buscarPorCNPJ(cnpj);
-        return p != null ? ResponseEntity.ok(p) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
@@ -120,7 +71,6 @@ public class FretamentoEventualResource {
     public ResponseEntity<FretamentoEventual> contratarFretamento(@Valid @PathVariable String key) {
         return ResponseEntity.status(HttpStatus.OK).body(fretamentoEventualService.contratarFretamento(fretamentoEventualService.buscarPorKey(key)));
     }
-
 
     @GetMapping("/{key}/contrato")
 //    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")

@@ -4,7 +4,7 @@ CREATE TABLE pessoa_fisica (
     cpf VARCHAR(15) NOT NULL,
     rg VARCHAR(15),
 
-    orgao_rg VARCHAR(6),
+    orgao_rg VARCHAR(10),
     data_emissao_rg  DATE,
     data_nascimento DATE,
     sexo VARCHAR(1),

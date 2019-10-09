@@ -40,7 +40,7 @@ public class Utils {
 
     public static String formatarTelefone(String valor) {
         try {
-            if(valor.isEmpty()){
+            if (valor.isEmpty()) {
                 return "";
             }
 
@@ -54,7 +54,7 @@ public class Utils {
         }
     }
 
-    public static String getDataPorExtenso(Date data){
+    public static String getDataPorExtenso(Date data) {
         // CRIO AQUI UM FORMATADOR PASSANDO UM ESTILO DE FORMATAÇÃO : DateFormat.FULL E PASSANDO UM LOCAL DA DATA : new Locale("pt", "BR")
         DateFormat formatador = DateFormat.getDateInstance(DateFormat.FULL, new Locale("pt", "BR"));
 
@@ -62,7 +62,7 @@ public class Utils {
         String dataExtenso = formatador.format(data);
 
         // AQUI É CASO VOCÊ QUEIRA TIRAR O DIA DA SEMANA QUE APARECE NO PRIMEIRO EXEMPLO
-        int index  = dataExtenso.indexOf(",");
+        int index = dataExtenso.indexOf(",");
         int lenght = dataExtenso.length();
 
         // MOSTRA A DATA

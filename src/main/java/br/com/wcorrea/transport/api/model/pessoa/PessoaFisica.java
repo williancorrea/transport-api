@@ -30,11 +30,11 @@ public class PessoaFisica extends IdentificadorComum implements Serializable {
     @CPF
     private String cpf;
 
-    @Size(min = 5, max = 12)
+    @Size(max = 12)
     private String rg;
 
     @Column(name = "orgao_rg")
-    @Size(max = 6)
+    @Size(max = 10)
     private String orgaoRg;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
