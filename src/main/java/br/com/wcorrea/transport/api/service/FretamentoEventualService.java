@@ -24,9 +24,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.rmi.CORBA.Util;
 import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -100,7 +102,7 @@ public class FretamentoEventualService {
     public FretamentoEventual ativarContrato(Long id) {
         FretamentoEventual f = findOne(id);
         f.setSituacaoData(new Date());
-        f.setSituacao(f.getCliente() != null ?  FretamentoEventalTipo.ORCAMENTO_CLIENTE : FretamentoEventalTipo.ORCAMENTO_CONTATO);
+        f.setSituacao(f.getCliente() != null ? FretamentoEventalTipo.ORCAMENTO_CLIENTE : FretamentoEventalTipo.ORCAMENTO_CONTATO);
         return fretamentoEventualRepository.saveAndFlush(f);
     }
 
@@ -111,8 +113,6 @@ public class FretamentoEventualService {
         f.setSituacao(FretamentoEventalTipo.CONTRATADO);
         return fretamentoEventualRepository.saveAndFlush(f);
     }
-
-
 
     private FretamentoEventual prepararFretamentoParaPersistencia(FretamentoEventual fretamentoEventual) {
 
@@ -149,12 +149,12 @@ public class FretamentoEventualService {
             }
 
             fretamentoEventual.setCliente(pessoaService.validarPessoa(fretamentoEventual.getCliente()));
-        }else{
+        } else {
             fretamentoEventual.setCliente(null);
         }
 
         //VERIFICA A DATA INICIAL DO ESTATUDO DO ORÇAMENTO
-        if(fretamentoEventual.getSituacaoData() == null){
+        if (fretamentoEventual.getSituacaoData() == null) {
             fretamentoEventual.setSituacaoData(new Date());
         }
 
@@ -197,7 +197,7 @@ public class FretamentoEventualService {
         }
 
         // VERIFICA SE O MOTORISTA 2 SELECIONADO EXISTE
-        if(fretamentoEventual.getCusto().getMotorista2() != null) {
+        if (fretamentoEventual.getCusto().getMotorista2() != null) {
             try {
                 Pessoa m2 = pessoaService.buscarPorId(fretamentoEventual.getCusto().getMotorista2().getId());
                 if (m2 == null) {
@@ -231,9 +231,9 @@ public class FretamentoEventualService {
         }
 
         List<FretamentoEventualRelatorio.TermoResponsabilidadeMotorista> dados = new ArrayList<>();
-        dados.add(new FretamentoEventualRelatorio.TermoResponsabilidadeMotorista(f.getCusto().getMotorista1())) ;
-        if(f.getCusto().getMotorista2() != null){
-          dados.add(new FretamentoEventualRelatorio.TermoResponsabilidadeMotorista(f.getCusto().getMotorista2()));
+        dados.add(new FretamentoEventualRelatorio.TermoResponsabilidadeMotorista(f.getCusto().getMotorista1()));
+        if (f.getCusto().getMotorista2() != null) {
+            dados.add(new FretamentoEventualRelatorio.TermoResponsabilidadeMotorista(f.getCusto().getMotorista2()));
         }
 
         Map<String, Object> parametros = new HashMap<>();
@@ -242,7 +242,7 @@ public class FretamentoEventualService {
         parametros.put("VEICULO", f.getItinerario().getVeiculo().getPlaca().toUpperCase());
         parametros.put("DATA_PARTIDA", Utils.getDataPorExtenso(f.getItinerario().getPartida()));
         parametros.put("DATA_RETORNO", Utils.getDataPorExtenso(f.getItinerario().getRetorno()));
-        parametros.put("DATA_REALIZACAO_VIAGEM", f.getEmpresa().getCidade().getNome() +", " + Utils.getDataPorExtenso(f.getItinerario().getPartida()));
+        parametros.put("DATA_REALIZACAO_VIAGEM", f.getEmpresa().getCidade().getNome() + ", " + Utils.getDataPorExtenso(f.getItinerario().getPartida()));
 
         parametros.put("EMPRESA_RAZAO", f.getEmpresa().getNome().toUpperCase());
         parametros.put("EMPRESA_CNPJ_IE", "CNPJ:" + f.getEmpresa().getPessoaJuridica().getCnpj() + "            " + "IE:" + f.getEmpresa().getPessoaJuridica().getInscricaoEstadual());
@@ -272,7 +272,6 @@ public class FretamentoEventualService {
         parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
         parametros.put("CONTRATO", new FretamentoEventualRelatorio(f).getContratoFretamentoEventual());
         parametros.put("EMPRESA_RAZAO", f.getEmpresa().getNome().toUpperCase());
-//        parametros.put("EMPRESA_CNPJ_IE", "CNPJ:" + f.getEmpresa().getPessoaJuridica().getCnpjFormatado() + "            " + "IE:" + f.getEmpresa().getPessoaJuridica().getInscricaoEstadualFormatada());
         parametros.put("EMPRESA_CNPJ_IE", "CNPJ:" + f.getEmpresa().getPessoaJuridica().getCnpj() + "            " + "IE:" + f.getEmpresa().getPessoaJuridica().getInscricaoEstadual());
         parametros.put("EMPRESA_ENDERECO", f.getEmpresa().getEndereco() + ", " + f.getEmpresa().getBairro() + " - " + f.getEmpresa().getCidade().getNome() + "/" + f.getEmpresa().getCidade().getEstado().getIniciais());
         parametros.put("EMPRESA_CEP_FONE", "CEP: " + f.getEmpresa().getCep() + "  -  FONE: " + f.getEmpresa().getTelefone1());
@@ -281,6 +280,63 @@ public class FretamentoEventualService {
         parametros.put("IMAGEM_LOGO", this.getClass().getResource("/relatorios/Logo.png").getPath());
 
         InputStream inputStream = this.getClass().getResourceAsStream("/relatorios/FretamentoEventualContrato.jasper");
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros, new JRBeanCollectionDataSource(dados));
+        return JasperExportManager.exportReportToPdf(jasperPrint);
+    }
+
+    public byte[] contratoRelatorioViagem(String key) throws Exception {
+        FretamentoEventual f = findOne(buscarPorKey(key));
+
+        if (f.getCliente() == null) {
+            throw new RegraDeNegocio("Fretamento não contém um cadastro de cliente completo, verifique e tente novamente!");
+        }
+
+        //FORCA O RELATORIO TER 1 PAGINA
+        List<FretamentoEventualRelatorio.TermoResponsabilidadeMotorista> dados = new ArrayList<>();
+        dados.add(new FretamentoEventualRelatorio.TermoResponsabilidadeMotorista(f.getCusto().getMotorista1()));
+
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
+
+        parametros.put("EMPRESA_RAZAO", f.getEmpresa().getNome().toUpperCase());
+        parametros.put("EMPRESA_CNPJ_IE", "CNPJ:" + f.getEmpresa().getPessoaJuridica().getCnpj() + "            " + "IE:" + f.getEmpresa().getPessoaJuridica().getInscricaoEstadual());
+        parametros.put("EMPRESA_ENDERECO", f.getEmpresa().getEndereco() + ", " + f.getEmpresa().getBairro() + " - " + f.getEmpresa().getCidade().getNome() + "/" + f.getEmpresa().getCidade().getEstado().getIniciais());
+        parametros.put("EMPRESA_CEP_FONE", "CEP: " + f.getEmpresa().getCep() + "  -  FONE: " + f.getEmpresa().getTelefone1());
+        parametros.put("EMPRESA_EMAIL", f.getEmpresa().getEmail());
+        parametros.put("CONTRATO_CODIGO", "Contrato de Fretamento Eventual: " + f.getNumeroContrato());
+        parametros.put("IMAGEM_LOGO", this.getClass().getResource("/relatorios/Logo.png").getPath());
+
+        parametros.put("VEICULO", "Frota: " + f.getItinerario().getVeiculo().getFrota() + " - Placa: " + f.getItinerario().getVeiculo().getPlaca().toUpperCase() + ", com capacidade de " + f.getItinerario().getVeiculo().getQtdLugares() + " lugares");
+        parametros.put("DATA_PARTIDA", Utils.getDataPorExtenso(f.getItinerario().getPartida()));
+        parametros.put("DATA_RETORNO", Utils.getDataPorExtenso(f.getItinerario().getRetorno()));
+        parametros.put("DATA_REALIZACAO_VIAGEM", f.getEmpresa().getCidade().getNome() + ", " + Utils.getDataPorExtenso(f.getItinerario().getPartida()));
+        parametros.put("CLIENTE", f.getCliente().getNome().toUpperCase());
+        parametros.put("CLIENTE_TELEFONE1", f.getCliente().getTelefone1Formatado());
+        parametros.put("CLIENTE_TELEFONE2", StringUtils.isNotBlank(f.getCliente().getTelefone2()) ? " - " + f.getCliente().getTelefone2Formatado() : "");
+
+        parametros.put("ORIGEM", f.getItinerario().getPartidaCidade().getNome() + "/" + f.getItinerario().getPartidaCidade().getEstado().getIniciais());
+        parametros.put("ORIGEM_SAIDA_DATA_HORA", Utils.getDataPorExtenso(f.getItinerario().getPartida()) + " as " + Utils.getHoraFormatada(f.getItinerario().getPartida()) + ".");
+        parametros.put("ORIGEM_LOCAL_SAIDA", StringUtils.isNotBlank(f.getItinerario().getLocalSaida()) ? f.getItinerario().getLocalSaida() : "");
+        parametros.put("DESTINO", f.getItinerario().getRetornoCidade().getNome() + "/" + f.getItinerario().getRetornoCidade().getEstado().getIniciais());
+        parametros.put("DESTINO_SAIDA_DATA_HORA", Utils.getDataPorExtenso(f.getItinerario().getRetorno()) + " as " + Utils.getHoraFormatada(f.getItinerario().getRetorno()) + ".");
+        parametros.put("DESTINO_LOCAL_SAIDA", StringUtils.isNotBlank(f.getItinerario().getLocalRetorno()) ? f.getItinerario().getLocalRetorno() : "");
+
+        parametros.put("MOTORISTA1", f.getCusto().getMotorista1().getNome() + "   -   Total de Diária(s): " + Utils.formatarDinheiro(f.getCusto().getValorMotorista1Diaria()));
+        parametros.put("MOTORISTA2", f.getCusto().getMotorista2() != null ? (f.getCusto().getMotorista2().getNome() + "" +
+                "   -   Total de Diária(s): " + ((f.getCusto().getValorMotorista2Diaria() != null && f.getCusto().getValorMotorista2Diaria().compareTo(BigDecimal.ZERO) == 1)  ? Utils.formatarDinheiro(f.getCusto().getValorMotorista2Diaria()) : "")) : "");
+
+        parametros.put("ABASTECIMENTO", "VOU TER QUE CALCULAR");
+        parametros.put("ESTACIONAMENTO", (f.getCusto().getValorEstacionamento() != null && f.getCusto().getValorEstacionamento().compareTo(BigDecimal.ZERO) == 1)  ? Utils.formatarDinheiro(f.getCusto().getValorEstacionamento()) : "");
+        parametros.put("GELO", (f.getCusto().getValorGelo() != null && f.getCusto().getValorGelo().compareTo(BigDecimal.ZERO) == 1)  ? Utils.formatarDinheiro(f.getCusto().getValorGelo()) : "");
+        parametros.put("GASTOS_EXTRAS", (f.getCusto().getValorDespesasAdicionais() != null && f.getCusto().getValorDespesasAdicionais().compareTo(BigDecimal.ZERO) == 1)  ? Utils.formatarDinheiro(f.getCusto().getValorDespesasAdicionais()) : "");
+        parametros.put("RESERVA", (f.getCusto().getValorDinheiroReserva() != null && f.getCusto().getValorDinheiroReserva().compareTo(BigDecimal.ZERO) == 1)  ? Utils.formatarDinheiro(f.getCusto().getValorDinheiroReserva()) : "");
+
+
+
+
+
+        InputStream inputStream = this.getClass().getResourceAsStream("/relatorios/FretamentoEventualContratoRelatorioViagem.jasper");
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros, new JRBeanCollectionDataSource(dados));
         return JasperExportManager.exportReportToPdf(jasperPrint);

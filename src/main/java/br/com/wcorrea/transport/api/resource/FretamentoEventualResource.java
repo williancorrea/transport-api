@@ -85,4 +85,11 @@ public class FretamentoEventualResource {
         byte[] relatorio = fretamentoEventualService.contratoTermoResponsabilidadeMotorista(key);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(relatorio);
     }
+
+    @GetMapping("/{key}/contratoRelatorioViagem")
+//    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+    public ResponseEntity<byte[]> contratoRelatorioViagem(@Valid @PathVariable String key) throws Exception {
+        byte[] relatorio = fretamentoEventualService.contratoRelatorioViagem(key);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(relatorio);
+    }
 }

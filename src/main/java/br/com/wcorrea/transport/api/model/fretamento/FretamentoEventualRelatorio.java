@@ -8,8 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class FretamentoEventualRelatorio {
@@ -104,7 +102,9 @@ public class FretamentoEventualRelatorio {
         return contrato.toString();
     }
 
-
+    /**
+     * Classe utilizada para gerar o Termo de Responsabilidade de motorista
+     */
     public static class TermoResponsabilidadeMotorista{
 
         private Pessoa motorista;

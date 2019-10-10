@@ -4,9 +4,12 @@ import org.apache.commons.codec.binary.Base64;
 
 import javax.swing.text.MaskFormatter;
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,7 +31,7 @@ public class Utils {
      * @param mascara
      * @return
      */
-    public static String formatarValor(String valor, String mascara) {
+    public static String formatarMascaraTexto(String valor, String mascara) {
         try {
             MaskFormatter mask = new MaskFormatter(mascara);
             mask.setValueContainsLiteralCharacters(false);
@@ -36,6 +39,10 @@ public class Utils {
         } catch (Exception ex) {
             return " --> ERRO <--";
         }
+    }
+
+    public static String formatarDinheiro(BigDecimal valor){
+     return NumberFormat.getCurrencyInstance(new Locale( "pt", "BR" )).format(valor);
     }
 
     public static String formatarTelefone(String valor) {
@@ -54,12 +61,35 @@ public class Utils {
         }
     }
 
+    public static String getHoraFormatada(Date data){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        return sdf.format(data);
+    }
+
+    public static String getDataFormatada(Date data){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(data);
+    }
+
+    public static String getDataHoraFormatada(Date data){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        return sdf.format(data);
+    }
+
     public static String getDataPorExtenso(Date data) {
+        return getDataPorExtenso(data, false);
+    }
+
+    public static String getDataPorExtenso(Date data, Boolean mostrarDiaDaSemana) {
         // CRIO AQUI UM FORMATADOR PASSANDO UM ESTILO DE FORMATAÇÃO : DateFormat.FULL E PASSANDO UM LOCAL DA DATA : new Locale("pt", "BR")
         DateFormat formatador = DateFormat.getDateInstance(DateFormat.FULL, new Locale("pt", "BR"));
 
         // FORMATO A DATA, O FORMATADOR ME RETORNA A STRING DA DATA FORMATADA
         String dataExtenso = formatador.format(data);
+
+        if (mostrarDiaDaSemana) {
+            return dataExtenso;
+        }
 
         // AQUI É CASO VOCÊ QUEIRA TIRAR O DIA DA SEMANA QUE APARECE NO PRIMEIRO EXEMPLO
         int index = dataExtenso.indexOf(",");
