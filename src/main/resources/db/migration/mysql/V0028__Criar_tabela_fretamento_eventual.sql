@@ -18,6 +18,8 @@ CREATE TABLE fretamento_eventual (
     retorno TIMESTAMP NULL,
     previsao_chegada_retorno TIMESTAMP NULL,
     obs_itineratio LONGBLOB,
+    local_saida VARCHAR(250),
+    local_retorno VARCHAR(250),
 
     data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

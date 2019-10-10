@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -56,6 +58,14 @@ public class FretamentoEventualItinerario implements Serializable {
     @NotNull
     @Column(name = "previsao_chegada_retorno")
     private Date previsaoChegadaRetorno;
+
+    @Size(max = 250)
+    @Column(name = "local_saida")
+    private String localSaida;
+
+    @Size(max = 250)
+    @Column(name = "local_retorno")
+    private String localRetorno;
 
     @Lob
     @Column(name = "obs_itineratio")

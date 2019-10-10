@@ -57,6 +57,7 @@ public class PessoaService {
         Pessoa objFound = buscarPorId(id);
 
 //        objFound.getPessoaFisica().setCpf(pessoa.getPessoaFisica().getCpf());
+        objFound.setImagem(pessoa.getImagem());
         objFound.setNome(pessoa.getNome());
         objFound.setFantasia(pessoa.getFantasia());
         objFound.getPessoaFisica().setRg(pessoa.getPessoaFisica().getRg());
