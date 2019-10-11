@@ -27,8 +27,10 @@ INSERT INTO usuario_permissao (id_usuario, id_permissao) VALUES ((select id from
 
 
 
-alter table fretamento_eventual add local_retorno varchar(250) null;
-alter table fretamento_eventual add local_saida varchar(250) null;
+
+
+alter table veiculo
+    add capacidade_tanque_combustivel_lts int default 0 null;
 
 
 

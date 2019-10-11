@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c1857ce0-9ddb-43d6-94ef-2151a0f3de91">
 	<property name="ireport.zoom" value="1.610510000000001"/>
 	<property name="ireport.x" value="0"/>
@@ -35,6 +35,15 @@
 	<parameter name="GASTOS_EXTRAS" class="java.lang.String"/>
 	<parameter name="GELO" class="java.lang.String"/>
 	<parameter name="ORIGEM" class="java.lang.String"/>
+	<parameter name="HOSPEDAGEM" class="java.lang.String"/>
+	<parameter name="PEDAGIO" class="java.lang.String"/>
+	<parameter name="ITINERARIO_OBS" class="java.lang.String"/>
+	<parameter name="VALOR_TOTAL_DESPESAS" class="java.lang.String"/>
+	<parameter name="VALOR_A_SER_DEVOLVIDO" class="java.lang.String"/>
+	<parameter name="DATA_LIBERACAO_VIAGEM" class="java.lang.String"/>
+	<parameter name="IMAGEM_VELOCIDADE_MAXIMA" class="java.lang.String">
+		<defaultValueExpression><![CDATA["VelocidadeMaximaPermitida.jpg"]]></defaultValueExpression>
+	</parameter>
 	<field name="motorista" class="br.com.wcorrea.transport.api.model.pessoa.Pessoa"/>
 	<pageHeader>
 		<band height="106">
@@ -105,8 +114,18 @@
 	<detail>
 		<band height="651">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<image>
+				<reportElement x="10" y="560" width="79" height="80" uuid="3113b828-9e0a-47e1-8066-66d4f64eea08"/>
+				<imageExpression><![CDATA[$P{IMAGEM_VELOCIDADE_MAXIMA}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="460" y="560" width="79" height="80" uuid="c94146fc-e4fc-4289-b14f-6a16687b7be2">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{IMAGEM_VELOCIDADE_MAXIMA}]]></imageExpression>
+			</image>
 			<textField isStretchWithOverflow="true" evaluationTime="Auto">
-				<reportElement x="0" y="50" width="555" height="540" uuid="12e26bc8-3f9f-4fcc-9b0b-eac03da6101e">
+				<reportElement x="0" y="50" width="555" height="360" uuid="12e26bc8-3f9f-4fcc-9b0b-eac03da6101e">
 					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
@@ -127,16 +146,20 @@
 + "\n" + "<b>Data de Retorno: </b>" + $P{DESTINO_SAIDA_DATA_HORA}
 + "\n" + "<b>Local de Retorno: </b>" + $P{DESTINO_LOCAL_SAIDA}
 
++ "\n\n" + "<b>Observações do Itinerário: </b>" + $P{ITINERARIO_OBS}
+
 + "\n\n" + "<b>Motorista 1: </b>" + $P{MOTORISTA1}
 + "\n" + "<b>Motorista 2: </b>" + $P{MOTORISTA2}
 
 + "\n\n" + "<b>Gelo: </b>" + $P{GELO}
++ "\n" + "<b>Pedágio: </b>" + $P{PEDAGIO}
 + "\n" + "<b>Estacionamento: </b>" + $P{ESTACIONAMENTO}
 + "\n" + "<b>Abastecimento: </b>" + $P{ABASTECIMENTO}
-+ "\n" + "<b>Outros: </b>" + $P{GASTOS_EXTRAS}
++ "\n" + "<b>Hospedagem: </b>" + $P{HOSPEDAGEM}
 
-+ "\n\n" + "<b>Reserva: </b>" + $P{RESERVA}
-]]></textFieldExpression>
++ "\n" + "<b>Despesas Adicionais: </b>" + $P{GASTOS_EXTRAS}
+
++ "\n\n" + "<b>Reserva: </b>" + "<style forecolor='blue'>" +$P{RESERVA}+ "</style>"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="10" width="555" height="24" uuid="b1b9818a-16ff-4e24-be7a-f08608cee489">
@@ -147,6 +170,28 @@
 				</textElement>
 				<text><![CDATA[RELATÓRIO DE VIAGENS]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="0" y="410" width="555" height="230" uuid="60edc483-9a40-4648-a546-3a3d6c254956">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" markup="styled">
+					<paragraph leftIndent="30" rightIndent="30"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold='true' backcolor='yellow'>Valor total disponibilizado para viagem: " +$P{VALOR_TOTAL_DESPESAS}+ "</style>"
++ "\n" + "<style isBold='true' backcolor='yellow'>Caso NÃO tenha gastos extras o valor a ser devolvido será de: " + "<style forecolor='blue'>" +$P{VALOR_A_SER_DEVOLVIDO}+ "</style></style>"
++ "\n\n" + "<style size='10' isBold='true'>É obrigatorio a apresentação dos cupons fiscais de cada gastos, para poder fazer o acerto da viagem.</style>"
+
++ "\n" + "<style size='10' isBold='true'>Multas tomadas de responsabilidade do condutor será descontado no pagamento e será identificado os pontos em sua CNH.</style>"
+
+
++ "\n\n\n" + "<style size='12' isBold='true'>BOA VIAGEM, DEUS ACOMPANHE!!!</style>"
+
+
++"\n\n\n\n\n\n"+ "_______________________________________________________"
++ "\n" +"MOTORISTA RESPONSÁVEL PELA LIBERAÇÃO"
++ "\n"+ "Data da liberação: " + $P{DATA_LIBERACAO_VIAGEM}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>

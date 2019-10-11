@@ -1,9 +1,7 @@
 package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.Veiculo;
-import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventalTipo;
-import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventual;
-import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventualRelatorio;
+import br.com.wcorrea.transport.api.model.fretamento.*;
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.model.pessoa.PessoaTipo;
@@ -24,7 +22,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.rmi.CORBA.Util;
 import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
 import java.io.InputStream;
@@ -305,7 +302,7 @@ public class FretamentoEventualService {
         parametros.put("EMPRESA_CEP_FONE", "CEP: " + f.getEmpresa().getCep() + "  -  FONE: " + f.getEmpresa().getTelefone1());
         parametros.put("EMPRESA_EMAIL", f.getEmpresa().getEmail());
         parametros.put("CONTRATO_CODIGO", "Contrato de Fretamento Eventual: " + f.getNumeroContrato());
-        parametros.put("IMAGEM_LOGO", this.getClass().getResource("/relatorios/Logo.png").getPath());
+        parametros.put("IMAGEM_LOGO", this.getClass().getResource("/relatorios/").getPath() + "Logo.png");
 
         parametros.put("VEICULO", "Frota: " + f.getItinerario().getVeiculo().getFrota() + " - Placa: " + f.getItinerario().getVeiculo().getPlaca().toUpperCase() + ", com capacidade de " + f.getItinerario().getVeiculo().getQtdLugares() + " lugares");
         parametros.put("DATA_PARTIDA", Utils.getDataPorExtenso(f.getItinerario().getPartida()));
@@ -321,24 +318,76 @@ public class FretamentoEventualService {
         parametros.put("DESTINO", f.getItinerario().getRetornoCidade().getNome() + "/" + f.getItinerario().getRetornoCidade().getEstado().getIniciais());
         parametros.put("DESTINO_SAIDA_DATA_HORA", Utils.getDataPorExtenso(f.getItinerario().getRetorno()) + " as " + Utils.getHoraFormatada(f.getItinerario().getRetorno()) + ".");
         parametros.put("DESTINO_LOCAL_SAIDA", StringUtils.isNotBlank(f.getItinerario().getLocalRetorno()) ? f.getItinerario().getLocalRetorno() : "");
+        parametros.put("ITINERARIO_OBS", StringUtils.isNotBlank(f.getItinerario().getObsItineratio()) ? f.getItinerario().getObsItineratio() : "");
 
         parametros.put("MOTORISTA1", f.getCusto().getMotorista1().getNome() + "   -   Total de Diária(s): " + Utils.formatarDinheiro(f.getCusto().getValorMotorista1Diaria()));
         parametros.put("MOTORISTA2", f.getCusto().getMotorista2() != null ? (f.getCusto().getMotorista2().getNome() + "" +
-                "   -   Total de Diária(s): " + ((f.getCusto().getValorMotorista2Diaria() != null && f.getCusto().getValorMotorista2Diaria().compareTo(BigDecimal.ZERO) == 1)  ? Utils.formatarDinheiro(f.getCusto().getValorMotorista2Diaria()) : "")) : "");
+                "   -   Total de Diária(s): " + ((f.getCusto().getValorMotorista2Diaria() != null && f.getCusto().getValorMotorista2Diaria().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiro(f.getCusto().getValorMotorista2Diaria()) : "")) : "");
 
-        parametros.put("ABASTECIMENTO", "VOU TER QUE CALCULAR");
-        parametros.put("ESTACIONAMENTO", (f.getCusto().getValorEstacionamento() != null && f.getCusto().getValorEstacionamento().compareTo(BigDecimal.ZERO) == 1)  ? Utils.formatarDinheiro(f.getCusto().getValorEstacionamento()) : "");
-        parametros.put("GELO", (f.getCusto().getValorGelo() != null && f.getCusto().getValorGelo().compareTo(BigDecimal.ZERO) == 1)  ? Utils.formatarDinheiro(f.getCusto().getValorGelo()) : "");
-        parametros.put("GASTOS_EXTRAS", (f.getCusto().getValorDespesasAdicionais() != null && f.getCusto().getValorDespesasAdicionais().compareTo(BigDecimal.ZERO) == 1)  ? Utils.formatarDinheiro(f.getCusto().getValorDespesasAdicionais()) : "");
-        parametros.put("RESERVA", (f.getCusto().getValorDinheiroReserva() != null && f.getCusto().getValorDinheiroReserva().compareTo(BigDecimal.ZERO) == 1)  ? Utils.formatarDinheiro(f.getCusto().getValorDinheiroReserva()) : "");
+        parametros.put("ABASTECIMENTO", relatorioViagemCalcularAbastecimentoVeiculo(f.getItinerario().getKmPercorridoQuantidade(), f.getItinerario().getVeiculo().getCapacidadeTanqueCombustivelLts(), f.getCusto().getCombustivelValor()));
+        parametros.put("PEDAGIO", relatorioViagemVerificarCobrancaAutomatica(f.getCusto().getValorPedagio(), f.getCusto().isCobrancaAutomatica()));
+        parametros.put("ESTACIONAMENTO", (f.getCusto().getValorEstacionamento() != null && f.getCusto().getValorEstacionamento().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiro(f.getCusto().getValorEstacionamento()) : "");
+        parametros.put("GELO", (f.getCusto().getValorGelo() != null && f.getCusto().getValorGelo().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiro(f.getCusto().getValorGelo()) : "");
+        parametros.put("GASTOS_EXTRAS", (f.getCusto().getValorDespesasAdicionais() != null && f.getCusto().getValorDespesasAdicionais().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiro(f.getCusto().getValorDespesasAdicionais()) : "");
+        parametros.put("HOSPEDAGEM", (f.getCusto().getValorHospedagem() != null && f.getCusto().getValorHospedagem().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiro(f.getCusto().getValorHospedagem()) : "");
+        parametros.put("RESERVA", (f.getCusto().getValorDinheiroReserva() != null && f.getCusto().getValorDinheiroReserva().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiro(f.getCusto().getValorDinheiroReserva()) : "");
 
-
-
+        parametros.put("VALOR_TOTAL_DESPESAS", relatorioViagemCalcularDespesas(f.getCusto(), f.getItinerario()));
+        parametros.put("VALOR_A_SER_DEVOLVIDO", (f.getCusto().getValorDinheiroReserva() != null && f.getCusto().getValorDinheiroReserva().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiro(f.getCusto().getValorDinheiroReserva()) : "");
+        parametros.put("DATA_LIBERACAO_VIAGEM", Utils.getDataFormatada(new Date()));
+        parametros.put("IMAGEM_VELOCIDADE_MAXIMA", this.getClass().getResource("/relatorios/").getPath() + "VelocidadeMaximaPermitida.jpg");
 
 
         InputStream inputStream = this.getClass().getResourceAsStream("/relatorios/FretamentoEventualContratoRelatorioViagem.jasper");
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros, new JRBeanCollectionDataSource(dados));
         return JasperExportManager.exportReportToPdf(jasperPrint);
+    }
+
+    private String relatorioViagemCalcularAbastecimentoVeiculo(int totalKm, int capacidadeTanqueVeiculo, BigDecimal valorKm) {
+        Integer litrosNaoUsados = totalKm - capacidadeTanqueVeiculo;
+
+        if (litrosNaoUsados > 0) {
+            return Utils.formatarDinheiro(valorKm.multiply(new BigDecimal(litrosNaoUsados))) + ", previsto gastar " + litrosNaoUsados + " lts, com valor estimado a " + Utils.formatarDinheiro(valorKm);
+        }
+        return "";
+    }
+
+    private String relatorioViagemCalcularDespesas(FretamentoEventualCusto custo, FretamentoEventualItinerario itinerario) {
+        BigDecimal total = BigDecimal.ZERO;
+
+        if (!custo.isCobrancaAutomatica()) {
+            total = total.add(custo.getValorPedagio()); //VERIFICAR SEM PARAR
+        }
+        total = total.add(custo.getValorEstacionamento())
+//                .add(custo.getValorAgua())
+                .add(custo.getValorGelo())
+                .add(custo.getValorHospedagem())
+                .add(custo.getValorDespesasAdicionais())
+
+                .add(custo.getValorMotorista1Diaria());
+
+        if(custo.getValorMotorista2Diaria() != null){
+            total = total.add(custo.getValorMotorista2Diaria());
+        }
+
+
+        Integer litrosNaoUsados = itinerario.getKmPercorridoQuantidade() - itinerario.getVeiculo().getCapacidadeTanqueCombustivelLts();
+        if (litrosNaoUsados > 0) {
+            total = total.add(new BigDecimal(litrosNaoUsados).multiply(custo.getCombustivelValor()));
+        }
+
+        return "Valor total disponibilizado para viagem: " + Utils.formatarDinheiro(total);
+    }
+
+    private String relatorioViagemVerificarCobrancaAutomatica(BigDecimal pedagio, boolean cobrancaAutomatica) {
+        if (pedagio != null && pedagio.compareTo(BigDecimal.ZERO) == 1) {
+            if (!cobrancaAutomatica) {
+                return Utils.formatarDinheiro(pedagio);
+            }
+            return "SEM PARAR";
+        }
+
+        return "";
     }
 }

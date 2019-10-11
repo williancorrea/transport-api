@@ -54,6 +54,9 @@ public class Veiculo extends IdentificadorComum implements Serializable {
     @Column(name = "quantidade_lugares")
     private int qtdLugares;
 
+    @Column(name = "capacidade_tanque_combustivel_lts")
+    private int capacidadeTanqueCombustivelLts;
+
     private boolean inativo;
 
     public Veiculo() {
