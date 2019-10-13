@@ -47,6 +47,44 @@ public class PessoaService {
     }
 
     /**
+     * Prepara os dados de Cliente/Fornecedor para atualização
+     *
+     * @param id
+     * @param pessoa
+     * @return
+     */
+    public Pessoa updateClienteFornecedor(Long id, Pessoa pessoa) {
+        Pessoa objFound = buscarPorId(id);
+
+        objFound.setImagem(pessoa.getImagem());
+        objFound.setNome(pessoa.getNome());
+        objFound.setFantasia(pessoa.getFantasia());
+        objFound.setEmail(pessoa.getEmail());
+        objFound.setTelefone1(pessoa.getTelefone1());
+        objFound.setTelefone1Obs(pessoa.getTelefone1Obs());
+        objFound.setTelefone2(pessoa.getTelefone2());
+        objFound.setTelefone2Obs(pessoa.getTelefone2Obs());
+        objFound.setCidade(pessoa.getCidade());
+        objFound.setBairro(pessoa.getBairro());
+        objFound.setCep(pessoa.getCep());
+        objFound.setEndereco(pessoa.getEndereco());
+        objFound.setObs(pessoa.getObs());
+
+        if (objFound.getTipo().equals(PessoaTipo.FISICA)) {
+//            objFound.getPessoaFisica().setCpf(pessoa.getPessoaFisica().getCpf());
+            objFound.getPessoaFisica().setRg(pessoa.getPessoaFisica().getRg());
+            objFound.setPessoaJuridica(null);
+        } else {
+//            objFound.getPessoaJuridica().setCnpj(pessoa.getPessoaJuridica().getCnpj());
+            objFound.getPessoaJuridica().setInscricaoEstadual(pessoa.getPessoaJuridica().getInscricaoEstadual());
+            objFound.setPessoaFisica(null);
+        }
+
+        return update(objFound.getId(), objFound);
+    }
+
+
+    /**
      * Prepara os dados de motorista para atualização
      *
      * @param id
@@ -86,7 +124,7 @@ public class PessoaService {
         return update(objFound.getId(), objFound);
     }
 
-    public Pessoa update(Long id, Pessoa pessoa) {
+    private Pessoa update(Long id, Pessoa pessoa) {
         Pessoa objFound = buscarPorId(id);
 
         pessoa.setId(objFound.getId());

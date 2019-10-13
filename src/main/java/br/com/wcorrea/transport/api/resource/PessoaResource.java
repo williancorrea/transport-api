@@ -51,16 +51,16 @@ public class PessoaResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(pessoaSalva);
     }
 
-    @PutMapping("/{key}")
-//    @PreAuthorize("hasAuthority('ROLE_UPDATE_PERSON') and #oauth2.hasScope('write')")
-    public ResponseEntity<Pessoa> update(@Valid @PathVariable String key, @Valid @RequestBody Pessoa Pessoa) {
-        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.update(pessoaService.descriptografarKey(key), Pessoa));
-    }
-
     @PutMapping("/{key}/motorista")
 //    @PreAuthorize("hasAuthority('ROLE_UPDATE_PERSON') and #oauth2.hasScope('write')")
     public ResponseEntity<Pessoa> updateMotorista(@Valid @PathVariable String key, @Valid @RequestBody Pessoa Pessoa) {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.updateMotorista(pessoaService.descriptografarKey(key), Pessoa));
+    }
+
+    @PutMapping("/{key}/cliente-fornecedor")
+//    @PreAuthorize("hasAuthority('ROLE_UPDATE_PERSON') and #oauth2.hasScope('write')")
+    public ResponseEntity<Pessoa> updateClienteFornecedor(@Valid @PathVariable String key, @Valid @RequestBody Pessoa Pessoa) {
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.updateClienteFornecedor(pessoaService.descriptografarKey(key), Pessoa));
     }
 
     @GetMapping("/cmbClientes")
