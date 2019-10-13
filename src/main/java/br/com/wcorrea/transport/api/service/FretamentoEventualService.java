@@ -370,9 +370,10 @@ public class FretamentoEventualService {
                 .add(custo.getValorMotorista2Diaria() != null ? custo.getValorMotorista2Diaria() : BigDecimal.ZERO);
 
 
-        Integer litrosNaoUsados = itinerario.getKmPercorridoQuantidade() - itinerario.getVeiculo().getCapacidadeTanqueCombustivelLts();
+        Double litrosTotalParaViagem = itinerario.getKmPercorridoQuantidade() / itinerario.getVeiculo().getConsumoReal().doubleValue();
+        Double litrosNaoUsados = litrosTotalParaViagem - itinerario.getVeiculo().getCapacidadeTanqueCombustivelLts();
         if (litrosNaoUsados > 0) {
-            total = total.add(new BigDecimal(litrosNaoUsados).multiply(custo.getCombustivelValor()));
+                total = total.add(custo.getValorKm().multiply(new BigDecimal(litrosNaoUsados)));
         }
 
         return "Valor total disponibilizado para viagem: " + Utils.formatarDinheiro(total);
