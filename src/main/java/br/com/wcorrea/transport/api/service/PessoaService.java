@@ -83,7 +83,6 @@ public class PessoaService {
         return update(objFound.getId(), objFound);
     }
 
-
     /**
      * Prepara os dados de motorista para atualização
      *
@@ -228,7 +227,6 @@ public class PessoaService {
         p.getPessoaFisica().setInativoMotorista(true);
         return update(p.getId(), p);
     }
-
 
     public Pessoa validarPessoa(Pessoa pessoa) {
         Pessoa pessoaEncontrada = pessoa.getId() != null ? this.buscarPorId(pessoa.getId()) : null;

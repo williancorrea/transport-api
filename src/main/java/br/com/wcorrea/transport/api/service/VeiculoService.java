@@ -1,14 +1,16 @@
 package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.Veiculo;
+import br.com.wcorrea.transport.api.repository.veiculo.VeiculoFiltro;
 import br.com.wcorrea.transport.api.repository.veiculo.VeiculoRepository;
 import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoJaCadastrado;
 import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -16,6 +18,19 @@ public class VeiculoService {
 
     @Autowired
     private VeiculoRepository veiculoRepository;
+
+    public Page<Veiculo> listar(VeiculoFiltro filtro, Pageable paginacao) {
+        return veiculoRepository.findAll(filtro, paginacao);
+    }
+
+    public void excluir(String key) {
+        excluir(descriptografarKey(key));
+    }
+
+    public void excluir(Long id) {
+        Veiculo veiculo = buscarPorId(id);
+        veiculoRepository.deleteById(veiculo.getId());
+    }
 
     public Veiculo atualizar(Long id, Veiculo veiculo) {
         Veiculo objFound = veiculoRepository.save(buscarPorId(id));
@@ -47,7 +62,7 @@ public class VeiculoService {
         return this.buscarPorId(veiculo.getId());
     }
 
-    public Long buscarPorKey(String key) {
+    public Long descriptografarKey(String key) {
         try {
             return new Criptografia().getKey(key);
         } catch (Exception e) {
