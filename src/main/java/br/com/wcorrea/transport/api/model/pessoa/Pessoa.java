@@ -50,13 +50,13 @@ public class Pessoa extends IdentificadorComum implements Serializable {
     @Size(max = 20)
     private String telefone1;
 
-    @Size(max = 100)
+    @Size(max = 10)
     private String telefone1Obs;
 
     @Size(max = 20)
     private String telefone2;
 
-    @Size(max = 100)
+    @Size(max = 10)
     private String telefone2Obs;
 
     @JoinColumn(name = "cidade_id", referencedColumnName = "id")
@@ -126,4 +126,5 @@ public class Pessoa extends IdentificadorComum implements Serializable {
     public String getTelefone2Formatado() {
         return Utils.formatarTelefone(this.telefone2) ;
     }
+
 }
