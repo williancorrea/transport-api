@@ -24,7 +24,7 @@ public class Veiculo extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    @Size(min = 8, max = 8)
+    @Size(max = 8)
     @Column(name = "placa", nullable = false, unique = true)
     private String placa;
 
