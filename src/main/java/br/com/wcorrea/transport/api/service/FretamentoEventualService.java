@@ -320,20 +320,20 @@ public class FretamentoEventualService {
         parametros.put("DESTINO_LOCAL_SAIDA", StringUtils.isNotBlank(f.getItinerario().getLocalRetorno()) ? f.getItinerario().getLocalRetorno() : "");
         parametros.put("ITINERARIO_OBS", StringUtils.isNotBlank(f.getItinerario().getObsItineratio()) ? f.getItinerario().getObsItineratio() : "");
 
-        parametros.put("MOTORISTA1", f.getCusto().getMotorista1().getNome() + "   -   Total de Diária(s): " + Utils.formatarDinheiro(f.getCusto().getValorMotorista1Diaria()));
+        parametros.put("MOTORISTA1", f.getCusto().getMotorista1().getNome() + "   -   Total de Diária(s): " + Utils.formatarDinheiroRS(f.getCusto().getValorMotorista1Diaria()));
         parametros.put("MOTORISTA2", f.getCusto().getMotorista2() != null ? (f.getCusto().getMotorista2().getNome() + "" +
-                "   -   Total de Diária(s): " + ((f.getCusto().getValorMotorista2Diaria() != null && f.getCusto().getValorMotorista2Diaria().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiro(f.getCusto().getValorMotorista2Diaria()) : "")) : "");
+                "   -   Total de Diária(s): " + ((f.getCusto().getValorMotorista2Diaria() != null && f.getCusto().getValorMotorista2Diaria().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiroRS(f.getCusto().getValorMotorista2Diaria()) : "")) : "");
 
         parametros.put("ABASTECIMENTO", relatorioViagemCalcularAbastecimentoVeiculo(f.getItinerario().getKmPercorridoQuantidade(), f.getItinerario().getVeiculo().getCapacidadeTanqueCombustivelLts(), f.getCusto().getCombustivelValor(), f.getItinerario().getVeiculo().getConsumoAtual()));
         parametros.put("PEDAGIO", relatorioViagemVerificarCobrancaAutomatica(f.getCusto().getValorPedagio(), f.getCusto().isCobrancaAutomatica()));
-        parametros.put("ESTACIONAMENTO", (f.getCusto().getValorEstacionamento() != null && f.getCusto().getValorEstacionamento().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiro(f.getCusto().getValorEstacionamento()) : "");
-        parametros.put("GELO", (f.getCusto().getValorGelo() != null && f.getCusto().getValorGelo().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiro(f.getCusto().getValorGelo()) : "");
-        parametros.put("GASTOS_EXTRAS", (f.getCusto().getValorDespesasAdicionais() != null && f.getCusto().getValorDespesasAdicionais().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiro(f.getCusto().getValorDespesasAdicionais()) : "");
-        parametros.put("HOSPEDAGEM", (f.getCusto().getValorHospedagem() != null && f.getCusto().getValorHospedagem().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiro(f.getCusto().getValorHospedagem()) : "");
-        parametros.put("RESERVA", (f.getCusto().getValorDinheiroReserva() != null && f.getCusto().getValorDinheiroReserva().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiro(f.getCusto().getValorDinheiroReserva()) : "");
+        parametros.put("ESTACIONAMENTO", (f.getCusto().getValorEstacionamento() != null && f.getCusto().getValorEstacionamento().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiroRS(f.getCusto().getValorEstacionamento()) : "");
+        parametros.put("GELO", (f.getCusto().getValorGelo() != null && f.getCusto().getValorGelo().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiroRS(f.getCusto().getValorGelo()) : "");
+        parametros.put("GASTOS_EXTRAS", (f.getCusto().getValorDespesasAdicionais() != null && f.getCusto().getValorDespesasAdicionais().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiroRS(f.getCusto().getValorDespesasAdicionais()) : "");
+        parametros.put("HOSPEDAGEM", (f.getCusto().getValorHospedagem() != null && f.getCusto().getValorHospedagem().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiroRS(f.getCusto().getValorHospedagem()) : "");
+        parametros.put("RESERVA", (f.getCusto().getValorDinheiroReserva() != null && f.getCusto().getValorDinheiroReserva().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiroRS(f.getCusto().getValorDinheiroReserva()) : "");
 
         parametros.put("VALOR_TOTAL_DESPESAS", relatorioViagemCalcularDespesas(f.getCusto(), f.getItinerario()));
-        parametros.put("VALOR_A_SER_DEVOLVIDO", (f.getCusto().getValorDinheiroReserva() != null && f.getCusto().getValorDinheiroReserva().compareTo(BigDecimal.ZERO) == 1) ? "<style isBold='true' backcolor='yellow'>Caso NÃO tenha gastos extras o valor a ser devolvido será de: " + "<style forecolor='blue'>" +Utils.formatarDinheiro(f.getCusto().getValorDinheiroReserva()) + "</style></style>" : "");
+        parametros.put("VALOR_A_SER_DEVOLVIDO", (f.getCusto().getValorDinheiroReserva() != null && f.getCusto().getValorDinheiroReserva().compareTo(BigDecimal.ZERO) == 1) ? "<style isBold='true' backcolor='yellow'>Caso NÃO tenha gastos extras o valor a ser devolvido será de: " + "<style forecolor='blue'>" +Utils.formatarDinheiroRS(f.getCusto().getValorDinheiroReserva()) + "</style></style>" : "");
         parametros.put("DATA_LIBERACAO_VIAGEM", Utils.getDataFormatada(new Date()));
         parametros.put("IMAGEM_VELOCIDADE_MAXIMA", this.getClass().getResource("/relatorios/").getPath() + "VelocidadeMaximaPermitida.jpg");
 
@@ -349,7 +349,7 @@ public class FretamentoEventualService {
         Double litrosNaoUsados = litrosTotalParaViagem - capacidadeTanqueVeiculo;
 
         if (litrosNaoUsados > 0) {
-            return Utils.formatarDinheiro(valorKm.multiply(new BigDecimal(litrosNaoUsados))) + ", previsto gastar " + String.format("%.2f", litrosNaoUsados) + " lts, com valor estimado a " + Utils.formatarDinheiro(valorKm);
+            return Utils.formatarDinheiroRS(valorKm.multiply(new BigDecimal(litrosNaoUsados))) + ", previsto gastar " + String.format("%.2f", litrosNaoUsados) + " lts, com valor estimado a " + Utils.formatarDinheiroRS(valorKm);
         }
         return "";
     }
@@ -376,13 +376,13 @@ public class FretamentoEventualService {
                 total = total.add(custo.getValorKm().multiply(new BigDecimal(litrosNaoUsados)));
         }
 
-        return "Valor total disponibilizado para viagem: " + Utils.formatarDinheiro(total);
+        return "Valor total disponibilizado para viagem: " + Utils.formatarDinheiroRS(total);
     }
 
     private String relatorioViagemVerificarCobrancaAutomatica(BigDecimal pedagio, boolean cobrancaAutomatica) {
         if (pedagio != null && pedagio.compareTo(BigDecimal.ZERO) == 1) {
             if (!cobrancaAutomatica) {
-                return Utils.formatarDinheiro(pedagio);
+                return Utils.formatarDinheiroRS(pedagio);
             }
             return "SEM PARAR";
         }

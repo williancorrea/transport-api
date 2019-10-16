@@ -41,8 +41,12 @@ public class Utils {
         }
     }
 
-    public static String formatarDinheiro(BigDecimal valor){
+    public static String formatarDinheiroRS(BigDecimal valor){
      return NumberFormat.getCurrencyInstance(new Locale( "pt", "BR" )).format(valor);
+    }
+
+    public static String formatarDinheiroPorExtenso(BigDecimal valor){
+        return new NumeroExtenso(valor).toMonetario();
     }
 
     public static String formatarTelefone(String valor) {
