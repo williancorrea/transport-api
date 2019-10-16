@@ -136,7 +136,9 @@
 				</reportElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="160" y="30" width="235" height="10" uuid="9ff9afed-6ba1-4965-8937-6062d1e126be"/>
+				<reportElement x="160" y="30" width="235" height="12" uuid="9ff9afed-6ba1-4965-8937-6062d1e126be">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Center">
 					<font size="8" isBold="true" isItalic="false"/>
 				</textElement>
