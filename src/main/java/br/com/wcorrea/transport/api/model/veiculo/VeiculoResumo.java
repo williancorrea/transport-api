@@ -1,5 +1,6 @@
-package br.com.wcorrea.transport.api.model;
+package br.com.wcorrea.transport.api.model.veiculo;
 
+import br.com.wcorrea.transport.api.model.veiculo.Veiculo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -32,6 +33,4 @@ public class VeiculoResumo implements Serializable {
         this.consumoReal = veiculo.getConsumoReal();
         this.velocidadeMedia = veiculo.getVelocidadeMedia();
     }
-
-
 }

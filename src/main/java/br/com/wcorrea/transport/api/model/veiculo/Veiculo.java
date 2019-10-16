@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.model;
+package br.com.wcorrea.transport.api.model.veiculo;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import lombok.Data;
@@ -6,9 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Lob;
+import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
@@ -56,6 +54,11 @@ public class Veiculo extends IdentificadorComum implements Serializable {
 
     @Column(name = "capacidade_tanque_combustivel_lts")
     private int capacidadeTanqueCombustivelLts;
+
+    @JoinColumn(name = "veiculo_modelo_id", referencedColumnName = "id")
+    @ManyToOne()
+    @NotNull
+    private VeiculoModelo veiculoModelo;
 
     private boolean inativo;
 

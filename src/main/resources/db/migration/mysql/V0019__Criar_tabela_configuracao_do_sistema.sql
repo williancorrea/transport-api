@@ -3,7 +3,10 @@ CREATE TABLE configuracao_sistema (
   nome varchar(250) NOT NULL,
   descricao varchar(250) NOT NULL,
   valor varchar(250) NOT NULL,
-  inativo BOOLEAN DEFAULT FALSE
+  inativo BOOLEAN DEFAULT FALSE,
+
+  data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 )
   ENGINE = InnoDB DEFAULT CHARSET = utf8;
 

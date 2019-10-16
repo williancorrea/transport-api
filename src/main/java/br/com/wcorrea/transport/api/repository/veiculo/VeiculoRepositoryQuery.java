@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.repository.veiculo;
 
-import br.com.wcorrea.transport.api.model.Veiculo;
+import br.com.wcorrea.transport.api.model.veiculo.Veiculo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

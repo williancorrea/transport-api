@@ -1,8 +1,8 @@
 package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
-import br.com.wcorrea.transport.api.model.Veiculo;
-import br.com.wcorrea.transport.api.model.VeiculoResumo;
+import br.com.wcorrea.transport.api.model.veiculo.Veiculo;
+import br.com.wcorrea.transport.api.model.veiculo.VeiculoResumo;
 import br.com.wcorrea.transport.api.repository.veiculo.VeiculoFiltro;
 import br.com.wcorrea.transport.api.service.VeiculoService;
 import org.springframework.beans.factory.annotation.Autowired;

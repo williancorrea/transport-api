@@ -6,7 +6,7 @@ CREATE TABLE tanque_combustivel (
     quantidade_lts  INTEGER,
 
     data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     combustivel_id BIGINT(20) NOT NULL,
     FOREIGN KEY (combustivel_id) REFERENCES combustivel(id)

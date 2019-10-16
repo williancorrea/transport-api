@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.service;
 
-import br.com.wcorrea.transport.api.model.Veiculo;
+import br.com.wcorrea.transport.api.model.veiculo.Veiculo;
 import br.com.wcorrea.transport.api.model.fretamento.*;
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;

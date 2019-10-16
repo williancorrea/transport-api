@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.repository.veiculo;
 
-import br.com.wcorrea.transport.api.model.Veiculo;
+import br.com.wcorrea.transport.api.model.veiculo.Veiculo;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;

@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.service;
 
-import br.com.wcorrea.transport.api.model.Veiculo;
+import br.com.wcorrea.transport.api.model.veiculo.Veiculo;
 import br.com.wcorrea.transport.api.repository.veiculo.VeiculoFiltro;
 import br.com.wcorrea.transport.api.repository.veiculo.VeiculoRepository;
 import br.com.wcorrea.transport.api.service.exception.veiculo.VeiculoJaCadastrado;

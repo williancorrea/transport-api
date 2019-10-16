@@ -1,12 +1,11 @@
 package br.com.wcorrea.transport.api.model.fretamento;
 
-import br.com.wcorrea.transport.api.model.Veiculo;
+import br.com.wcorrea.transport.api.model.veiculo.Veiculo;
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
