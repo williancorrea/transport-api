@@ -60,6 +60,11 @@ public class Veiculo extends IdentificadorComum implements Serializable {
     @NotNull
     private VeiculoModelo veiculoModelo;
 
+    @JoinColumn(name = "veiculo_marca_id", referencedColumnName = "id")
+    @ManyToOne()
+    @NotNull
+    private VeiculoMarca veiculoMarca;
+
     private boolean inativo;
 
     public Veiculo() {

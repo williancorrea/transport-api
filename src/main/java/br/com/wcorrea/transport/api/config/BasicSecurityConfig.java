@@ -41,6 +41,9 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/pessoas/**").permitAll()
                 .antMatchers("/cidades/**").permitAll()
                 .antMatchers("/veiculos/**").permitAll()
+                .antMatchers("/veiculosMarca/**").permitAll()
+                .antMatchers("/veiculosModelo/**").permitAll()
+
 
 
                 .anyRequest().authenticated()

@@ -15,8 +15,6 @@ CREATE TABLE veiculo_modelo (
     nome VARCHAR(100) NOT NULL,
     inativo BOOLEAN DEFAULT FALSE,
 
-    veiculo_marca_id BIGINT(20), FOREIGN KEY (veiculo_marca_id) REFERENCES veiculo_marca(id),
-
     data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     data_alteracao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )
@@ -39,6 +37,7 @@ CREATE TABLE veiculo (
     quantidade_lugares int default 0,
     capacidade_tanque_combustivel_lts int default 0,
 
+    veiculo_marca_id BIGINT(20), FOREIGN KEY (veiculo_marca_id) REFERENCES veiculo_marca(id),
     veiculo_modelo_id BIGINT(20), FOREIGN KEY (veiculo_modelo_id) REFERENCES veiculo_modelo(id),
 
     data_criacao  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

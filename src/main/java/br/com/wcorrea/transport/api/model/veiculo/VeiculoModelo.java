@@ -22,11 +22,6 @@ public class VeiculoModelo extends IdentificadorComum implements Serializable {
     @Size(max = 100)
     private String nome;
 
-    @JoinColumn(name = "veiculo_marca_id", referencedColumnName = "id")
-    @ManyToOne()
-    @NotNull
-    private VeiculoMarca veiculoMarca;
-
     private boolean inativo;
 
     public VeiculoModelo() {

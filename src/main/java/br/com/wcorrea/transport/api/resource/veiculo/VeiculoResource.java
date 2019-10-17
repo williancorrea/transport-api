@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.resource;
+package br.com.wcorrea.transport.api.resource.veiculo;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.veiculo.Veiculo;

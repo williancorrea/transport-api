@@ -24,4 +24,8 @@ public class QueryFiltroPadrao {
     public String getOrdemClassificacao() {
         return StringUtils.isEmpty(ordemClassificacao) ? "ASC" : ordemClassificacao.toUpperCase();
     }
+
+    public String getFiltroGlobal() {
+        return filtroGlobal != null ? filtroGlobal : "";
+    }
 }
