@@ -3,13 +3,14 @@ package br.com.wcorrea.transport.api;
 import br.com.wcorrea.transport.api.config.AutowireHelper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
 @SpringBootApplication
-public class ApiApplication {
+public class ApiApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(ApiApplication.class, args);

@@ -7,7 +7,7 @@
     <groupId>br.com.wcorrea.transport</groupId>
     <artifactId>api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>transport-api</name>
     <description>Demo project for Spring Boot</description>
@@ -167,7 +167,6 @@
         </dependency>
 
 
-
         <!--
             JasperReports
         -->
@@ -210,14 +209,20 @@
             ADICIONANDO UM JAR EXTERNO AO PROJETO
             https://stackoverflow.com/questions/1091760/export-html-content-to-pdf-using-jasperreports
         -->
-<!--        <dependency>-->
-<!--            <groupId>htmlComponent</groupId>-->
-<!--            <artifactId>htmlComponent</artifactId>-->
-<!--            <version>1.0</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${basedir}/lib/htmlcomponent.jar</systemPath>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>htmlComponent</groupId>-->
+        <!--            <artifactId>htmlComponent</artifactId>-->
+        <!--            <version>1.0</version>-->
+        <!--            <scope>system</scope>-->
+        <!--            <systemPath>${basedir}/lib/htmlcomponent.jar</systemPath>-->
+        <!--        </dependency>-->
 
+        <!-- REMOVENDO O TOMCAT EMBARCADO DO EMPACOTAMENTO WAR-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
