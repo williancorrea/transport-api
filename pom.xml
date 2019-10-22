@@ -19,6 +19,19 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+                <FILE_LOG_LEVEL>INFO</FILE_LOG_LEVEL>
+            </properties>
+        </profile>
+    </profiles>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -226,6 +239,7 @@
     </dependencies>
 
     <build>
+        <finalName>gestao-api</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
