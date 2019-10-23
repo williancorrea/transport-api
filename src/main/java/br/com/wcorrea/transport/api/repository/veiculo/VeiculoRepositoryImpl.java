@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.*;
+import org.hibernate.sql.JoinType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -68,6 +69,7 @@ public class VeiculoRepositoryImpl implements VeiculoRepositoryQuery {
     private Criteria criarCriteriaParaFiltro(VeiculoFiltro filtro) {
         Session session = manager.unwrap(Session.class);
         Criteria criteria = session.createCriteria(Veiculo.class);
+        criteria.createAlias("combustivel", "c",  JoinType.LEFT_OUTER_JOIN);
 
         if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
             Disjunction disjunction = Restrictions.disjunction(); // Restricao com OR
