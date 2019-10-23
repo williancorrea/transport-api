@@ -345,11 +345,15 @@ public class FretamentoEventualService {
     }
 
     private String relatorioViagemCalcularAbastecimentoVeiculo(int totalKm, int capacidadeTanqueVeiculo, BigDecimal valorKm, BigDecimal mediaAtualVeiculo) {
+
+        // TODO: COLOCAR ESSE 0.2 = 20% DO TANQUE DE COMBUSTIVEL NA TABELA DE PARAMETRO
+        Double reservaDoTanque = capacidadeTanqueVeiculo * 0.2;
+
         Double litrosTotalParaViagem = totalKm / mediaAtualVeiculo.doubleValue();
-        Double litrosNaoUsados = litrosTotalParaViagem - capacidadeTanqueVeiculo;
+        Double litrosNaoUsados = litrosTotalParaViagem - (capacidadeTanqueVeiculo - reservaDoTanque);
 
         if (litrosNaoUsados > 0) {
-            return Utils.formatarDinheiroRS(valorKm.multiply(new BigDecimal(litrosNaoUsados))) + ", previsto gastar " + String.format("%.2f", litrosNaoUsados) + " lts, com valor estimado a " + Utils.formatarDinheiroRS(valorKm);
+            return Utils.formatarDinheiroRS(valorKm.multiply(new BigDecimal(litrosNaoUsados))) + ", previsto gastar " + String.format("%.2f", litrosNaoUsados) + " lts, com valor estimado a " + Utils.formatarDinheiroRS(valorKm) + " ( Sem contar " + String.format("%.2f", reservaDoTanque) + "lts reserva no Tanque )";
         }
         return "";
     }
@@ -370,8 +374,11 @@ public class FretamentoEventualService {
                 .add(custo.getValorMotorista2Diaria() != null ? custo.getValorMotorista2Diaria() : BigDecimal.ZERO);
 
 
+        // TODO: COLOCAR ESSE 0.2 = 20% DO TANQUE DE COMBUSTIVEL NA TABELA DE PARAMETRO
+        Double reservaDoTanque = itinerario.getVeiculo().getCapacidadeTanqueCombustivelLts() * 0.2;
+
         Double litrosTotalParaViagem = itinerario.getKmPercorridoQuantidade() / itinerario.getVeiculo().getConsumoReal().doubleValue();
-        Double litrosNaoUsados = litrosTotalParaViagem - itinerario.getVeiculo().getCapacidadeTanqueCombustivelLts();
+        Double litrosNaoUsados = litrosTotalParaViagem - (itinerario.getVeiculo().getCapacidadeTanqueCombustivelLts() - reservaDoTanque);
         if (litrosNaoUsados > 0) {
                 total = total.add(custo.getValorKm().multiply(new BigDecimal(litrosNaoUsados)));
         }

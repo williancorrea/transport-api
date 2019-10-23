@@ -37,6 +37,22 @@ CREATE TABLE veiculo (
     quantidade_lugares int default 0,
     capacidade_tanque_combustivel_lts int default 0,
 
+    ano_modelo varchar(9),
+    tipo_veiculo varchar(50),
+    pode_ser_fretado  BOOLEAN DEFAULT true,
+    combustivel_id BIGINT(20), FOREIGN KEY (combustivel_id) REFERENCES combustivel(id),
+    cor varchar(50),
+    renavam varchar(50),
+    chassi varchar(50),
+    motor varchar(50),
+    motor_modelo varchar(100),
+    quantidade_pneus int(20) default 1,
+    cambio_tipo varchar(100),
+    cambio_modelo varchar(100),
+    capacidade_oleo_motor_lts  decimal(20,2) DEFAULT 0.0,
+    capacidade_oleo_cambio_lts  decimal(20,2) DEFAULT 0.0,
+    capacidade_oleo_diferencial_lts  decimal(20,2) DEFAULT 0.0,
+
     veiculo_marca_id BIGINT(20), FOREIGN KEY (veiculo_marca_id) REFERENCES veiculo_marca(id),
     veiculo_modelo_id BIGINT(20), FOREIGN KEY (veiculo_modelo_id) REFERENCES veiculo_modelo(id),
 
