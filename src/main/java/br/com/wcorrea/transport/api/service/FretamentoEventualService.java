@@ -238,7 +238,7 @@ public class FretamentoEventualService {
 
         parametros.put("VEICULO", f.getItinerario().getVeiculo().getPlaca().toUpperCase());
         parametros.put("DATA_PARTIDA", Utils.getDataPorExtenso(f.getItinerario().getPartida()));
-        parametros.put("DATA_RETORNO", Utils.getDataPorExtenso(f.getItinerario().getRetorno()));
+        parametros.put("DATA_RETORNO", Utils.getDataPorExtenso(f.getItinerario().getPrevisaoChegadaRetorno()));
         parametros.put("DATA_REALIZACAO_VIAGEM", f.getEmpresa().getCidade().getNome() + ", " + Utils.getDataPorExtenso(f.getItinerario().getPartida()));
 
         parametros.put("EMPRESA_RAZAO", f.getEmpresa().getNome().toUpperCase());
@@ -353,7 +353,7 @@ public class FretamentoEventualService {
         Double litrosNaoUsados = litrosTotalParaViagem - (capacidadeTanqueVeiculo - reservaDoTanque);
 
         if (litrosNaoUsados > 0) {
-            return Utils.formatarDinheiroRS(valorKm.multiply(new BigDecimal(litrosNaoUsados))) + ", previsto gastar " + String.format("%.2f", litrosNaoUsados) + " lts, com valor estimado a " + Utils.formatarDinheiroRS(valorKm) + " ( Sem contar " + String.format("%.2f", reservaDoTanque) + "lts reserva no Tanque )";
+            return Utils.formatarDinheiroRS(valorKm.multiply(new BigDecimal(litrosNaoUsados))) + ", previsto gastar " + String.format("%.2f", litrosNaoUsados) + " lts, com valor estimado a " + Utils.formatarDinheiroRS(valorKm) + " ( Sem contar " + String.format("%.2f", reservaDoTanque) + " lts reserva no Tanque )";
         }
         return "";
     }
