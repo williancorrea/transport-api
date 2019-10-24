@@ -102,25 +102,23 @@ public class Veiculo extends IdentificadorComum implements Serializable {
     @Column(name = "chassi")
     private String chassiNumero;
 
-    @NotBlank
     @Size(max = 50)
     @Column(name = "motor")
     private String motorNumero;
 
-    @NotBlank
     @Size(max = 100)
     @Column(name = "motor_modelo")
     private String motorModelo;
 
+    @NotNull
     @Column(name = "quantidade_pneus")
-    private int qtdPneus;
+    private Integer qtdPneus;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "cambio_tipo")
     private VeiculoCambioTipo cambioTipo;
 
-    @NotBlank
     @Size(max = 100)
     @Column(name = "cambio_modelo")
     private String cambioModelo;

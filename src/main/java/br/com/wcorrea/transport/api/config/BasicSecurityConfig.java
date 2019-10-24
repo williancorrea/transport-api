@@ -43,6 +43,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/veiculos/**").permitAll()
                 .antMatchers("/veiculosMarca/**").permitAll()
                 .antMatchers("/veiculosModelo/**").permitAll()
+                .antMatchers("/combustivel/**").permitAll()
 
 
 
