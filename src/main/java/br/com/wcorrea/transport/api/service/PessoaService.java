@@ -166,17 +166,19 @@ public class PessoaService {
     }
 
     public Pessoa buscarPorCPF(String cpf) {
-        if (StringUtils.isBlank(cpf)) {
+        if (cpf == null) {
             throw new PessoaNaoEncontrada();
         }
-        return pessoaRepository.findOneByCPF(cpf);
+        cpf = cpf.replace(".", "").replace(".", "").replace("-", "");
+        return pessoaRepository.findOneByCPF(Utils.formatarMascaraTexto(cpf,"###.###.###-##"));
     }
 
     public Pessoa buscarPorCNPJ(String cnpj) {
-        if (StringUtils.isBlank(cnpj)) {
+        if (cnpj == null) {
             throw new PessoaNaoEncontrada();
         }
-        return pessoaRepository.findOneByCNPJ(cnpj);
+        cnpj = cnpj.replace(".", "").replace(".", "").replace("/", "").replace("-", "");
+        return pessoaRepository.findOneByCNPJ(Utils.formatarMascaraTexto(cnpj,"##.###.###/####-##"));
     }
 
     public Long descriptografarKey(String key) {

@@ -1,10 +1,10 @@
 package br.com.wcorrea.transport.api.service;
 
-import br.com.wcorrea.transport.api.model.veiculo.Veiculo;
 import br.com.wcorrea.transport.api.model.fretamento.*;
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.model.pessoa.PessoaTipo;
+import br.com.wcorrea.transport.api.model.veiculo.Veiculo;
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualEventualRepository;
 import br.com.wcorrea.transport.api.repository.fretamentoEventual.FretamentoEventualFiltro;
 import br.com.wcorrea.transport.api.service.exception.FretamentoEventualNaoEncontrado;
@@ -333,7 +333,7 @@ public class FretamentoEventualService {
         parametros.put("RESERVA", (f.getCusto().getValorDinheiroReserva() != null && f.getCusto().getValorDinheiroReserva().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiroRS(f.getCusto().getValorDinheiroReserva()) : "");
 
         parametros.put("VALOR_TOTAL_DESPESAS", relatorioViagemCalcularDespesas(f.getCusto(), f.getItinerario()));
-        parametros.put("VALOR_A_SER_DEVOLVIDO", (f.getCusto().getValorDinheiroReserva() != null && f.getCusto().getValorDinheiroReserva().compareTo(BigDecimal.ZERO) == 1) ? "<style isBold='true' backcolor='yellow'>Caso NÃO tenha gastos extras o valor a ser devolvido será de: " + "<style forecolor='blue'>" +Utils.formatarDinheiroRS(f.getCusto().getValorDinheiroReserva()) + "</style></style>" : "");
+        parametros.put("VALOR_A_SER_DEVOLVIDO", (f.getCusto().getValorDinheiroReserva() != null && f.getCusto().getValorDinheiroReserva().compareTo(BigDecimal.ZERO) == 1) ? "<style isBold='true' backcolor='yellow'>Caso NÃO tenha gastos extras o valor a ser devolvido será de: " + "<style forecolor='blue'>" + Utils.formatarDinheiroRS(f.getCusto().getValorDinheiroReserva()) + "</style></style>" : "");
         parametros.put("DATA_LIBERACAO_VIAGEM", Utils.getDataFormatada(new Date()));
         parametros.put("IMAGEM_VELOCIDADE_MAXIMA", this.getClass().getResource("/relatorios/").getPath() + "VelocidadeMaximaPermitida.jpg");
 
@@ -380,7 +380,7 @@ public class FretamentoEventualService {
         Double litrosTotalParaViagem = itinerario.getKmPercorridoQuantidade() / itinerario.getVeiculo().getConsumoReal().doubleValue();
         Double litrosNaoUsados = litrosTotalParaViagem - (itinerario.getVeiculo().getCapacidadeTanqueCombustivelLts() - reservaDoTanque);
         if (litrosNaoUsados > 0) {
-                total = total.add(custo.getValorKm().multiply(new BigDecimal(litrosNaoUsados)));
+            total = total.add(custo.getValorKm().multiply(new BigDecimal(litrosNaoUsados)));
         }
 
         return "Valor total disponibilizado para viagem: " + Utils.formatarDinheiroRS(total);
