@@ -42,7 +42,6 @@ public class VeiculoRepositoryImpl implements VeiculoRepositoryQuery {
                 criteria.addOrder(Order.desc(filtro.getCampoOrdenacao()));
             }
         }
-
         //Consulta paginada
         return new PageImpl<>(criteria.list(), paginacao, quantidadeRegistrosFiltrados(filtro));
     }
@@ -69,7 +68,7 @@ public class VeiculoRepositoryImpl implements VeiculoRepositoryQuery {
     private Criteria criarCriteriaParaFiltro(VeiculoFiltro filtro) {
         Session session = manager.unwrap(Session.class);
         Criteria criteria = session.createCriteria(Veiculo.class);
-        criteria.createAlias("combustivel", "c",  JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("combustivel", "c", JoinType.LEFT_OUTER_JOIN);
 
         if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
             Disjunction disjunction = Restrictions.disjunction(); // Restricao com OR
@@ -81,6 +80,12 @@ public class VeiculoRepositoryImpl implements VeiculoRepositoryQuery {
             criteria.add(disjunction);
         }
 
+        //SOMENTE SOMENTE VEICULOS AUTORIZADO A FAZER FRETAMENTO
+        if (filtro.isSomenteVeiculosQuePodemSerFretados()) {
+            criteria.add(Restrictions.eq("podeSerFretado", true));
+        }
+
+        //SOMENTE CADASTROS ATIVOS
         if (filtro.isSomenteAtivo()) {
             criteria.add(Restrictions.eq("inativo", false));
         }

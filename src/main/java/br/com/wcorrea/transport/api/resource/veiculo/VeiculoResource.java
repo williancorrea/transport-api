@@ -34,10 +34,11 @@ public class VeiculoResource {
         return veiculoService.listar(filtro, paginacao);
     }
 
-    @GetMapping("/cmb")
+    @GetMapping("/cmbFretamento")
 //    @PreAuthorize("hasAuthority('ROLE_CMB-PADRAO') and #oauth2.hasScope('read')")
     public List<VeiculoResumo> listAllComboBox(VeiculoFiltro filtro, Pageable pageable) {
         filtro.setSomenteAtivo(true);
+        filtro.setSomenteVeiculosQuePodemSerFretados(true);
         Page<Veiculo> page = veiculoService.listar(filtro, pageable);
         List<VeiculoResumo> lista = new ArrayList<>();
         for (Veiculo c : page.getContent()) {
