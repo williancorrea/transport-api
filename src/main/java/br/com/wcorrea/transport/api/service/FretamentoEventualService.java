@@ -380,7 +380,7 @@ public class FretamentoEventualService {
         Double litrosTotalParaViagem = itinerario.getKmPercorridoQuantidade() / itinerario.getVeiculo().getConsumoReal().doubleValue();
         Double litrosNaoUsados = litrosTotalParaViagem - (itinerario.getVeiculo().getCapacidadeTanqueCombustivelLts() - reservaDoTanque);
         if (litrosNaoUsados > 0) {
-            total = total.add(custo.getValorKm().multiply(new BigDecimal(litrosNaoUsados)));
+            total = total.add(custo.getCombustivelValor().multiply(new BigDecimal(litrosNaoUsados)));
         }
 
         return "Valor total disponibilizado para viagem: " + Utils.formatarDinheiroRS(total);

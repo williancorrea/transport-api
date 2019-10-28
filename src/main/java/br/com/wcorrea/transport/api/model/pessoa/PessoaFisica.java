@@ -26,7 +26,7 @@ public class PessoaFisica extends IdentificadorComum implements Serializable {
     @CPF
     private String cpf;
 
-    @Size(max = 12)
+    @Size(max = 13)
     private String rg;
 
     @Column(name = "orgao_rg")
