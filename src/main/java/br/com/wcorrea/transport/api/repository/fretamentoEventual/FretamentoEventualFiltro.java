@@ -22,4 +22,8 @@ public class FretamentoEventualFiltro extends QueryFiltroPadrao {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date dataRetorno;
+
+    private boolean situacaoNaoContratado;
+    private boolean situacaoOrcamento;
+    private boolean situacaoContratado;
 }

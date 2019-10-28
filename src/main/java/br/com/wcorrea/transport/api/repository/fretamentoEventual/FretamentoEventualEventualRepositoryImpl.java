@@ -1,5 +1,6 @@
 package br.com.wcorrea.transport.api.repository.fretamentoEventual;
 
+import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventalTipo;
 import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventual;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
@@ -63,12 +64,12 @@ public class FretamentoEventualEventualRepositoryImpl implements FretamentoEvent
         Session session = manager.unwrap(Session.class);
         Criteria criteria = session.createCriteria(FretamentoEventual.class);
 
-        criteria.createAlias("cliente", "c",  JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("cliente", "c", JoinType.LEFT_OUTER_JOIN);
 
         // Objetos embedded não precisa ter um Alias
-        criteria.createAlias("itinerario.partidaCidade", "pc",  JoinType.LEFT_OUTER_JOIN);
-        criteria.createAlias("itinerario.retornoCidade", "pr",  JoinType.LEFT_OUTER_JOIN);
-        criteria.createAlias("itinerario.veiculo", "v",  JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("itinerario.partidaCidade", "pc", JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("itinerario.retornoCidade", "pr", JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("itinerario.veiculo", "v", JoinType.LEFT_OUTER_JOIN);
 
         if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
             Disjunction disjunction = Restrictions.disjunction(); // Restricao com OR
@@ -85,19 +86,34 @@ public class FretamentoEventualEventualRepositoryImpl implements FretamentoEvent
 
 
         // Faz filtro pelo id do veiculo
-        if(StringUtils.isNotBlank(filtro.getVeiculoKey())){
+        if (StringUtils.isNotBlank(filtro.getVeiculoKey())) {
             criteria.add(Restrictions.eq("v.id", filtro.getVeiculoId()));
         }
 
-
         // Data de partida >=
-        if(filtro.getDataPartida() != null){
+        if (filtro.getDataPartida() != null) {
             criteria.add(Restrictions.ge("itinerario.partida", filtro.getDataPartida()));
         }
 
         // Data de Retorno <=
-        if(filtro.getDataRetorno() != null){
+        if (filtro.getDataRetorno() != null) {
             criteria.add(Restrictions.le("itinerario.retorno", filtro.getDataRetorno()));
+        }
+
+        if (filtro.isSituacaoContratado() || filtro.isSituacaoNaoContratado() || filtro.isSituacaoOrcamento()) {
+            Disjunction disjunction = Restrictions.disjunction(); // Restricao com OR
+            if (filtro.isSituacaoContratado()) {
+                disjunction.add(Restrictions.eq("situacao", FretamentoEventalTipo.CONTRATADO));
+            }
+            if (filtro.isSituacaoNaoContratado()) {
+                disjunction.add(Restrictions.eq("situacao", FretamentoEventalTipo.NAO_CONTRATADO_CLIENTE));
+                disjunction.add(Restrictions.eq("situacao", FretamentoEventalTipo.NAO_CONTRATADO_CONTATO));
+            }
+            if (filtro.isSituacaoOrcamento()) {
+                disjunction.add(Restrictions.eq("situacao", FretamentoEventalTipo.ORCAMENTO_CLIENTE));
+                disjunction.add(Restrictions.eq("situacao", FretamentoEventalTipo.ORCAMENTO_CONTATO));
+            }
+            criteria.add(disjunction);
         }
 
         return criteria;
