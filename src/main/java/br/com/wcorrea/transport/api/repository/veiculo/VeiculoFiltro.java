@@ -6,9 +6,13 @@ import lombok.Setter;
 
 public class VeiculoFiltro extends QueryFiltroPadrao {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String placa;
-
-    @Getter @Setter
+    @Getter
+    @Setter
     private String frota;
+    @Getter
+    @Setter
+    private boolean somenteVeiculosQuePodemSerFretados;
 }

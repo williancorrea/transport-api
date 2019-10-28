@@ -68,6 +68,7 @@ public class FretamentoEventualEventualRepositoryImpl implements FretamentoEvent
         // Objetos embedded não precisa ter um Alias
         criteria.createAlias("itinerario.partidaCidade", "pc",  JoinType.LEFT_OUTER_JOIN);
         criteria.createAlias("itinerario.retornoCidade", "pr",  JoinType.LEFT_OUTER_JOIN);
+        criteria.createAlias("itinerario.veiculo", "v",  JoinType.LEFT_OUTER_JOIN);
 
         if (StringUtils.isNotBlank(filtro.getFiltroGlobal())) {
             Disjunction disjunction = Restrictions.disjunction(); // Restricao com OR
@@ -80,18 +81,24 @@ public class FretamentoEventualEventualRepositoryImpl implements FretamentoEvent
             disjunction.add(Restrictions.ilike("contato.nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
 
             criteria.add(disjunction);
-            return criteria;
         }
 
-//        if (StringUtils.isNotBlank(filtro.getCodigo())) {
-//            criteria.add(Restrictions.ilike("codigo", filtro.getCodigo(), MatchMode.ANYWHERE));
-//        }
-//        if (StringUtils.isNotBlank(filtro.getNome())) {
-//            criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
-//        }
-//        if (StringUtils.isNotBlank(filtro.getUrl())) {
-//            criteria.add(Restrictions.ilike("url", filtro.getUrl(), MatchMode.ANYWHERE));
-//        }
+
+        // Faz filtro pelo id do veiculo
+        if(StringUtils.isNotBlank(filtro.getVeiculoKey())){
+            criteria.add(Restrictions.eq("v.id", filtro.getVeiculoId()));
+        }
+
+
+        // Data de partida >=
+        if(filtro.getDataPartida() != null){
+            criteria.add(Restrictions.ge("itinerario.partida", filtro.getDataPartida()));
+        }
+
+        // Data de Retorno <=
+        if(filtro.getDataRetorno() != null){
+            criteria.add(Restrictions.le("itinerario.retorno", filtro.getDataRetorno()));
+        }
 
         return criteria;
     }
