@@ -47,6 +47,10 @@ public class FretamentoEventualService {
     ServletContext context;
 
     public Page<FretamentoEventual> listarTodos(FretamentoEventualFiltro filtro, Pageable paginacao) {
+
+        if(StringUtils.isNotBlank(filtro.getVeiculoKey())){
+            filtro.setVeiculoId(veiculoService.buscarPorId(filtro.getVeiculoKey()).getId());
+        }
         return fretamentoEventualRepository.findAll(filtro, paginacao);
     }
 

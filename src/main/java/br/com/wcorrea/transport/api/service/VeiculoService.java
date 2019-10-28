@@ -62,6 +62,10 @@ public class VeiculoService {
         return this.buscarPorId(veiculo.getId());
     }
 
+    public Veiculo buscarPorId(String key){
+        return buscarPorId(descriptografarKey(key));
+    }
+
     public Long descriptografarKey(String key) {
         try {
             return new Criptografia().getKey(key);
