@@ -13,6 +13,8 @@ CREATE TABLE banco (
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8;
 
+
+
 -- -------------------------
 -- PERMISSOES
 -- -------------------------
