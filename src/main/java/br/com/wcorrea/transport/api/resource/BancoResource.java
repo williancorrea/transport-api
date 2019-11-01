@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
-import br.com.wcorrea.transport.api.model.Banco;
+import br.com.wcorrea.transport.api.model.financeiro.Banco;
 import br.com.wcorrea.transport.api.repository.banco.BancoFiltro;
 import br.com.wcorrea.transport.api.repository.banco.BancoRepository;
 import br.com.wcorrea.transport.api.service.BancoService;

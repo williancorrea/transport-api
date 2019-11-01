@@ -72,7 +72,7 @@ public class FretamentoEventualRelatorio {
                 .append("\n\n\n")    .append("7 - A CONTRATADA não se responsabiliza por quaisquer objetos e/ou valores deixados ou esquecidos no veículo, porem caso a empresa venha encontrar o mesmo será guardado pelo prazo de 15 dias no setor de achado e perdidos, caso não tenha nenhuma procura será doado para alguma instituição carente do município.")
 
                 .append("\n\n\n")    .append("<font color='white'>_ _ _ _ _ _ _ _ _ _ _ _ </font> <style size='12' isBold='true'> CLAUSULA OITAVA – DESPESAS DECORRENTES </style>")
-                .append("\n\n\n")    .append("8 - Todas as despesas decorrentes a encargos tributários com o ICMS, IPI, ISS, PIS, COFINS, INSS, a mão de obra, manutenção entre outros que estiverem ligadas ao objeto da prestação de serviço serão de responsabilidade da CONTRADA.")
+                .append("\n\n\n")    .append("8 - Todas as despesas decorrentes a encargos tributários com o ICMS, IPI, ISS, PIS, COFINS, INSS, a mão de obra, manutenção entre outros que estiverem ligadas ao objeto da prestação de serviço serão de responsabilidade da CONTRATADA.")
 
                 .append("\n\n\n")    .append("<font color='white'>_ _ _ _ _ _ _ _ _ _ _ </font> <style size='12' isBold='true'> CLAUSULA NONA - DAS CONDIÇÕES DE RESCISÃO </style>")
                 .append("\n\n\n")    .append("9 - O presente contrato poderá ser rescindido de pleno direito, nas seguintes hipóteses:")

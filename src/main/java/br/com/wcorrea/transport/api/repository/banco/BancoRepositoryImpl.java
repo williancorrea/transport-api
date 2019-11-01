@@ -1,6 +1,6 @@
 package br.com.wcorrea.transport.api.repository.banco;
 
-import br.com.wcorrea.transport.api.model.Banco;
+import br.com.wcorrea.transport.api.model.financeiro.Banco;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
