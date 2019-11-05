@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.repository.estadoCivil;
+package br.com.wcorrea.transport.api.repository.pessoa.estadoCivil;
 
 import br.com.wcorrea.transport.api.repository.QueryFiltroPadrao;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.repository.estadoCivil;
+package br.com.wcorrea.transport.api.repository.pessoa.estadoCivil;
 
 import br.com.wcorrea.transport.api.model.pessoa.EstadoCivil;
 import br.com.wcorrea.transport.api.repository.utils.UtilsRepository;

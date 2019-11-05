@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.repository.estadoCidade;
+package br.com.wcorrea.transport.api.repository.pessoa.estadoCidade;
 
 import br.com.wcorrea.transport.api.model.pessoa.Estado;
 import org.springframework.data.jpa.repository.JpaRepository;
