@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.ControleKm;
-import br.com.wcorrea.transport.api.repository.controleKm.ControleKmRepository;
+import br.com.wcorrea.transport.api.repository.veiculo.controleKm.ControleKmRepository;
 import br.com.wcorrea.transport.api.service.exception.veiculo.*;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;

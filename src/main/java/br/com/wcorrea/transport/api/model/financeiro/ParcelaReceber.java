@@ -25,7 +25,7 @@ public class ParcelaReceber extends IdentificadorComum implements Serializable {
 
     @JoinColumn(name = "ID_FIN_STATUS_PARCELA", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private StatusParcela statusParcela;
+    private ParcelaStatus parcelaStatus;
 
     @JoinColumn(name = "ID_FIN_BANCO_CONTA", referencedColumnName = "id")
     @ManyToOne(optional = false)

@@ -2,8 +2,8 @@ package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.ControleKm;
-import br.com.wcorrea.transport.api.repository.controleKm.ControleKmFiltro;
-import br.com.wcorrea.transport.api.repository.controleKm.ControleKmRepository;
+import br.com.wcorrea.transport.api.repository.veiculo.controleKm.ControleKmFiltro;
+import br.com.wcorrea.transport.api.repository.veiculo.controleKm.ControleKmRepository;
 import br.com.wcorrea.transport.api.service.ControleKmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

@@ -2,8 +2,8 @@ package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.CentroDeCusto;
-import br.com.wcorrea.transport.api.repository.centroDeCusto.CentroDeCustoFiltro;
-import br.com.wcorrea.transport.api.repository.centroDeCusto.CentroDeCustoRepository;
+import br.com.wcorrea.transport.api.repository.financeiro.centroDeCusto.CentroDeCustoFiltro;
+import br.com.wcorrea.transport.api.repository.financeiro.centroDeCusto.CentroDeCustoRepository;
 import br.com.wcorrea.transport.api.service.CentroDeCustoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

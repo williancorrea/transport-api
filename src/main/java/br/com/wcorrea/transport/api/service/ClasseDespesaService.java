@@ -1,13 +1,12 @@
 package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.ClasseDespesa;
-import br.com.wcorrea.transport.api.repository.classeDespesa.ClasseDespesaRepository;
+import br.com.wcorrea.transport.api.repository.financeiro.classeDespesa.ClasseDespesaRepository;
 import br.com.wcorrea.transport.api.service.exception.ClasseDespesaNaoEncontrada;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.Optional;
 
 @Service

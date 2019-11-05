@@ -1,14 +1,12 @@
 package br.com.wcorrea.transport.api.service;
 
-import br.com.wcorrea.transport.api.model.TipoPagamento;
-import br.com.wcorrea.transport.api.repository.tipoPagamento.TipoPagamentoRepository;
-import br.com.wcorrea.transport.api.service.exception.ClasseDespesaNaoEncontrada;
+import br.com.wcorrea.transport.api.model.financeiro.TipoPagamento;
+import br.com.wcorrea.transport.api.repository.financeiro.tipoPagamento.TipoPagamentoRepository;
 import br.com.wcorrea.transport.api.service.exception.TipoPagamentoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.Optional;
 
 @Service

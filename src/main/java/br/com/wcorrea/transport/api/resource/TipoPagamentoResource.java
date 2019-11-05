@@ -1,9 +1,9 @@
 package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
-import br.com.wcorrea.transport.api.model.TipoPagamento;
-import br.com.wcorrea.transport.api.repository.tipoPagamento.TipoPagamentoFiltro;
-import br.com.wcorrea.transport.api.repository.tipoPagamento.TipoPagamentoRepository;
+import br.com.wcorrea.transport.api.model.financeiro.TipoPagamento;
+import br.com.wcorrea.transport.api.repository.financeiro.tipoPagamento.TipoPagamentoFiltro;
+import br.com.wcorrea.transport.api.repository.financeiro.tipoPagamento.TipoPagamentoRepository;
 import br.com.wcorrea.transport.api.service.TipoPagamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.pessoa.NivelFormacao;
-import br.com.wcorrea.transport.api.repository.NivelFormacao.NivelFormacaoRepository;
+import br.com.wcorrea.transport.api.repository.pessoa.NivelFormacao.NivelFormacaoRepository;
 import br.com.wcorrea.transport.api.service.exception.NivelEducacaoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;

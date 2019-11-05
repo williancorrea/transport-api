@@ -2,8 +2,8 @@ package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.pessoa.NivelFormacao;
-import br.com.wcorrea.transport.api.repository.NivelFormacao.NivelFormacaoFilter;
-import br.com.wcorrea.transport.api.repository.NivelFormacao.NivelFormacaoRepository;
+import br.com.wcorrea.transport.api.repository.pessoa.NivelFormacao.NivelFormacaoFilter;
+import br.com.wcorrea.transport.api.repository.pessoa.NivelFormacao.NivelFormacaoRepository;
 import br.com.wcorrea.transport.api.service.NivelFormacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

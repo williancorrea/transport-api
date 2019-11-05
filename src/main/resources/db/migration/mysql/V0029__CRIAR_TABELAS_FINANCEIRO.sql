@@ -123,7 +123,7 @@ CREATE TABLE FIN_LANCAMENTO_RECEBER (
 -- ---------------------------------------------------
 -- STATUS DA PARCELA
 -- ---------------------------------------------------
-CREATE TABLE FIN_STATUS_PARCELA (
+CREATE TABLE FIN_PARCELA_STATUS (
     ID BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     SITUACAO VARCHAR(2),
     DESCRICAO VARCHAR(100),

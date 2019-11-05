@@ -2,8 +2,8 @@ package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.TanqueCombustivel;
-import br.com.wcorrea.transport.api.repository.tanqueCombustivel.TanqueCombustivelFiltro;
-import br.com.wcorrea.transport.api.repository.tanqueCombustivel.TanqueCombustivelRepository;
+import br.com.wcorrea.transport.api.repository.veiculo.tanqueCombustivel.TanqueCombustivelFiltro;
+import br.com.wcorrea.transport.api.repository.veiculo.tanqueCombustivel.TanqueCombustivelRepository;
 import br.com.wcorrea.transport.api.service.TanqueCombustivelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

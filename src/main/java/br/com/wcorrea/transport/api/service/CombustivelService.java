@@ -1,13 +1,12 @@
 package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.Combustivel;
-import br.com.wcorrea.transport.api.repository.combustivel.CombustivelRepository;
+import br.com.wcorrea.transport.api.repository.veiculo.combustivel.CombustivelRepository;
 import br.com.wcorrea.transport.api.service.exception.abastecimento.CombustivelNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.Optional;
 
 /**

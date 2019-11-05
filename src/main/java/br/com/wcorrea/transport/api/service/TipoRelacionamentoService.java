@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.pessoa.TipoRelacionamento;
-import br.com.wcorrea.transport.api.repository.TipoRelacionamento.TipoRelacionamentoRepository;
+import br.com.wcorrea.transport.api.repository.pessoa.TipoRelacionamento.TipoRelacionamentoRepository;
 import br.com.wcorrea.transport.api.service.exception.TipoRelacionamentoNaoEncontrado;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import org.springframework.beans.factory.annotation.Autowired;

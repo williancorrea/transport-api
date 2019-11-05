@@ -2,7 +2,7 @@ package br.com.wcorrea.transport.api.service;
 
 import br.com.wcorrea.transport.api.model.pessoa.Cidade;
 import br.com.wcorrea.transport.api.repository.QueryFiltroPadrao;
-import br.com.wcorrea.transport.api.repository.estadoCidade.CidadeRepository;
+import br.com.wcorrea.transport.api.repository.pessoa.estadoCidade.CidadeRepository;
 import br.com.wcorrea.transport.api.service.exception.CidadeNaoEncontrada;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

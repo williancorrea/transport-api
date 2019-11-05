@@ -2,8 +2,8 @@ package br.com.wcorrea.transport.api.resource;
 
 import br.com.wcorrea.transport.api.hateoas.EventResourceCreated;
 import br.com.wcorrea.transport.api.model.ClasseDespesa;
-import br.com.wcorrea.transport.api.repository.classeDespesa.ClasseDespesaFiltro;
-import br.com.wcorrea.transport.api.repository.classeDespesa.ClasseDespesaRepository;
+import br.com.wcorrea.transport.api.repository.financeiro.classeDespesa.ClasseDespesaFiltro;
+import br.com.wcorrea.transport.api.repository.financeiro.classeDespesa.ClasseDespesaRepository;
 import br.com.wcorrea.transport.api.service.ClasseDespesaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
