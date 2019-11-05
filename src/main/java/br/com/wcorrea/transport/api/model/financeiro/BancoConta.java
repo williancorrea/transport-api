@@ -1,6 +1,7 @@
 package br.com.wcorrea.transport.api.model.financeiro;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
+import br.com.wcorrea.transport.api.modulos.financeiro.bancoAgencia.BancoAgencia;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
