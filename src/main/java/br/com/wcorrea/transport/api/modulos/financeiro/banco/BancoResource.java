@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/bancos")
+@RequestMapping("/financeiro/bancos")
 public class BancoResource {
 
     @Autowired

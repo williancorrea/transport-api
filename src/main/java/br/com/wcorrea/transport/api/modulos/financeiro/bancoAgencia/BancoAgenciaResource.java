@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/bancos-agencias")
+@RequestMapping("/financeiro/bancos-agencias")
 public class BancoAgenciaResource {
 
     @Autowired
