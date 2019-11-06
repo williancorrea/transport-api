@@ -26,7 +26,7 @@ public class BancoAgenciaService {
     }
 
     public BancoAgencia atualizar(Long id, BancoAgencia bancoAgencia) {
-        BancoAgencia updateFound = findOne(id);
+        BancoAgencia updateFound = buscarPorId(id);
         bancoAgencia.setId(updateFound.getId());
         bancoAgencia = prepararObj(bancoAgencia);
         return bancoAgenciaRepository.save(bancoAgencia);
@@ -38,7 +38,7 @@ public class BancoAgenciaService {
         return bancoAgencia;
     }
 
-    public BancoAgencia findOne(Long id) {
+    public BancoAgencia buscarPorId(Long id) {
         if (id != null && id > 0) {
             Optional<BancoAgencia> obj = bancoAgenciaRepository.findById(id);
             if (obj.isPresent()) {

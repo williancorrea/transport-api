@@ -1,12 +1,11 @@
-package br.com.wcorrea.transport.api.model.financeiro;
+package br.com.wcorrea.transport.api.modulos.financeiro.bancoConta;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @JsonFormat(shape = JsonFormat.Shape.STRING)
 public enum BancoContaTipo {
     FISICA("FISICA"),
-    JURIDICA("JURIDICA"),
-    CONTA_SALARIO("CONTA_SALARIO");
+    JURIDICA("JURIDICA");
 
     private String descricao;
 

@@ -34,7 +34,7 @@ public class BancoAgenciaResource {
     @GetMapping("/{key}")
 //    @PreAuthorize("hasAuthority('ROLE_LISTAR_BANCO') and #oauth2.hasScope('read')")
     public ResponseEntity<BancoAgencia> findOne(@Valid @PathVariable String key) {
-        BancoAgencia bancoAgenciaEncontrado = bancoAgenciaService.findOne(bancoAgenciaService.buscarPorKey(key));
+        BancoAgencia bancoAgenciaEncontrado = bancoAgenciaService.buscarPorId(bancoAgenciaService.buscarPorKey(key));
         return bancoAgenciaEncontrado != null ? ResponseEntity.ok(bancoAgenciaEncontrado) : ResponseEntity.notFound().build();
     }
 

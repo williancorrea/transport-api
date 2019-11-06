@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.model.financeiro;
+package br.com.wcorrea.transport.api.modulos.financeiro.bancoConta;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.modulos.financeiro.bancoAgencia.BancoAgencia;
@@ -20,21 +20,21 @@ public class BancoConta extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JoinColumn(name = "ID_BANCO_AGENCIA", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @NotNull
     private BancoAgencia bancoAgencia;
 
     @Size(max = 20)
+    @NotBlank
     private String contaNumero;
 
     @Size(max = 1)
+    @NotBlank
     private String contaDigito;
 
     @NotBlank
     @Size(min = 5, max = 100)
     private String nome;
-
-    @Size(max = 250)
-    private String url;
 
     @Lob
     private String descricao;
