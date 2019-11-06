@@ -336,8 +336,9 @@ public class FretamentoEventualService {
         parametros.put("HOSPEDAGEM", (f.getCusto().getValorHospedagem() != null && f.getCusto().getValorHospedagem().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiroRS(f.getCusto().getValorHospedagem()) : "");
         parametros.put("RESERVA", (f.getCusto().getValorDinheiroReserva() != null && f.getCusto().getValorDinheiroReserva().compareTo(BigDecimal.ZERO) == 1) ? Utils.formatarDinheiroRS(f.getCusto().getValorDinheiroReserva()) : "");
 
-        parametros.put("VALOR_TOTAL_DESPESAS", relatorioViagemCalcularDespesas(f.getCusto(), f.getItinerario()));
+        parametros.put("VALOR_TOTAL_DESPESAS", "Valor disponivel para viagem: " + Utils.formatarDinheiroRS(relatorioViagemCalcularDespesas(f.getCusto(), f.getItinerario())));
         parametros.put("VALOR_A_SER_DEVOLVIDO", (f.getCusto().getValorDinheiroReserva() != null && f.getCusto().getValorDinheiroReserva().compareTo(BigDecimal.ZERO) == 1) ? "<style isBold='true' backcolor='yellow'>Caso NÃO tenha gastos extras o valor a ser devolvido será de: " + "<style forecolor='blue'>" + Utils.formatarDinheiroRS(f.getCusto().getValorDinheiroReserva()) + "</style></style>" : "");
+        parametros.put("VALOR_TOTAL_DISPONIBILIZADO","Total Disponibilizado: " + Utils.formatarDinheiroRS(relatorioViagemCalcularDespesas(f.getCusto(), f.getItinerario()).add(f.getCusto().getValorDinheiroReserva())));
         parametros.put("DATA_LIBERACAO_VIAGEM", Utils.getDataFormatada(new Date()));
         parametros.put("IMAGEM_VELOCIDADE_MAXIMA", this.getClass().getResource("/relatorios/").getPath() + "VelocidadeMaximaPermitida.jpg");
 
@@ -362,7 +363,7 @@ public class FretamentoEventualService {
         return "";
     }
 
-    private String relatorioViagemCalcularDespesas(FretamentoEventualCusto custo, FretamentoEventualItinerario itinerario) {
+    private BigDecimal relatorioViagemCalcularDespesas(FretamentoEventualCusto custo, FretamentoEventualItinerario itinerario) {
         BigDecimal total = BigDecimal.ZERO;
 
         if (!custo.isCobrancaAutomatica() && custo.getValorPedagio() != null) {
@@ -387,7 +388,7 @@ public class FretamentoEventualService {
             total = total.add(custo.getCombustivelValor().multiply(new BigDecimal(litrosNaoUsados)));
         }
 
-        return "Valor total disponibilizado para viagem: " + Utils.formatarDinheiroRS(total);
+        return total;
     }
 
     private String relatorioViagemVerificarCobrancaAutomatica(BigDecimal pedagio, boolean cobrancaAutomatica) {

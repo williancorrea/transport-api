@@ -25,6 +25,11 @@ public class ApiApplication extends SpringBootServletInitializer {
 //    TimeZone.setDefault(TimeZone.getTimeZone("+3:00")); // PODE TB SER USADO ASSIM
     }
 
+    /**
+     * Autowired Personalizado dentro das classes de Modelo
+     *
+     * @return
+     */
     @Bean
     public AutowireHelper autowireHelper() {
         return AutowireHelper.getInstance();
