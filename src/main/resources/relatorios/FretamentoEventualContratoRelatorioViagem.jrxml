@@ -180,7 +180,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA["<style isBold='true' backcolor='yellow'>" +$P{VALOR_TOTAL_DESPESAS}+ "</style>"
 + "\n" + $P{VALOR_A_SER_DEVOLVIDO}
-+ "\n <style size='12' isBold='true'>" + $P{VALOR_TOTAL_DISPONIBILIZADO} + "</style>"
++ "\n\n <style size='12' isBold='true'>" + $P{VALOR_TOTAL_DISPONIBILIZADO} + "</style>"
 + "\n\n" + "<style size='10' isBold='true'>É obrigatorio a apresentação dos cupons fiscais de cada gastos, para poder fazer o acerto da viagem.</style>"
 
 + "\n" + "<style size='10' isBold='true'>Multas tomadas de responsabilidade do condutor será descontado no pagamento e será identificado os pontos em sua CNH.</style>"
@@ -189,7 +189,7 @@
 + "\n\n\n" + "<style size='12' isBold='true'>BOA VIAGEM, DEUS ACOMPANHE!!!</style>"
 
 
-+"\n\n\n\n\n\n"+ "_______________________________________________________"
++"\n\n\n\n"+ "_______________________________________________________"
 + "\n" +"MOTORISTA RESPONSÁVEL PELA LIBERAÇÃO"
 + "\n"+ "Data da liberação: " + $P{DATA_LIBERACAO_VIAGEM}]]></textFieldExpression>
 			</textField>

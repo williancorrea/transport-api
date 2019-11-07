@@ -1,3 +1,11 @@
+-- REMOVER ESTA VERIFICACAO - depois que subir esta atualizacao
+DROP TABLE IF EXISTS `banco_abreviacao`;
+DROP TABLE IF EXISTS `banco`;
+
+
+
+
+
 -- ---------------------------------------------------
 -- BANCO
 -- ---------------------------------------------------
