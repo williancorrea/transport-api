@@ -2,6 +2,7 @@ package br.com.wcorrea.transport.api.model.financeiro;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.modulos.financeiro.bancoConta.BancoConta;
+import br.com.wcorrea.transport.api.modulos.financeiro.recebimentoTipo.RecebimentoTipo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
