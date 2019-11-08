@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.model.financeiro;
+package br.com.wcorrea.transport.api.modulos.financeiro.planoConta;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import lombok.Data;

@@ -2,6 +2,7 @@ package br.com.wcorrea.transport.api.model.financeiro;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
+import br.com.wcorrea.transport.api.modulos.financeiro.planoConta.PlanoConta;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
