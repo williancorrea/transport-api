@@ -53,6 +53,8 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/financeiro/bancos-extrato-abreviacao/**").permitAll()
                 .antMatchers("/financeiro/recebimento-tipo/**").permitAll()
                 .antMatchers("/financeiro/recebimento-parcela-status/**").permitAll()
+                .antMatchers("/financeiro/recebimento-lancamentos/**").permitAll()
+
 
 
 

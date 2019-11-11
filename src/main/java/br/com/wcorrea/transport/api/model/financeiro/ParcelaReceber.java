@@ -2,6 +2,7 @@ package br.com.wcorrea.transport.api.model.financeiro;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.modulos.financeiro.bancoConta.BancoConta;
+import br.com.wcorrea.transport.api.modulos.financeiro.recebimentoLancamento.RecebimentoLancamento;
 import br.com.wcorrea.transport.api.modulos.financeiro.recebimentoParcelaStatus.RecebimentoParcelaStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -23,7 +24,7 @@ public class ParcelaReceber extends IdentificadorComum implements Serializable {
 
     @JoinColumn(name = "ID_FIN_LANCAMENTO_RECEBER", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private LancamentoReceber lancamentoReceber;
+    private RecebimentoLancamento recebimentoLancamento;
 
     @JoinColumn(name = "ID_FIN_STATUS_PARCELA", referencedColumnName = "id")
     @ManyToOne(optional = false)

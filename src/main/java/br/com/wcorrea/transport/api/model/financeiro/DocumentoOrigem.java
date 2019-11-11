@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 @ToString
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-@Entity(name = "FIN_RECEBIMENTO_DOCUMENTO_ORIGEM")
+@Entity(name = "FIN_DOCUMENTO_ORIGEM")
 @Data
 public class DocumentoOrigem extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -30,8 +30,6 @@ public class DocumentoOrigem extends IdentificadorComum implements Serializable 
     @JoinColumn(name = "ID_FRETAMENTO_EVENTUAL", referencedColumnName = "id")
     @ManyToOne(optional = true)
     private FretamentoEventual fretamentoEventual;
-
-    private boolean inativo;
 
     public DocumentoOrigem() {
     }

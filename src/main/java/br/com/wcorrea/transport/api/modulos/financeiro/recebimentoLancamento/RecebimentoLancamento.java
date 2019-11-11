@@ -1,6 +1,7 @@
-package br.com.wcorrea.transport.api.model.financeiro;
+package br.com.wcorrea.transport.api.modulos.financeiro.recebimentoLancamento;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
+import br.com.wcorrea.transport.api.model.financeiro.DocumentoOrigem;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.modulos.financeiro.planoConta.PlanoConta;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,9 +20,9 @@ import java.util.Date;
 
 @ToString
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-@Entity(name = "FIN_LANCAMENTO_RECEBER")
+@Entity(name = "FIN_RECEBIMENTO_LANCAMENTO")
 @Data
-public class LancamentoReceber extends IdentificadorComum implements Serializable {
+public class RecebimentoLancamento extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JoinColumn(name = "ID_FIN_PLANO_DE_CONTA", referencedColumnName = "id")
@@ -78,8 +79,6 @@ public class LancamentoReceber extends IdentificadorComum implements Serializabl
     @Size(max = 50)
     private String numeroDocumento;
 
-    private boolean inativo;
-
-    public LancamentoReceber() {
+    public RecebimentoLancamento() {
     }
 }
