@@ -50,12 +50,11 @@ public class FretamentoEventualRelatorio {
 
                 .append("\n\n\n")    .append("<font color='white'>_ _ _ _ _ _ _ _ _ _ _ _</font> <style size='12' isBold='true'> CLÁUSULA TERCEIRA – CONDIÇÕES COMERCIAIS </style>")
                 .append("\n\n\n")    .append("3 - A CONTRATANTE pagará à CONTRATADA, pela execução dos serviços:")
-                .append("\n\n")      .append("3.1 - <b>Valor fixo integral de "+Utils.formatarDinheiroRS(f.getCusto().getViagemPrecoFinal())+" ("+Utils.formatarDinheiroPorExtenso(f.getCusto().getViagemPrecoFinal()).toUpperCase()+")</b> que deverá ser pago ate um dia antes da realização da viagem através por boleto, deposito bancário, ou até mesmo diretamente no escritório oficial no endereço da CONTRATANTA.")
-//                .append("\n\n")      .append("3.2 - Banco para depósito (Caixa econômica Federal: Agencia 0901 – Conta Corrente: 1328-8) ")
-                .append("\n\n")      .append("3.2 - Caso seja necessário realizar alguma alteração na rota destinada por conta da CONTRATANTE, deveram ser acordados e comunicado com antecedência CONTRATADA de no mínimo 7 dias antes da realização da viagem.")
+                .append("\n\n")      .append("3.1 - <b>Valor fixo integral de "+Utils.formatarDinheiroRS(f.getCusto().getViagemPrecoFinal())+" ("+Utils.formatarDinheiroPorExtenso(f.getCusto().getViagemPrecoFinal()).toUpperCase()+")</b> que deverá ser pago ate um dia antes da realização da viagem através de boleto, deposito bancário, ou até mesmo diretamente no escritório oficial no endereço da CONTRATANTA.")
+                .append("\n\n")      .append("3.2 - Caso seja necessário realizar alguma alteração na rota destinada por conta da CONTRATANTE, deveram ser acordados e comunicado com antecedência a CONTRATADA de no mínimo 7 dias antes da realização da viagem, sendo que a o valor final antes acordado poderá ser reajustado de acordo com as novas rotas da viagem.")
 
                 .append("\n\n\n")    .append("<font color='white'>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _</font> <style size='12' isBold='true'> CLAUSULA QUARTA - DO REAJUSTE </style>")
-                .append("\n\n\n")    .append("4 - Os preços ora contratados, não serão reajustados até o final da vigência do contrato, salvo clausula 3.3.")
+                .append("\n\n\n")    .append("4 - Os preços ora contratados, não serão reajustados até o final da vigência do contrato, salvo clausula 3.2.")
 
                 .append("\n\n\n")    .append("<font color='white'>_ _</font> <style size='12' isBold='true'> CLÁUSULA QUINTA - DAS OBRIGAÇÕES E DAS RESPONSABILIDADES DA </style>")
                 .append("\n\n")      .append("<font color='white'>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _</font> <style size='12' isBold='true'> CONTRATADA </style>")

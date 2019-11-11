@@ -54,7 +54,7 @@ public class FretamentoEventualService {
         return fretamentoEventualRepository.findAll(filtro, paginacao);
     }
 
-    public FretamentoEventual findOne(Long id) {
+    public FretamentoEventual buscarPorId(Long id) {
         if (id != null && id > 0) {
             Optional<FretamentoEventual> obj = fretamentoEventualRepository.findById(id);
             if (obj.isPresent()) {
@@ -80,7 +80,7 @@ public class FretamentoEventualService {
 
     @Transactional
     public FretamentoEventual atualizar(Long id, FretamentoEventual fretamentoEventual) {
-        FretamentoEventual fretamentoEncontrado = findOne(id);
+        FretamentoEventual fretamentoEncontrado = buscarPorId(id);
 
         fretamentoEventual.setId(fretamentoEncontrado.getId());
         fretamentoEventual.setNumeroContrato(Utils.StrZeroEsquerda(fretamentoEncontrado.getId().toString(), 5));
@@ -92,7 +92,7 @@ public class FretamentoEventualService {
 
     @Transactional
     public FretamentoEventual cancelarContrato(Long id) {
-        FretamentoEventual f = findOne(id);
+        FretamentoEventual f = buscarPorId(id);
 
         f.setSituacao(f.getCliente() != null ? FretamentoEventalTipo.NAO_CONTRATADO_CLIENTE : FretamentoEventalTipo.NAO_CONTRATADO_CONTATO);
         f.setSituacaoData(new Date());
@@ -101,7 +101,7 @@ public class FretamentoEventualService {
 
     @Transactional
     public FretamentoEventual ativarContrato(Long id) {
-        FretamentoEventual f = findOne(id);
+        FretamentoEventual f = buscarPorId(id);
         f.setSituacaoData(new Date());
         f.setSituacao(f.getCliente() != null ? FretamentoEventalTipo.ORCAMENTO_CLIENTE : FretamentoEventalTipo.ORCAMENTO_CONTATO);
         return fretamentoEventualRepository.saveAndFlush(f);
@@ -109,7 +109,7 @@ public class FretamentoEventualService {
 
     @Transactional
     public FretamentoEventual contratarFretamento(Long id) {
-        FretamentoEventual f = findOne(id);
+        FretamentoEventual f = buscarPorId(id);
         f.setSituacaoData(new Date());
         f.setSituacao(FretamentoEventalTipo.CONTRATADO);
         return fretamentoEventualRepository.saveAndFlush(f);
@@ -225,7 +225,7 @@ public class FretamentoEventualService {
     }
 
     public byte[] contratoTermoResponsabilidadeMotorista(String key) throws Exception {
-        FretamentoEventual f = findOne(buscarPorKey(key));
+        FretamentoEventual f = buscarPorId(buscarPorKey(key));
 
         if (f.getCliente() == null) {
             throw new RegraDeNegocio("Fretamento não contém um cadastro de cliente completo, verifique e tente novamente!");
@@ -260,7 +260,7 @@ public class FretamentoEventualService {
     }
 
     public byte[] contratoPorFretamento(String key) throws Exception {
-        FretamentoEventual f = findOne(buscarPorKey(key));
+        FretamentoEventual f = buscarPorId(buscarPorKey(key));
 
         if (f.getCliente() == null) {
             throw new RegraDeNegocio("Fretamento não contém um cadastro de cliente completo, verifique e tente novamente!");
@@ -287,7 +287,7 @@ public class FretamentoEventualService {
     }
 
     public byte[] contratoRelatorioViagem(String key) throws Exception {
-        FretamentoEventual f = findOne(buscarPorKey(key));
+        FretamentoEventual f = buscarPorId(buscarPorKey(key));
 
         if (f.getCliente() == null) {
             throw new RegraDeNegocio("Fretamento não contém um cadastro de cliente completo, verifique e tente novamente!");

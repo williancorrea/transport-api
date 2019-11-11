@@ -36,7 +36,7 @@ public class FretamentoEventualResource {
     @GetMapping("/{key}")
 //    @PreAuthorize("hasAuthority('ROLE_LISTAR_FRETAMENTO_EVENTUAL') and #oauth2.hasScope('read')")
     public ResponseEntity<FretamentoEventual> buscarporKey(@Valid @PathVariable String key) {
-        FretamentoEventual fretamentoEventualEncontrado = fretamentoEventualService.findOne(fretamentoEventualService.buscarPorKey(key));
+        FretamentoEventual fretamentoEventualEncontrado = fretamentoEventualService.buscarPorId(fretamentoEventualService.buscarPorKey(key));
         return fretamentoEventualEncontrado != null ? ResponseEntity.ok(fretamentoEventualEncontrado) : ResponseEntity.notFound().build();
     }
 
