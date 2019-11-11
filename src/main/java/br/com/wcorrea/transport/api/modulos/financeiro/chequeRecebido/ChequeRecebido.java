@@ -1,15 +1,13 @@
-package br.com.wcorrea.transport.api.model.financeiro;
+package br.com.wcorrea.transport.api.modulos.financeiro.chequeRecebido;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
+import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -45,9 +43,6 @@ public class ChequeRecebido extends IdentificadorComum implements Serializable {
     @Size(max = 20)
     private String conta;
 
-    @NotBlank
-    private Integer numero;
-
     @Digits(integer = 20, fraction = 2)
     @DecimalMin("0.00")
     private BigDecimal valor;
@@ -66,9 +61,13 @@ public class ChequeRecebido extends IdentificadorComum implements Serializable {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
     @Column(name = "DATA_COMPENSACAO")
     private Date dataCompensacao;
+
+    @JoinColumn(name = "ID_PESSOA", referencedColumnName = "ID")
+    @ManyToOne
+    @NotNull
+    private Pessoa cliente;
 
     public ChequeRecebido() {
     }

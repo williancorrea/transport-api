@@ -46,6 +46,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/combustivel/**").permitAll()
 
                 .antMatchers("/financeiro/plano-conta/**").permitAll()
+                .antMatchers("/financeiro/cheques-recebidos/**").permitAll()
                 .antMatchers("/financeiro/bancos/**").permitAll()
                 .antMatchers("/financeiro/bancos-agencias/**").permitAll()
                 .antMatchers("/financeiro/bancos-contas/**").permitAll()

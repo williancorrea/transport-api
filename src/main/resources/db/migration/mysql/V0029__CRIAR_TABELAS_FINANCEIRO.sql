@@ -1,4 +1,4 @@
--- REMOVER ESTA VERIFICACAO - depois que subir esta atualizacao
+-- REMOVER ESTA VERIFICACAO - depois que subir esta atualizacao em producao
 DROP TABLE IF EXISTS `banco_abreviacao`;
 DROP TABLE IF EXISTS `banco`;
 
@@ -95,7 +95,6 @@ CREATE TABLE FIN_CHEQUE_RECEBIDO (
     CODIGO_BANCO VARCHAR(10),
     CODIGO_AGENCIA VARCHAR(10),
     CONTA VARCHAR(20),
-    NUMERO INTEGER,
     DATA_EMISSAO DATE,
     BOM_PARA DATE,
     DATA_COMPENSACAO DATE,
