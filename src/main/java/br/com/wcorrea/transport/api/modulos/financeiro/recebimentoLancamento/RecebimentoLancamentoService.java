@@ -1,5 +1,11 @@
 package br.com.wcorrea.transport.api.modulos.financeiro.recebimentoLancamento;
 
+import br.com.wcorrea.transport.api.model.financeiro.DocumentoOrigemTipo;
+import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventual;
+import br.com.wcorrea.transport.api.modulos.financeiro.planoConta.PlanoContaService;
+import br.com.wcorrea.transport.api.service.FretamentoEventualService;
+import br.com.wcorrea.transport.api.service.PessoaService;
+import br.com.wcorrea.transport.api.service.exception.RegraDeNegocio;
 import br.com.wcorrea.transport.api.utils.Criptografia;
 import br.com.wcorrea.transport.api.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +21,6 @@ public class RecebimentoLancamentoService {
 
     @Autowired
     private PessoaService pessoaService;
-
-    @Autowired
-    private PlanoContaService planoContaService;
 
     @Autowired
     private PlanoContaService planoContaService;
@@ -52,5 +55,32 @@ public class RecebimentoLancamentoService {
         } catch (Exception e) {
             throw new RecebimentoLancamentoExceptionNaoEncontrado();
         }
+    }
+
+    private RecebimentoLancamento prepararPersistenciaDados(RecebimentoLancamento obj) {
+        try {
+            obj.setCliente(pessoaService.buscarPorId(obj.getCliente().getId()));
+        } catch (Exception e) {
+            throw new RegraDeNegocio("Cliente n\u00e3o encontrado");
+        }
+        try {
+            obj.setVendedor(pessoaService.buscarPorId(obj.getVendedor().getId()));
+        } catch (Exception e) {
+            throw new RegraDeNegocio("Vendedor/Representante n\u00e3o encontrado.");
+        }
+        obj.setPlanoConta(planoContaService.buscarPorId(obj.getPlanoConta().getId()));
+
+
+        if (obj.getDocumentoOrigem().getTipo().equals(DocumentoOrigemTipo.FRETAMENTO_EVENTUAL)) {
+            FretamentoEventual f = fretamentoEventualService.buscarPorId(obj.getDocumentoOrigem().getFretamentoEventual().getId());
+            obj.getDocumentoOrigem().setFretamentoEventual(f);
+            obj.getDocumentoOrigem().setDescricao("Fretamento Eventual (" + Utils.StrZeroEsquerda(f.getId().toString(), 5) + ") - "+ f.getCliente().getNome()   );
+        }
+
+
+        if (true) {
+            throw new RegraDeNegocio("Exception FORCADA");
+        }
+        return obj;
     }
 }
