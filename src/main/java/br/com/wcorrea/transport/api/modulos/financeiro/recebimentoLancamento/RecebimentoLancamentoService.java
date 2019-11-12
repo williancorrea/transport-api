@@ -1,6 +1,7 @@
 package br.com.wcorrea.transport.api.modulos.financeiro.recebimentoLancamento;
 
 import br.com.wcorrea.transport.api.model.financeiro.DocumentoOrigemTipo;
+import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventalTipo;
 import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventual;
 import br.com.wcorrea.transport.api.modulos.financeiro.planoConta.PlanoContaService;
 import br.com.wcorrea.transport.api.service.FretamentoEventualService;
@@ -25,6 +26,7 @@ public class RecebimentoLancamentoService {
     @Autowired
     private PlanoContaService planoContaService;
 
+    @Autowired
     private FretamentoEventualService fretamentoEventualService;
 
     public RecebimentoLancamento salvar(RecebimentoLancamento r) {
@@ -73,14 +75,18 @@ public class RecebimentoLancamentoService {
 
         if (obj.getDocumentoOrigem().getTipo().equals(DocumentoOrigemTipo.FRETAMENTO_EVENTUAL)) {
             FretamentoEventual f = fretamentoEventualService.buscarPorId(obj.getDocumentoOrigem().getFretamentoEventual().getId());
+
+            if(f.isContratado() == false){
+                throw new RegraDeNegocio("Fretamento selecionado n\u00e3o pode ser utilizado pois n\u00e3o est\u00e1 com o status de CONTRATADO.");
+            }
             obj.getDocumentoOrigem().setFretamentoEventual(f);
             obj.getDocumentoOrigem().setDescricao("Fretamento Eventual (" + Utils.StrZeroEsquerda(f.getId().toString(), 5) + ") - "+ f.getCliente().getNome()   );
         }
 
+        // TODO: fazer um cadastro a parte das comissoes a ser  realizadas
+//        obj.setComissaoTaxa();
+//        obj.setComissaoValor();
 
-        if (true) {
-            throw new RegraDeNegocio("Exception FORCADA");
-        }
         return obj;
     }
 }

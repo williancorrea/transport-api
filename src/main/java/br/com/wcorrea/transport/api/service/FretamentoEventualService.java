@@ -338,7 +338,7 @@ public class FretamentoEventualService {
 
         parametros.put("VALOR_TOTAL_DESPESAS", "Valor disponivel para viagem: " + Utils.formatarDinheiroRS(relatorioViagemCalcularDespesas(f.getCusto(), f.getItinerario())));
         parametros.put("VALOR_A_SER_DEVOLVIDO", (f.getCusto().getValorDinheiroReserva() != null && f.getCusto().getValorDinheiroReserva().compareTo(BigDecimal.ZERO) == 1) ? "<style isBold='true' backcolor='yellow'>Caso NÃO tenha gastos extras o valor a ser devolvido será de: " + "<style forecolor='blue'>" + Utils.formatarDinheiroRS(f.getCusto().getValorDinheiroReserva()) + "</style></style>" : "");
-        parametros.put("VALOR_TOTAL_DISPONIBILIZADO","Total Disponibilizado: " + Utils.formatarDinheiroRS(relatorioViagemCalcularDespesas(f.getCusto(), f.getItinerario()).add(f.getCusto().getValorDinheiroReserva())));
+        parametros.put("VALOR_TOTAL_DISPONIBILIZADO","Total Disponibilizado: " + Utils.formatarDinheiroRS(relatorioViagemCalcularDespesas(f.getCusto(), f.getItinerario()).add((f.getCusto().getValorDinheiroReserva() != null && f.getCusto().getValorDinheiroReserva().compareTo(BigDecimal.ZERO) == 1) ? f.getCusto().getValorDinheiroReserva() : BigDecimal.ZERO)));
         parametros.put("DATA_LIBERACAO_VIAGEM", Utils.getDataFormatada(new Date()));
         parametros.put("IMAGEM_VELOCIDADE_MAXIMA", this.getClass().getResource("/relatorios/").getPath() + "VelocidadeMaximaPermitida.jpg");
 

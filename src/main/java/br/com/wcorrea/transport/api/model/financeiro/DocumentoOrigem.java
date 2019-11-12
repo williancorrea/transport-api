@@ -23,7 +23,6 @@ public class DocumentoOrigem extends IdentificadorComum implements Serializable 
     @Enumerated(EnumType.STRING)
     private DocumentoOrigemTipo tipo;
 
-    @NotBlank
     @Size(min = 5, max = 250)
     private String descricao;
 

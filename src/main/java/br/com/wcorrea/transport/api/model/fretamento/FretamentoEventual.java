@@ -4,6 +4,7 @@ import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.utils.Utils;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -75,4 +76,9 @@ public class FretamentoEventual extends IdentificadorComum implements Serializab
         this.numeroContrato = Utils.StrZeroEsquerda(this.getId().toString(), 5);
     }
 
+    @JsonIgnore
+    @Transient
+    public boolean isContratado() {
+        return situacao.equals(FretamentoEventalTipo.CONTRATADO) ? true : false;
+    }
 }
