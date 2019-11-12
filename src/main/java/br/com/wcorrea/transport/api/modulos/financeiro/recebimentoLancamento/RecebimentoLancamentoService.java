@@ -77,7 +77,7 @@ public class RecebimentoLancamentoService {
             FretamentoEventual f = fretamentoEventualService.buscarPorId(obj.getDocumentoOrigem().getFretamentoEventual().getId());
 
             if(f.isContratado() == false){
-                throw new RegraDeNegocio("Fretamento selecionado n\u00e3o pode ser utilizado pois n\u00e3o est\u00e1 com o status de CONTRATADO.");
+                throw new RegraDeNegocio("Fretamento Eventual ("+ Utils.StrZeroEsquerda(f.getId().toString(), 5)+") selecionado n\u00e3o pode ser utilizado pois n\u00e3o est\u00e1 com o status de CONTRATADO.");
             }
             obj.getDocumentoOrigem().setFretamentoEventual(f);
             obj.getDocumentoOrigem().setDescricao("Fretamento Eventual (" + Utils.StrZeroEsquerda(f.getId().toString(), 5) + ") - "+ f.getCliente().getNome()   );
