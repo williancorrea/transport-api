@@ -3,6 +3,7 @@ package br.com.wcorrea.transport.api.model.financeiro;
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.modulos.financeiro.bancoConta.BancoConta;
 import br.com.wcorrea.transport.api.modulos.financeiro.chequeRecebido.ChequeRecebido;
+import br.com.wcorrea.transport.api.modulos.financeiro.recebimentoParcela.RecebimentoParcela;
 import br.com.wcorrea.transport.api.modulos.financeiro.recebimentoTipo.RecebimentoTipo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -19,9 +20,9 @@ import java.util.Date;
 
 @ToString
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-@Entity(name = "FIN_PARCELA_RECEBIMENTO")
+@Entity(name = "FIN_RECEBIMENTO_PARCELA_DETALHE")
 @Data
-public class ParcelaRecebimento extends IdentificadorComum implements Serializable {
+public class RecebimentoParcelaDetalhe extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JoinColumn(name = "ID_FIN_RECEBIMENTO_TIPO", referencedColumnName = "id")
@@ -38,7 +39,7 @@ public class ParcelaRecebimento extends IdentificadorComum implements Serializab
 
     @JoinColumn(name = "ID_FIN_PARCELA_RECEBER", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private ParcelaReceber parcelaReceber;
+    private RecebimentoParcela recebimentoParcela;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
@@ -74,6 +75,6 @@ public class ParcelaRecebimento extends IdentificadorComum implements Serializab
     @DecimalMin("0.00")
     private BigDecimal valorRecebido;
 
-    public ParcelaRecebimento() {
+    public RecebimentoParcelaDetalhe() {
     }
 }

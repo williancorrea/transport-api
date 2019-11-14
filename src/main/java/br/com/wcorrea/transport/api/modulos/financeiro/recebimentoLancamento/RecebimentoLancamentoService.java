@@ -1,9 +1,10 @@
 package br.com.wcorrea.transport.api.modulos.financeiro.recebimentoLancamento;
 
-import br.com.wcorrea.transport.api.model.financeiro.DocumentoOrigemTipo;
-import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventalTipo;
+import br.com.wcorrea.transport.api.modulos.financeiro.DocumentoOrigemTipo;
 import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventual;
 import br.com.wcorrea.transport.api.modulos.financeiro.planoConta.PlanoContaService;
+import br.com.wcorrea.transport.api.modulos.financeiro.recebimentoParcela.RecebimentoParcela;
+import br.com.wcorrea.transport.api.modulos.financeiro.recebimentoParcelaStatus.RecebimentoParcelaStatusService;
 import br.com.wcorrea.transport.api.service.FretamentoEventualService;
 import br.com.wcorrea.transport.api.service.PessoaService;
 import br.com.wcorrea.transport.api.service.exception.RegraDeNegocio;
@@ -12,6 +13,8 @@ import br.com.wcorrea.transport.api.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,6 +31,9 @@ public class RecebimentoLancamentoService {
 
     @Autowired
     private FretamentoEventualService fretamentoEventualService;
+
+    @Autowired
+    private RecebimentoParcelaStatusService recebimentoParcelaStatusService;
 
     public RecebimentoLancamento salvar(RecebimentoLancamento r) {
         r = prepararPersistenciaDados(r);
@@ -82,6 +88,14 @@ public class RecebimentoLancamentoService {
             obj.getDocumentoOrigem().setFretamentoEventual(f);
             obj.getDocumentoOrigem().setDescricao("Fretamento Eventual (" + Utils.StrZeroEsquerda(f.getId().toString(), 5) + ") - "+ f.getCliente().getNome()   );
         }
+
+        List<RecebimentoParcela> listaParcela = new ArrayList<>();
+        for (RecebimentoParcela p: obj.getRecebimentoParcelaList()) {
+            p.setRecebimentoParcelaStatus(recebimentoParcelaStatusService.buscarPorId(p.getId()));
+            p.setRecebimentoLancamento(obj);
+        }
+        obj.setRecebimentoParcelaList(listaParcela);
+
 
         // TODO: fazer um cadastro a parte das comissoes a ser  realizadas
 //        obj.setComissaoTaxa();

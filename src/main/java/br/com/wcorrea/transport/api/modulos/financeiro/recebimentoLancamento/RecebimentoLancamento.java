@@ -1,20 +1,23 @@
 package br.com.wcorrea.transport.api.modulos.financeiro.recebimentoLancamento;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
-import br.com.wcorrea.transport.api.model.financeiro.DocumentoOrigem;
+import br.com.wcorrea.transport.api.modulos.financeiro.DocumentoOrigem;
 import br.com.wcorrea.transport.api.model.pessoa.Pessoa;
 import br.com.wcorrea.transport.api.modulos.financeiro.planoConta.PlanoConta;
+import br.com.wcorrea.transport.api.modulos.financeiro.recebimentoParcela.RecebimentoParcela;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @ToString
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
@@ -42,6 +45,10 @@ public class RecebimentoLancamento extends IdentificadorComum implements Seriali
     @ManyToOne(optional = false)
     @NotNull
     private Pessoa vendedor;
+
+    @JsonIgnoreProperties({"recebimentoLancamento"})
+    @OneToMany(mappedBy = "recebimentoLancamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval= true)
+    private List<RecebimentoParcela> recebimentoParcelaList;
 
     @Column(name = "QUANTIDADE_PARCELA")
     @Min(1)

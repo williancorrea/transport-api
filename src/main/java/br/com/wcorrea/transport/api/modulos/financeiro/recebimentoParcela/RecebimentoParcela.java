@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.model.financeiro;
+package br.com.wcorrea.transport.api.modulos.financeiro.recebimentoParcela;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.modulos.financeiro.bancoConta.BancoConta;
@@ -17,21 +17,23 @@ import java.util.Date;
 
 @ToString
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-@Entity(name = "FIN_PARCELA_RECEBER")
+@Entity(name = "FIN_RECEBIMENTO_PARCELA")
 @Data
-public class ParcelaReceber extends IdentificadorComum implements Serializable {
+public class RecebimentoParcela extends IdentificadorComum implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JoinColumn(name = "ID_FIN_LANCAMENTO_RECEBER", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @NotNull
     private RecebimentoLancamento recebimentoLancamento;
 
     @JoinColumn(name = "ID_FIN_STATUS_PARCELA", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @NotNull
     private RecebimentoParcelaStatus recebimentoParcelaStatus;
 
     @JoinColumn(name = "ID_FIN_BANCO_CONTA", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private BancoConta bancoConta;
 
     @NotNull
@@ -51,9 +53,8 @@ public class ParcelaReceber extends IdentificadorComum implements Serializable {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
     @Column(name = "DESCONTO_ATE")
-    private Date datadescontoAte;
+    private Date dataDescontoAte;
 
     @Digits(integer = 20, fraction = 2)
     @DecimalMin("0.00")
@@ -64,6 +65,6 @@ public class ParcelaReceber extends IdentificadorComum implements Serializable {
     @Size(max = 100)
     private String boletoNossoNumero;
 
-    public ParcelaReceber() {
+    public RecebimentoParcela() {
     }
 }
