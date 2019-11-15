@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.modulos.financeiro.recebimentoParcela;
+package br.com.wcorrea.transport.api.modulos.financeiro.recebimentoParcelaDetalhe;
 
 import br.com.wcorrea.transport.api.exceptionHandler.defaultException.ApiError;
 import br.com.wcorrea.transport.api.exceptionHandler.defaultException.DefaultExceptionHandler;
@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.Locale;
 
 @ControllerAdvice
-public class RecebimentoParcelaExceptionHandler extends DefaultExceptionHandler {
+public class RecebimentoParcelaDetalheExceptionHandler extends DefaultExceptionHandler {
 
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler({RecebimentoParcelaExceptionNaoEncontrado.class})
-    public ResponseEntity<Object> handleBankUpdateNotFound(RecebimentoParcelaExceptionNaoEncontrado ex, WebRequest request, Locale loc) {
-        String userMessage = messageSource.getMessage("recurso.recebimento-parcela-nao-encontrado", null, loc);
+    @ExceptionHandler({RecebimentoParcelaDetalheExceptionNaoEncontrado.class})
+    public ResponseEntity<Object> handleBankUpdateNotFound(RecebimentoParcelaDetalheExceptionNaoEncontrado ex, WebRequest request, Locale loc) {
+        String userMessage = messageSource.getMessage("recurso.recebimento-parcela-detalhe-nao-encontrado", null, loc);
         String developerMessage = ex.toString();
         List<ApiError> errors = Arrays.asList(new ApiError(userMessage, developerMessage, HttpStatus.NOT_FOUND));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.NOT_FOUND, request);

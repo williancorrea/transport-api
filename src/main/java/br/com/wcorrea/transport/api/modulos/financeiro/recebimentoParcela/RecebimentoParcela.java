@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.modulos.financeiro.recebimentoParcela;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
-import br.com.wcorrea.transport.api.modulos.financeiro.RecebimentoParcelaDetalhe;
+import br.com.wcorrea.transport.api.modulos.financeiro.recebimentoParcelaDetalhe.RecebimentoParcelaDetalhe;
 import br.com.wcorrea.transport.api.modulos.financeiro.bancoConta.BancoConta;
 import br.com.wcorrea.transport.api.modulos.financeiro.recebimentoLancamento.RecebimentoLancamento;
 import br.com.wcorrea.transport.api.modulos.financeiro.recebimentoParcelaStatus.RecebimentoParcelaStatus;
