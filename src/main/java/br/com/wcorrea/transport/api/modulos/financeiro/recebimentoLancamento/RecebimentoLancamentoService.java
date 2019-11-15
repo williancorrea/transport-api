@@ -1,7 +1,7 @@
 package br.com.wcorrea.transport.api.modulos.financeiro.recebimentoLancamento;
 
-import br.com.wcorrea.transport.api.modulos.financeiro.DocumentoOrigemTipo;
 import br.com.wcorrea.transport.api.model.fretamento.FretamentoEventual;
+import br.com.wcorrea.transport.api.modulos.financeiro.DocumentoOrigemTipo;
 import br.com.wcorrea.transport.api.modulos.financeiro.planoConta.PlanoContaService;
 import br.com.wcorrea.transport.api.modulos.financeiro.recebimentoParcela.RecebimentoParcela;
 import br.com.wcorrea.transport.api.modulos.financeiro.recebimentoParcelaStatus.RecebimentoParcelaStatusService;
@@ -47,6 +47,10 @@ public class RecebimentoLancamentoService {
         return recebimentoLancamentoRepository.save(obj);
     }
 
+    public RecebimentoLancamento buscarPorObj(RecebimentoLancamento obj) {
+        return buscarPorId(obj.getId());
+    }
+
     public RecebimentoLancamento buscarPorId(Long id) {
         if (id != null && id > 0) {
             Optional<RecebimentoLancamento> obj = recebimentoLancamentoRepository.findById(id);
@@ -82,15 +86,15 @@ public class RecebimentoLancamentoService {
         if (obj.getDocumentoOrigem().getTipo().equals(DocumentoOrigemTipo.FRETAMENTO_EVENTUAL)) {
             FretamentoEventual f = fretamentoEventualService.buscarPorId(obj.getDocumentoOrigem().getFretamentoEventual().getId());
 
-            if(f.isContratado() == false){
-                throw new RegraDeNegocio("Fretamento Eventual ("+ Utils.StrZeroEsquerda(f.getId().toString(), 5)+") selecionado n\u00e3o pode ser utilizado pois n\u00e3o est\u00e1 com o status de CONTRATADO.");
+            if (f.isContratado() == false) {
+                throw new RegraDeNegocio("Fretamento Eventual (" + Utils.StrZeroEsquerda(f.getId().toString(), 5) + ") selecionado n\u00e3o pode ser utilizado pois n\u00e3o est\u00e1 com o status de CONTRATADO.");
             }
             obj.getDocumentoOrigem().setFretamentoEventual(f);
-            obj.getDocumentoOrigem().setDescricao("Fretamento Eventual (" + Utils.StrZeroEsquerda(f.getId().toString(), 5) + ") - "+ f.getCliente().getNome()   );
+            obj.getDocumentoOrigem().setDescricao("Fretamento Eventual (" + Utils.StrZeroEsquerda(f.getId().toString(), 5) + ") - " + f.getCliente().getNome());
         }
 
         List<RecebimentoParcela> listaParcela = new ArrayList<>();
-        for (RecebimentoParcela p: obj.getRecebimentoParcelaList()) {
+        for (RecebimentoParcela p : obj.getRecebimentoParcelaList()) {
             p.setRecebimentoParcelaStatus(recebimentoParcelaStatusService.buscarPorId(p.getId()));
             p.setRecebimentoLancamento(obj);
         }

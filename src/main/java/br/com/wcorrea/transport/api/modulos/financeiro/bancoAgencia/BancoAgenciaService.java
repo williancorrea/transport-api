@@ -38,6 +38,10 @@ public class BancoAgenciaService {
         return bancoAgencia;
     }
 
+    public BancoAgencia buscarPorObj(BancoAgencia obj) {
+        return buscarPorId(obj.getId());
+    }
+
     public BancoAgencia buscarPorId(Long id) {
         if (id != null && id > 0) {
             Optional<BancoAgencia> obj = bancoAgenciaRepository.findById(id);

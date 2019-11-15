@@ -1,4 +1,4 @@
-package br.com.wcorrea.transport.api.model.financeiro;
+package br.com.wcorrea.transport.api.modulos.financeiro;
 
 import br.com.wcorrea.transport.api.model.common.IdentificadorComum;
 import br.com.wcorrea.transport.api.modulos.financeiro.bancoConta.BancoConta;
@@ -30,7 +30,7 @@ public class RecebimentoParcelaDetalhe extends IdentificadorComum implements Ser
     private RecebimentoTipo recebimentoTipo;
 
     @JoinColumn(name = "ID_FIN_CHEQUE_RECEBIDO", referencedColumnName = "id")
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
     private ChequeRecebido chequeRecebido;
 
     @JoinColumn(name = "ID_FIN_BANCO_CONTA", referencedColumnName = "id")
@@ -39,6 +39,7 @@ public class RecebimentoParcelaDetalhe extends IdentificadorComum implements Ser
 
     @JoinColumn(name = "ID_FIN_PARCELA_RECEBER", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @NotNull
     private RecebimentoParcela recebimentoParcela;
 
     @JsonFormat(pattern = "yyyy-MM-dd")

@@ -33,6 +33,10 @@ public class BancoContaService {
         return bancoConta;
     }
 
+    public BancoConta buscarPorObj(BancoConta obj) {
+        return buscarPorId(obj.getId());
+    }
+
     public BancoConta buscarPorId(Long id) {
         if (id != null && id > 0) {
             Optional<BancoConta> obj = bancoContaRepository.findById(id);

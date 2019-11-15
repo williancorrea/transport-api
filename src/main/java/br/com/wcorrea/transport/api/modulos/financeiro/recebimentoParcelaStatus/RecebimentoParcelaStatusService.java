@@ -22,6 +22,10 @@ public class RecebimentoParcelaStatusService {
         return recebimentoParcelaStatusRepository.save(banco);
     }
 
+    public RecebimentoParcelaStatus buscarPorObj(RecebimentoParcelaStatus obj) {
+        return buscarPorId(obj.getId());
+    }
+
     public RecebimentoParcelaStatus buscarPorId(Long id) {
         if (id != null && id > 0) {
             Optional<RecebimentoParcelaStatus> obj = recebimentoParcelaStatusRepository.findById(id);

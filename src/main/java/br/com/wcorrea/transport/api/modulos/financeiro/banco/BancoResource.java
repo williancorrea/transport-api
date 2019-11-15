@@ -35,7 +35,7 @@ public class BancoResource {
     @GetMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_LISTAR_BANCO') and #oauth2.hasScope('read')")
     public ResponseEntity<Banco> findOne(@Valid @PathVariable String key) {
-        Banco bancoEncontrado = bancoService.buscarPorId(bancoService.buscarPorKey(key));
+        Banco bancoEncontrado = bancoService.buscarPorKey(key);
         return bancoEncontrado != null ? ResponseEntity.ok(bancoEncontrado) : ResponseEntity.notFound().build();
     }
 
@@ -50,13 +50,13 @@ public class BancoResource {
     @PutMapping("/{key}")
     @PreAuthorize("hasAuthority('ROLE_ATUALIZAR_BANCO') and #oauth2.hasScope('write')")
     public ResponseEntity<Banco> update(@Valid @PathVariable String key, @Valid @RequestBody Banco banco) {
-        return ResponseEntity.status(HttpStatus.OK).body(bancoService.update(bancoService.buscarPorKey(key), banco));
+        return ResponseEntity.status(HttpStatus.OK).body(bancoService.update(key, banco));
     }
 
     @DeleteMapping("/{key}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_DELETAR_BANCO') and #oauth2.hasScope('write')")
     public void delete(@PathVariable String key) {
-        bancoRepository.deleteById(bancoService.buscarPorKey(key));
+        bancoRepository.deleteById(bancoService.buscarPorKey(key).getId());
     }
 }

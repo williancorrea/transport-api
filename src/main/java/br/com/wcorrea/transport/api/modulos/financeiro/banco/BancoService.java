@@ -12,6 +12,16 @@ public class BancoService {
     @Autowired
     private BancoRepository bancoRepository;
 
+    public Banco update(String key, Banco banco) {
+        Long id = 0L;
+        try {
+            id = new Criptografia().getKey(key);
+        } catch (Exception e) {
+            throw new BancoExceptionNaoEncontrado();
+        }
+        return update(id, banco);
+    }
+
     public Banco update(Long id, Banco banco) {
         Banco updateFound = buscarPorId(id);
         banco.setId(updateFound.getId());
@@ -28,9 +38,9 @@ public class BancoService {
         throw new BancoExceptionNaoEncontrado();
     }
 
-    public Long buscarPorKey(String key) {
+    public Banco buscarPorKey(String key) {
         try {
-            return new Criptografia().getKey(key);
+            return buscarPorId(new Criptografia().getKey(key));
         } catch (Exception e) {
             throw new BancoExceptionNaoEncontrado();
         }
