@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Profile("basic-security")
 @EnableWebSecurity
-public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityBasicConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -52,10 +52,10 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/financeiro/bancos-contas/**").permitAll()
                 .antMatchers("/financeiro/bancos-extrato-abreviacao/**").permitAll()
                 .antMatchers("/financeiro/recebimento-tipo/**").permitAll()
-                .antMatchers("/financeiro/recebimento-parcela-status/**").permitAll()
                 .antMatchers("/financeiro/recebimento-lancamentos/**").permitAll()
-
-
+                .antMatchers("/financeiro/recebimento-parcela/**").permitAll()
+                .antMatchers("/financeiro/recebimento-parcela-detalhe/**").permitAll()
+                .antMatchers("/financeiro/recebimento-parcela-status/**").permitAll()
 
 
                 .anyRequest().authenticated()

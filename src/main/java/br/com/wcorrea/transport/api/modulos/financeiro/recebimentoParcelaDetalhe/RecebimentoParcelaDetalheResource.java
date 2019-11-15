@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/financeiro/recebimento-parcela-status")
+@RequestMapping("/financeiro/recebimento-parcela-detalhe")
 public class RecebimentoParcelaDetalheResource {
 
     @Autowired
