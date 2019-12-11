@@ -75,6 +75,7 @@ public class FretamentoEventualEventualRepositoryImpl implements FretamentoEvent
             Disjunction disjunction = Restrictions.disjunction(); // Restricao com OR
             disjunction.add(Restrictions.ilike("numeroContrato", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
             disjunction.add(Restrictions.ilike("c.nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
+            disjunction.add(Restrictions.ilike("c.fantasia", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
             disjunction.add(Restrictions.ilike("pc.nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
             disjunction.add(Restrictions.ilike("pr.nome", filtro.getFiltroGlobal(), MatchMode.ANYWHERE));
 
