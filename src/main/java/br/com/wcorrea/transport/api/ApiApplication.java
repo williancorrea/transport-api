@@ -22,7 +22,7 @@ public class ApiApplication extends SpringBootServletInitializer {
     @PostConstruct
     void started() {
         TimeZone.setDefault(TimeZone.getTimeZone("America/Sao_Paulo"));
-//    TimeZone.setDefault(TimeZone.getTimeZone("+3:00")); // PODE TB SER USADO ASSIM
+//    TimeZone.setDefault(TimeZone.getTimeZone("-3:00")); // PODE TB SER USADO ASSIM
     }
 
     /**
