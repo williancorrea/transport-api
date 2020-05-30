@@ -1,4 +1,4 @@
--- REMOVER ESTA VERIFICACAO - depois que subir esta atualizacao em producao
+-- TODO: REMOVER ESTA VERIFICACAO - depois que subir esta atualizacao em producao
 DROP TABLE IF EXISTS `banco_abreviacao`;
 DROP TABLE IF EXISTS `banco`;
 
@@ -16,7 +16,7 @@ CREATE TABLE FIN_BANCO (
 
     LOGO_BASE_64 LONGBLOB
 )
-    ENGINE = InnoDB DEFAULT CHARSET = utf8;
+    ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- -----------------------------------------------
 -- BANCO - SIGLAS E ABREVIAÇÕES
@@ -28,7 +28,7 @@ CREATE TABLE FIN_BANCO_EXTRATO_ABREVIACAO (
     NOME_COMPLETO VARCHAR(250) NOT NULL,
 
     ID_FIN_BANCO BIGINT(20) not null,  FOREIGN KEY (ID_FIN_BANCO) REFERENCES FIN_BANCO(id)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_general_ci;
 
 
 -- ---------------------------------------------------
@@ -50,7 +50,7 @@ CREATE TABLE FIN_BANCO_AGENCIA (
     TELEFONE_GERENTE VARCHAR(20),
     OBS TEXT
 )
-    ENGINE = InnoDB DEFAULT CHARSET = utf8;
+    ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_general_ci;
 
 
 
@@ -68,7 +68,7 @@ CREATE TABLE FIN_BANCO_CONTA (
     TIPO VARCHAR(20),
     INATIVO BOOLEAN DEFAULT FALSE
 )
-    ENGINE = InnoDB DEFAULT CHARSET = utf8;
+    ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_general_ci;
 
 
 
@@ -80,7 +80,7 @@ CREATE TABLE FIN_PLANO_DE_CONTA (
     DESCRICAO VARCHAR(100),
     INATIVO BOOLEAN DEFAULT FALSE
 )
-    ENGINE = InnoDB DEFAULT CHARSET = utf8;
+    ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_general_ci;
 
 
 -- ---------------------------------------------------
@@ -100,7 +100,7 @@ CREATE TABLE FIN_CHEQUE_RECEBIDO (
 
     ID_PESSOA BIGINT(20),     FOREIGN KEY (ID_PESSOA) REFERENCES PESSOA(ID)
 )
-    ENGINE = InnoDB DEFAULT CHARSET = utf8;
+    ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_general_ci;
 
 
 -- ---------------------------------------------------
@@ -111,7 +111,7 @@ CREATE TABLE FIN_RECEBIMENTO_TIPO (
     DESCRICAO VARCHAR(100),
     INATIVO BOOLEAN DEFAULT FALSE
 )
-ENGINE = InnoDB DEFAULT CHARSET = utf8;
+ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_general_ci;
 
 
 -- ---------------------------------------------------
@@ -123,7 +123,7 @@ CREATE TABLE FIN_DOCUMENTO_ORIGEM (
     DESCRICAO VARCHAR(250),
     ID_FRETAMENTO_EVENTUAL BIGINT(20),     FOREIGN KEY (ID_FRETAMENTO_EVENTUAL) REFERENCES FRETAMENTO_EVENTUAL(ID)
 )
-    ENGINE = InnoDB DEFAULT CHARSET = utf8;
+    ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_general_ci;
 
 
 -- ---------------------------------------------------
@@ -145,7 +145,7 @@ CREATE TABLE FIN_RECEBIMENTO_LANCAMENTO (
     COMISSAO_TAXA DECIMAL(20,2) DEFAULT 0.00,
     COMISSAO_VALOR DECIMAL(20,2) DEFAULT  0.00
 )
-    ENGINE = InnoDB DEFAULT CHARSET = utf8;
+    ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_general_ci;
 
 
 -- ---------------------------------------------------
@@ -156,7 +156,7 @@ CREATE TABLE FIN_RECEBIMENTO_PARCELA_STATUS (
     SIGLA VARCHAR(2),
     DESCRICAO VARCHAR(100)
 )
-    ENGINE = InnoDB DEFAULT CHARSET = utf8;
+    ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_general_ci;
 
 --
 -- CABECALHO DAS PARCELAS
@@ -175,7 +175,7 @@ CREATE TABLE FIN_RECEBIMENTO_PARCELA (
     EMITIU_BOLETO BOOLEAN DEFAULT FALSE,
     BOLETO_NOSSO_NUMERO VARCHAR(100)
 )
-    ENGINE = InnoDB DEFAULT CHARSET = utf8;
+    ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_general_ci;
 
 
 -- ---------------------------------------------------
@@ -197,7 +197,7 @@ CREATE TABLE FIN_RECEBIMENTO_PARCELA_DETALHE (
     VALOR_DESCONTO DECIMAL(20,2) DEFAULT 0.00,
     VALOR_RECEBIDO DECIMAL(20,2) DEFAULT 0.00    
 )
-    ENGINE = InnoDB DEFAULT CHARSET = utf8;
+    ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE=utf8_general_ci;
 
 
 
